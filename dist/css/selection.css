@@ -1,0 +1,33 @@
+#show {  
+    width: 100%;  
+    font-size: 10px;  
+    display: flex !important;
+    justify-content: start;
+    flex-wrap: wrap;
+}  
+.msg{
+    font-weight:bold;
+    width: 276px;
+    display: flex;
+    justify-content: start;
+    margin-left: auto;
+}
+
+.content {  
+    float: top;  
+    width: 200px;  
+    margin: -5px 0px 0px 10px;  
+}  
+
+.bigfont {  
+    font-size: 14px;  
+}  
+
+.la {  
+    color: gray ;
+    float: left;  
+    width: 40px;  
+    height: 20px;  
+    margin: 5px 0;  
+    line-height: 5px;  
+}  

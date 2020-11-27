@@ -1,0 +1,130 @@
+/* Move down content because we have a fixed navbar that is 50px tall */
+
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+  border: 0;
+}
+
+
+
+/*
+ * Main content
+ */
+
+
+.main {
+  padding: 5px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.placeholders h4 {
+  margin-bottom: 0;
+}
+.placeholder {
+  margin-bottom: 20px;
+}
+.placeholder img {
+  display: inline-block;
+  border-radius: 50%;
+}
+
+/* #bgcolor
+{  */
+  /* filter:alpha(opacity=50);   */
+  /* opacity:0.5;  */
+  /* width:100px;
+  height:100px; */
+  /* background-color:#fff0;
+}  */
+body {
+  padding-top: 50px;
+  /*background: rgb(185, 246, 246);*/
+  background: var(--pic) no-repeat center;/*设置背景图片*/
+  /* background-repeat:no-repeat;图片适应窗口大小，这里设置的是不进行平铺 */
+  background-attachment: fixed;/*图片相对于浏览器固定,这里设置背景图片固定，不随内容滚动*/
+  background-origin: border-box;/*从边框区域显示*/
+  background-size:cover;/*指定图片大小，此时会保持图像的纵横比并将图像缩放成将完全覆盖背景定位区域的最小大小*/
+  /* align-items: center; */
+  /* text-shadow:1px 1px 2px #ddd,0px 0px 3px #ddd,0px 0px 3px #ddd,0px 0px 3px #ddd,0px 0px 5px #ddd,0px 0px 4px #ddd,0px 0px 4px #ddd,0px 0px 4px #ddd; */
+  }
+
+.table-responsive, #container{
+  background-color:#fffa;
+}
+tbody > tr:nth-child(2n+1) > td, tbody > tr:nth-child(2n+1) > th {
+ background-color: #fff7;
+}
+tbody > tr:nth-child(2n) > td, tbody > tr:nth-child(2n) > th {
+ background-color: #fffd;
+}
+svg {
+  animation: 2s linear infinite svg-animation;
+  max-width: 100px;
+}
+@keyframes svg-animation {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg)
+  }
+}
+circle {
+  animation: 1.4s ease-in-out infinite both circle-animation;
+  display: block;
+  fill: transparent;
+  stroke: #2f3d4c;
+  stroke-linecap: round;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 280;
+  stroke-width: 10px;
+  transform-origin: 50% 50%;
+}
+@keyframes circle-animation {
+  0%,
+  25% {
+    stroke-dashoffset: 280;
+    transform: rotate(0);
+  }
+  
+  50%,
+  75% {
+    stroke-dashoffset: 75;
+    transform: rotate(45deg);
+  }
+  
+  100% {
+    stroke-dashoffset: 280;
+    transform: rotate(360deg);
+  }
+}

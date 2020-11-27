@@ -1,0 +1,29 @@
+[{
+    "api_id": 1,
+    "api_name": "鎮守府海域",
+    "api_type": 0
+}, {
+    "api_id": 2,
+    "api_name": "南西諸島海域",
+    "api_type": 0
+}, {
+    "api_id": 3,
+    "api_name": "北方海域",
+    "api_type": 0
+}, {
+    "api_id": 4,
+    "api_name": "西方海域",
+    "api_type": 0
+}, {
+    "api_id": 5,
+    "api_name": "南方海域",
+    "api_type": 0
+}, {
+    "api_id": 6,
+    "api_name": "中部海域",
+    "api_type": 0
+}, {
+    "api_id": 7,
+    "api_name": "南西海域",
+    "api_type": 0
+}]

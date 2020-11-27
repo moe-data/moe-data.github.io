@@ -1,0 +1,122 @@
+[
+    {
+      "_id": "{\"$oid\":\"5f90fdcad3ed7196fed9a2bc\"}",
+      "kdockId": "3",
+      "largeFlag": "Y",
+      "highspeed": "0",
+      "secretary": "364",
+      "teitokuLv": "120",
+      "shipId": "111",
+      "origin": "Reporter/4.5.0 poi/10.6.0",
+      "items": "[4000,2000,5000,7000,20]",
+      "n": "1"
+    },
+    {
+      "_id": "{\"$oid\":\"5f8ad158651fd49df3b125e0\"}",
+      "kdockId": "1",
+      "largeFlag": "Y",
+      "highspeed": "0",
+      "secretary": "364",
+      "teitokuLv": "120",
+      "shipId": "163",
+      "origin": "Reporter/4.5.0 poi/10.6.0",
+      "items": "[4000,2000,5000,7000,20]",
+      "n": "3"
+    },
+    {
+      "_id": "{\"$oid\":\"5f8ad13f651fd49df3b1258a\"}",
+      "kdockId": "1",
+      "largeFlag": "Y",
+      "highspeed": "0",
+      "secretary": "364",
+      "teitokuLv": "120",
+      "shipId": "451",
+      "origin": "Reporter/4.5.0 poi/10.6.0",
+      "items": "[4000,2000,5000,7000,20]",
+      "n": "2"
+    },
+    {
+      "_id": "{\"$oid\":\"5f8ad167651fd49df3b12623\"}",
+      "kdockId": "0",
+      "largeFlag": "Y",
+      "highspeed": "0",
+      "secretary": "364",
+      "teitokuLv": "120",
+      "shipId": "515",
+      "origin": "Reporter/4.5.0 poi/10.6.0",
+      "items": "[4000,2000,5000,7000,20]",
+      "n": "1"
+    },
+    {
+      "_id": "{\"$oid\":\"5f8cf65b3b4a95fb5003cda1\"}",
+      "kdockId": "0",
+      "largeFlag": "Y",
+      "highspeed": "0",
+      "secretary": "364",
+      "teitokuLv": "114",
+      "shipId": "74",
+      "origin": "Reporter v4.4.1",
+      "items": "[4000,2000,5000,7000,20]",
+      "n": "1"
+    },
+    {
+      "_id": "{\"$oid\":\"5f8cf6663b4a95fb5003cdbe\"}",
+      "kdockId": "1",
+      "largeFlag": "Y",
+      "highspeed": "0",
+      "secretary": "364",
+      "teitokuLv": "114",
+      "shipId": "75",
+      "origin": "Reporter v4.4.1",
+      "items": "[4000,2000,5000,7000,20]",
+      "n": "1"
+    },
+    {
+      "_id": "{\"$oid\":\"5f92ca8b432991ca4f24bdbc\"}",
+      "kdockId": "0",
+      "largeFlag": "Y",
+      "highspeed": "0",
+      "secretary": "364",
+      "teitokuLv": "119",
+      "shipId": "76",
+      "origin": "Reporter/4.5.0 poi/10.6.0",
+      "items": "[4000,2000,5000,7000,20]",
+      "n": "1"
+    },
+    {
+      "_id": "{\"$oid\":\"5f944ec947f57cf1462326cb\"}",
+      "kdockId": "0",
+      "largeFlag": "Y",
+      "highspeed": "0",
+      "secretary": "364",
+      "teitokuLv": "117",
+      "shipId": "84",
+      "origin": "Reporter/4.5.0 poi/10.6.0-beta.2",
+      "items": "[4000,2000,5000,7000,20]",
+      "n": "1"
+    },
+    {
+      "_id": "{\"$oid\":\"5f898bdae5d3ed67da4f562c\"}",
+      "kdockId": "1",
+      "largeFlag": "Y",
+      "highspeed": "0",
+      "secretary": "364",
+      "teitokuLv": "117",
+      "shipId": "90",
+      "origin": "Reporter/4.5.0 poi/10.6.0-beta.2",
+      "items": "[4000,2000,5000,7000,20]",
+      "n": "1"
+    },
+    {
+      "_id": "{\"$oid\":\"5f89fe7f651fd49df3aee2a8\"}",
+      "kdockId": "3",
+      "largeFlag": "Y",
+      "highspeed": "0",
+      "secretary": "364",
+      "teitokuLv": "120",
+      "shipId": "92",
+      "origin": "Reporter/4.5.0 poi/10.6.0",
+      "items": "[4000,2000,5000,7000,20]",
+      "n": "2"
+    }
+  ]

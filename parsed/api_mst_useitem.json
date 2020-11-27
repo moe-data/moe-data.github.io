@@ -1,0 +1,659 @@
+[{
+    "id": 1,
+    "name": "高速修復材",
+    "category": 1,
+    "description": ["入渠時間を短縮できる。", ""],
+    "price": 0,
+    "usetype": 1
+}, {
+    "category": 2,
+    "description": ["建造時間を短縮できる。", ""],
+    "id": 2,
+    "name": "高速建造材",
+    "price": 0,
+    "usetype": 2
+}, {
+    "category": 3,
+    "description": ["建造・開発を行うのに使用する<br>資材。", ""],
+    "id": 3,
+    "name": "開発資材",
+    "price": 0,
+    "usetype": 3
+}, {
+    "category": 4,
+    "description": ["装備を改修する為の資材、「改<br>修工廠」で使用します。", ""],
+    "id": 4,
+    "name": "改修資材",
+    "price": 0,
+    "usetype": 3
+}, {
+    "category": 4,
+    "description": ["", ""],
+    "id": 5,
+    "name": "",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 4,
+    "description": ["", ""],
+    "id": 6,
+    "name": "",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 5,
+    "description": ["", ""],
+    "id": 7,
+    "name": "",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 5,
+    "description": ["", ""],
+    "id": 8,
+    "name": "",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 5,
+    "description": ["", ""],
+    "id": 9,
+    "name": "",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 6,
+    "description": ["開けると、中から少量の家具コ<br>インが出現する。", "200"],
+    "id": 10,
+    "name": "家具箱（小）",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 6,
+    "description": ["開けると、中から中量の家具コ<br>インが出現する。", "400"],
+    "id": 11,
+    "name": "家具箱（中）",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 6,
+    "description": ["開けると、中から大量の家具コ<br>インが出現する。", "700"],
+    "id": 12,
+    "name": "家具箱（大）",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 7,
+    "description": ["", ""],
+    "id": 13,
+    "name": "",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 7,
+    "description": ["", ""],
+    "id": 14,
+    "name": "",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 8,
+    "description": ["", ""],
+    "id": 15,
+    "name": "",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 9,
+    "description": ["", ""],
+    "id": 16,
+    "name": "",
+    "price": 0,
+    "usetype": 5
+}, {
+    "category": 9,
+    "description": ["", ""],
+    "id": 17,
+    "name": "",
+    "price": 0,
+    "usetype": 5
+}, {
+    "category": 10,
+    "description": ["", ""],
+    "id": 18,
+    "name": "",
+    "price": 0,
+    "usetype": 5
+}, {
+    "category": 10,
+    "description": ["", ""],
+    "id": 19,
+    "name": "",
+    "price": 0,
+    "usetype": 5
+}, {
+    "category": 11,
+    "description": ["", ""],
+    "id": 20,
+    "name": "",
+    "price": 0,
+    "usetype": 5
+}, {
+    "category": 11,
+    "description": ["", ""],
+    "id": 21,
+    "name": "",
+    "price": 0,
+    "usetype": 5
+}, {
+    "category": 11,
+    "description": ["", ""],
+    "id": 22,
+    "name": "",
+    "price": 0,
+    "usetype": 5
+}, {
+    "category": 12,
+    "description": ["", ""],
+    "id": 23,
+    "name": "",
+    "price": 0,
+    "usetype": 5
+}, {
+    "category": 12,
+    "description": ["", ""],
+    "id": 24,
+    "name": "",
+    "price": 0,
+    "usetype": 5
+}, {
+    "category": 13,
+    "description": ["", ""],
+    "id": 25,
+    "name": "",
+    "price": 0,
+    "usetype": 5
+}, {
+    "category": 13,
+    "description": ["", ""],
+    "id": 26,
+    "name": "",
+    "price": 0,
+    "usetype": 5
+}, {
+    "category": 14,
+    "description": ["", ""],
+    "id": 27,
+    "name": "",
+    "price": 0,
+    "usetype": 5
+}, {
+    "category": 15,
+    "description": ["", ""],
+    "id": 28,
+    "name": "",
+    "price": 0,
+    "usetype": 5
+}, {
+    "category": 15,
+    "description": ["", ""],
+    "id": 29,
+    "name": "",
+    "price": 0,
+    "usetype": 5
+}, {
+    "category": 15,
+    "description": ["", ""],
+    "id": 30,
+    "name": "",
+    "price": 0,
+    "usetype": 5
+}, {
+    "category": 16,
+    "description": ["", ""],
+    "id": 31,
+    "name": "燃料",
+    "price": 0,
+    "usetype": 6
+}, {
+    "category": 17,
+    "description": ["", ""],
+    "id": 32,
+    "name": "弾薬",
+    "price": 0,
+    "usetype": 6
+}, {
+    "category": 18,
+    "description": ["", ""],
+    "id": 33,
+    "name": "鋼材",
+    "price": 0,
+    "usetype": 6
+}, {
+    "category": 19,
+    "description": ["", ""],
+    "id": 34,
+    "name": "ボーキサイト",
+    "price": 0,
+    "usetype": 6
+}, {
+    "category": 20,
+    "description": ["", ""],
+    "id": 35,
+    "name": "",
+    "price": 0,
+    "usetype": 7
+}, {
+    "category": 20,
+    "description": ["", ""],
+    "id": 36,
+    "name": "",
+    "price": 0,
+    "usetype": 7
+}, {
+    "category": 20,
+    "description": ["", ""],
+    "id": 37,
+    "name": "",
+    "price": 0,
+    "usetype": 7
+}, {
+    "category": 20,
+    "description": ["", ""],
+    "id": 38,
+    "name": "",
+    "price": 0,
+    "usetype": 7
+}, {
+    "category": 20,
+    "description": ["", ""],
+    "id": 39,
+    "name": "",
+    "price": 0,
+    "usetype": 7
+}, {
+    "category": 20,
+    "description": ["", ""],
+    "id": 40,
+    "name": "",
+    "price": 0,
+    "usetype": 7
+}, {
+    "category": 20,
+    "description": ["", ""],
+    "id": 41,
+    "name": "",
+    "price": 0,
+    "usetype": 7
+}, {
+    "category": 20,
+    "description": ["", ""],
+    "id": 42,
+    "name": "",
+    "price": 0,
+    "usetype": 7
+}, {
+    "category": 20,
+    "description": ["", ""],
+    "id": 43,
+    "name": "",
+    "price": 0,
+    "usetype": 7
+}, {
+    "category": 21,
+    "description": ["", ""],
+    "id": 44,
+    "name": "家具コイン",
+    "price": 0,
+    "usetype": 6
+}, {
+    "category": 16,
+    "description": ["", ""],
+    "id": 45,
+    "name": "",
+    "price": 0,
+    "usetype": 6
+}, {
+    "category": 17,
+    "description": ["", ""],
+    "id": 46,
+    "name": "",
+    "price": 0,
+    "usetype": 6
+}, {
+    "category": 18,
+    "description": ["", ""],
+    "id": 47,
+    "name": "",
+    "price": 0,
+    "usetype": 6
+}, {
+    "category": 19,
+    "description": ["", ""],
+    "id": 48,
+    "name": "",
+    "price": 0,
+    "usetype": 6
+}, {
+    "category": 0,
+    "description": ["入渠ドックまたは工廠ドックを<br>１つ開放できるキー。さらに、<br>艦隊編成記録枠を１つ拡張する<br>ことも可能です。", ""],
+    "id": 49,
+    "name": "ドック開放キー",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["艦のスロットに装備する。装備<br>した艦は1度だけ撃沈を回避で<br>きる。", ""],
+    "id": 50,
+    "name": "応急修理要員",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["応急修理要員がパワーアップ！<br>撃沈回避時に出撃能力が全回<br>復。", ""],
+    "id": 51,
+    "name": "応急修理女神",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["特注家具を製作する職人さん。<br>家具屋さんで使用する。", ""],
+    "id": 52,
+    "name": "特注家具職人",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["最大保有艦娘数＋10(最大470)。最大保有アイテム数＋40(最大2020)。", ""],
+    "id": 53,
+    "name": "母港拡張",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["艦隊全体の疲労度を回復する給<br>糧艦。編成で使用可能。", ""],
+    "id": 54,
+    "name": "給糧艦「間宮」",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["ケッコンカッコカリに必要な書<br>類一式と指輪。改装で使用す<br>る。", ""],
+    "id": 55,
+    "name": "書類一式＆指輪",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["艦娘から贈られたチョコ。ク<br>リックして資源にするのもよ<br>し、保存しておくのもよし。", ""],
+    "id": 56,
+    "name": "艦娘からのチョコ",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 0,
+    "description": ["暁の水平線に勝利を刻んだ提督<br>に贈られる「証」。資源や改修<br>資材、または複数集めて改装設<br>計図と交換することも可能で<br>す。", ""],
+    "id": 57,
+    "name": "勲章",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 0,
+    "description": ["艦娘の「特別な改造」に使用す<br>る設計図。", ""],
+    "id": 58,
+    "name": "改装設計図",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["艦娘たちの士気を高揚させる新<br>型給糧艦。編成で使用可能。", ""],
+    "id": 59,
+    "name": "給糧艦「伊良湖」",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["特別な時期だけ発見が可能とな<br>る丁寧に包装された「プレゼン<br>ト箱」。開封時に希望の中味を<br>選択することが可能です。", ""],
+    "id": 60,
+    "name": "プレゼント箱",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 0,
+    "description": ["難易度の高い作戦を、精鋭の艦<br>娘たちと共に攻略した提督のみ<br>に贈られる勝利の証。それが、<br>「甲種勲章」。資材等に交換す<br>ることも可能です。", ""],
+    "id": 61,
+    "name": "甲種勲章",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 0,
+    "description": ["桃の節句の時期だけ発見が可能<br>となる美味しい「菱餅」です。<br>展開時に希望の中味を選択する<br>ことが可能です。", ""],
+    "id": 62,
+    "name": "菱餅",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 0,
+    "description": ["「任務」同時受託可能数を拡張<br>することができる司令部要員で<br>す。使用すると、同時受託可能<br>任務数が＋１拡張されます。", ""],
+    "id": 63,
+    "name": "司令部要員",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 0,
+    "description": ["艦娘(練度30以上必要)を補強増<br>設改修できます。同改修により<br>補強増設装備スロットが艦娘に<br>増設されます。(1回分)", ""],
+    "id": 64,
+    "name": "補強増設",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["本格的な大型航空母艦を、より<br>強力に改装するための、特殊な<br>航空艤装です。ある型の正規空<br>母の改二改装に使用します。", ""],
+    "id": 65,
+    "name": "試製甲板カタパルト",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["腹が減ってはなんとやら……！<br>この戦闘糧食を装備して、合戦<br>前にしっかりと腹ごしらえを！<br>(発動すると消滅します)", ""],
+    "id": 66,
+    "name": "戦闘糧食",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["戦闘航海中の洋上で燃料弾薬を<br>艦隊補給することが可能です。<br>艦隊決戦のサポートにどうぞ！<br>（発動すると消滅します）", ""],
+    "id": 67,
+    "name": "洋上補給",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["漁場の安全を確保し、秋刀魚漁<br>を支援することで入手した貴重<br>な旬の「秋刀魚」です。※秋刀<br>魚祭り終了時に消滅します。", ""],
+    "id": 68,
+    "name": "秋刀魚",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 0,
+    "description": ["旬の秋刀魚「蒲焼」缶詰です。<br>単品はもちろん、おにぎり等と<br>一緒に食すとより美味しい！<br>(発動すると消滅します)", ""],
+    "id": 69,
+    "name": "秋刀魚の缶詰",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["精鋭の航空部隊を新規編成する<br>ために必要な、熟練した技術を<br>持つ、航空機搭乗員です。　　<br>(※部隊編成時に消滅します)", ""],
+    "id": 70,
+    "name": "熟練搭乗員",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["新開発の燃焼噴射推進器です。<br>日本初の実用ジェットエンジン<br>として戦力化が期待されます。<br>(※任務/装備改修で使用可能)", ""],
+    "id": 71,
+    "name": "ネ式エンジン",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["ある給糧艦が、新年の艦隊艦娘<br>と提督の安全を祈って準備する<br>お飾りの材料。３２個消費して<br>艦隊安全お飾りを制作可能。", ""],
+    "id": 72,
+    "name": "お飾り材料",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 0,
+    "description": ["飛行場などの設営に必要です。<br>※基地航空隊の拡張も可能　　<br>※最大計10個まで保有可能", ""],
+    "id": 73,
+    "name": "設営隊",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["新型航空機の開発、戦力化する<br>ために必要な技術図面です。　<br>※開発には複数図面必要です。<br>※任務や装備改修で使用可能。", ""],
+    "id": 74,
+    "name": "新型航空機設計図",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["新型砲熕兵装を開発及び戦力化<br>に必要な技術図面と資材です。<br>※任務や装備改修で使用可能。<br>※新型大口径主砲等の開発には<br>　複数の同資材が必要です。", ""],
+    "id": 75,
+    "name": "新型砲熕兵装資材",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["腹が減ってはなんとやら……！<br>愛情たっぷり美味しさバッチリ<br>の高栄養価新型戦闘糧食です。<br>(発動消費すると消滅します)", ""],
+    "id": 76,
+    "name": "戦闘糧食(特別なおにぎり)",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["新型航空機材を開発及び戦力化<br>に必要な技術図面と資材です。<br>※任務や装備改修等で使用する<br>ことで、今後新型機の開発が可<br>能になります。", ""],
+    "id": 77,
+    "name": "新型航空兵装資材",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["本資料の活用により、貴重な戦<br>訓を今後の戦術や装備改修など<br>にフィードバック可能です。　<br>※艦隊司令部の更新には、複数<br>　の戦闘詳報が必要です。", ""],
+    "id": 78,
+    "name": "戦闘詳報",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["", ""],
+    "id": 79,
+    "name": "海峡章",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["令和元年２０１９年クリスマス<br>に贈られる大きなプレゼント箱<br>です。開封時に、プレゼントの<br>中身は提督が好きなものを選ぶ<br>ことができます。", ""],
+    "id": 80,
+    "name": "Xmas Select Gift Box",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 0,
+    "description": ["", ""],
+    "id": 81,
+    "name": "捷号章",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["", ""],
+    "id": 82,
+    "name": "捷号章",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["", ""],
+    "id": 83,
+    "name": "捷号章",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["", ""],
+    "id": 84,
+    "name": "捷号章",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["美味しい日本の「お米」です。<br>ふっくらと炊き上げて、召し上<br>がれ！※食べ物イベ終了時に消<br>滅します。", ""],
+    "id": 85,
+    "name": "お米",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 0,
+    "description": ["梅の実を独特の製法で漬けた<br>「梅干」です。ご飯やおにぎり<br>にもぴったりです※食べ物イベ<br>終了時に消滅します。", ""],
+    "id": 86,
+    "name": "梅干",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 0,
+    "description": ["身近な海産物「海苔」。ご飯や<br>おにぎり、お茶漬けのお供にも<br>欠かせません。※食べ物イベ終<br>了時に消滅します。", ""],
+    "id": 87,
+    "name": "海苔",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 0,
+    "description": ["「お茶」は心を落ち着かせてく<br>れます。香り高い日本茶、お茶<br>漬けも美味しい！※食べ物イベ<br>終了時に消滅します。", ""],
+    "id": 88,
+    "name": "お茶",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 0,
+    "description": ["あの暖簾をくぐって鳳翔さんの<br>小料理屋へどうぞ。心尽くしア<br>イテムと交換できます。※一定<br>期間後、消滅します。", ""],
+    "id": 89,
+    "name": "鳳翔さんの夕食券",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 0,
+    "description": ["「鬼は外！福は内！」<br>季節の大切な行事、節分。今年<br>も豆まきをして、健康に元気に<br>頑張ってまいりましょう！", ""],
+    "id": 90,
+    "name": "節分の豆",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 0,
+    "description": ["工作艦などの艦で緊急泊地修理<br>を実施時に必要な資材です。　<br>※緊急泊地修理を実施する際、<br>　一つ消費します。", ""],
+    "id": 91,
+    "name": "緊急修理資材",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["新型噴進装備を開発及び戦力化<br>に必要な技術図面と資材です。<br>※任務や装備改修等で使用する<br>ことで、新型噴進装備の開発が<br>可能になります。", ""],
+    "id": 92,
+    "name": "新型噴進装備開発資材",
+    "price": 0,
+    "usetype": 0
+}, {
+    "category": 0,
+    "description": ["漁場の安全を確保し、鰯漁を支<br>援することで入手した美味しい<br>旬の「鰯」です。※秋刀魚＆鰯<br>祭り終了時に消滅します。", ""],
+    "id": 93,
+    "name": "鰯",
+    "price": 0,
+    "usetype": 4
+}, {
+    "category": 0,
+    "description": ["新型兵装の開発及び実戦配備　<br>に必要な技術図面と資材です。<br>※装備改修等で使用すること　<br>で、各種新型兵装の開発及び　<br>実戦配備が可能となります。", ""],
+    "id": 94,
+    "name": "新型兵装資材",
+    "price": 0,
+    "usetype": 0
+}]

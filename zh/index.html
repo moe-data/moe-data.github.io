@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta name="keywords" content="萌萌数据库,装备开发统计,舰队collection" />
+  <meta name="description" content="本站支持多装备概率叠加显示，特定旗舰出货概率显示" />
+  <link rel="icon" href="../images/logo/icon.png">
+  <title>萌萌数据库 - 舰娘开发建造统计</title>
+    <!-- <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> -->
+  <style>
+    body{margin: 10px;}
+    .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
+  </style>
+</head>
+<body>
+    <div id="nav"></div>
+    <div id="bgpic"><div id="bgcolor">
+   
+    <h1 align="center">萌萌数据库</h1>
+<div style="margin-right: 10px; margin-bottom: 30px;flex:7;">
+    <div style="text-align: center; background: rgba(214, 203, 203, 0.4); padding: 10px;">
+        <div class="container" style="text-align: center; background:rgba(255,255,255,0.2);">
+            <p class="main-header" style="background: #88ceff;padding-bottom:10px;">統計報告</p>
+            <div style="display: flex;flex-wrap: wrap;">
+                <p style="flex: 1;"><a href="%E5%BB%BA%E9%80%A0.html" title="建造"><img alt="IcoConstruct.png" src="https://kcwiki.kcyuri.com/commons/thumb/0/0c/IcoConstruct.png/160px-IcoConstruct.png" height="128" data-url="https://kcwiki.kcyuri.com/commons/thumb/0/0c/IcoConstruct.png/160px-IcoConstruct.png" data-srcset="https://kcwiki.kcyuri.com/commons/0/0c/IcoConstruct.png 1.5x" srcset="https://kcwiki.kcyuri.com/commons/0/0c/IcoConstruct.png 1.5x" style="opacity: 1; transition: opacity 1s ease 0s;"></a> <br><b><a href="%E5%BB%BA%E9%80%A0.html" title="建造">建造统计</a></b></p>
+                <!-- <p class="nomobile" style="width:10px;margin:0;background:#88ceff;"></p> -->
+                <p style="flex: 1;"><a href="%E5%BC%80%E5%8F%91.html" title="开发"><img alt="IcoDevelop.png" src="../images/menu/dev.png" height="128" data-url="https://kcwiki.kcyuri.com/commons/thumb/4/45/IcoDevelop.png/160px-IcoDevelop.png" data-srcset="https://kcwiki.kcyuri.com/commons/4/45/IcoDevelop.png 1.5x" srcset="https://kcwiki.kcyuri.com/commons/4/45/IcoDevelop.png 1.5x" style="opacity: 1; transition: opacity 1s ease 0s;"></a> <br><b><a href="%E5%BC%80%E5%8F%91.html" title="开发">开发统计</a></b></p>
+            </div>
+            
+            <!-- <p class="main-header nomobile" style="padding: 10px 0;margin: 0;background: #88ceff;">舰娘</p>
+            <div class="nomobile" style="padding-left: 110px;display: flex;flex-wrap: wrap; position: relative;line-height: 46px;overflow: hidden;margin:6px 0;"><i style="display: block;position: absolute;left: 10px;line-height: 60px;"><a href="%E8%88%B0%E5%A8%98.html" title="舰娘"><img alt="舰娘" src="https://kcwiki.kcyuri.com/commons/a/a6/IcoShips.png" width="100" height="50" data-url="https://kcwiki.kcyuri.com/commons/a/a6/IcoShips.png" style="opacity: 1; transition: opacity 1s ease 0s;"></a></i><p style="flex: 1;min-width: 100px;">[ <b><a href="%E8%88%B0%E5%A8%98%E5%88%97%E8%A1%A8" title="舰娘列表">数据列表</a></b> ]</p><p style="flex: 1;min-width: 100px;">[ <b><a href="%E8%88%B0%E5%A8%98%E7%B1%BB%E5%88%AB" title="舰娘类别">类别</a></b> ]</p><p style="flex: 1;min-width: 100px;">[ <b><a href="%E8%88%B0%E5%A8%98%E5%9B%BE%E9%89%B4" title="舰娘图鉴">图鉴</a></b> ]</p><p style="flex: 1;min-width: 100px;">[ <b><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://db.kcwiki.org/drop/">掉落统计</a></b> ]</p><p style="flex: 1;min-width: 100px;">[ <b><a href="%E7%BB%93%E5%A9%9A.html" class="mw-redirect" title="结婚">结婚</a></b> ]</p>
+            </div> -->
+            
+            <div style="display: flex;flex-wrap: wrap;">
+                <div style="flex: 1;display: inline-block;min-width: 300px;">
+                    <p class="main-header" style="padding: 10px 0;margin: 0;background: #88ceff;">我方</p>
+
+                    <!-- <div class="nomobile" style="padding-left: 110px;display: flex;flex-wrap: wrap;position: relative;line-height: 46px;overflow: hidden;margin:6px 0;"><i style="display: block;position: absolute;left: 10px;line-height: 60px;"><a href="%E8%A3%85%E5%A4%87%E5%88%97%E8%A1%A8" title="装备"><img alt="装备" src="https://kcwiki.kcyuri.com/commons/7/7a/IcoItems.png" width="100" height="50" data-url="https://kcwiki.kcyuri.com/commons/7/7a/IcoItems.png" style="opacity: 1; transition: opacity 1s ease 0s;"></a></i><p style="flex: 1;min-width: 80px;">[ <b><a href="%E8%A3%85%E5%A4%87%E5%88%97%E8%A1%A8" title="装备列表">列表</a></b> ]</p><p style="flex: 1;min-width: 80px;">[ <b><a href="%E8%A3%85%E5%A4%87%E5%9B%BE%E9%89%B4" title="装备图鉴">图鉴</a></b> ]</p><p style="flex: 1;min-width: 80px;">[ <b><a href="%E8%A3%85%E5%A4%87%E7%B1%BB%E5%88%AB" title="装备类别">类别</a></b> ]</p><p style="flex: 1;min-width: 80px;">[ <b><a href="%E8%A3%85%E5%A4%87%E6%94%B9%E4%BF%AE%E5%88%97%E8%A1%A8" title="装备改修列表">改修</a></b> ]</p>
+                    </div> -->
+                    <div style="display: flex;flex-wrap: wrap;">
+                        <p style="flex: 1"><a href="fleet.html" title="舰娘"><img alt="IcoEnemy.png" src="https://kcwiki.kcyuri.com/commons/a/a6/IcoShips.png" height="60" data-url="https://kcwiki.kcyuri.com/commons/a/a6/IcoShips.png" style="opacity: 1; transition: opacity 1s ease 0s;"></a> <br><b><a href="fleet.html" title="舰娘">舰娘</a></b></p>
+                        <p style="flex: 1"><a href="slotitem.html" title="装备"><img alt="装备" src="https://kcwiki.kcyuri.com/commons/7/7a/IcoItems.png"  height="60" data-url="https://kcwiki.kcyuri.com/commons/7/7a/IcoItems.png" style="opacity: 1; transition: opacity 1s ease 0s;"></a> <br><b><a href="slotitem.html" title="装备">装备</a></b></p>
+                    </div>
+                </div>
+                    <p class="nomobile" style="width:10px;margin:0;background:#88ceff;"></p>
+                <div style="flex: 1;display: inline-block;min-width: 300px;">
+                    <p class="main-header" style="padding: 10px 0;margin: 0;background: #88ceff;">敌方</p>
+                    <div style="display: flex;flex-wrap: wrap;">
+                        <p style="flex: 1"><a href="enemy.html" title="深海栖舰"><img alt="IcoEnemy.png" src="https://kcwiki.kcyuri.com/commons/0/06/IcoEnemy.png" width="160" height="50" data-url="https://kcwiki.kcyuri.com/commons/0/06/IcoEnemy.png" style="opacity: 1; transition: opacity 1s ease 0s;"></a> <br><b><a href="enemy.html" title="深海栖舰">深海栖舰</a></b></p>
+                        <p style="flex: 1"><a href="%E6%B7%B1%E6%B5%B7%E6%A0%96%E8%88%B0%E8%A3%85%E5%A4%87.html" title="深海栖舰装备"><img alt="装备" src="https://kcwiki.kcyuri.com/commons/1/1c/IcoAbyssItems.png" width="160" height="50" data-url="https://kcwiki.kcyuri.com/commons/1/1c/IcoAbyssItems.png" style="opacity: 1; transition: opacity 1s ease 0s;"></a> <br><b><a href="%E6%B7%B1%E6%B5%B7%E6%A0%96%E8%88%B0%E8%A3%85%E5%A4%87.html" title="深海栖舰装备">装备</a></b></p>
+                    </div>
+                
+                </div>
+            </div>
+            <div style="display: flex;flex-wrap: wrap;">
+                <div style="flex: 1;display: inline-block;min-width: 300px;">
+                    <p class="main-header" style="padding: 10px 0;margin: 0;background: #88ceff;">强化</p>
+                    <div style="display: flex;flex-wrap: wrap;">
+                    <p style="flex: 1;"><a href="%E8%BF%91%E4%BB%A3%E5%8C%96%E6%94%B9%E4%BF%AE.html" title="舰船最大值"><img alt="IcoModernization.png" src="https://kcwiki.kcyuri.com/commons/b/bc/IcoModernization.png" width="130" height="50" data-url="https://kcwiki.kcyuri.com/commons/b/bc/IcoModernization.png" style="opacity: 1; transition: opacity 1s ease 0s;"></a> <br><b><a href="%E8%BF%91%E4%BB%A3%E5%8C%96%E6%94%B9%E4%BF%AE.html" title="舰船最大值">舰船最大值</a></b></p>
+                    <p style="flex: 1;"><a href="改造.html" title="改造"><img alt="IcoRemodel.png" src="https://kcwiki.kcyuri.com/commons/2/22/IcoRemodel.png" width="130" height="50" data-url="https://kcwiki.kcyuri.com/commons/2/22/IcoRemodel.png" style="opacity: 1; transition: opacity 1s ease 0s;"></a> <br><b><a href="改造.html" title="改造">改造</a></b></p>
+                    </div>
+                </div>
+                    <p class="nomobile" style="width:10px;margin:0;background:#88ceff;"></p>
+                    <div style="flex: 1;display: inline-block;min-width: 300px;">
+                        <p class="main-header" style="padding: 10px 0;margin: 0;background: #88ceff;">道具</p>
+                        <div style="display: flex;flex-wrap: wrap;">
+                        <p style="flex: 1"><a href="道具.html" title="道具"><img alt="IcoShop.png" src="https://kcwiki.kcyuri.com/commons/2/26/IcoShop.png" width="130" height="50" data-url="https://kcwiki.kcyuri.com/commons/2/26/IcoShop.png" style="opacity: 1; transition: opacity 1s ease 0s;"></a> <br><b><a href="道具.html" title="道具">道具</a></b></p>
+                            <!-- <p style="flex: 1"><a href="payitem.html" title="道具"><img alt="IcoShop.png" src="../images/menu/Wikihome_expansion.png" style="opacity: 1; transition: opacity 1s ease 0s;"></a> <br><b><a href="payitem.html" title="付费物品">付费物品</a></b></p> -->
+                        <p style="flex: 1"><a href="furniture.html" title="家具"><img alt="IcoFurniture.png" src="https://kcwiki.kcyuri.com/commons/2/21/IcoFurniture.png" width="130" height="50" data-url="https://kcwiki.kcyuri.com/commons/2/21/IcoFurniture.png" style="opacity: 1; transition: opacity 1s ease 0s;"></a> <br><b><a href="furniture.html" title="家具">家具</a></b></p>
+                        </div>
+                    </div>
+            </div>
+            <p class="main-header nomobile" style="padding: 10px 0;margin: 0;background: #88ceff;">菜单</p>
+           
+            <div style="display: flex;flex-wrap: wrap;margin:10px 0">
+                <p style="flex: 1;"><a href="出击.html" title="出击">
+                <img alt="出击" src="https://kcwiki.kcyuri.com/commons/thumb/3/39/IcoSortie.png/160px-IcoSortie.png" width="160" height="182" data-url="https://kcwiki.kcyuri.com/commons/thumb/3/39/IcoSortie.png/160px-IcoSortie.png" data-srcset="https://kcwiki.kcyuri.com/commons/3/39/IcoSortie.png 1.5x" srcset="https://kcwiki.kcyuri.com/commons/3/39/IcoSortie.png 1.5x" style="opacity: 1; transition: opacity 1s ease 0s;"></a>
+                <br><b><a href="出击.html" title="出击">出击海域</a></b></p>
+                <!-- <p style="flex: 1;"><a href="%E6%BC%94%E4%B9%A0.html" title="演习">
+                <img alt="演习" src="https://kcwiki.kcyuri.com/commons/thumb/2/21/IcoPractice.png/160px-IcoPractice.png" width="160" height="182" data-url="https://kcwiki.kcyuri.com/commons/thumb/2/21/IcoPractice.png/160px-IcoPractice.png" data-srcset="https://kcwiki.kcyuri.com/commons/2/21/IcoPractice.png 1.5x" srcset="https://kcwiki.kcyuri.com/commons/2/21/IcoPractice.png 1.5x" style="opacity: 1; transition: opacity 1s ease 0s;"></a></p> -->
+                <p style="flex: 1;"><a href="%E8%BF%9C%E5%BE%81%E5%88%97%E8%A1%A8" title="远征"><img alt="远征" src="https://kcwiki.kcyuri.com/commons/thumb/c/c2/IcoExpedition.png/160px-IcoExpedition.png" width="160" height="182" data-url="https://kcwiki.kcyuri.com/commons/thumb/c/c2/IcoExpedition.png/160px-IcoExpedition.png" data-srcset="https://kcwiki.kcyuri.com/commons/c/c2/IcoExpedition.png 1.5x" srcset="https://kcwiki.kcyuri.com/commons/c/c2/IcoExpedition.png 1.5x" style="opacity: 1; transition: opacity 1s ease 0s;"></a><br><b><a href="%E8%BF%9C%E5%BE%81%E5%88%97%E8%A1%A8" title="远征列表">远征</a></b></p>
+                <p style="flex: 1;"><a href="任务.html" title="任务"><img alt="任务" src="https://kcwiki.kcyuri.com/commons/6/6a/IcoQuest.png" width="160" height="182" data-url="https://kcwiki.kcyuri.com/commons/6/6a/IcoQuest.png" style="opacity: 1; transition: opacity 1s ease 0s;"></a><br><b><a href="任务.html" title="任务">任务</a></b></p>
+                <p style="flex: 1;"><a href="payitem.html" title="任务"><img alt="任务" src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=4089004902,4051886593&fm=15&gp=0.jpg" height="182" data-url="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=4089004902,4051886593&fm=15&gp=0.jpg" style="opacity: 1; transition: opacity 1s ease 0s;"></a><br><b><a href="payitem.html" title="任务">商店</a></b></p>
+            </div>
+                    <!--<div style="display: flex;">
+                    <p style="flex: 1;"><b><a href="construction" title="演习">Construction</a></b></p>
+                    <p style="flex: 1;"></p>
+                    <p style="flex: 1;"><b><a href="任务.html" title="任务">任务</a></b></p>
+                    <p style="flex: 1;"><b><a href="任务.html" title="任务">商店</a></b></p>
+                </div> -->
+        </div>
+    </div> <h1 align="center"><img src="../images/logo/whitelong.png" width="200"  style="opacity: 1; transition: opacity 1s ease 0s;"></h1>   
+</div> 
+<div id="foot"></div></div></div>
+<!-- <script type="text/javascript" src= "../dist/js/simplize.js"> </script>   -->
+<!-- <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $("#nav").load("nav.html");
+</script> -->
+</body>
+</html>
