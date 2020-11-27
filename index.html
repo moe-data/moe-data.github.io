@@ -9,7 +9,7 @@
   <meta name="description" content="本站支持多装备概率叠加显示，特定旗舰出货概率显示" />
   <meta name="author" content="提督Conba">
   <link rel="icon" href="images/logo/icon.png">
-  <title>萌萌数据库</title>
+  <title>萌萌数据库- 装备开发统计</title>
   <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.css" rel="stylesheet">
   <link rel="stylesheet" href="dist/css/dashboard.css">
@@ -21,7 +21,7 @@
     }
     h3 {display : inline!important}
     .off{    background-color: #eee;color: #000;}
-    div.hint {line-height:99%}
+    /* div.hint {line-height:99%} */
     .btnlg{width: 300px;height: 70px;font-size: large;font-weight: bold}
     button.clicked.btn-default{color:darkblue;}
   </style>
@@ -53,28 +53,31 @@
 
           <button type="button" class="btn btnlg btn-success go">检索</button>
         </div>
-        <div class="panel panel-success col-sm-6">
+        <div class="panel panel-success  text-nowrap col-sm-6">
           <div class="panel-heading">
             <h3 class="panel-title">时间范围</h3>
           </div>
-          <div class="panel-body">
-            <input class="time" type="checkbox" value="1" id="1">
-            <label for ="1">2019年5月或更早&ensp;15036320条 24MB</label><br> 
-            <input class="time" type="checkbox" value="2" id="2">
-            <label for ="2">2019年6月~2020年3月&ensp;68718791条 11484KB</label><br> 
-            <input class="time" type="checkbox" value="3" id="3">
-            <label for ="3">2020年4月~8月&ensp;35462754条 11484KB</label><br> 
-            <input class="time" type="checkbox" value="8"  id="8" checked="checked">
-            <label for ="8">2020年9月~10月&ensp;4232条 4.4MB</label><br> 
+          <div class="panel-body"  align="center">
+            <table cellpadding="50"><tr><th>时间</th><th>累计开发次数</th><th>&ensp;&ensp;&ensp;文件大小</th></tr>
+            <tr><td><input class="time" type="checkbox" value="1" id="1">
+            <label for ="1">2019年5月或更早</td><td align="right">16,256,435</td><td align="right"> 24 MB</label></td> </tr> 
+            <tr><td><input class="time" type="checkbox" value="2" id="2">
+            <label for ="2">2019年6月~2020年3月</td><td align="right">68718791</td><td align="right"> 11484KB</label></td> </tr> 
+            <tr><td><input class="time" type="checkbox" value="3" id="3">
+            <label for ="3">2020年4月~8月</td><td align="right">35462754</td><td align="right"> 11484KB</label></td> </tr> 
+            <tr><td><input class="time" type="checkbox" value="8"  id="8" checked="checked">
+            <label for ="8">2020年9月~10月</td><td align="right">1,214,965</td><td align="right"> 4.4 MB</label></td> </tr> 
+          </table>
           </div>
         </div>
-        <div class="panel panel-warning col-sm-6  hint">
+        <div class="panel panel-warning col-sm-6 text-nowrap hint">
         <div class="panel-heading">
               <h3 class="panel-title ">提示</h3>
-            </div> <br>
-            <h3><span class="label label-primary">主查询</span></h3><span>&ensp;&ensp;目标出货率必须>0，计入总确率（点击一次）</span> <br> <br>
-            <h3><span class="label label-info">副查询</span></h3><span>&ensp;&ensp;目标出货率允许=0，计入总确率（点击两次）</span> <br> <br>
-           <h3><span class="label label-default off">不查询</span></h3><span>&ensp;&ensp;目标不计入总确率（点击三次取消）</span> <br> <br> <br>
+            </div><br><table  align="center">
+            <tr><td><h3><span class="label label-primary">主查询</span></h3><span>&ensp;&ensp;目标出货率必须>0，计入总确率（点击一次）</span> <br> <br>
+            <tr><td><h3><span class="label label-info">副查询</span></h3><span>&ensp;&ensp;目标出货率允许=0，计入总确率（点击两次）</span> <br> <br>
+           <tr><td><h3><span class="label label-default off">不查询</span></h3><span>&ensp;&ensp;目标不计入总确率（不点击或点击三次）</span>  <br> <br>
+          </table>
         </div>
         
 
