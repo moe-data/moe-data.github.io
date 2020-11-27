@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta name="keywords" content="萌萌数据库,装备开发统计,舰队collection" />
+<meta name="description" content="本站支持多装备概率叠加显示，特定旗舰出货概率显示" />
+<meta content="yes" name="apple-mobile-web-app-capable" /><!--iphone设备中的safari私有meta标签，它表示：允许全屏模式浏览-->
+<meta content="black" name="apple-mobile-web-app-status-bar-style" /><!--iphone的私有标签，它指定的iphone中safari顶端的状态条的样式-->
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="images/logo/icon.png">
+    <title ></title>
+    <!-- Bootstrap core CSS -->
+    <!-- <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="https://cdn.bootcss.com/bootstrap-table/1.18.0/bootstrap-table.min.css" rel="stylesheet"> -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="dist/css/dashboard.css">
+    <link rel="stylesheet" href="dist/css/selection.css">
+    <style id='csscontainer'></style>
+    <style>
+        /* .fix-sticky {padding-top: 40px;        position: fixed !important;        overflow: hidden;        z-index: 100;} */
+        /* .sticky-header-container {margin-top: 40px;} */
+        .fix-sticky table thead {background: #fff;}
+        table tbody tr td {white-space: nowrap !important;}
+        /* .table thead th .th-inner { white-space: normal !important; } */
+        div.panel-success{position: fixed; left: 25%; top:30%}
+    </style>
+</head>
+
+<body>
+    <div id="nav"></div>
+    <div id="bgpic">
+        <div id="bgcolor">
+            <div class="remind  col-sm-12"> 
+        <div class="panel panel-success col-sm-6">
+            <div class="panel-heading">
+              <h3 class="panel-title"  align="center">检索中</h3>
+            </div>
+          <div id="panel-body">
+            <!-- <button>确定</button> -->
+          </div>
+          </div></div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="main">
+                        <h1 class="page-header" align="center">查询结果</h1>
+                        <div class="table-responsive">
+                            <div class="bootstrap-table">
+
+                                <div id="toolbar" class="form-inline">
+                                    <input id="page" class="form-control" style="width: 60px" type="number" value="1" min="1">
+                                    <button id="jump" class="btn btn-secondary">跳页</button>
+                                    <input id="denominator" class="form-control" style="width: 60px" type="number" value="100" min="0">
+                                    <button class="btn btn-secondary" onclick="setdeno()">设置最小总次数</button>
+                                    <select class="form-control" id="locale">
+                                        <option value="zh-CN" selected="selected">Language</option>
+                                        <option value="en-US">English</option>
+                                        <option value="zh-CN">简体中文</option>
+                                        <option value="zh-TW">繁體中文</option>
+                                        <option value="ja-JP">日本語</option>
+                                        <option value="ko-KR">한국어</option>
+                                        <option value="ru-RU">Русский</option>
+                                        <option value="fr-FR">Français</option>
+                                        <option value="de-DE">Deutsch</option>
+                                        <option value="af-ZA">af-ZA</option>
+                                        <option value="ar-SA">ar-SA</option>
+                                        <option value="ca-ES">ca-ES</option>
+                                        <option value="cs-CZ">cs-CZ</option>
+                                        <option value="el-GR">el-GR</option>
+                                        <option value="es-AR">es-AR</option>
+                                        <option value="es-CL">es-CL</option>
+                                        <option value="es-CR">es-CR</option>
+                                        <option value="es-ES">es-ES</option>
+                                        <option value="es-MX">es-MX</option>
+                                        <option value="es-NI">es-NI</option>
+                                        <option value="es-SP">es-SP</option>
+                                        <option value="et-EE">et-EE</option>
+                                        <option value="eu-EU">eu-EU</option>
+                                        <option value="fa-IR">fa-IR</option>
+                                        <option value="fi-FI">fi-FI</option>
+                                        <option value="fr-BE">fr-BE</option>
+                                        <option value="he-IL">he-IL</option>
+                                        <option value="hr-HR">hr-HR</option>
+                                        <option value="hu-HU">hu-HU</option>
+                                        <option value="id-ID">id-ID</option>
+                                        <option value="it-IT">it-IT</option>
+                                        <option value="ka-GE">ka-GE</option>
+                                        <option value="ms-MY">ms-MY</option>
+                                        <option value="nb-NO">nb-NO</option>
+                                        <option value="nl-NL">nl-NL</option>
+                                        <option value="pl-PL">pl-PL</option>
+                                        <option value="pt-BR">pt-BR</option>
+                                        <option value="pt-PT">pt-PT</option>
+                                        <option value="ro-RO">ro-RO</option>
+                                        <option value="sk-SK">sk-SK</option>
+                                        <option value="sv-SE">sv-SE</option>
+                                        <option value="th-TH">th-TH</option>
+                                        <option value="tr-TR">tr-TR</option>
+                                        <option value="uk-UA">uk-UA</option>
+                                        <option value="ur-PK">ur-PK</option>
+                                        <option value="uz-Latn-UZ">uz-Latn</option>
+                                        <option value="vi-VN">vi-VN</option>
+                                    </select>
+                                    <div class="loading" style="text-align: center;">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped" role="progressbar"
+                                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                                                style="width:0%">
+                                                <span class="sr-only"></span></div>
+                                        </div>
+                                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="50" cy="50" r="45"></circle>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <span>
+                                    <table id="mytab" data-toolbar="#toolbar" data-search="true" data-filterable='true'
+                                        data-filter-control="true" data-width="1000px" data-sortable="true"
+                                        data-show-columns="true" data-show-export="false" data-show-fullscreen="true"
+                                        data-show-pagination-switch="true" data-unique-id="uid"
+                                        class="table table-hover">
+                                    </table>
+                                </span>
+
+                            </div>
+
+                            <!-- <h1 class="page-header" align="center">数据可视化</h1>
+    <div class="table-responsive"> -->
+  <div class="show text-nowrap" id="show"></div>  
+<!-- <div class="cstype"></div><div class="cfinal"></div>   <button id='selectAll'>全选</button> <button id='ReverseSelect'>反选</button>
+排序：<select title="可在表格中对内容进行排序" id="sort">
+    <option value='sum' selected>属性值</option>
+    <option value="stype">类型</option>
+    <option value="final_form">最终形态</option>
+    <option value="houg">火力</option>
+    <option value="raig">雷装</option>
+    <option value="HP">HP</option>
+    <option value="souk">装甲</option>
+    <option value="evasion">回避</option>
+    <option value="tyku">对空</option>
+    <option value="anti_submarine">对潜</option>
+    <option value="sight">索敌</option>
+    <option value="luck">运</option>
+    <option value="id">ID</option>
+    <option value='unsort' >表格顺序</option>
+</select>
+<input type="checkbox" checked='checked' id="desc">降序排列
+<select name="" id="stack">
+    <option value=0 selected>默认</option>
+    <option value=1>堆叠</option>
+    <option value=2>分散</option>
+</select>
+<select name="" id="shape">
+    <option value="bar" selected>柱状图</option>
+    <option value="line">折线图</option>
+</select>
+<button id="button2" title="可在表格中对内容进行排序" classs="btn btn-secondary">选中数据生成图表</button><span id="inform"></span></div> -->
+                        </div>
+                        <div id="container"></div>
+                    </div>
+
+                    <div id="foot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--container-fluid-->
+    <i id="js"></i>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script>window.jQuery || document.write('<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"><\/script>')</script> -->
+    <script>
+        $("#nav").load("nav.html");
+    </script>
+    <!-- <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+    <script type="text/javascript" src="dist/js/jgs.js"> </script>
+    <script type="text/javascript" src="dist/js/simplize.js"> </script>
+    <script type="text/javascript" src="dist/js/share.js"> </script>
+    <script type="text/javascript" src="dist/js/table.js"> </script>
+    <!-- <script type="text/javascript" src="dist/js/bootstrap-table.min.js"> </script> -->
+    <!-- <script type="text/javascript" src= "dist/js/line.js"> </script>   -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- <script src="https://cdn.bootcss.com/bootstrap-table/1.18.0/bootstrap-table.min.js"></script> -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.js"></script>
+    <!-- <script src="dist/js/tableExport.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script> -->
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/extensions/export/bootstrap-table-export.min.js"></script> -->
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table-locale-all.js"></script> -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/extensions/filter-control/bootstrap-table-filter-control.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/extensions/sticky-header/bootstrap-table-sticky-header.min.js"></script>
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script> -->
+    <script type="text/javascript" src="dist/js/calc.js"> </script>
+</body>
+
+</html>
