@@ -112,15 +112,15 @@ function loadchart(){
                 var myseries = '';
                 for(i=0;i<params.length;i++){
                     if(params[i].value){
-                        console.log(params[i],i)
-                        myseries+='<tr><td>'+addicon(params[i].seriesName)+'：</td><td  align="right">'+params[i].data.toFixed(3)+'%</td></tr>'// + params[i].color
-                    }
-                }
+                        // console.log(params[i],i)
+                        myseries+='<tr><td>'+addicon(params[i].seriesName,params[i].color)+'：</td><td  align="right">'+params[i].data.toFixed(3)+'%</td></tr>'
+                }}
                 return res+myseries;
             }
         },
         legend: {
-            data: gseries[1]//['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+            data: gseries[1],
+            formatter:addemoji
         },
         grid: {
             left: '0%',
@@ -166,7 +166,7 @@ function loadprot(prot){
     var stat=[]
     for(key in prot){
         var e=key
-        if(e == 'ratio'||( e!='i'&& e!='denominator'&& e!='times'&& e!='i'&& e[0]!='n')){
+        if(e == 'ratio'||( e!='i'&& e!='denominator'&& e!='times'&& e!='i'&& e[0]!='n'&& e[0]!='l')){
         keys.push(key)
         stat[key]=1}
     }
@@ -224,14 +224,14 @@ function getseries(r,c,shape,stack,sortkey){
                         // if(temp==formatStype(params.value)){return ''}else{
                         // temp=formatStype(params.value)
                         //  return temp}}:function(params){
-                        if(params.seriesType=='line'){
-                            if(Math.random()<0.8||(params.value==0)){return ""}else{
-                                return params.value
-                            }
-                        }else{
+                        // if(params.seriesType=='line'){
+                        //     if(Math.random()<0.8||(params.value==0)){return ""}else{
+                        //         return params.value
+                            // }
+                        // }else{
                             if(params.value<limit){return ""}else{
                                 return params.value.toFixed(1).replace(/[.]?0+$/g,"") +'%'
-                        }}
+                        }
                     },
                     // ),
                     position: eie?'right':'insideLeft',
@@ -379,3 +379,72 @@ function isAllCheck(name) {
     }  
     return true;  
 }  
+function addemoji(value){
+    var str=bra(value,0);
+    var emoji=''
+    for (aitem=0;aitem<slotitem.length;aitem++){
+        if(slotitem[aitem]['api_name']==str){
+            type=slotitem[aitem]['api_type'][3];
+            switch(type) {
+                // case 1:
+                //     emoji= "🧨"
+                //   break;
+                // case 2:
+                //     emoji= "🧨"
+                //   break;
+                // case 3:
+                //     emoji= "🧨"
+                //   break;
+                // case 16:
+                //     emoji= "🍾"
+                //   break;
+                case 6:
+                    emoji= "🛫"
+                  break;
+                case 7:
+                    emoji= "🛫"
+                  break;
+                case 8:
+                    emoji= "🛫"
+                  break;
+                case 10:
+                    emoji= "✈️"
+                  break;
+                case 11:
+                    emoji= "〽️"
+                  break;
+                case 19:
+                    emoji= "⚙️"
+                  break;
+                case 23:
+                    emoji= "🟪"
+                  break;
+                case 13:
+                    emoji= "🖍️"
+                  break;
+                // case 18:
+                //     emoji= "🧿"
+                //   break;
+                // case 17:
+                //     emoji= ""
+                //   break;
+                case 9:
+                    emoji= "🛩️"
+                  break;
+                case 25:
+                    emoji= "🛢️"
+                  break;
+                // case 30:
+                //     emoji= "📤"
+                //   break;
+                // case 37:
+                //     emoji= ""
+                //   break;
+                // case 44:
+                //     emoji= "🛩️"
+                //   break;
+                }
+    return emoji+str;
+        }
+    }return str;
+    }

@@ -30,6 +30,8 @@
     background-position: center center;
     background-repeat: no-repeat;
   }  
+.flex{
+      display: flex;}
   /* .three{
     display: inline-block;
     width: 20px;
@@ -38,8 +40,6 @@
     color: #0000;
     font-size: 24px;
   } */
-  span.item{
-        display: flex;}
     div.panel-info {line-height:19%}
     .bigfont{font-size: 18px;}
   </style>
@@ -276,7 +276,9 @@
         }else{if(value==-2){
           release=init}else{
           developable.forEach(function(d){
-            for(e of slotitem){
+            // for(e of slotitem){
+          for(j=0;j<slotitem.length;j++){
+            e=slotitem[j];
             if(e['api_id']==d){
           var jstr
           var tn=e['api_type'][value]
