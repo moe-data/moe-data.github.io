@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
-    <meta name="keywords" content="萌萌数据库,装备开发统计,舰队collection,舰船建造统计" />
+    <meta name="keywords" content="萌萌数据库,装备开发统计,舰队collection,舰船建造统计,舰娘数据库" />
 <meta name="description" content="本站支持多装备概率叠加显示，特定旗舰出货概率显示" />
 <meta content="yes" name="apple-mobile-web-app-capable" /><!--iphone设备中的safari私有meta标签，它表示：允许全屏模式浏览-->
 <meta content="black" name="apple-mobile-web-app-status-bar-style" /><!--iphone的私有标签，它指定的iphone中safari顶端的状态条的样式-->
@@ -27,6 +27,10 @@
         .fix-sticky table thead {background: #fff;}
         table tbody tr td{ white-space: nowrap !important; }
         /* .table thead th .th-inner { white-space: normal !important; } */
+        .bootstrap-table table tbody tr td:nth-of-type(2){
+        display: flex;
+        align-items: center;
+        }
     </style>
   </head>
 
@@ -159,6 +163,7 @@
 <!-- <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 <script type="text/javascript" src= "../dist/js/jgs.js"> </script>  
 <script type="text/javascript" src= "../dist/js/simplize.js"> </script>  
+<script type="text/javascript" src="../dist/js/item.js"> </script>
 <script type="text/javascript" src= "../dist/js/share.js"> </script>  
 <script type="text/javascript" src= "../dist/js/table.js"> </script>  
 <script type="text/javascript" src= "../dist/js/line.js"> </script>  
@@ -176,8 +181,37 @@
 <script type="text/javascript">
 </script>
 <script>    //language
-var mst_ship
 var kj=false
+var cm12={
+    "id": 1,
+    "name": "12cm単装砲",
+    "itype":1,
+    "developable":"",
+    "houg": 1,
+    "raig": 0,
+    "baku": 0,
+    "tyku": 1,
+    "tais": 0,
+    "saku": 0,
+    "houm": 0,
+    "broken": [0, 1, 1, 0],
+    "houk": 0,
+    "souk": 0,
+    "leng": 1,
+    "luck": 0,
+    "raik": 0,
+    "raim": 0,
+    "rare": 0,
+    "sakb": 0,
+    "soku": 0,
+    "sortno": 1,
+    "taik": 0,
+    "type": [1, 1, 1, 1, 0],
+    "usebull": 0,
+    "atap": 0,
+    "bakk": 0,
+    "version": 2
+}
 var detect=(navigator.browserLanguage || navigator.language)
 if(!havelang){
     if (detect.length>0){console.log(detect);}else{detect="zh-CN"}
@@ -189,7 +223,8 @@ if(!havelang){
     if(selectlang[i].value==detect)
     selectlang[i].selected = true;
     }}
-$(document).ready(function() {
+    $.getJSON("../parsed/api_mst_slotitem_equiptype.json", function (result) {
+    itype=result}).done(function (){
     langchange()
     $('#locale').change(function(){
         langchange();setlang();});
@@ -204,7 +239,7 @@ $(document).ready(function() {
     // $("#foot").load("foot.html");
     $('.search-input').bind("input onchange", function() {
         setTimeout(function(){
-            for(i=0;i<6;i++){
+            for(i=0;i<document.getElementsByClassName('search-input').length;i++){
         //console.log(document.getElementsByClassName('search-input')[i])
             document.getElementsByClassName('search-input')[i].value=Japanized(document.getElementsByClassName('search-input')[i].value);}
             },     50);
@@ -217,18 +252,26 @@ function langchange(){
 }
 function thead(eg) {
 var col=[]
-for(e in eg){
+for(el in eg){
+    e=api(el)
     var filterControl="input"
     var formatter=undefined
     var cellStyle=undefined
+    var strict=true
     // var escapes=false
     var visible=(title[e]==undefined?false:true)
     var cwidth=""
+    if(e=='name'){
+        formatter=itemicon
+        strict=false;}
+    if(e=='rare'){
+        filterControl="select";}
     if(e=='soku'){
         formatter=formatSoku;}
     if(e=='leng'){
         formatter=formatRange;}
     if(e=='itype'){
+        strict=false
         formatter=formatItype;}
     if(e=='developable'){filterControl="select";
         formatter=formatDev;}
@@ -240,11 +283,12 @@ for(e in eg){
     var temp=(Width()<1080)?(temp):temp
     col.push({
             title: temp,
-            field: e,
+            field: el,
             sortable: true,
             filterControl:filterControl,
             formatter:formatter,
-            cellStyle:cellStyle ,
+            cellStyle:cellStyle,
+            filterStrictSearch:strict,
             // escape:escapes,
             visible: visible,
             width:cwidth,
@@ -253,15 +297,31 @@ for(e in eg){
 }   
 return col;
 }
+function itemicon(value,row,index){
+    for (i=0;i<slotitem.length;i++){
+        if(slotitem[i]['name']==value){
+            str=slotitem[i]['type'][3]
+        return '<i style="background-image:url(http://fleet.diablohu.com/!/assets/images/itemicon/'+str+'.png);" class="item"></i>'+value
+        }
+    }
+}
 function initTable(lval){
-    kj=(lval.slice(0,2)=='zh'||lval.slice(0,2)=='ja')
+    if(lval){ kj=(lval.slice(0,2)=='zh'||lval.slice(0,2)=='ja')}else{console.log(lval)};
     $.getJSON("../parsed/api_mst_slotitem.json",function(result){
-    addcol(result,"itype","type",2)
-    mst_ship=result;
-    loadprot(result[0]);
+    slotitem=[];
+    result.forEach(el => {
+        if((el['api_id']<501)){
+        var i={}
+        for(key in el){
+            i[api(key)]=el[key]
+        }
+        slotitem.push(i)}
+    });
+    addcol(slotitem,"itype","type",2)
+    loadprot(cm12);
     $('#mytab').bootstrapTable('destroy').bootstrapTable({
         method: 'get',
-        data:mst_ship,
+        data:slotitem,
         sortReset: true,
         striped: false, // 是否显示行间隔色
         pageNumber: 1, // 初始化加载第一页
@@ -273,7 +333,7 @@ function initTable(lval){
         stickyHeaderOffsetLeft: em,
         stickyHeaderOffsetRight: em,
         locale: lval,
-        columns: thead(result[0])
+        columns: thead(cm12)
         // showRefresh : true,// 刷新按钮
         // queryParams: function(params) { // 上传服务器的参数
         //     var temp = {
@@ -293,24 +353,11 @@ function initTable(lval){
   <script>
 // $('#mytab').find('th').attr("data-sortable","true");
 // $('#mytab').find('.th-inner').attr("class","sortable both");
-function formatAfter(value){
-var str='';
-if(value==0){
-    str=kj?'改造不可':'unable';
-    return str
-}else{
-for(i=0,l=mst_ship.length;i<l;i++){
-    if(value==mst_ship[i]['id']){
-        str=mst_ship[i]['name']
-    }
-}}
-return str;
-}
 function formatLv(value){
     return kj?(value=='no'?'否':'是'):value
 }
 function formatDev(value, row, index){
-    return developable.indexOf(row["id"])>-1?'可✔':'不可✖'
+    return developable.indexOf(row["id"])>-1?'可':'不可'
 }
 function formatSoku(value, row, index) {
     return value == 10 ? (kj?"高速":'high speed') : (kj?"低速":'low speed');

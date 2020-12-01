@@ -95,3 +95,7 @@ function remove(arr,b) {
   }
   return arr;
 };
+function jsonstr(a){
+  return JSON.stringify(a).replace("[", "").replace("]", "").replace(/"/g, '');
+}
+function sortNumber(a,b){return a - b}

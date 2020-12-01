@@ -10,18 +10,15 @@ function setlang(){
 function locallang(){
     var myselect=document.getElementById("locale");
     var index=myselect.selectedIndex ;
-    // console.log(myselect)
-    // console.log(index)
-    if(!myselect.options[index]){console.log(index); return 'zh-CN'}
-    return myselect.options[index].value;
+    if(!myselect.options[index]){console.log(index); return 'zh-CN'}else{
+        return myselect.value
+    }
 }
 function formatname(value, row) {
-        
     formatTableUnit(value,row);
     // return"<a href='ship.html?id="+row["id"]+"'>"+value+"</a>"
     return value
 }
-
 // 格式化时间
 // function formatTime(value, row, index) {
 //     var date = new Date();
@@ -50,9 +47,7 @@ function formatTime(value, row, index) {
     var time = hours-8 + ":" + minutes;
     return time;
 }
-    
 // 格式化访问理由 "viewReason": 1是面试,2是开会，3是拜访客户，4是项目实施
-
 // 删除访客
 function updDevice(id) {
     $('#mytab').bootstrapTable('hideRow', {index:id});

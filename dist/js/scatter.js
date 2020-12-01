@@ -34,7 +34,7 @@ function loadchart(){
     var rawlen=raw.length
     var rnd
     if(raw.length==0){console.log(raw);info.innerHTML=("没有符合筛选的数据");isFirst=false;return}
-    if(!raw[0]['id']&&!raw[0]['api_id']){
+    if(!raw[0]['i']&&!raw[0]['api_id']){
         console.log(raw[0])
         if(isFirst){info.innerHTML=("点击按钮试试看吧");isFirst=false}else{
         info.innerHTML=(raw[0]); }        return    }
@@ -49,7 +49,7 @@ function loadchart(){
     rawlen=raw.length
     isFirst=false
     if(column.length<1||rawlen<1){
-        info.innerHTML=("请选择属性"); console.log(raw,rnd)
+        info.innerHTML=("请选择装备"); console.log(raw,rnd)
         return    }
     sortkey=$('#sort').val();
     if(sortkey!='unsort'&&(raw[0][sortkey]||raw[0][sortkey]==false)){
@@ -64,6 +64,15 @@ function loadchart(){
     var stackval=$('#stack').val()
     if(!stackval){stackval=0}
     gseries=getseries(raw,column,shapeval,stackval,sortkey)
+    // var items=['总确率']
+    // console.log(gseries[1])
+    // for(j=1;j<gseries[1].length;j++){
+    //     console.log(gseries[1][j],j)
+    //     items.push(gseries[1][j])//formatItemId(gseries[1][j].slice(1,gseries[1][j].length)))
+    //     console.log(j)
+    // }
+    // console.log(gseries[1].length)
+    // console.log(items.length)
     lable=Math.round(gseries[1].length/4*22/w*375)+sqrtrl
     if(h>2178){h=2178;extra=50}
     document.getElementById('container').style.height = lable+extra+h+'px'
@@ -93,11 +102,22 @@ function loadchart(){
         }
     }
     option = {
-        title: {
-            text: ''
-        },
+        // title: {
+        //     text: ''
+        // },
         tooltip: {
-            trigger: 'axis'
+            trigger: 'axis',
+            formatter: function(params) {
+                var res =  (params[0].name)+'<br><table>';
+                var myseries = '';
+                for(i=0;i<params.length;i++){
+                    if(params[i].value){
+                        console.log(params[i],i)
+                        myseries+='<tr><td>'+addicon(params[i].seriesName)+'：</td><td  align="right">'+params[i].data.toFixed(3)+'%</td></tr>'// + params[i].color
+                    }
+                }
+                return res+myseries;
+            }
         },
         legend: {
             data: gseries[1]//['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
@@ -145,19 +165,10 @@ function loadprot(prot){
     var months = {}
     var stat=[]
     for(key in prot){
-        if(isNaN(prot[key])){
-            if(isNaN(prot[key][0])){stat[key]=0}else{
-                keys.push(key)
-                stat[key]=prot[key].length
-                months[key]=[]
-                for (i=0;i<stat[key];i++){
-                    months[key].push(i+1)
-                }
-            }
-        }else{
+        var e=key
+        if(e == 'ratio'||( e!='i'&& e!='denominator'&& e!='times'&& e!='i'&& e[0]!='n')){
         keys.push(key)
-        stat[key]=1
-        }
+        stat[key]=1}
     }
         var years = keys; 
         // var yearMonth = [years, months];  
@@ -166,34 +177,34 @@ function loadprot(prot){
 function getseries(r,c,shape,stack,sortkey){
     w=Width()
     // limit=w>1080?5:(w>900?20:25);
-    var limit=Math.round(4*2^(4-w/500));
+    var limit=Math.round(2*2^(4-w/500));
     var s=[]
     var col=[]
     var rawlen=r.length
     for(k=0;k<c.length;k++){
         var e=c[k]
         // for(e of c){
-        var prot
-        var suffix=""
-        if(e.indexOf('#')>0){
-            prot=e.split('#')[0]
-            if(r[0][prot].length==2){
-                if(e.split('#')[1]==1){
-                    // suffix=" min"}else{
-                        suffix=" max"}
-            }else{
-            suffix=1+Number(e.split('#')[1])};
-        }else{
-                prot=e
-            }
-        var name=getname(prot,kj)+suffix
+        var prot=c[k]
+        // var suffix=""
+        // if(e.indexOf('#')>0){
+        //     prot=e.split('#')[0]
+        //     if(r[0][prot].length==2){
+        //         if(e.split('#')[1]==1){
+        //             // suffix=" min"}else{
+        //                 suffix=" max"}
+        //     }else{
+        //     suffix=1+Number(e.split('#')[1])};
+        // }else{
+        //         prot=e
+        //     }
+        var name=getname(prot,kj)
         var data=[]
         for(i=0;i<rawlen;i++){
-            if(r[i][e]==null){  if(r[i][(e.split('#')[0])]==null){
-                unit=0}else{
-                unit=(r[i][(e.split('#')[0])][e.split('#')[1]])}}else{
-                    unit=(r[i][e])
-                }
+            // if(r[i][e]==null){  if(r[i][(e.split('#')[0])]==null){
+            //     unit=0}else{
+            //     unit=(r[i][(e.split('#')[0])][e.split('#')[1]])}}else{
+                    unit=(r[i][e])*100
+                // }
             data.push(unit)
         }   var eie=exclude.indexOf(prot)>-1
         s.push({name:name,
@@ -204,34 +215,37 @@ function getseries(r,c,shape,stack,sortkey){
                 origin:prot,
                 label: {
                     show: true,
-                    formatter:e=='itype'?function(params){
-                        if(temp==formatItype(params.value)){return ''}else{
-                        temp=formatItype(params.value)
-                         return temp}}:(e=='stype'?function(params){
-                        if(temp==formatStype(params.value)){return ''}else{
-                        temp=formatStype(params.value)
-                         return temp}}:function(params){
+                    formatter:
+                    // e=='itype'?
+                    function(params){
+                        // if(temp==formatItype(params.value)){return ''}else{
+                        // temp=formatItype(params.value)
+                        //  return temp}}:(e=='stype'?function(params){
+                        // if(temp==formatStype(params.value)){return ''}else{
+                        // temp=formatStype(params.value)
+                        //  return temp}}:function(params){
                         if(params.seriesType=='line'){
                             if(Math.random()<0.8||(params.value==0)){return ""}else{
                                 return params.value
                             }
                         }else{
                             if(params.value<limit){return ""}else{
-                                return params.value
+                                return params.value.toFixed(1).replace(/[.]?0+$/g,"") +'%'
                         }}
-                    }),
+                    },
+                    // ),
                     position: eie?'right':'insideLeft',
                 },
                 lineStyle: {
                   type: prot==sortkey?'solid': (Math.random()>0.7?"dashed":(Math.random()>0.5?'solid':'dotted')),
                   width: prot==sortkey?4: 1
-                }
+                },
             })
         col.push(name)
     }
     var shipname=[]
     var nametitle='title'
-    if(!r[0][nametitle]){nametitle='name'}
+    if(!r[0][nametitle]){nametitle='i'}
     for(i=0;i<rawlen;i++){
         shipname.push(r[i][nametitle])
     }
@@ -239,7 +253,7 @@ function getseries(r,c,shape,stack,sortkey){
     if(shape=='bar'||sortkey=='sum'){
         var len = s[0]['data'].length;
         var slen=col.length
-        s[slen]={name:kj?'属性合计':'total',
+        s[slen]={name:kj?'合计':'total',
             symbol:'none',
             type:'line',
             stack:false,
@@ -273,6 +287,7 @@ function getseries(r,c,shape,stack,sortkey){
             }
         }
     }}
+    console.log([s,col,shipname])
 return [s,col,shipname]
 }
 function genCheck(years, months,stat) {  
@@ -328,29 +343,29 @@ function genCheck(years, months,stat) {
 }  
 
 function genCheckBox(id, name, value, showText, parentIndex, stat) {
-    var chck=" checked='checked'"
-    var txt=showText
-    var isCheck=false
-    if(stat==2){
-        if(showText==1){txt="min";    }else{
-        txt="max";isCheck=true;
-    }
-    if(parentIndex=='luck'){isCheck=!isCheck}if(parentIndex=='taik'){isCheck=false}}
-        var checkbox = "<span class='la'><input type='checkbox' parentIndex=" + parentIndex + " name=".concat(name,((isCheck)?chck:"")+" value=",value," alt=",showText," id='"+parentIndex+value+"' /><label for='"+parentIndex+value+"'>",txt,"</label></span>");  
-        $("#" + id).append(checkbox);  
-    // debug(id,checkbox)
+    // var chck=" checked='checked'"
+    // var txt=showText
+    // var isCheck=false
+    // if(stat==2){
+    //     if(showText==1){txt="min";    }else{
+    //     txt="max";isCheck=true;
+    // }
+    // if(parentIndex=='luck'){isCheck=!isCheck}if(parentIndex=='taik'){isCheck=false}}
+    //     var checkbox = "<span class='la'><input type='checkbox' parentIndex=" + parentIndex + " name=".concat(name,((isCheck)?chck:"")+" value=",value," alt=",showText," id='"+parentIndex+value+"' /><label for='"+parentIndex+value+"'>",txt,"</label></span>");  
+    //     $("#" + id).append(checkbox);  
+    // // debug(id,checkbox)
 }  
 
 
 function genShowContent(id, checkboxId, index, showText, idName,stat) {  
     if(showText=='name'||showText=='title'){return}
     var chck=" checked='checked'"
-    var isCheck=false
+    var isCheck=true
     // console.log(id, checkboxId, index, showText, idName,stat)
     var colon='#'
     if(stat==1){colon=""}
     if(showText=='anti_submarine'||showText=='sight'||showText=='evasion'||showText=='HP'||showText=='houg'||showText=='raig'||showText=='tyku'){isCheck=true}
-    var showContent = "<span class='msg'><input type='checkbox' name='items'"+((isCheck)?chck:"")+" value='".concat(showText,"' index=",stat," id='",checkboxId,"'/><label class='bigfont' for='"+checkboxId+"'>",getname(showText,kj),colon," </label><span class='content' id='",idName,"' ></span></span>")
+    var showContent = "<span class='msg'><input type='checkbox' name='items'"+((isCheck)?chck:"")+" value='".concat(showText,"' index=",stat," id='",checkboxId,"'/><label class='bigfont' for='"+checkboxId+"'>",addicon(getname(showText,kj)),colon," </label><span class='content' id='",idName,"' ></span></span>")
     $("#" + id).append(showContent);  
 }  
 

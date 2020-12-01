@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 
 <head>
-    <meta name="keywords" content="萌萌数据库,装备开发统计,舰队collection,舰船建造统计" />
+    <meta name="keywords" content="萌萌数据库,装备开发统计,舰队collection,舰船建造统计,舰娘数据库" />
 <meta name="description" content="本站支持多装备概率叠加显示，特定旗舰出货概率显示" />
 <meta content="yes" name="apple-mobile-web-app-capable" /><!--iphone设备中的safari私有meta标签，它表示：允许全屏模式浏览-->
 <meta content="black" name="apple-mobile-web-app-status-bar-style" /><!--iphone的私有标签，它指定的iphone中safari顶端的状态条的样式-->
@@ -56,7 +56,7 @@
                                     <input id="page" class="form-control" style="width: 60px" type="number" value="1" min="1">
                                     <button id="jump" class="btn btn-secondary">跳页</button>
                                     <input id="denominator" class="form-control" style="width: 60px" type="number" value="100" min="0">
-                                    <button class="btn btn-secondary" onclick="setdeno()">设置最小总次数</button>
+                                    <button class="btn btn-secondary" onclick="setdeno()">设置最小公式次数</button>
                                     <select class="form-control" id="locale">
                                         <option value="zh-CN" selected="selected">Language</option>
                                         <option value="en-US">English</option>
@@ -119,10 +119,10 @@
                                     </div>
                                 </div>
                                 <span>
-                                    <table id="mytab" data-toolbar="#toolbar" data-search="true" data-filterable='true'
+                                    <table id="mytab" data-toolbar="#toolbar" data-search="false" data-filterable='true'
                                         data-filter-control="true" data-width="1000px" data-sortable="true"
                                         data-show-columns="true" data-show-export="false" data-show-fullscreen="true"
-                                        data-show-pagination-switch="true" data-unique-id="uid"
+                                        data-show-pagination-switch="true" data-unique-id="uid" 
                                         class="table table-hover">
                                     </table>
                                 </span>
@@ -132,7 +132,7 @@
                             <!-- <h1 class="page-header" align="center">数据可视化</h1>
     <div class="table-responsive"> -->
   <div class="show text-nowrap" id="show"></div>  
-<!-- <div class="cstype"></div><div class="cfinal"></div>   <button id='selectAll'>全选</button> <button id='ReverseSelect'>反选</button>
+<div class="cstype"></div><div class="cfinal"></div>   <button id='selectAll'>全选</button> <button id='ReverseSelect'>反选</button>
 排序：<select title="可在表格中对内容进行排序" id="sort">
     <option value='sum' selected>属性值</option>
     <option value="stype">类型</option>
@@ -159,7 +159,7 @@
     <option value="bar" selected>柱状图</option>
     <option value="line">折线图</option>
 </select>
-<button id="button2" title="可在表格中对内容进行排序" classs="btn btn-secondary">选中数据生成图表</button><span id="inform"></span></div> -->
+<button id="button2" title="可在表格中对内容进行排序" classs="btn btn-secondary">选中数据生成图表</button><span id="inform"></span></div>
                         </div>
                         <div id="container"></div>
                     </div>
@@ -174,15 +174,16 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- <script>window.jQuery || document.write('<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"><\/script>')</script> -->
     <script>
-        $("#nav").load("nav.html");
+        $("#nav").load("zh/nav.html");
     </script>
     <!-- <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+    <script type="text/javascript" src="dist/js/item.js"> </script>
     <script type="text/javascript" src="dist/js/jgs.js"> </script>
     <script type="text/javascript" src="dist/js/simplize.js"> </script>
     <script type="text/javascript" src="dist/js/share.js"> </script>
     <script type="text/javascript" src="dist/js/table.js"> </script>
     <!-- <script type="text/javascript" src="dist/js/bootstrap-table.min.js"> </script> -->
-    <!-- <script type="text/javascript" src= "dist/js/line.js"> </script>   -->
+    <script type="text/javascript" src= "dist/js/scatter.js"> </script>  
     <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!-- <script src="https://cdn.bootcss.com/bootstrap-table/1.18.0/bootstrap-table.min.js"></script> -->
     <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.js"></script>

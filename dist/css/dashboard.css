@@ -77,15 +77,22 @@ body {
   /* align-items: center; */
   /* text-shadow:1px 1px 2px #ddd,0px 0px 3px #ddd,0px 0px 3px #ddd,0px 0px 3px #ddd,0px 0px 5px #ddd,0px 0px 4px #ddd,0px 0px 4px #ddd,0px 0px 4px #ddd; */
   }
-
+i.item{
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-size: 25px 25px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
 .table-responsive, #container{
   background-color:#fffa;
 }
-tbody > tr:nth-child(2n+1) > td, tbody > tr:nth-child(2n+1) > th {
- background-color: #fff7;
+table.table-hover > tbody > tr:nth-child(2n+1) > td, tbody > tr:nth-child(2n+1) > th {
+ background-color: rgba(240, 240, 240, 0.8);
 }
-tbody > tr:nth-child(2n) > td, tbody > tr:nth-child(2n) > th {
- background-color: #fffd;
+table.table-hover > tbody > tr:nth-child(2n) > td, tbody > tr:nth-child(2n) > th {
+ background-color: #fff7;
 }
 svg {
   animation: 2s linear infinite svg-animation;

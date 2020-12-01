@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="keywords" content="萌萌数据库,装备开发统计,舰队collection,舰船建造统计" />
+  <meta name="keywords" content="萌萌数据库,装备开发统计,舰队collection,舰船建造统计,舰娘数据库" />
   <meta name="description" content="本站支持多装备概率叠加显示，特定旗舰出货概率显示" />
   <meta name="author" content="提督Conba">
   <link rel="icon" href="images/logo/icon.png">
   <title>萌萌数据库 - 装备开发统计</title>
   <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="dist/css/dashboard.css">
+  <!-- <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.css" rel="stylesheet"> -->
+  <!-- <link rel="stylesheet" href="dist/css/dashboard.css"> -->
   <!-- <link rel="stylesheet" href="dist/css/selection.css"> -->
   <style>
     #bgcolor {
@@ -21,14 +20,34 @@
     }
     h3 {display : inline!important}
     .off{    background-color: #eee;color: #000;}
-    /* div.hint {line-height:99%} */
-    .btnlg{width: 300px;height: 70px;font-size: large;font-weight: bold}
+    .btnlg{width: 300px;height: 50px;font-size: large;font-weight: bold}
     button.clicked.btn-default{color:darkblue;}
+    i.item{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-size: 25px 25px;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }  
+  /* .three{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-size: 25px 25px;
+    color: #0000;
+    font-size: 24px;
+  } */
+  span.item{
+        display: flex;}
+    div.panel-info {line-height:19%}
+    .bigfont{font-size: 18px;}
   </style>
 </head>
 
 <body>
   <div id="nav"></div>
+  <h2 align="center">萌萌数据库 - 舰队收藏</h2>
   <h1 align="center">萌萌数据库 - 装备开发统计</h1>
   <div id="bgpic">
     <div id="bgcolor">
@@ -37,10 +56,16 @@
         <div class="panel panel-info col-sm-12">
           <div class="panel-heading">
             <h3 class="panel-title">開発対象装備&ensp;&ensp;
-              <select name="" id="sort">
-              <option value="itype" selected>类型排序</option>
-              <option value="rare">稀有排序</option>
-              <option value=0>开发解禁时间排序</option>
+              <select name="" id="sort" onchange="arrange(value)" >
+                <option value=-2 selected>默认排序</option>
+                <option value="api_rare">稀有排序</option>
+                <option value=0>大类排序</option>
+                <option value=1>类型排序</option>
+                <option value=2>类型排序</option>
+                <option value=3>图标排序</option>
+                <option value=-1>开发解禁时间</option>
+                <option value="api_tyku">对空排序</option>
+              <!-- <option value=4>api_type</option> -->
           </select></h3>
           </div>
           <div class="panel-body">
@@ -53,24 +78,23 @@
 
           <button type="button" class="btn btnlg btn-success go">检索</button>
         </div>
-        <div class="panel panel-success  text-nowrap col-sm-6">
+        <div class="panel panel-default col-sm-4 text-nowrap ">
           <div class="panel-heading">
-            <h3 class="panel-title">时间范围</h3>
+            <h3 class="panel-title">设置</h3>
           </div>
-          <div class="panel-body"  align="center">
-            <table cellpadding="50"><tr><th>时间</th><th>累计开发次数</th><th>&ensp;&ensp;&ensp;文件大小</th></tr>
-            <tr><td><input class="time" type="checkbox" value="1" id="1">
-            <label for ="1">2019年5月或更早</td><td align="right">16,256,435</td><td align="right"> 24 MB</label></td> </tr> 
-            <tr><td><input class="time" type="checkbox" value="2" id="2">
-            <label for ="2">2019年6月~2020年3月</td><td align="right">68718791</td><td align="right"> 11484KB</label></td> </tr> 
-            <tr><td><input class="time" type="checkbox" value="3" id="3">
-            <label for ="3">2020年4月~8月</td><td align="right">35462754</td><td align="right"> 11484KB</label></td> </tr> 
-            <tr><td><input class="time" type="checkbox" value="8"  id="8" checked="checked">
-            <label for ="8">2020年9月~10月</td><td align="right">1,214,965</td><td align="right"> 4.4 MB</label></td> </tr> 
-          </table>
+          <div class="panel-body">
+            <label for="">&ensp;&ensp;结果排序&ensp;&ensp;</label> 
+            <select name="" id="sorto">
+            <option value=-1>默认排序</option>
+            <option value=0 selected>出货次数排序</option>
+            <option value=1>总确率排序</option>
+            </select> <br>
+            <label>&ensp;&ensp;公式次数(分母)&ensp;>&ensp;</label><input type="text" id="a" value="0" style="width: 50px;"> <br>
+            <input type="checkbox" id="lv"><label for="lv">计算出货最小Lv</label> <br>
+            <input type="checkbox" id="fail"><label for="fail">失败率计入总确率</label> <br> <br>
           </div>
         </div>
-        <div class="panel panel-warning col-sm-6 text-nowrap hint">
+        <div class="panel panel-warning col-sm-4 text-nowrap hint">
         <div class="panel-heading">
               <h3 class="panel-title ">提示</h3>
             </div><br><table  align="center">
@@ -79,8 +103,24 @@
            <tr><td><h3><span class="label label-default off">不查询</span></h3><span>&ensp;&ensp;目标不计入总确率（不点击或点击三次）</span>  <br> <br>
           </table>
         </div>
-        
 
+        <div class="panel panel-success  text-nowrap col-sm-4">
+          <div class="panel-heading">
+            <h3 class="panel-title">时间范围</h3>
+          </div>
+          <div class="panel-body"  align="center">
+            <table cellpadding="50"><tr><th>时间</th><th>累计开发次数</th><th>&ensp;&ensp;&ensp;文件大小</th></tr>
+            <tr><td><input class="time" type="checkbox" value="1" id="1">
+            <label for ="1">2019年5月或更早</label></td><td align="right">16,256,435</td><td align="right"> 24 MB</td> </tr> 
+            <tr><td><input class="time" type="checkbox" value="2" id="2">
+            <label for ="2">2019年6月~2020年3月</label></td><td align="right">68718791</td><td align="right"> 11484KB</td> </tr> 
+            <tr><td><input class="time" type="checkbox" value="3" id="3">
+            <label for ="3">2020年4月~8月</label></td><td align="right">35462754</td><td align="right"> 11484KB</td> </tr> 
+            <tr><td><input class="time" type="checkbox" value="8"  id="8" checked="checked">
+            <label for ="8">2020年9月~10月</label></td><td align="right">1,214,965</td><td align="right"> 4.4 MB</td> </tr> 
+          </table>
+          </div>
+        </div>
       </div>
       <div class=" col-sm-12">
         <h2 align="center"> <a href="zh/5200.html">Ark Royal [4000,2000,5000,5200,20]</a> </h2>
@@ -94,51 +134,32 @@
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- <script>window.jQuery || document.write('<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"><\/script>')</script> -->
   <script>
-    $("#nav").load("nav.html");
+    $("#nav").load("zh/nav.html");
   </script>
   <!-- <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
   <script type="text/javascript" src="dist/js/jgs.js"> </script>
   <script type="text/javascript" src="dist/js/simplize.js"> </script>
+  <script type="text/javascript" src="dist/js/item.js"> </script>
   <script type="text/javascript" src="dist/js/share.js"> </script>
-  <script type="text/javascript" src="dist/js/table.js"> </script>
-  <script type="text/javascript" src="dist/js/line.js"> </script>
+  <!-- <script type="text/javascript" src="dist/js/line.js"> </script> -->
   <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script type="text/javascript">
     var slotitem
     var primary = 'btn-primary'
     var warning = 'btn-info'
     var btndef='btn-default'
+    $.getJSON("parsed/api_mst_slotitem_equiptype.json", function (res) {
+    itype=res}).done(function () {
     $.getJSON("parsed/api_mst_slotitem.json", function (result) {
-      addcol(result,"itype","type",2)
+      addcol(result,"itype","api_type",2)
       slotitem = result;
     }).done(function () {
-      var years = ["2020", "2018", "2014"];
-      var months = {
-        "2014": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "44", "45", "46", "47", "49", "52", "54", "55", "57", "59", "60", "61", "65", "66", "72", "73", "75", "163", "168", "181"],
-        "2018": ["51", "90", "120", "207", "226"],
-        "2020": ["194", "242", "249", "250"],
-      };
-      var yearMonth = [years, months];
-      genCheck(yearMonth);
-      $('.btn').click(function () {
-          $(this).addClass('clicked')
-        if ($(this).hasClass(primary)) {
-          $(this).removeClass(btndef)
-          $(this).addClass(warning)
-          $(this).removeClass(primary)
-        } else {if ($(this).hasClass(warning)) {
-          $(this).addClass(btndef)
-          $(this).removeClass(warning)
-        } else {
-          $(this).removeClass(btndef)
-          $(this).addClass(primary)
-        }
-        }
-      })
+      genCheck(release);
     }).fail(function (d) {
         alert("文件  " + "parsed/api_mst_slotitem.json" + " 读取失败"+d);
+    })}).fail(function (d) {
+        alert("文件  " + "parsed/itype.json" + " 读取失败"+d);
     })
-
     $('.go').click(function () {
       var output=[]
       var extra = []
@@ -157,84 +178,54 @@
       console.log(extra,output)
       window.location.href=("result.html?t="+duration.reverse()+'&q='+'d'+'&o='+output+'&e='+extra )
     })
-  </script>
-  <script type="text/javascript">
-
-    function genCheck(yearMonth) {
+    
+    function genCheck(Obj) {
+      years=[]
+      for(key in Obj){
+        years.push(key)
+      }
       var content = "content";
       var checkText = "checkbox";
       var link = "link";
       var size;
-
       $("#show").html("");
-
-      var years = yearMonth[0];
       size = years.length;
       for (var i = 0; i < years.length; i++) {
-        genShowContent("show", checkText + i, i, years[i] + "年", content + i);
+        genShowContent("show", checkText + i, i, years[i] + "", content + i);
       }
-      var monthObj = yearMonth[1];
-
       for (var i = 0; i < years.length; i++) {
-        var array = monthObj["" + years[i] + ""];
+        var array = Obj["" + years[i] + ""];
         for (var j = 0; j < array.length; j++) {
-          genCheckBox(content + i, link + i, array[j], formatItemId(array[j]) + " &ensp; ", i, false);
+          genCheckBox(content + i, link + i, array[j], (array[j]), i, false);
         }
-
-        // var flag = isAllCheck(link + i);
         var box = document.getElementById(checkText + i);
-        // if (flag) {
-        //   box.checked = true;
-        // } else {
-        //   box.checked = false;
-        // }
-        // $("input[name=" + link + i + "]").each(function () {
-        //   $(this).unbind();
-        //   $(this).change(function () {
-        //     var flag = isAllCheck($(this).attr("name"));
-        //     var box = document.getElementById(checkText + $(this).attr("parentIndex"));
-        //     if (flag) {
-        //       box.checked = true;
-        //     } else {
-        //       box.checked = false;
-        //     }
-        //   });
-        // });
       }
-      // for (var i = 0; i < size; i++) {
-      //   $("#" + checkText + i).unbind();
-      //   $("#" + checkText + i).change(function () {
-      //     var temp = link + $(this).attr("index");
-      //     var p = document.getElementById(checkText + $(this).attr("index"));
-      //     var box = document.getElementsByName(temp);
-      //     for (var j = 0; j < box.length; j++) {
-      //       if (p.checked) {
-      //         box[j].checked = true;
-      //       } else {
-      //         box[j].checked = false;
-      //       }
-      //     }
-      //   });
-      // }
+      
+      $('.btn').click(function () {
+          $(this).addClass('clicked')
+        if ($(this).hasClass(primary)) {
+          $(this).removeClass(btndef)
+          $(this).addClass(warning)
+          $(this).removeClass(primary)
+        } else {if ($(this).hasClass(warning)) {
+          $(this).addClass(btndef)
+          $(this).removeClass(warning)
+        } else {
+          $(this).removeClass(btndef)
+          $(this).addClass(primary)
+        }
+        }
+      })
     }
-
-
     function genCheckBox(id, name, value, showText, parentIndex, isCheck) {
-      var checkbox = "<span class='la'><button class='btn btn-default' parentIndex=" + parentIndex + " name=".concat(name).concat((isCheck ? " checked='checked'" : '') + " value=").concat(value).concat(" alt=").concat(showText).concat(" >").concat(showText).concat("</button></span>");
+      var checkbox = "<span class='la'><button class='btn btn-default' parentIndex=" + parentIndex + " name="+name+(isCheck ? " checked='checked'" : '') + " value="+value+" alt="+showText+" >"+formatItemId(showText) + " &ensp; </button></span>";
       $("#" + id).append(checkbox);
 
     }
-
-
     function genShowContent(id, checkboxId, index, showText, idName) {
-      var showContent = "<dd class='msg'><dt><span class='bigfont'>".concat(showText).concat("： </span>" +
-        // "<input type='checkbox' index="+index+" id='"+checkboxId+
-        // "'/><span>全选</span>"+
-        "</dt> <dd class='content' id='").concat(idName).concat("' ></dd></dd><br>");
+      var showContent = "<dd class='msg'><dt><span class='bigfont'>".concat(showText).concat("： </span>" +"</dt> <dd class='content' id='").concat(idName).concat("' ></dd></dd><br>");
       $("#" + id).append(showContent);
     }
-
-
     function isAllCheck(name) {
       var box = document.getElementsByName(name);
       for (var j = 0; j < box.length; j++) {
@@ -244,6 +235,73 @@
       }
       return true;
     }  
+    function arrange(value){
+      release={}
+      if(isNaN(value)){
+        developable.forEach(function(d){
+          for(i=0,l=slotitem.length;i<l;i++){
+            e=slotitem[i]
+          // slotitem.forEach(function(e){
+            if(e['api_id']==d){
+          var jstr= e[value]}else{continue}
+          if(release[jstr]){
+          release[jstr].push(e['api_id'])}
+          else{release[jstr]=[];
+          release[jstr].push(e['api_id'])}
+          break;
+        }
+      });
+      }else{
+        if(value==-1){
+          release={
+          // "2020/11/13":[78,147],
+          "2020/10/16":[194,242,249,250],
+          "2020/03/27":[120],
+          "2020/02/07":[51,90,207,226],
+          "2017/03/17":[168],
+          "2016/06/30":[181],
+          "2016/03/11":[49],
+          "2016/02/29":[163],
+          "2015/06/12":[65,66],
+          "2014/07/04":[73],
+          "2014/06/06":[72],
+          "2014/05/23":[61],
+          "2014/03/14":[59],
+          "2014/02/26":[60,75],
+          "2013/08/26":[47,57],
+          "2013/05/15":[54,55],
+          "2013/05/08":[44,45,46,52],
+          };
+          release["2013/04/23"] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]
+        }else{if(value==-2){
+          release=init}else{
+          developable.forEach(function(d){
+            for(e of slotitem){
+            if(e['api_id']==d){
+          var jstr
+          var tn=e['api_type'][value]
+          switch(value) {
+          case '2':
+            jstr= formatItype(tn)
+            break;
+          case '3':
+            jstr= '<i style="background-image:url(http://fleet.diablohu.com/!/assets/images/itemicon/'+tn+'.png);" class="item"></i>'
+            break;
+          default:
+            
+          var jstr= tn
+          } }else{continue}
+          if(release[jstr]){
+          release[jstr].push(e['api_id'])}
+          else{release[jstr]=[];
+          release[jstr].push(e['api_id'])}
+          break}
+      });}}
+      
+      }
+      genCheck(release);
+          // console.log(JSON.stringify( release))
+    }
   </script>
 </body>
 

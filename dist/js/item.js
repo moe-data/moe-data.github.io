@@ -35,3 +35,12 @@ function formatItemId(value) {
         }
     }return str
     }
+function addicon(name){
+    var str=bra(name,0)
+    for (aitem=0;aitem<slotitem.length;aitem++){
+        if(slotitem[aitem]['api_name']==str){
+            type=slotitem[aitem]['api_type'][3]
+    return '<span class="item"><i style="background-image:url(http://fleet.diablohu.com/!/assets/images/itemicon/'+type+'.png);" class="item"></i>'+str+'</sapn>';
+        }
+    }return str
+    }

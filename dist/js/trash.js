@@ -484,3 +484,79 @@ function group2By( array, i,s ) {
 // // console.log(sorted);
 // let sorted = group2By(list, name,"Average");
 // console.log(sorted);
+
+getRootPath = function(){
+    //获取当前网址，如： http://localhost:8080/ems/Pages/Basic/Person.jsp
+    var curWwwPath = window.document.location.href;
+    //获取主机地址之后的目录，如： /ems/Pages/Basic/Person.jsp
+    var pathName = window.document.location.pathname;
+    var pos = curWwwPath.indexOf(pathName);
+    //获取主机地址，如： http://localhost:8080
+    var localhostPath = curWwwPath.substring(0, pos);
+    //获取带"/"的项目名，如：/ems
+    var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+    return localhostPath;
+};
+    console.log(getRootPath())
+
+    var emoji=""
+    switch(type) {
+        // case 1:
+        //     emoji= "🧨"
+        //   break;
+        // case 2:
+        //     emoji= "🧨"
+        //   break;
+        // case 3:
+        //     emoji= "🧨"
+        //   break;
+        // case 16:
+        //     emoji= "🍾"
+        //   break;
+        case 6:
+            emoji= "🛫🟩"
+          break;
+        case 7:
+            emoji= "🛫🟥"
+          break;
+        case 8:
+            emoji= "🛫🟦"
+          break;
+        case 10:
+            emoji= "✈️"
+          break;
+        case 11:
+            emoji= "〽️"
+          break;
+        case 19:
+            emoji= "⚙️"
+          break;
+        case 23:
+            emoji= "🟪"
+          break;
+        case 13:
+            emoji= "🖍️"
+          break;
+        // case 18:
+        //     emoji= "🧿"
+        //   break;
+        // case 17:
+        //     emoji= ""
+        //   break;
+        case 9:
+            emoji= "🛩️"
+          break;
+        case 25:
+            emoji= "🛢️"
+          break;
+        // case 30:
+        //     emoji= "📤"
+        //   break;
+        // case 37:
+        //     emoji= ""
+        //   break;
+        // case 44:
+        //     emoji= "🛩️"
+        //   break;
+        }
+        

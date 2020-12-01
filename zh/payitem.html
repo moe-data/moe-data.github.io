@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
-    <meta name="keywords" content="萌萌数据库,装备开发统计,舰队collection,舰船建造统计" />
+    <meta name="keywords" content="萌萌数据库,装备开发统计,舰队collection,舰船建造统计,舰娘数据库" />
 <meta name="description" content="本站支持多装备概率叠加显示，特定旗舰出货概率显示" />
 <meta content="yes" name="apple-mobile-web-app-capable" /><!--iphone设备中的safari私有meta标签，它表示：允许全屏模式浏览-->
 <meta content="black" name="apple-mobile-web-app-status-bar-style" /><!--iphone的私有标签，它指定的iphone中safari顶端的状态条的样式-->
@@ -170,7 +170,7 @@ $(document).ready(function() {
     // $("#foot").load("foot.html");
     $('.search-input').bind("input onchange", function() {
         setTimeout(function(){
-            for(i=0;i<6;i++){
+            for(i=0;i<document.getElementsByClassName('search-input').length;i++){
         //console.log(document.getElementsByClassName('search-input')[i])
             document.getElementsByClassName('search-input')[i].value=Japanized(document.getElementsByClassName('search-input')[i].value);}
             },     50);
@@ -188,9 +188,11 @@ for(el in eg){
     var filterControl="input"
     var formatter=undefined
     var cellStyle=undefined
-    // if(e=='name'){
-    //     formatter=formatname;}
+    var strict=true
+    if(e=='name'){
+   strict=false;}
     if(e=='description'||e=='shop_description'){
+        strict=false
         cellStyle=formatTableUnit
         formatter=paramsMatter;
         // escapes=true;
@@ -207,7 +209,8 @@ for(el in eg){
             sortable: true,
             filterControl:filterControl,
             formatter:formatter,
-            cellStyle:cellStyle ,
+            cellStyle:cellStyle,
+            filterStrictSearch:strict ,
             // escape:escapes,
             visible: true,
         }
@@ -216,7 +219,7 @@ for(el in eg){
 return col;
 }
 function initTable(lval){
-    kj=(lval.slice(0,2)=='zh'||lval.slice(0,2)=='ja')
+    if(lval){ kj=(lval.slice(0,2)=='zh'||lval.slice(0,2)=='ja')}else{console.log(lval)};
     $.getJSON("../parsed/api_mst_payitem.json",function(result){
     // addcol(result,"HP","taik",0)
     mst_ship=result;
