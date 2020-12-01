@@ -55,16 +55,16 @@
 
         <div class="panel panel-info col-sm-12">
           <div class="panel-heading">
-            <h3 class="panel-title">開発対象装備&ensp;&ensp;
+            <h3 class="panel-title">開発対象装備&ensp;&ensp;分类：
               <select name="" id="sort" onchange="arrange(value)" >
-                <option value=-2 selected>默认排序</option>
-                <option value="api_rare">稀有排序</option>
-                <option value=0>大类排序</option>
-                <option value=1>类型排序</option>
-                <option value=2>类型排序</option>
-                <option value=3>图标排序</option>
+                <option value=-2 selected>默认</option>
                 <option value=-1>开发解禁时间</option>
-                <option value="api_tyku">对空排序</option>
+                <option value=3>图标</option>
+                <option value="api_rare">稀有</option>
+                <option value="api_tyku">对空</option>
+                <option value=2>小类</option>
+                <option value=1>中类</option>
+                <option value=0>大类</option>
               <!-- <option value=4>api_type</option> -->
           </select></h3>
           </div>
@@ -78,23 +78,24 @@
 
           <button type="button" class="btn btnlg btn-success go">检索</button>
         </div>
-        <div class="panel panel-default col-sm-4 text-nowrap ">
+        <div class="panel panel-default col-sm-6 text-nowrap ">
           <div class="panel-heading">
             <h3 class="panel-title">设置</h3>
           </div>
           <div class="panel-body">
-            <label for="">&ensp;&ensp;结果排序&ensp;&ensp;</label> 
+            <label for="">&ensp;&ensp;结果排序&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</label> 
             <select name="" id="sorto">
-            <option value=-1>默认排序</option>
-            <option value=0 selected>出货次数排序</option>
-            <option value=1>总确率排序</option>
+            <option value=0>默认排序</option>
+            <option value=times selected>出货次数排序</option>
+            <option value=ratio>总确率排序</option>
             </select> <br>
-            <label>&ensp;&ensp;公式次数(分母)&ensp;>&ensp;</label><input type="text" id="a" value="0" style="width: 50px;"> <br>
-            <input type="checkbox" id="lv"><label for="lv">计算出货最小Lv</label> <br>
-            <input type="checkbox" id="fail"><label for="fail">失败率计入总确率</label> <br> <br>
+            <label>&ensp;&ensp;公式次数(分母)&ensp;>&ensp;</label><input type="number" id="a" value="0" style="width: 108px;"> <br>
+            <input type="checkbox" id="lv"><label for="lv">计算出货最小Lv</label> <br> <br>
+            <!-- <input type="checkbox" id="fail"><label for="fail">失败率计入总确率</label> <br> -->
+            <span class="la"><button class="btn btn-default" parentindex="11" name="link11" value="-1" alt="120">🐧开发失败</button></span>
           </div>
         </div>
-        <div class="panel panel-warning col-sm-4 text-nowrap hint">
+        <div class="panel panel-warning col-sm-6 text-nowrap hint">
         <div class="panel-heading">
               <h3 class="panel-title ">提示</h3>
             </div><br><table  align="center">
@@ -104,20 +105,20 @@
           </table>
         </div>
 
-        <div class="panel panel-success  text-nowrap col-sm-4">
+        <div class="panel panel-success  text-nowrap col-sm-12">
           <div class="panel-heading">
             <h3 class="panel-title">时间范围</h3>
           </div>
           <div class="panel-body"  align="center">
-            <table cellpadding="50"><tr><th>时间</th><th>累计开发次数</th><th>&ensp;&ensp;&ensp;文件大小</th></tr>
+            <table cellpadding="50"><tr><th>时间</th><th>累计开发次数</th><th>&ensp;&ensp;&ensp;公式计数</th><th>&ensp;&ensp;&ensp;文件大小</th></tr>
             <tr><td><input class="time" type="checkbox" value="1" id="1">
-            <label for ="1">2019年5月或更早</label></td><td align="right">16,256,435</td><td align="right"> 24 MB</td> </tr> 
+            <label for ="1">2019年5月或更早</label></td><td align="right">16,256,435</td><td align="right"> 24 MB</td> <td align="right"> 24 MB</td> </tr> 
             <tr><td><input class="time" type="checkbox" value="2" id="2">
-            <label for ="2">2019年6月~2020年3月</label></td><td align="right">68718791</td><td align="right"> 11484KB</td> </tr> 
+            <label for ="2">2019年6月~2020年3月</label></td><td align="right">68718791</td><td align="right"> 11484KB</td> <td align="right"> 24 MB</td> </tr> 
             <tr><td><input class="time" type="checkbox" value="3" id="3">
-            <label for ="3">2020年4月~8月</label></td><td align="right">35462754</td><td align="right"> 11484KB</td> </tr> 
+            <label for ="3">2020年4月~8月</label></td><td align="right">35462754</td><td align="right"> 11484KB</td> <td align="right"> 24 MB</td> </tr> 
             <tr><td><input class="time" type="checkbox" value="8"  id="8" checked="checked">
-            <label for ="8">2020年9月~10月</label></td><td align="right">1,214,965</td><td align="right"> 4.4 MB</td> </tr> 
+            <label for ="8">2020年9月~10月</label></td><td align="right">1,214,965</td><td align="right"> 4.4 MB</td> <td align="right"> 4.4 MB</td> </tr> 
           </table>
           </div>
         </div>
@@ -176,7 +177,7 @@
         }
       });
       console.log(extra,output)
-      window.location.href=("result.html?t="+duration.reverse()+'&q='+'d'+'&o='+output+'&e='+extra )
+      window.location.href=("result.html?t="+duration.reverse()+'&q='+'d'+'&o='+output+'&e='+extra+'&s='+$('#sorto').val()+'&a='+$("#a").val()+'&l='+$("#lv")[0].checked )
     })
     
     function genCheck(Obj) {
