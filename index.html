@@ -12,7 +12,7 @@
   <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.css" rel="stylesheet"> -->
   <!-- <link rel="stylesheet" href="dist/css/dashboard.css"> -->
-  <!-- <link rel="stylesheet" href="dist/css/selection.css"> -->
+  <link rel="stylesheet" href="dist/css/all.css">
   <style>
     #bgcolor {
       margin-right: 15px;
@@ -43,6 +43,15 @@
     div.panel-info {line-height:19%}
     .bigfont{font-size: 18px;}
   </style>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SQLQ5EBLTM');
+</script>
 </head>
 
 <body>
@@ -75,10 +84,19 @@
           </div>
         </div>
         <div align="center" class="panel-body  col-sm-12">
-
           <button type="button" class="btn btnlg btn-success go">检索</button>
         </div>
-        <div class="panel panel-default col-sm-6 text-nowrap ">
+        <div class="panel panel-warning col-sm-12 text-nowrap hint">
+        <div class="panel-heading">
+              <h3 class="panel-title ">提示</h3>
+            </div> <div class="col-sm-12"><table  align="center">
+            <tr><td><h3><span class="label label-primary">主查询</span></h3><span>&ensp;&ensp;目标出货率必须>0，计入总确率（点击一次）</span> <br> <br>
+            <tr><td><h3><span class="label label-info">副查询</span></h3><span>&ensp;&ensp;目标出货率允许=0，计入总确率（点击两次）</span> <br> <br>
+           <tr><td><h3><span class="label label-default off">不查询</span></h3><span>&ensp;&ensp;目标不计入总确率（不点击或点击三次）</span>  <br> <br>
+          </table></div> 
+          <!-- <div class="col-sm-5 "></div> -->
+        </div>
+        <div class="panel panel-default col-sm-5 text-nowrap ">
           <div class="panel-heading">
             <h3 class="panel-title">设置</h3>
           </div>
@@ -95,22 +113,13 @@
             <span class="la"><button class="btn btn-default" parentindex="11" name="link11" value="-1" alt="120">🐧开发失败</button></span>
           </div>
         </div>
-        <div class="panel panel-warning col-sm-6 text-nowrap hint">
-        <div class="panel-heading">
-              <h3 class="panel-title ">提示</h3>
-            </div><br><table  align="center">
-            <tr><td><h3><span class="label label-primary">主查询</span></h3><span>&ensp;&ensp;目标出货率必须>0，计入总确率（点击一次）</span> <br> <br>
-            <tr><td><h3><span class="label label-info">副查询</span></h3><span>&ensp;&ensp;目标出货率允许=0，计入总确率（点击两次）</span> <br> <br>
-           <tr><td><h3><span class="label label-default off">不查询</span></h3><span>&ensp;&ensp;目标不计入总确率（不点击或点击三次）</span>  <br> <br>
-          </table>
-        </div>
 
-        <div class="panel panel-success  text-nowrap col-sm-12">
+        <div class="panel panel-success  text-nowrap col-sm-7">
           <div class="panel-heading">
             <h3 class="panel-title">时间范围</h3>
           </div>
           <div class="panel-body"  align="center">
-            <table cellpadding="50"><tr><th>时间</th><th>累计开发次数</th><th>&ensp;&ensp;&ensp;公式计数</th><th>&ensp;&ensp;&ensp;文件大小</th></tr>
+            <table cellpadding="50"><tr><th>时间</th><th>累计开发次数</th><th>&ensp;&ensp;&ensp;公式条数</th><th>&ensp;&ensp;&ensp;文件大小</th></tr>
             <tr><td><input class="time" type="checkbox" value="1" id="1">
             <label for ="1">2019年5月或更早</label></td><td align="right">16,256,435</td><td align="right"> 24 MB</td> <td align="right"> 24 MB</td> </tr> 
             <tr><td><input class="time" type="checkbox" value="2" id="2">
@@ -123,10 +132,6 @@
           </div>
         </div>
       </div>
-      <div class=" col-sm-12">
-        <h2 align="center"> <a href="zh/5200.html">Ark Royal [4000,2000,5000,5200,20]</a> </h2>
-        <h2 align="center"> <a href="zh/7000.html">Ark Royal [4000,2000,5000,7000,20]</a> </h2>
-      </div>
 
       <div id="foot"></div>
     </div>
@@ -136,6 +141,7 @@
   <!-- <script>window.jQuery || document.write('<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"><\/script>')</script> -->
   <script>
     $("#nav").load("zh/nav.html");
+    $("#foot").load("foot.html");
   </script>
   <!-- <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
   <script type="text/javascript" src="dist/js/jgs.js"> </script>
@@ -155,7 +161,7 @@
       addcol(result,"itype","api_type",2)
       slotitem = result;
     }).done(function () {
-      genCheck(release);
+      genCheck(init);
     }).fail(function (d) {
         alert("文件  " + "parsed/api_mst_slotitem.json" + " 读取失败"+d);
     })}).fail(function (d) {

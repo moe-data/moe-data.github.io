@@ -111,9 +111,11 @@ function loadchart(){
                 var res =  (params[0].name)+'<br><table>';
                 var myseries = '';
                 for(i=0;i<params.length;i++){
-                    if(params[i].value){
+                    num=params[i].value
+                    if(num){
                         // console.log(params[i],i)
-                        myseries+='<tr><td>'+addicon(params[i].seriesName,params[i].color)+'：</td><td  align="right">'+params[i].data.toFixed(3)+'%</td></tr>'
+                        myseries+='<tr><td>'+addicon(params[i].seriesName,params[i].color)+'：</td><td  align="right">'+ (num%1 === 0&&temp?num:num.toFixed(3))+'%</td></tr>'
+                        temp=num%1 === 0
                 }}
                 return res+myseries;
             }
@@ -199,6 +201,7 @@ function getseries(r,c,shape,stack,sortkey){
         //     }
         var name=getname(prot,kj)
         var data=[]
+        var clr={}
         for(i=0;i<rawlen;i++){
             // if(r[i][e]==null){  if(r[i][(e.split('#')[0])]==null){
             //     unit=0}else{
@@ -206,7 +209,80 @@ function getseries(r,c,shape,stack,sortkey){
                     unit=(r[i][e])*100
                 // }
             data.push(unit)
-        }   var eie=exclude.indexOf(prot)>-1
+        }   
+        var eie=exclude.indexOf(prot)>-1
+        var emoji=""
+        switch(nametype(e)) {
+            case "ratio":
+                emoji= "#d4f2e7"
+              break;
+            case fail:
+                emoji= "#ddd"
+              break;
+            case 1:
+                emoji= "#c222"+ parseInt(10+35*Math.random())
+              break;
+            case 2:
+                emoji= "#c222"+ parseInt(10+35*Math.random())
+              break;
+            case 3:
+                emoji= "#c222"+ parseInt(10+35*Math.random())
+              break;
+            case 5:
+                emoji= "#5987ab"
+              break;
+            case 16:
+                emoji= "#6c7"
+              break;
+            case 6:
+                emoji= "#405e"+ parseInt(11+50*Math.random())
+              break;
+            case 7:
+                emoji= "#447cab"
+              break;
+            case 8:
+                emoji= "#d66461"
+              break;
+            case 10:
+                emoji= "#acd8b3"
+              break;
+            case 11:
+                emoji= "#eeb66f"
+              break;
+            case 19:
+                emoji= "#dcaa44"
+              break;
+            case 23:
+                emoji= "#9279a7"
+              break;
+            case 13:
+                emoji= "#f00"
+              break;
+            case 18:
+                emoji= "#64b1bc"
+              break;
+            case 17:
+                emoji= "#6ba6b0"
+              break;
+            case 9:
+                emoji= "#f5b304"
+              break;
+            case 25:
+                emoji= "#999"
+              break;
+            case 30:
+                emoji= "#899a4d"
+              break;
+            case 37:
+                emoji= "#387027"
+              break;
+            case 44:
+                emoji= "#94e7a5"
+              break;
+            }
+            if(emoji){
+                clr={color:emoji}
+            }
         s.push({name:name,
                 type:eie?(shape=='line'?'bar':'line'):shape,
                 stack:eie?(shape=='line'):(stack==0?(shape=='line'?(false):true):(stack==1?true:false)),
@@ -240,6 +316,7 @@ function getseries(r,c,shape,stack,sortkey){
                   type: prot==sortkey?'solid': (Math.random()>0.7?"dashed":(Math.random()>0.5?'solid':'dotted')),
                   width: prot==sortkey?4: 1
                 },
+                itemStyle: clr
             })
         col.push(name)
     }
@@ -382,69 +459,75 @@ function isAllCheck(name) {
 function addemoji(value){
     var str=bra(value,0);
     var emoji=''
+    type=nametype(str)
+    switch(type) {
+        // case 1:
+        //     emoji= "🧨"
+        //   break;
+        // case 2:
+        //     emoji= "🧨"
+        //   break;
+        // case 3:
+        //     emoji= "🧨"
+        //   break;
+        // case 16:
+        //     emoji= "🍾"
+        //   break;
+        case 6:
+            emoji= "🛫"
+          break;
+        case 7:
+            emoji= "🛫"
+          break;
+        case 8:
+            emoji= "🛫"
+          break;
+        case 10:
+            emoji= "✈️"
+          break;
+        case 11:
+            emoji= "〽️"
+          break;
+        case 19:
+            emoji= "⚙️"
+          break;
+        case 23:
+            emoji= "🟪"
+          break;
+        case 13:
+            emoji= "🖍️"
+          break;
+        // case 18:
+        //     emoji= "🧿"
+        //   break;
+        // case 17:
+        //     emoji= ""
+        //   break;
+        case 9:
+            emoji= "🛩️"
+          break;
+        case 25:
+            emoji= "🛢"
+          break;
+        // case 30:
+        //     emoji= "📤"
+        //   break;
+        // case 37:
+        //     emoji= ""
+        //   break;
+        // case 44:
+        //     emoji= "🛩️"
+        //   break;
+        }
+        return emoji+str;
+    }
+function nametype(value){
+    str=bra(value,0)
     for (aitem=0;aitem<slotitem.length;aitem++){
         if(slotitem[aitem]['api_name']==str){
-            type=slotitem[aitem]['api_type'][3];
-            switch(type) {
-                // case 1:
-                //     emoji= "🧨"
-                //   break;
-                // case 2:
-                //     emoji= "🧨"
-                //   break;
-                // case 3:
-                //     emoji= "🧨"
-                //   break;
-                // case 16:
-                //     emoji= "🍾"
-                //   break;
-                case 6:
-                    emoji= "🛫"
-                  break;
-                case 7:
-                    emoji= "🛫"
-                  break;
-                case 8:
-                    emoji= "🛫"
-                  break;
-                case 10:
-                    emoji= "✈️"
-                  break;
-                case 11:
-                    emoji= "〽️"
-                  break;
-                case 19:
-                    emoji= "⚙️"
-                  break;
-                case 23:
-                    emoji= "🟪"
-                  break;
-                case 13:
-                    emoji= "🖍️"
-                  break;
-                // case 18:
-                //     emoji= "🧿"
-                //   break;
-                // case 17:
-                //     emoji= ""
-                //   break;
-                case 9:
-                    emoji= "🛩️"
-                  break;
-                case 25:
-                    emoji= "🛢️"
-                  break;
-                // case 30:
-                //     emoji= "📤"
-                //   break;
-                // case 37:
-                //     emoji= ""
-                //   break;
-                // case 44:
-                //     emoji= "🛩️"
-                //   break;
-                }
-    return emoji+str;
+            str=slotitem[aitem]['api_type'][3];
+            break;
         }
-    }return str;
     }
+    return str
+}
