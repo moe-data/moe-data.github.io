@@ -29,6 +29,19 @@
         table tbody tr td {white-space: nowrap !important;}
         /* .table thead th .th-inner { white-space: normal !important; } */
         div.panel-success{position: fixed; left: 25%; top:30%}
+        
+        svg {
+        animation: 2s linear infinite svg-animation;
+        max-width: 100px;
+        }
+        @keyframes svg-animation {
+        0% {
+            transform: rotateZ(0deg);
+        }
+        100% {
+            transform: rotateZ(360deg)
+        }
+        }
     </style>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"></script>

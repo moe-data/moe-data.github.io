@@ -32,6 +32,7 @@
   <body>
     <div id="nav"></div>
     <div id="bgpic"><div id="bgcolor">
+      <h2 id="title" style="text-align: center;"></h2>
       <div id="container" style="margin:0 auto;"></div>
 <div id="foot"></div>
 
@@ -47,44 +48,40 @@
     <script type="text/javascript">
       console.log(JSON.parse($.cookie('pie')));
       piedata=JSON.parse($.cookie('pie'));
-      // piedata=(JSON.parse('{"i":"20,60,10,100,正規空母","n-1":4515,"n16":1705,"n17":2228,"n18":1130,"n19":1648,"n20":2743,"n21":2266,"n22":567,"n23":1678,"n24":1679,"n25":2325,"n26":2324,"n52":545,"n55":563,"n57":580,"n60":580,"n120":592,"n181":570,"denominator":28238,"ratio":0.15996175366527374,"times":4517,"🐧 失败":0.15989092711948438,"九七式艦攻":0.06037963028543098,"天山":0.0789007720093491,"流星":0.040016998370989446,"九六式艦戦":0.058361073730434164,"零式艦戦21型":0.09713860755010978,"零式艦戦52型":0.08024647637934698,"試製烈風 後期型":0.020079325731284084,"九九式艦爆":0.059423471917274595,"彗星":0.05945888519016927,"零式水上偵察機":0.08233585948013315,"瑞雲":0.08230044620723848,"流星改":0.019300233727601104,"紫電改二":0.01993767263970536,"彗星一二型甲":0.02053969827891494,"零式艦戦62型（爆戦）":0.02053969827891494,"91式高射装置":0.02096465755365111,"零式艦戦32型":0.02018556554996813}'));
-      document.getElementById('container').style.width = Width()*0.60+'px'
-      document.getElementById('container').style.height = Width()*0.60+'px'
+      $("#nav").load("zh/nav.html");
+      // piedata=(JSON.parse('[{"value":17030,"name":"🐧 失败"},{"value":1388,"name":"14cm単装砲"},{"value":2878,"name":"15.5cm三連装砲"},{"value":4348,"name":"20.3cm連装砲"},{"value":7398,"name":"35.6cm連装砲"},{"value":5680,"name":"41cm連装砲"},{"value":2944,"name":"46cm三連装砲"},{"value":4399,"name":"12.7cm連装高角砲"},{"value":4252,"name":"15.2cm単装砲"},{"value":2929,"name":"15.5cm三連装副砲"},{"value":2845,"name":"61cm三連装魚雷"},{"value":2925,"name":"61cm四連装魚雷"},{"value":1462,"name":"九一式徹甲弾"},{"value":1494,"name":"7.7mm機銃"},{"value":1451,"name":"12.7mm単装機銃"},{"value":2853,"name":"25mm連装機銃"},{"value":1450,"name":"25mm三連装機銃"},{"value":1417,"name":"甲標的 甲型"},{"value":1460,"name":"25mm単装機銃"},{"value":1466,"name":"20.3cm（2号）連装砲"},"10,251,250,10,戦艦"]'));
+      document.getElementById('container').style.width = Width()+'px'
+      document.getElementById('container').style.height = Width()+'px'
       console.log($.cookie('pie'));
       var title=piedata.pop()
-      document.title = title
-        var myChart = echarts.init(document.getElementById('container'));
-            myChart.setOption({
-              title: {
-                  text: title,
-                  subtext: '',
-                  left: 'center'
-              },
-              tooltip: {
-                  trigger: 'item',
-                  formatter: '{b} : {c} ({d}%)'
-              },
-              legend: {
-                  orient: 'vertical',
-                  left: 'left',
-              },
-              series: [
-                  {
-                      name: title,
-                      type: 'pie',
-                      radius: '55%',
-                      data: piedata,
-                      emphasis: {
-                          itemStyle: {
-                              shadowBlur: 10,
-                              shadowOffsetX: 0,
-                              shadowColor: 'rgba(0, 0, 0, 0.5)'
-                          }
-                      }
-                  }
-              ]
-            });
-      $("#nav").load("zh/nav.html");
+      document.title = title;
+      document.getElementById("title").innerHTML=title
+      var myChart = echarts.init(document.getElementById('container'));
+      legend = Width()>400?{}:null;
+      console.log(legend)
+          myChart.setOption({
+            tooltip: {
+                trigger: 'item',
+                formatter: '{b} : {c} ({d}%)'
+            },
+            legend: legend,
+            series: [
+                {
+                    name: title,
+                    type: 'pie',
+                    radius: '35%',
+                    center: ['50%', '30%'],
+                    data: piedata,
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+          });
       $("#foot").load("foot.html");
     </script>
 </body>

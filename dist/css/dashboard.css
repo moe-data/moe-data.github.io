@@ -96,18 +96,6 @@ table.table-hover > tbody > tr:nth-child(2n+1) > td, tbody > tr:nth-child(2n+1) 
 table.table-hover > tbody > tr:nth-child(2n) > td, tbody > tr:nth-child(2n) > th {
  background-color: #fff7;
 }
-svg {
-  animation: 2s linear infinite svg-animation;
-  max-width: 100px;
-}
-@keyframes svg-animation {
-  0% {
-    transform: rotateZ(0deg);
-  }
-  100% {
-    transform: rotateZ(360deg)
-  }
-}
 circle {
   animation: 1.4s ease-in-out infinite both circle-animation;
   display: block;
