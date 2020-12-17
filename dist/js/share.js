@@ -122,14 +122,17 @@ function api(name){
 function Width(){
     return document.body.clientWidth;}
 setTimeout(function(){
-    if($('.loading').is(':hidden')&&Width()>1000){
+    if(($('.loading').is(':hidden')||"undefined" != typeof warning)&&Width()>1000){
     document.body.style.setProperty('--pic', "url(http://fleet.diablohu.com/!/assets/images/homebg/"+
     // "2"
-    Math.round(Math.random(25))
-    +".jpg)");}
-        },     5000);
+    Math.round(25*Math.random())
+    +".jpg)");
+    console.log($('#logo').css("width"))
+    $('#logo').attr("width","500px")}
+        },     2000);
+//bootstrap出现特殊字符冲突
 function bra(value,x){
-    if(x){return value.replace("(","（").replace(")","）")}else{
-        return value.replace("（","(").replace("）",")")
+    if(x){return value.replace("(","（").replace(")","）").replace("/","╱")}else{
+        return value.replace("（","(").replace("）",")").replace("╱","/")
     }
 }

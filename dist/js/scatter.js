@@ -49,7 +49,7 @@ function loadchart(){
     rawlen=raw.length
     isFirst=false
     if(column.length<1||rawlen<1){
-        info.innerHTML=("请选择装备"); console.log(raw,rnd)
+        info.innerHTML=("服务器忙，请稍后重试"); console.log(raw,rnd)
         return    }
     sortkey=$('#sort').val();
     if(sortkey!='unsort'&&(raw[0][sortkey]||raw[0][sortkey]==false)){

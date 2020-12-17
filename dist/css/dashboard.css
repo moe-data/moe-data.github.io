@@ -87,7 +87,7 @@ i.item{
 }
 .flex{
       display: flex;}
-.table-responsive, #container{
+.table-responsive, #container, .footer-list{
   background-color:#fffa;
 }
 table.table-hover > tbody > tr:nth-child(2n+1) > td, tbody > tr:nth-child(2n+1) > th {

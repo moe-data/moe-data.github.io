@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="keywords" content="萌萌数据库,装备开发统计,舰队collection,舰船建造统计,舰娘数据库" />
+<meta name="description" content="本站支持多装备概率叠加显示，特定旗舰出货概率显示" />
+<meta content="yes" name="apple-mobile-web-app-capable" /><!--iphone设备中的safari私有meta标签，它表示：允许全屏模式浏览-->
+<meta content="black" name="apple-mobile-web-app-status-bar-style" /><!--iphone的私有标签，它指定的iphone中safari顶端的状态条的样式-->
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="images/logo/icon.png">
+    <title>萌萌数据库</title>
+    <!-- Bootstrap core CSS -->
+    <!-- <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="dist/css/dashboard.css">
+    <link rel="stylesheet" href="dist/css/selection.css">
+    <style id='csscontainer'></style>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-SQLQ5EBLTM');
+</script>
+</head>
+
+  <body>
+    <div id="nav"></div>
+    <div id="bgpic"><div id="bgcolor">
+<div id="foot"></div></div></div></div></div>
+    <i id="js"></i>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script>window.jQuery || document.write('<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"><\/script>')</script> -->
+    <script type="text/javascript" src= "dist/js/jgs.js"> </script>  
+    <script type="text/javascript" src= "dist/js/simplize.js"> </script>  
+    <script type="text/javascript" src= "dist/js/share.js"> </script>  
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+      console.log($.cookie('pie'));
+      $("#nav").load("zh/nav.html");
+      $("#foot").load("foot.html");
+    </script>
+</body>
+</html>
