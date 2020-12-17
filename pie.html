@@ -51,10 +51,12 @@
       document.getElementById('container').style.width = Width()*0.60+'px'
       document.getElementById('container').style.height = Width()*0.60+'px'
       console.log($.cookie('pie'));
+      var title=piedata.pop()
+      document.title = title
         var myChart = echarts.init(document.getElementById('container'));
             myChart.setOption({
               title: {
-                  text: piedata.pop(),
+                  text: title,
                   subtext: '',
                   left: 'center'
               },
@@ -68,7 +70,7 @@
               },
               series: [
                   {
-                      name: '',
+                      name: title,
                       type: 'pie',
                       radius: '55%',
                       data: piedata,
