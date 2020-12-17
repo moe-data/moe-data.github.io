@@ -32,7 +32,10 @@
   <body>
     <div id="nav"></div>
     <div id="bgpic"><div id="bgcolor">
-<div id="foot"></div></div></div>
+      <div id="container" style="margin:0 auto;"></div>
+<div id="foot"></div>
+
+</div></div>
     <i id="js"></i>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- <script>window.jQuery || document.write('<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"><\/script>')</script> -->
@@ -40,9 +43,45 @@
     <script type="text/javascript" src= "dist/js/simplize.js"> </script>  
     <script type="text/javascript" src= "dist/js/share.js"> </script>  
     <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script>
-      console.log(typeof($.cookie('pie')));
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script type="text/javascript">
+      console.log(JSON.parse($.cookie('pie')));
+      piedata=JSON.parse($.cookie('pie'));
+      // piedata=(JSON.parse('{"i":"20,60,10,100,正規空母","n-1":4515,"n16":1705,"n17":2228,"n18":1130,"n19":1648,"n20":2743,"n21":2266,"n22":567,"n23":1678,"n24":1679,"n25":2325,"n26":2324,"n52":545,"n55":563,"n57":580,"n60":580,"n120":592,"n181":570,"denominator":28238,"ratio":0.15996175366527374,"times":4517,"🐧 失败":0.15989092711948438,"九七式艦攻":0.06037963028543098,"天山":0.0789007720093491,"流星":0.040016998370989446,"九六式艦戦":0.058361073730434164,"零式艦戦21型":0.09713860755010978,"零式艦戦52型":0.08024647637934698,"試製烈風 後期型":0.020079325731284084,"九九式艦爆":0.059423471917274595,"彗星":0.05945888519016927,"零式水上偵察機":0.08233585948013315,"瑞雲":0.08230044620723848,"流星改":0.019300233727601104,"紫電改二":0.01993767263970536,"彗星一二型甲":0.02053969827891494,"零式艦戦62型（爆戦）":0.02053969827891494,"91式高射装置":0.02096465755365111,"零式艦戦32型":0.02018556554996813}'));
+      document.getElementById('container').style.width = Width()*0.60+'px'
+      document.getElementById('container').style.height = Width()*0.60+'px'
       console.log($.cookie('pie'));
+        var myChart = echarts.init(document.getElementById('container'));
+            myChart.setOption({
+              title: {
+                  text: piedata.pop(),
+                  subtext: '',
+                  left: 'center'
+              },
+              tooltip: {
+                  trigger: 'item',
+                  formatter: '{b} : {c} ({d}%)'
+              },
+              legend: {
+                  orient: 'vertical',
+                  left: 'left',
+              },
+              series: [
+                  {
+                      name: '',
+                      type: 'pie',
+                      radius: '55%',
+                      data: piedata,
+                      emphasis: {
+                          itemStyle: {
+                              shadowBlur: 10,
+                              shadowOffsetX: 0,
+                              shadowColor: 'rgba(0, 0, 0, 0.5)'
+                          }
+                      }
+                  }
+              ]
+            });
       $("#nav").load("zh/nav.html");
       $("#foot").load("foot.html");
     </script>
