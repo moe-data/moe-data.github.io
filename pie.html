@@ -46,19 +46,20 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
     <script type="text/javascript">
-      console.log(JSON.parse($.cookie('pie')));
+      console.log($.cookie('pie'));
+      if ($.cookie('pie')==null){
+        window.location.href='index.html'
+      }
       piedata=JSON.parse($.cookie('pie'));
       $("#nav").load("zh/nav.html");
       // piedata=(JSON.parse('[{"value":17030,"name":"🐧 失败"},{"value":1388,"name":"14cm単装砲"},{"value":2878,"name":"15.5cm三連装砲"},{"value":4348,"name":"20.3cm連装砲"},{"value":7398,"name":"35.6cm連装砲"},{"value":5680,"name":"41cm連装砲"},{"value":2944,"name":"46cm三連装砲"},{"value":4399,"name":"12.7cm連装高角砲"},{"value":4252,"name":"15.2cm単装砲"},{"value":2929,"name":"15.5cm三連装副砲"},{"value":2845,"name":"61cm三連装魚雷"},{"value":2925,"name":"61cm四連装魚雷"},{"value":1462,"name":"九一式徹甲弾"},{"value":1494,"name":"7.7mm機銃"},{"value":1451,"name":"12.7mm単装機銃"},{"value":2853,"name":"25mm連装機銃"},{"value":1450,"name":"25mm三連装機銃"},{"value":1417,"name":"甲標的 甲型"},{"value":1460,"name":"25mm単装機銃"},{"value":1466,"name":"20.3cm（2号）連装砲"},"10,251,250,10,戦艦"]'));
       document.getElementById('container').style.width = Width()+'px'
       document.getElementById('container').style.height = Width()+'px'
-      console.log($.cookie('pie'));
       var title=piedata.pop()
       document.title = title;
       document.getElementById("title").innerHTML=title
       var myChart = echarts.init(document.getElementById('container'));
       legend = Width()>400?{}:null;
-      console.log(legend)
           myChart.setOption({
             tooltip: {
                 trigger: 'item',
