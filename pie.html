@@ -32,7 +32,7 @@
   <body>
     <div id="nav"></div>
     <div id="bgpic"><div id="bgcolor">
-<div id="foot"></div></div></div></div></div>
+<div id="foot"></div></div></div>
     <i id="js"></i>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- <script>window.jQuery || document.write('<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"><\/script>')</script> -->
@@ -41,7 +41,7 @@
     <script type="text/javascript" src= "dist/js/share.js"> </script>  
     <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script>
-      console.log($.cookie('pie'));
+      console.log(typeof($.cookie('pie')));      
       $("#nav").load("zh/nav.html");
       $("#foot").load("foot.html");
     </script>
