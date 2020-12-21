@@ -15,10 +15,10 @@
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../dist/css/dashboard.css">
     <style>
-        .fuel{background-color: #f0fff0; text-align: center;}
-        .ammo{background-color: #fdf5e6; text-align: center;}
-        .steel{background: #f9f9f9; text-align: center;}
-        .bauxite{background-color: #ffe4b5; text-align: center;}
+        .cssfuel{background-color: #f0fff0; text-align: center;}
+        .cssammo{background-color: #fdf5e6; text-align: center;}
+        .csssteel{background: #f9f9f9; text-align: center;}
+        .cssbauxite{background-color: #ffe4b5; text-align: center;}
     </style>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"></script>
@@ -35,26 +35,26 @@
     <div id="bgpic"><div id="bgcolor">
     <div id="container" class="col-sm-8"></div>
     <div class="col-sm-4">
-        <div class="center"><b>C51</b>  &emsp;<input type="checkbox" id="finish" onchange="finish()"><label for="finish">已完成</label></div>
-        <div class="center"><h4><b> 奇跡の駆逐艦</b></h4></div>
-        <table border="1">
-            <tr><td>前置任务</td><td>C21</td></tr>
-            <tr><td>后继任务</td><td colspan="3"></td></tr>
-            <tr><td colspan="4"> 旗艦「雪風」を含む合計4隻以上の駆逐艦を配備した精強な演習艦隊を編成、本日中に演習で【S判定】以上の勝利を4回以上達成せよ！
+        <div class="center"><b class="id">C51</b>  &emsp;<b class="period">&emsp;</b> <input type="checkbox" id="finish" onchange="finish()"><label for="finish">已完成</label></div>
+        <div class="center"><h4><b class="description"> 奇跡の駆逐艦</b></h4></div>
+        <table border="1" class="mid">
+            <tr><td>前置任务</td><td class="before">C21</td></tr>
+            <tr><td>后继任务</td><td colspan="3" class="after"></td></tr>
+            <tr><td colspan="4" class="content"> 旗艦「雪風」を含む合計4隻以上の駆逐艦を配備した精強な演習艦隊を編成、本日中に演習で【S判定】以上の勝利を4回以上達成せよ！
                 编成包含旗舰“雪风”总计驱逐舰4艘以上的精强演习部队，在同一日内在演习达成4次以上【S胜】！</td> </tr>
-                </table><br><table border="1">
-            <tr><td class="fuel"><img src="https://uploads.kcwiki.cn/commons/thumb/0/0d/IcoFuel.png/25px-IcoFuel.png" alt="油"></td>
-                <td class="ammo"><img src="https://uploads.kcwiki.cn/commons/thumb/4/4e/IcoAmmo.png/25px-IcoAmmo.png" alt="油"></td>
-                <td class="steel"><img src="https://uploads.kcwiki.cn/commons/thumb/f/f8/IcoSteel.png/25px-IcoSteel.png" alt="油"></td>
-                <td class="bauxite"><img src="https://uploads.kcwiki.cn/commons/thumb/1/12/IcoBauxite.png/25px-IcoBauxite.png" alt="油"></td></tr>
-            <tr><td class="fuel">100</td><td class="ammo">100</td><td class="steel">100</td><td class="bauxite">100</td></tr>
-            <tr><td colspan="4">以下奖励三选一：
-                开发资材×8
-                新型兵装资材
-                改修资材×4 以下奖励二选一：
-                间宫
-                高速修复材×5</td></tr>
-            <tr><td colspan="4">雪风旗舰+3艘驱逐舰+其他，在一个任务周期内取得4次S胜</td></tr>
+                </table><br><table border="1" class="mid">
+            <tr><td class="cssfuel"><img src="https://uploads.kcwiki.cn/commons/thumb/0/0d/IcoFuel.png/25px-IcoFuel.png" alt="油"></td>
+                <td class="cssammo"><img src="https://uploads.kcwiki.cn/commons/thumb/4/4e/IcoAmmo.png/25px-IcoAmmo.png" alt="油"></td>
+                <td class="csssteel"><img src="https://uploads.kcwiki.cn/commons/thumb/f/f8/IcoSteel.png/25px-IcoSteel.png" alt="油"></td>
+                <td class="cssbauxite"><img src="https://uploads.kcwiki.cn/commons/thumb/1/12/IcoBauxite.png/25px-IcoBauxite.png" alt="油"></td></tr>
+            <tr><td class="cssfuel fuel">100</td><td class="cssammo ammo">100</td><td class="csssteel steel">100</td><td class="cssbauxite bauxite">100</td></tr>
+            <tr><td colspan="4"><div class="bonus">以下奖励三选一：
+开发资材×8
+新型兵装资材
+改修资材×4 以下奖励二选一：
+间宫
+高速修复材×5</div></tr>
+            <tr><td colspan="4" class="memo">雪风旗舰+3艘驱逐舰+其他，在一个任务周期内取得4次S胜</td></tr>
         </table>
     </div>
 <div id="foot"></div></div></div>
@@ -72,6 +72,7 @@
       if(data.nodes[i].id==current){
         data.nodes[i].cluster='a';
         data.nodes[i].style.stroke='#aaa';
+        break;
       }
     }
     // graph.data(data);
@@ -8714,7 +8715,6 @@ const strokes = [
 {source: '7thAnvB1',target: '7thAnvB2'},					
 {source: '7thAnvB2',target: '7thAnvB3'},					
 {source: 'B6',target: '7thAnvC1'},					
-					
 {source: 'A9',target: 'A10'},					
 {source: 'B3',target: 'A11'},					
 {source: 'A7',target: 'A12'},					
@@ -8806,7 +8806,6 @@ const strokes = [
 {source: 'F3',target: 'A90'},	{source: 'A86',target: 'A90'},				
 {source: 'A79',target: 'A91'},					
 {source: 'B99',target: 'A92'},					
-					
 {source: 'A11',target: 'B10'},					
 {source: 'B98',target: 'B100'},	{source: 'Bw5',target: 'B100'},				
 {source: 'A76',target: 'B101'},	{source: 'C2',target: 'B101'},				
@@ -8815,7 +8814,6 @@ const strokes = [
 {source: 'A79',target: 'B104'},	{source: 'G2',target: 'B104'},	{source: 'C2',target: 'B104'},			
 {source: 'A80',target: 'B105'},	{source: 'Bd2',target: 'B105'},				
 {source: 'B105',target: 'B106'},	{source: 'B91',target: 'B106'},				
-					
 {source: 'B88',target: 'B108'},	{source: 'B20',target: 'B108'},				
 {source: 'A81',target: 'B109'},	{source: 'D27',target: 'B109'},				
 {source: 'A20',target: 'B11'},					
@@ -8846,7 +8844,6 @@ const strokes = [
 {source: 'B131',target: 'B132'},	{source: 'F85',target: 'B132'},				
 {source: 'B128',target: 'B133'},					
 {source: 'D29',target: 'B134'},					
-					
 {source: 'B135',target: 'B136'},	{source: 'B41',target: 'B136'},				
 {source: 'C33',target: 'B137'},	{source: 'B40',target: 'B137'},				
 {source: 'B135',target: 'B138'},					
@@ -8854,7 +8851,6 @@ const strokes = [
 {source: 'A22',target: 'B14'},					
 {source: 'F5',target: 'B140'},	{source: 'B11',target: 'B140'},				
 {source: 'B140',target: 'B141'},					
-					
 {source: 'D21',target: 'B143'},					
 {source: 'B133',target: 'B144'},					
 {source: 'Bd5',target: 'B145'},	{source: 'B62',target: 'B145'},				
@@ -8931,7 +8927,6 @@ const strokes = [
 {source: 'A70',target: 'B73'},					
 {source: 'A71',target: 'B74'},					
 {source: 'B70',target: 'B75'},					
-					
 {source: 'C2',target: 'B77'},					
 {source: 'A72',target: 'B78'},					
 {source: 'B78',target: 'B79'},					
@@ -8939,7 +8934,6 @@ const strokes = [
 {source: 'B41',target: 'B80'},	{source: 'Bw9',target: 'B80'},	{source: 'B62',target: 'B80'},			
 {source: 'B80',target: 'B81'},					
 {source: 'Bd2',target: 'B82'},	{source: 'B6',target: 'B82'},				
-					
 {source: 'A73',target: 'B84'},					
 {source: 'A74',target: 'B85'},					
 {source: 'B79',target: 'B86'},	{source: 'B85',target: 'B86'},				
@@ -8950,7 +8944,6 @@ const strokes = [
 {source: 'B73',target: 'B90'},	{source: 'B81',target: 'B90'},				
 {source: 'Bd5',target: 'B91'},	{source: 'B69',target: 'B91'},				
 {source: 'B91',target: 'B92'},					
-					
 {source: 'B93',target: 'B94'},	{source: 'B91',target: 'B94'},				
 {source: 'B87',target: 'B95'},	{source: 'B50',target: 'B95'},				
 {source: 'B95',target: 'B96'},					
@@ -8985,7 +8978,6 @@ const strokes = [
 {source: 'Bq5',target: 'Bq6'},	{source: 'A83',target: 'Bq6'},				
 {source: 'B41',target: 'Bq7'},	{source: 'Bw9',target: 'Bq7'},				
 {source: 'Bw1',target: 'Bq8'},	{source: 'B125',target: 'Bq8'},				
-					
 {source: 'Bd2',target: 'Bw1'},					
 {source: 'A45',target: 'Bw10'},	{source: 'Bw4',target: 'Bw10'},				
 {source: 'Bd5',target: 'Bw2'},					
@@ -8996,21 +8988,13 @@ const strokes = [
 {source: 'Bw5',target: 'Bw7'},					
 {source: 'Bw6',target: 'Bw8'},					
 {source: 'Bw8',target: 'Bw9'},					
-					
-					
-					
-					
-					
 {source: 'C2',target: 'C10'},					
 {source: 'C2',target: 'C11'},					
 {source: 'C2',target: 'C12'},					
 {source: 'D17',target: 'C13'},	{source: 'Bd5',target: 'C13'},				
-					
 {source: 'F65',target: 'C15'},					
 {source: 'F68',target: 'C16'},	{source: 'F16',target: 'C16'},				
 {source: 'A85',target: 'C17'},					
-					
-					
 {source: 'C1',target: 'C2'},					
 {source: 'A88',target: 'C20'},	{source: 'C15',target: 'C20'},				
 {source: 'B23',target: 'C21'},	{source: 'B18',target: 'C21'},				
@@ -9025,20 +9009,13 @@ const strokes = [
 {source: 'C2',target: 'C3'},					
 {source: 'C2',target: 'C30'},					
 {source: 'C29',target: 'C31'},					
-					
-					
 {source: 'C33',target: 'C34'},					
-					
-					
 {source: 'Bd1',target: 'C37'},	{source: 'C35',target: 'C37'},				
-					
 {source: 'Bw4',target: 'C39'},					
 {source: 'C2',target: 'C4'},					
-					
 {source: 'C2',target: 'C41'},					
 {source: 'C38',target: 'C42'},	{source: 'A72',target: 'C42'},				
 {source: 'C2',target: 'C43'},	{source: 'C30',target: 'C43'},				
-					
 {source: 'A50',target: 'C5'},					
 {source: 'D17',target: 'C6'},					
 {source: 'B46',target: 'C7'},					
@@ -9069,8 +9046,6 @@ const strokes = [
 {source: 'D2',target: 'D3'},					
 {source: 'D15',target: 'D30'},					
 {source: 'D30',target: 'D31'},	{source: 'D23',target: 'D31'},				
-					
-					
 {source: 'D23',target: 'D34'},					
 {source: 'D1',target: 'D4'},					
 {source: 'A27',target: 'D5'},					
@@ -9082,7 +9057,6 @@ const strokes = [
 {source: 'B2',target: 'E2'},					
 {source: 'E2',target: 'E3'},					
 {source: 'E3',target: 'E4'},					
-					
 {source: 'G4',target: 'F10'},					
 {source: 'A5',target: 'F11'},					
 {source: 'Bw5',target: 'F12'},					
@@ -9142,7 +9116,6 @@ const strokes = [
 {source: 'F8',target: 'F61'},	{source: 'A80',target: 'F61'},				
 {source: 'F61',target: 'F62'},	{source: 'F34',target: 'F62'},				
 {source: 'F61',target: 'F63'},	{source: 'B105',target: 'F63'},	{source: 'B106',target: 'F63'},			
-					
 {source: 'F7',target: 'F65'},					
 {source: 'F65',target: 'F66'},					
 {source: 'F66',target: 'F67'},					
@@ -9171,14 +9144,10 @@ const strokes = [
 {source: 'B137',target: 'F88'},	{source: 'F20',target: 'F88'},				
 {source: 'F5',target: 'F89'},					
 {source: 'F8',target: 'F9'},					
-					
-					
 {source: 'G1',target: 'G2'},					
 {source: 'G2',target: 'G3'},					
 {source: 'A14',target: 'G4'},					
 {source: 'B87',target: 'G5'},	{source: 'G3',target: 'G5'},				
-					
-					
 {source: 'WC01',target: 'WA01'},					
 {source: 'WB01',target: 'WA02'},					
 {source: 'WA01',target: 'WB01'},					
@@ -9216,7 +9185,11 @@ const graph = new G6.Graph({
   },
   defaultNode: {
     size: [10, 10],
-  },
+    labelCfg: {
+      style: {
+        fill : '#000',
+      },
+  }},
   defaultEdge: {
     size: 1,
     color: '#333',
@@ -9228,8 +9201,6 @@ const graph = new G6.Graph({
     },
   },
 });
-
-
       // 读取数据
 // mapping
 const nodes = data.nodes;
@@ -9248,16 +9219,17 @@ nodes.forEach((node) => {
   node.style.fill = colors[cid % colors.length];
   node.style.stroke = strokes[cid % strokes.length];
   node.style.lineWidth = 5
-  node.x = width / 2 + 200 * (Math.random() - 0.5);
-  node.y = height / 2 + 200 * (Math.random() - 0.5);
+  // node.x = width / 2 + 200 * (Math.random() - 0.5);
+  // node.y = height / 2 + 200 * (Math.random() - 0.5);
 });
 
 // map the value to node size
 let maxNodeValue = -9999,
   minNodeValue = 9999;
 nodes.forEach(function (n) {
-  if (maxNodeValue < n.value) maxNodeValue = n.value;
-  if (minNodeValue > n.value) minNodeValue = n.value;
+  nval=n.value/2
+  if (maxNodeValue < nval) maxNodeValue = nval;
+  if (minNodeValue > nval) minNodeValue = nval;
 });
 const nodeSizeRange = [10, 30];
 const nodeSizeDataRange = [minNodeValue, maxNodeValue];
@@ -9287,11 +9259,10 @@ function refreshDragedNodePosition(e) {
 // graph.on('node:contextmenu', function (e) {
 //     console.log(e.item._cfg.model)});
 graph.on('node:click', function (e) {
-    console.log(e.item._cfg.model)
   const node = e.item;
   const states = node.getStates();
   let clicked = false;
-  const model = node.getModel();
+  var model = node.getModel();
   let size = 80;
   let labelText = '' + model.id + '\n' + newline(model.description);
   states.forEach(function (state) {
@@ -9306,7 +9277,18 @@ graph.on('node:click', function (e) {
     size,
     label: labelText,
   });
-  // graph.layout();
+    console.log(e.item._cfg.model)//model.description,$('#description').html())//
+  $('.description').html(model.description)
+  $('.id').html(model.id)
+  $('.content').html(model.content.replace(/\n/g,'<br/>'))
+  $('.after').html(seplink(model.after))
+  $('.ammo').html(model.ammo)
+  $('.bauxite').html(model.bauxite)
+  $('.before').html(seplink(model.before));
+  $('.bonus').html(model.bonus.replace(/\n/g,'<br/>'))
+  $('.fuel').html(model.fuel)
+  $('.memo').html(model.memo)
+  $('.period').html(model.period)
 });
 
 graph.data(data);
@@ -9350,6 +9332,38 @@ function newline(str){
   }
   return res
 }
+function seplink(str){
+  var link=''
+  var m=str.split(",")
+  for(i=0;i<m.length;i++){
+    link+=`<a href='javascript:jump("`+m[i]+`")'>`+m[i]+"</a> "
+  }
+  console.log(22)
+  return link
+}
+function jump(str){
+  n++
+  for(i=0;i<data.nodes.length;i++){
+    if(data.nodes[i].id==str){
+          console.log(data.nodes[i])
+      var model=data.nodes[i]
+      $('.description').html(model.description)
+      $('.id').html(model.id)
+      $('.content').html(model.content.replace(/\n/g,'<br/>'))
+      $('.after').html(seplink(model.after))
+      $('.ammo').html(model.ammo)
+      $('.bauxite').html(model.bauxite)
+      $('.before').html(seplink(model.before));
+      $('.bonus').html(model.bonus.replace(/\n/g,'<br/>'))
+      $('.fuel').html(model.fuel)
+      $('.memo').html(model.memo)
+      $('.period').html(model.period)
+      return
+    }
+  }
+  return
+}
+n=0
     $("#nav").load("nav.html");
     $("#foot").load("../foot.html");
   </script>
