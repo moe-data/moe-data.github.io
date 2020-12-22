@@ -15,10 +15,10 @@
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../dist/css/dashboard.css">
     <style>
-        .cssfuel{background-color: #f0fff03e; text-align: center;}
-        .cssammo{background-color: #fdf5e63e; text-align: center;}
-        .csssteel{background: #f9f9f93e; text-align: center;}
-        .cssbauxite{background-color: #ffe4b53e; text-align: center;}
+        .cssfuel{background-color: #f0fff05e; text-align: center;}
+        .cssammo{background-color: #fdf5e65e; text-align: center;}
+        .csssteel{background: #f9f9f95e; text-align: center;}
+        .cssbauxite{background-color: #ffe4b55e; text-align: center;}
     </style>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"></script>
@@ -40,7 +40,7 @@
         <table border="1" class="mid" style="background: #fffe;">
             <tr><td style="width: 60px;">前置任务</td><td class="before"><a href='javascript:jump("C21")'>C21</a> </td></tr>
             <tr><td>后继任务</td><td class="after"></td></tr>
-            <tr><td colspan="2" class="content"> 旗艦「雪風」を含む合計4隻以上の駆逐艦を配備した精強な演習艦隊を編成、本日中に演習で【S判定】以上の勝利を4回以上達成せよ！
+            <tr><td colspan="2" class="content"> 旗艦「雪風」を含む合計4隻以上の駆逐艦を配備した精強な演習艦隊を編成、本日中に演習で【S判定】以上の勝利を4回以上達成せよ！ <br>
                 编成包含旗舰“雪风”总计驱逐舰4艘以上的精强演习部队，在同一日内在演习达成4次以上【S胜】！</td> </tr>
                 </table><br><table border="1" class="mid" style="background: #fffe;">
             <tr><td class="cssfuel"><img src="https://uploads.kcwiki.cn/commons/thumb/0/0d/IcoFuel.png/25px-IcoFuel.png" alt="油"></td>
@@ -48,11 +48,11 @@
                 <td class="csssteel"><img src="https://uploads.kcwiki.cn/commons/thumb/f/f8/IcoSteel.png/25px-IcoSteel.png" alt="油"></td>
                 <td class="cssbauxite"><img src="https://uploads.kcwiki.cn/commons/thumb/1/12/IcoBauxite.png/25px-IcoBauxite.png" alt="油"></td></tr>
             <tr><td class="cssfuel fuel">100</td><td class="cssammo ammo">100</td><td class="csssteel steel">100</td><td class="cssbauxite bauxite">100</td></tr>
-            <tr><td colspan="4"><div class="bonus">以下奖励三选一：
-开发资材×8
-新型兵装资材
-改修资材×4 以下奖励二选一：
-间宫
+            <tr><td colspan="4"><div class="bonus">以下奖励三选一： <br>
+开发资材×8 <br>
+新型兵装资材 <br>
+改修资材×4 以下奖励二选一： <br>
+间宫 <br>
 高速修复材×5</div></tr>
             <tr><td colspan="4" class="memo">雪风旗舰+3艘驱逐舰+其他，在一个任务周期内取得4次S胜</td></tr>
         </table>
@@ -9164,17 +9164,17 @@ const graphDiv = document.getElementById('container');
 // graphDiv.appendChild(tipDiv);
 
 const container = document.getElementById('container');
-const width = container.scrollWidth*1.34;
+const width = Width()-80// container.scrollWidth*1.34;
 // const height = (width || 500) - 20;
       // 创建 G6 图实例
 const graph = new G6.Graph({
   container: 'container',
   width: width,
-  height: 1000,
+  height: 1080,
   layout: {
     type: 'dagre',
-    nodesep:4,
-    ranksep:10,
+    nodesep:2,
+    ranksep:3,
     nodeStrength: 30,
     collideStrength: 0.7,
     alphaDecay: 0.01,
@@ -9294,12 +9294,12 @@ graph.on('node:click', function (e) {
 graph.data(data);
 graph.render();
 
-if (typeof window !== 'undefined')
-  window.onresize = () => {
-    if (!graph || graph.get('destroyed')) return;
-    if (!container || !container.scrollWidth || !container.scrollHeight) return;
-    graph.changeSize(container.scrollWidth, container.scrollHeight - 20);
-  };
+// if (typeof window !== 'undefined')
+//   window.onresize = () => {
+//     if (!graph || graph.get('destroyed')) return;
+//     if (!container || !container.scrollWidth || !container.scrollHeight) return;
+//     graph.changeSize(container.scrollWidth, container.scrollHeight - 20);
+//   };
 
 
 function scaleNodeProp(elements, propName, refPropName, dataRange, outRange) {
@@ -9342,7 +9342,7 @@ function seplink(str){
   return link
 }
 function jump(str){
-  n++
+  graph.focusItem(str, true);
   for(i=0;i<data.nodes.length;i++){
     if(data.nodes[i].id==str){
           console.log(data.nodes[i])
@@ -9363,9 +9363,8 @@ function jump(str){
   }
   return
 }
-n=0
     $("#nav").load("nav.html");
-    $("#foot").load("../foot.html");
+    // $("#foot").load("../foot.html");
   </script>
   </body>
 </html>
