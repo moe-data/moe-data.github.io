@@ -8,7 +8,7 @@
   <meta name="description" content="本站支持多装备概率叠加显示，特定旗舰出货概率显示" />
   <meta name="author" content="提督Conba">
   <link rel="icon" href="images/logo/icon.png">
-  <title>萌萌数据库 - 装备开发统计</title>
+  <title>萌萌数据库 - 多装备开发统计</title>
   <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.css" rel="stylesheet"> -->
   <!-- <link rel="stylesheet" href="dist/css/dashboard.css"> -->
@@ -74,7 +74,7 @@
 <body>
   <div id="nav"></div>
   <!-- <h2 align="center">萌萌数据库 - 舰队收藏</h2> -->
-  <h1 align="center">萌萌数据库 - 装备开发统计</h1>
+  <h1 align="center">萌萌数据库 - 多装备开发统计</h1>
   <div id="bgpic">
     <div id="bgcolor">
       <div class="panel panel-default">
@@ -101,7 +101,7 @@
           </div>
         </div>
         <div align="center" class="panel-body  col-sm-12">
-          <button type="button" class="btn btnlg btn-success go">检索</button>
+          <button type="button" class="btnlg btn-success go" style="border-radius: 18px;" value="">检索</button>
         </div>
         <div class="panel panel-warning col-sm-12 hint">
         <div class="panel-heading">
@@ -137,10 +137,10 @@
             <option value=ratio>总确率排序</option>
             </select> <br>
             <label>&ensp;&ensp;公式次数(分母)&ensp;>&ensp;</label><input type="number" id="a" value="0" style="width: 108px;"> <br>
-            <input type="checkbox" id="lv"><label for="lv">计算出货最小Lv</label> <br> <br>
+            <input type="checkbox" id="lv"><label for="lv">计算出货最小Lv</label> <br> 
             <!-- <input type="checkbox" id="fail"><label for="fail">失败率计入总确率</label> <br> -->
             <span class="la"><button class="btn btn-default" parentindex="11" name="link11" value="-1" alt="120">🐧开发失败</button></span><br>
-           <b style="color: darkred;">*强烈建议将开发失败作为<span class="label label-info">副查询</span>，可有效节省开发资材</b>  
+           <b style="color: darkred;">*强烈建议将开发失败作为<span class="label label-info">副查询</span>，<br> 可有效节省开发资材</b>  
           </div>
         </div>
 
@@ -210,8 +210,12 @@
           duration.push($(this).val());
         }
       });
+      if(output.length+extra.length>0){
+        if(duration.length>0){
       console.log(extra,output)
       window.location.href=("result.html?t="+duration.reverse()+'&q='+'d'+'&o='+output+'&e='+extra+'&s='+$('#sorto').val()+'&a='+$("#a").val()+'&l='+$("#lv")[0].checked )
+        }else{alert("您未选择时间范围！")}
+    }else{alert("您未选择装备！")}
     })
     
     function genCheck(Obj) {

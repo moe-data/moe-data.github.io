@@ -9170,7 +9170,7 @@ const width = Width()-80// container.scrollWidth*1.34;
 const graph = new G6.Graph({
   container: 'container',
   width: width,
-  height: 1080,
+  height: width>550?1080:300,
   layout: {
     type: 'dagre',
     nodesep:2,
