@@ -2,6 +2,7 @@
 var Default_isFT = 4 //默认是否繁体，0-简体，1-繁体 , 2- Japan 3 english
 var StranIt_Delay = 1500 //翻译延时毫秒（设这个的目的是让网页先流畅的显现出来）
 var StranLink_Obj
+BodyIsFt = Default_isFT
 //转换文本
 function StranText(txt) {
     if (txt == "" || txt == null||BodyIsFt==4) return txt;

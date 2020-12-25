@@ -1,4 +1,3 @@
-BodyIsFt = 4
 var title={
     "afterlv": "改造lv",
     "backs": "稀有",
