@@ -255,15 +255,14 @@
         }
         }
       })
-      StranBody()
     }
     function genCheckBox(id, name, value, showText, parentIndex, isCheck) {
-      var checkbox = "<span class='la'><button class='btn btn-default' parentIndex=" + parentIndex + " name="+name+(isCheck ? " checked='checked'" : '') + " value="+value+" alt="+showText+" >"+formatItemId(showText) + " &ensp; </button></span>";
+      var checkbox = "<span class='la'><button class='btn btn-default' parentIndex=" + parentIndex + " name="+name+(isCheck ? " checked='checked'" : '') + " value="+value+" alt="+showText+" >"+ StranText(formatItemId(showText)) + " &ensp; </button></span>";
       $("#" + id).append(checkbox);
 
     }
     function genShowContent(id, checkboxId, index, showText, idName) {
-      var showContent = "<dd class='msg'><dt><span class='bigfont'>".concat(showText).concat("： </span>" +"</dt> <dd class='content' id='").concat(idName).concat("' ></dd></dd><br>");
+      var showContent = "<dd class='msg'><dt><span class='bigfont'>".concat(StranText(showText)).concat("： </span>" +"</dt> <dd class='content' id='").concat(idName).concat("' ></dd></dd><br>");
       $("#" + id).append(showContent);
     }
     function isAllCheck(name) {
@@ -342,7 +341,6 @@
       
       }
       genCheck(release);
-          // console.log(JSON.stringify( release))
     }
   </script>
   <script>
