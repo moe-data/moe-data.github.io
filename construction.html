@@ -8,7 +8,7 @@
   <meta name="description" content="本站支持多装备概率叠加显示，特定旗舰出货概率显示" />
   <meta name="author" content="提督Conba">
   <link rel="icon" href="images/logo/icon.png">
-  <title>萌萌数据库 - 多装备开发统计</title>
+  <title>萌萌数据库 - 多舰船建造统计</title>
   <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.css" rel="stylesheet"> -->
   <!-- <link rel="stylesheet" href="dist/css/dashboard.css"> -->
@@ -74,14 +74,14 @@
 <body>
   <div id="nav"></div>
   <!-- <h2 align="center">萌萌数据库 - 舰队收藏</h2> -->
-  <h1 align="center">萌萌数据库 - 多装备开发统计</h1>
+  <h1 align="center">萌萌数据库 - 多舰船建造统计</h1>
   <div id="bgpic">
     <div id="bgcolor">
       <div class="panel panel-default">
 
         <div class="panel panel-info col-sm-12">
           <div class="panel-heading">
-            <h3 class="panel-title">开发对象装备&ensp;&ensp;分类：
+            <h3 class="panel-title">建造对象选择&ensp;&ensp;分类：
               <select name="" id="sort" onchange="arrange(value)" >
                 <option value=-2 selected>默认</option>
                 <option value=-1>开发解禁时间</option>
@@ -213,9 +213,9 @@
       if(output.length+extra.length>0){
         if(duration.length>0){
       console.log(extra,output)
-      window.location.href=("result.html?t="+duration.reverse()+'&q='+'d'+'&o='+output+'&e='+extra+'&s='+$('#sorto').val()+'&a='+$("#a").val()+'&l='+$("#lv")[0].checked )
+      window.location.href=("result.html?t="+duration.reverse()+'&q='+'c'+'&o='+output+'&e='+extra+'&s='+$('#sorto').val()+'&a='+$("#a").val()+'&l='+$("#lv")[0].checked )
         }else{alert("您未选择时间范围！")}
-    }else{alert("您未选择装备！")}
+    }else{alert("您未选择舰娘！")}
     })
     
     function genCheck(Obj) {
@@ -255,7 +255,6 @@
         }
         }
       })
-      StranBody()
     }
     function genCheckBox(id, name, value, showText, parentIndex, isCheck) {
       var checkbox = "<span class='la'><button class='btn btn-default' parentIndex=" + parentIndex + " name="+name+(isCheck ? " checked='checked'" : '') + " value="+value+" alt="+showText+" >"+formatItemId(showText) + " &ensp; </button></span>";
