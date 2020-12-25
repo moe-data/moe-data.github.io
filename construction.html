@@ -8,6 +8,16 @@
   <meta name="description" content="本站支持多装备概率叠加显示，特定旗舰出货概率显示" />
   <meta name="author" content="提督Conba">
   <link rel="icon" href="images/logo/icon.png">
+  <title>萌萌数据库 - <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="萌萌数据库,装备开发统计,舰队collection,舰船建造统计,舰娘数据库" />
+  <meta name="description" content="本站支持多装备概率叠加显示，特定旗舰出货概率显示" />
+  <meta name="author" content="提督Conba">
+  <link rel="icon" href="images/logo/icon.png">
   <title>萌萌数据库 - 多舰船建造统计</title>
   <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.css" rel="stylesheet"> -->
@@ -81,7 +91,7 @@
 
         <div class="panel panel-info col-sm-12">
           <div class="panel-heading">
-            <h3 class="panel-title">建造对象选择&ensp;&ensp;分类：
+            <h3 class="panel-title">开发对象装备&ensp;&ensp;分类：
               <select name="" id="sort" onchange="arrange(value)" >
                 <option value=-2 selected>默认</option>
                 <option value=-1>开发解禁时间</option>
@@ -257,12 +267,12 @@
       })
     }
     function genCheckBox(id, name, value, showText, parentIndex, isCheck) {
-      var checkbox = "<span class='la'><button class='btn btn-default' parentIndex=" + parentIndex + " name="+name+(isCheck ? " checked='checked'" : '') + " value="+value+" alt="+showText+" >"+formatItemId(showText) + " &ensp; </button></span>";
+      var checkbox = "<span class='la'><button class='btn btn-default' parentIndex=" + parentIndex + " name="+name+(isCheck ? " checked='checked'" : '') + " value="+value+" alt="+showText+" >"+ StranText(formatItemId(showText)) + " &ensp; </button></span>";
       $("#" + id).append(checkbox);
 
     }
     function genShowContent(id, checkboxId, index, showText, idName) {
-      var showContent = "<dd class='msg'><dt><span class='bigfont'>".concat(showText).concat("： </span>" +"</dt> <dd class='content' id='").concat(idName).concat("' ></dd></dd><br>");
+      var showContent = "<dd class='msg'><dt><span class='bigfont'>".concat(StranText(showText)).concat("： </span>" +"</dt> <dd class='content' id='").concat(idName).concat("' ></dd></dd><br>");
       $("#" + id).append(showContent);
     }
     function isAllCheck(name) {
@@ -341,7 +351,6 @@
       
       }
       genCheck(release);
-          // console.log(JSON.stringify( release))
     }
   </script>
   <script>
@@ -349,5 +358,3 @@
     $("#foot").load("foot.html");
   </script>
 </body>
-
-</html>
