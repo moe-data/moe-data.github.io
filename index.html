@@ -12,7 +12,6 @@
   <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.css" rel="stylesheet"> -->
   <!-- <link rel="stylesheet" href="dist/css/dashboard.css"> -->
-  <!-- <link rel="stylesheet" href="dist/css/all.css"> -->
   <style>
     body {
     padding-top: 50px;
@@ -59,6 +58,10 @@
   } */
     div.panel-info {line-height:19%}
     .bigfont{font-size: 18px;}
+   .label, .btn, .btnlg, .panel{
+      border-radius: 20px;}
+    /* .dl-horizontal dt {width: 120px;}
+    .dl-horizontal dd {margin-left: 120px;} */
   </style>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"></script>
@@ -77,8 +80,6 @@
   <h1 align="center">萌萌数据库 - 多装备开发统计</h1>
   <div id="bgpic">
     <div id="bgcolor">
-      <div class="panel panel-default">
-
         <div class="panel panel-info col-sm-12">
           <div class="panel-heading">
             <h3 class="panel-title">开发对象装备&ensp;&ensp;分类：
@@ -101,7 +102,7 @@
           </div>
         </div>
         <div align="center" class="panel-body  col-sm-12">
-          <button type="button" class="btnlg btn-success go" style="border-radius: 18px;" value="">检索</button>
+          <button type="button" class="btnlg btn-success go" value="">检索</button>
         </div>
         <div class="panel panel-warning col-sm-12 hint">
         <div class="panel-heading">
@@ -139,7 +140,7 @@
             <label>&ensp;&ensp;公式次数(分母)&ensp;>&ensp;</label><input type="number" id="a" value="0" style="width: 108px;"> <br>
             <input type="checkbox" id="lv"><label for="lv">计算出货最小Lv</label> <br> 
             <!-- <input type="checkbox" id="fail"><label for="fail">失败率计入总确率</label> <br> -->
-            <span class="la"><button class="btn btn-default" parentindex="11" name="link11" value="-1" alt="120">🐧开发失败</button></span><br>
+            <span class="la"><button class="btn btn-default" parentindex="11" name="link11" value="-1">🐧开发失败</button></span><br>
            <b style="color: darkred;">*强烈建议将开发失败作为<span class="label label-info">副查询</span>，<br> 可有效节省开发资材</b>  
           </div>
         </div>
@@ -257,7 +258,7 @@
       })
     }
     function genCheckBox(id, name, value, showText, parentIndex, isCheck) {
-      var checkbox = "<span class='la'><button class='btn btn-default' parentIndex=" + parentIndex + " name="+name+(isCheck ? " checked='checked'" : '') + " value="+value+" alt="+showText+" >"+ StranText(formatItemId(showText)) + " &ensp; </button></span>";
+      var checkbox = "<span class='la'><button class='btn btn-default' parentIndex=" + parentIndex +(isCheck ? " checked='checked'" : '') + " value="+value+" >"+ StranText(formatItemId(showText)) + " &ensp; </button></span>";
       $("#" + id).append(checkbox);
 
     }
