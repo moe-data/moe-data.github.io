@@ -266,6 +266,23 @@ Spitfire Mk.I   </button></dd><br></div>
     var primary = 'btn-primary'
     var warning = 'btn-info'
     var btndef='btn-default'
+    function btnbind(){
+      $('.btn').click(function () {
+          $(this).addClass('clicked')
+        if ($(this).hasClass(primary)) {
+          $(this).removeClass(btndef)
+          $(this).addClass(warning)
+          $(this).removeClass(primary)
+        } else {if ($(this).hasClass(warning)) {
+          $(this).addClass(btndef)
+          $(this).removeClass(warning)
+        } else {
+          $(this).removeClass(btndef)
+          $(this).addClass(primary)
+        }
+        }
+      })}
+    btnbind()
     $.getJSON("parsed/api_mst_slotitem_equiptype.json", function (res) {
     itype=res}).done(function () {
     $.getJSON("parsed/api_mst_slotitem.json", function (result) {
@@ -322,22 +339,7 @@ Spitfire Mk.I   </button></dd><br></div>
         }
         var box = document.getElementById(checkText + i);
       }
-      
-      $('.btn').click(function () {
-          $(this).addClass('clicked')
-        if ($(this).hasClass(primary)) {
-          $(this).removeClass(btndef)
-          $(this).addClass(warning)
-          $(this).removeClass(primary)
-        } else {if ($(this).hasClass(warning)) {
-          $(this).addClass(btndef)
-          $(this).removeClass(warning)
-        } else {
-          $(this).removeClass(btndef)
-          $(this).addClass(primary)
-        }
-        }
-      })
+      btnbind()
     }
     function genCheckBox(id, name, value, showText, parentIndex, isCheck) {
       var checkbox = "<span class='la'><button class='btn btn-default' parentIndex=" + parentIndex +(isCheck ? " checked='checked'" : '') + " value="+value+" >"+ StranText(formatItemId(showText)) + " &ensp; </button></span>";
