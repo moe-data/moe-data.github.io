@@ -186,7 +186,7 @@ Spitfire Mk.I   </button></dd><br></div>
              <li>第一次所需的查询时间可能较长，请耐心等待。</li><br>
              <li>时间范围勾选的越少，加载速度越快</li><br>
              <li>加载速度和装备选择数量无关</li><br>
-             <li>建造统计正在施工中</li><br>
+             <li><a href="construction.html">建造统计</a>(beta)施工完成！</li><br>
              <li>不兼容IE8以下浏览器</li><br>
             </ul>  
             
@@ -255,13 +255,16 @@ Spitfire Mk.I   </button></dd><br></div>
         if ($(this).hasClass(primary)) {
           $(this).removeClass(btndef)
           $(this).addClass(warning)
+          $.cookie('d'+$(this).val(),warning,{expires:365,path:'/'})
           $(this).removeClass(primary)
         } else {if ($(this).hasClass(warning)) {
           $(this).addClass(btndef)
+          $.cookie('d'+$(this).val(),btndef,{expires:365,path:'/'})
           $(this).removeClass(warning)
         } else {
-          $(this).removeClass(btndef)
           $(this).addClass(primary)
+          $.cookie('d'+$(this).val(),primary,{expires:365,path:'/'})
+          $(this).removeClass(btndef)
         }
         }
       })}
@@ -325,7 +328,7 @@ Spitfire Mk.I   </button></dd><br></div>
       btnbind()
     }
     function genCheckBox(id, name, value, showText, parentIndex, isCheck) {
-      var checkbox = "<span class='la'><button class='btn btn-default' parentIndex=" + parentIndex +(isCheck ? " checked='checked'" : '') + " value="+value+" >"+ StranText(formatItemId(showText)) + " &ensp; </button></span>";
+      var checkbox = "<span class='la'><button class='btn "+ ($.cookie('d'+value)==warning?warning:($.cookie('d'+value)==primary?primary:btndef)) +"' parentIndex=" + parentIndex +(isCheck ? " checked='checked'" : '') + " value="+value+" >"+ StranText(formatItemId(showText)) + "</button></span>";
       $("#" + id).append(checkbox);
 
     }
