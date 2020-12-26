@@ -5,19 +5,11 @@ isFirst=true
 var exclude = ["id", "sortno", "sort_id", "afterfuel", "afterbull",  "fuel_max", "bull_max", "aftershipid", "ctype", "backs", "afterlv", "slot_num", "type","stype","itype", "buildtime"];
 function getcol(){
     var strIds=new Array();//声明一个存放id的数组 
-    $("input[name=items]").each(function (i,d){ 
-        if(d.getAttribute("index")==1){
+    $("input[name=items]").each(function (i,d){
         if(d.checked){
-        strIds.push(d.value); }}else{
-            var la =d.nextSibling.nextSibling.children;
-            for(lalen=la.length,j=0;j<lalen;j++){
-                if(la[j].firstChild.checked){strIds.push(d.value+'#'+j)//"Max",d.value+"Min")
-                }
-            }
-        }
+        strIds.push(d.value); }
     }) 
     return strIds}
-    
 function loadchart(){
     info=document.getElementById('inform')
     if("undefined" == typeof echarts){
@@ -164,17 +156,13 @@ function loadchart(){
 
 function loadprot(prot){
     var keys=[]
-    var months = {}
-    var stat=[]
     for(key in prot){
         var e=key
         if(e == 'ratio'||( e!='i'&& e!='denominator'&& e!='times'&& e!='i'&& e[0]!='n'&& e[0]!='l')){
-        keys.push(key)
-        stat[key]=1}
+        keys.push(key)}
     }
         var years = keys; 
-        // var yearMonth = [years, months];  
-        genCheck(years, months,stat);  
+        genCheck(years);  
 }
 function getseries(r,c,shape,stack,sortkey){
     w=Width()
@@ -185,29 +173,12 @@ function getseries(r,c,shape,stack,sortkey){
     var rawlen=r.length
     for(k=0;k<c.length;k++){
         var e=c[k]
-        // for(e of c){
         var prot=c[k]
-        // var suffix=""
-        // if(e.indexOf('#')>0){
-        //     prot=e.split('#')[0]
-        //     if(r[0][prot].length==2){
-        //         if(e.split('#')[1]==1){
-        //             // suffix=" min"}else{
-        //                 suffix=" max"}
-        //     }else{
-        //     suffix=1+Number(e.split('#')[1])};
-        // }else{
-        //         prot=e
-        //     }
         var name=getname(prot,kj)
         var data=[]
         var clr={}
         for(i=0;i<rawlen;i++){
-            // if(r[i][e]==null){  if(r[i][(e.split('#')[0])]==null){
-            //     unit=0}else{
-            //     unit=(r[i][(e.split('#')[0])][e.split('#')[1]])}}else{
                     unit=(r[i][e])*100
-                // }
             data.push(unit)
         }   
         var eie=exclude.indexOf(prot)>-1
@@ -367,86 +338,26 @@ function getseries(r,c,shape,stack,sortkey){
     console.log([s,col,shipname])
 return [s,col,shipname]
 }
-function genCheck(years, months,stat) {  
+function genCheck(years) {  
     var content = "content";  
     var checkText = "checkbox";  
-    var link = "link";  
+    // var link = "link";  
     var size;  
     $("#show").html("");  
     size = years.length;  
     for (var i = 0; i < size; i++) {
         // if(exclude.indexOf(years[i])>-1){}else{
-        genShowContent("show", checkText + years[i], i, years[i], content + years[i],stat[years[i]]);}
+        genShowContent("show", checkText + years[i], i, years[i], content + years[i]);}
     // }  
-    for (i in months){
-        for(j in months[i]){
-            genCheckBox(content + i, link + i, months[i][j], months[i][j], i, stat[i]);  }
-        // var flag = isAllCheck(link + i);  
-        // var box = document.getElementById(checkText + i);  
-        // if (flag) {  
-        //     box.checked = true;  
-        // } else {  
-        //     box.checked = false;  
-        // }  
-        $("input[name=" + link + i + "]").each(function () {  
-            $(this).unbind();  
-            $(this).change(function () {
-                var flag = isAllCheck($(this).attr("name"));  
-                var box = document.getElementById(checkText + $(this).attr("parentIndex"));  
-                if (flag) {  
-                    box.checked = true;  
-                } else {  
-                    box.checked = false;  
-                }  
-            });  
-        });  
-    }  
-    for (var i = 0; i < size; i++) {
-        if(stat[years[i]]>1){
-        $("#" + checkText + years[i]).unbind();  
-        $("#" + checkText + years[i]).change(function () {  
-            var temp = link + $(this).attr("value");  
-            var p = document.getElementById(checkText + $(this).attr("value"));  
-            var box = document.getElementsByName(temp);  
-            for (var j = 0; j < box.length; j++) {  
-                if (p.checked) {  
-                    box[j].checked = true;  
-                } else {  
-                    box[j].checked = false;  
-                }  
-            }  
-        });  
-    }  }
-}  
-
-function genCheckBox(id, name, value, showText, parentIndex, stat) {
-    // var chck=" checked='checked'"
-    // var txt=showText
-    // var isCheck=false
-    // if(stat==2){
-    //     if(showText==1){txt="min";    }else{
-    //     txt="max";isCheck=true;
-    // }
-    // if(parentIndex=='luck'){isCheck=!isCheck}if(parentIndex=='taik'){isCheck=false}}
-    //     var checkbox = "<span class='la'><input type='checkbox' parentIndex=" + parentIndex + " name=".concat(name,((isCheck)?chck:"")+" value=",value," alt=",showText," id='"+parentIndex+value+"' /><label for='"+parentIndex+value+"'>",txt,"</label></span>");  
-    //     $("#" + id).append(checkbox);  
-    // // debug(id,checkbox)
-}  
-
-
-function genShowContent(id, checkboxId, index, showText, idName,stat) {  
+}
+function genShowContent(id, checkboxId, index, showText, idName) {  
     if(showText=='name'||showText=='title'){return}
     var chck=" checked='checked'"
     var isCheck=true
-    // console.log(id, checkboxId, index, showText, idName,stat)
-    var colon='#'
-    if(stat==1){colon=""}
-    if(showText=='anti_submarine'||showText=='sight'||showText=='evasion'||showText=='HP'||showText=='houg'||showText=='raig'||showText=='tyku'){isCheck=true}
-    var showContent = "<span class='msg'><input type='checkbox' name='items'"+((isCheck)?chck:"")+" value='".concat(showText,"' index=",stat," id='",checkboxId,"'/><label class='bigfont' for='"+checkboxId+"'>",addicon(getname(showText,kj)),colon," </label><span class='content' id='",idName,"' ></span></span>")
+    if(showText=='ratio'){isCheck=false}
+    var showContent = "<span class='msg'><input type='checkbox' name='items'"+((isCheck)?chck:"")+" value='".concat(showText,"' id='",checkboxId,"'/><label class='bigfont' for='"+checkboxId+"'>",addicon(getname(showText,kj))," </label><span class='content' id='",idName,"' ></span></span>")
     $("#" + id).append(showContent);  
-}  
-
-
+}
 function isAllCheck(name) {  
     var box = document.getElementsByName(name);  
     for (var j = 0; j < box.length; j++) {  
@@ -509,8 +420,8 @@ function addemoji(value){
         case 25:
             emoji= "🛢"
           break;
-        // case 30:
-        //     emoji= "📤"
+        case 30:
+            emoji= "⛀"
         //   break;
         // case 37:
         //     emoji= ""
