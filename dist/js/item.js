@@ -31,7 +31,7 @@ function formatItemId(value) {
         if(slotitem[i]['api_id']==value){
             str=slotitem[i]['api_name']
             type=slotitem[i]['api_type'][3]
-    return '<span class="flex"><i style="background-image:url(http://fleet.diablohu.com/!/assets/images/itemicon/'+type+'.png);" class="item"></i>'+str+'</sapn>';
+    return '<span class="flex"><i style="background-image:url(https://fleet.diablohu.com/!/assets/images/itemicon/'+type+'.png);" class="item"></i>'+str+'</sapn>';
         }
     }return str
     }

@@ -76,7 +76,8 @@
                 <option value=1>中类</option>
                 <option value=0>大类</option>
               <!-- <option value=4>api_type</option> -->
-          </select></h3>
+          </select>
+          <button onclick="clearall()" style="float:right;">清空选择</button></h3>
           </div>
           <div class="panel-body">
             <dl class="dl-horizontal item-list">
@@ -167,7 +168,7 @@ Spitfire Mk.I   </button></dd><br></div>
             </dl>
           </div>
         </div>
-        <div align="center" class="panel-body  col-sm-12">
+        <div align="center" class="panel-body">
           <button type="button" class="btnlg btn-success go" value="">检索</button>
         </div>
         <div class="panel panel-warning col-sm-12 hint">
@@ -249,25 +250,6 @@ Spitfire Mk.I   </button></dd><br></div>
     var primary = 'btn-primary'
     var warning = 'btn-info'
     var btndef='btn-default'
-    function btnbind(){
-      $('.btn').click(function () {
-          $(this).addClass('clicked')
-        if ($(this).hasClass(primary)) {
-          $(this).removeClass(btndef)
-          $(this).addClass(warning)
-          $.cookie('d'+$(this).val(),warning,{expires:365,path:'/'})
-          $(this).removeClass(primary)
-        } else {if ($(this).hasClass(warning)) {
-          $(this).addClass(btndef)
-          $.cookie('d'+$(this).val(),btndef,{expires:365,path:'/'})
-          $(this).removeClass(warning)
-        } else {
-          $(this).addClass(primary)
-          $.cookie('d'+$(this).val(),primary,{expires:365,path:'/'})
-          $(this).removeClass(btndef)
-        }
-        }
-      })}
     btnbind()
     $.getJSON("parsed/api_mst_slotitem_equiptype.json", function (res) {
     itype=res}).done(function () {
@@ -397,7 +379,7 @@ Spitfire Mk.I   </button></dd><br></div>
             jstr= formatItype(tn)
             break;
           case '3':
-            jstr= '<i style="background-image:url(http://fleet.diablohu.com/!/assets/images/itemicon/'+tn+'.png);" class="item"></i>'
+            jstr= '<i style="background-image:url(https://fleet.diablohu.com/!/assets/images/itemicon/'+tn+'.png);" class="item"></i>'
             break;
           default:
             

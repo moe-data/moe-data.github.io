@@ -63,7 +63,7 @@
     <div id="bgcolor">
         <div class="panel panel-info col-sm-12">
           <div class="panel-heading">
-            <h3 class="panel-title">舰船选择</h3>
+            <h3 class="panel-title">舰船选择 &emsp;<button onclick="clearall()" style="float:right;">清空选择</button></h3>
           </div>
           <div class="panel-body"><dl class="dl-horizontal item-list"><dt class="bigfont">駆逐艦</dt> <dd>
 <button class="btn btn-default" value="1">睦月</button>
@@ -288,23 +288,7 @@
     var primary = 'btn-primary'
     var warning = 'btn-info'
     var btndef='btn-default'
-    
-      
-    $('.btn').click(function () {
-          $(this).addClass('clicked')
-        if ($(this).hasClass(primary)) {
-          $(this).removeClass(btndef)
-          $(this).addClass(warning)
-          $(this).removeClass(primary)
-        } else {if ($(this).hasClass(warning)) {
-          $(this).addClass(btndef)
-          $(this).removeClass(warning)
-        } else {
-          $(this).removeClass(btndef)
-          $(this).addClass(primary)
-        }
-        }
-      })
+    btnbind()
     $('.go').click(function () {
       var output=[]
       var extra = []

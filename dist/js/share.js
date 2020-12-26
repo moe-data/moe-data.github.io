@@ -125,7 +125,7 @@ function Width(){
     return document.body.clientWidth;}
 setTimeout(function(){
     if(($('.loading').is(':hidden')||"undefined" != typeof warning)&&Width()>1000){
-    document.body.style.setProperty('--pic', "url(http://fleet.diablohu.com/!/assets/images/homebg/"+
+    document.body.style.setProperty('--pic', "url(https://fleet.diablohu.com/!/assets/images/homebg/"+
     // "2"
     Math.round(25*Math.random())
     +".jpg)");
@@ -138,3 +138,32 @@ function bra(value,x){
         return value.replace("（","(").replace("）",")").replace("╱","/")
     }
 }
+
+function clearall(){
+    $('.btn').each(function(){
+        $(this).addClass(btndef)
+        $.cookie('d'+$(this).val(),null,{expires:365,path:'/'})
+        $(this).removeClass(warning)
+        $(this).removeClass(primary)
+    })
+  }
+  function btnbind(){
+    $('.btn').click(function () {
+        $(this).addClass('clicked')
+      if ($(this).hasClass(primary)) {
+        $(this).removeClass(btndef)
+        $(this).addClass(warning)
+        $.cookie('d'+$(this).val(),warning,{expires:365,path:'/'})
+        $(this).removeClass(primary)
+      } else {if ($(this).hasClass(warning)) {
+        $(this).addClass(btndef)
+        $.cookie('d'+$(this).val(),null,{expires:365,path:'/'})
+        $(this).removeClass(warning)
+        $(this).removeClass(primary)
+      } else {
+        $(this).addClass(primary)
+        $.cookie('d'+$(this).val(),primary,{expires:365,path:'/'})
+        $(this).removeClass(btndef)
+      }
+      }
+    })}
