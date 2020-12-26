@@ -11,8 +11,9 @@
   <title>萌萌数据库 - 多装备开发统计</title>
   <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.css" rel="stylesheet"> -->
-  <!-- <link rel="stylesheet" href="dist/css/dashboard.css"> -->
+  <link rel="stylesheet" href="dist/css/dashboard.css">
   <style>
+    div.panel-info {line-height:19%}
     body {
     padding-top: 50px;
     /*background: rgb(185, 246, 246);*/
@@ -32,9 +33,6 @@
       margin-left: 15px;
     }
     h3 {display : inline!important}
-    .off{    background-color: #eee;color: #000;}
-    .btnlg{width: 300px;height: 50px;font-size: large;font-weight: bold}
-    button.clicked.btn-default{color:darkblue;}
     i.item{
     display: inline-block;
     width: 20px;
@@ -43,25 +41,10 @@
     background-position: center center;
     background-repeat: no-repeat;
   }  
-  .flex{
-      display: flex;}
-  .hint{
-    line-height: 80%;
-  }
-  /* .three{
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background-size: 25px 25px;
-    color: #0000;
-    font-size: 24px;
-  } */
-    div.panel-info {line-height:19%}
-    .bigfont{font-size: 18px;}
-   .label, .btn, .btnlg, .panel{
-      border-radius: 20px;}
-    /* .dl-horizontal dt {width: 120px;}
-    .dl-horizontal dd {margin-left: 120px;} */
+  .flex{display: flex;}
+  /* .hint{    line-height: 80%;  } */
+  .label, .btnlg, .btn, .panel{
+    border-radius: 20px;} 
   </style>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"></script>
@@ -97,7 +80,7 @@
           </div>
           <div class="panel-body">
             <dl class="dl-horizontal item-list">
-              <div class="show" id="show"><dd class="msg"></dd><dt><span class="bigfont">主砲/副砲： </span>
+              <div class="show" id="show"><dd class="msg"></dd><dt class="bigfont">主砲/副砲
 </dt> <dd><button class="btn btn-default" value="1">
 12cm単装砲   </button><button class="btn btn-default" value="2">
 12.7cm連装砲   </button><button class="btn btn-default" value="147">
@@ -114,18 +97,18 @@
 12.7cm連装高角砲   </button><button class="btn btn-default" value="11">
 15.2cm単装砲   </button><button class="btn btn-default" value="12">
 15.5cm三連装副砲   </button><button class="btn btn-default" value="66">
-8cm高角砲   </button></dd><br><dd class="msg"></dd><dt><span class="bigfont">魚雷： </span>
+8cm高角砲   </button></dd><br><dd class="msg"></dd><dt class="bigfont">魚雷
 </dt> <dd><button class="btn btn-default" value="13">
 61cm三連装魚雷   </button><button class="btn btn-default" value="14">
 61cm四連装魚雷   </button><button class="btn btn-default" value="15">
 61cm四連装(酸素)魚雷   </button><button class="btn btn-default" value="41">
-甲標的 甲型   </button></dd><br><dd class="msg"></dd><dt><span class="bigfont">艦上攻撃機： </span>
+甲標的 甲型   </button></dd><br><dd class="msg"></dd><dt class="bigfont">艦上攻撃機
 </dt> <dd><button class="btn btn-default" value="16">
 九七式艦攻   </button><button class="btn btn-default" value="17">
 天山   </button><button class="btn btn-default" value="18">
 流星   </button><button class="btn btn-default" value="52">
 流星改   </button><button class="btn btn-default" value="242">
-Swordfish   </button></dd><br><dd class="msg"></dd><dt><span class="bigfont">艦上戦闘機： </span>
+Swordfish   </button></dd><br><dd class="msg"></dd><dt class="bigfont">艦上戦闘機
 </dt> <dd><button class="btn btn-default" value="19">
 九六式艦戦   </button><button class="btn btn-default" value="20">
 零式艦戦21型   </button><button class="btn btn-default" value="21">
@@ -133,31 +116,31 @@ Swordfish   </button></dd><br><dd class="msg"></dd><dt><span class="bigfont">�
 試製烈風 後期型   </button><button class="btn btn-default" value="55">
 紫電改二   </button><button class="btn btn-default" value="181">
 零式艦戦32型   </button><button class="btn btn-default" value="249">
-Fulmar   </button></dd><br><dd class="msg"></dd><dt><span class="bigfont">艦上爆撃機： </span>
+Fulmar   </button></dd><br><dd class="msg"></dd><dt class="bigfont">艦上爆撃機
 </dt> <dd><button class="btn btn-default" value="23">
 九九式艦爆   </button><button class="btn btn-default" value="24">
 彗星   </button><button class="btn btn-default" value="57">
 彗星一二型甲   </button><button class="btn btn-default" value="60">
-零式艦戦62型(爆戦)   </button></dd><br><dd class="msg"></dd><dt><span class="bigfont">水偵水爆： </span>
+零式艦戦62型(爆戦)   </button></dd><br><dd class="msg"></dd><dt class="bigfont">水偵水爆
 </dt> <dd><button class="btn btn-default" value="25">
 零式水上偵察機   </button><button class="btn btn-default" value="59">
 零式水上観測機   </button><button class="btn btn-default" value="163">
 Ro.43水偵   </button><button class="btn btn-default" value="26">
 瑞雲   </button><button class="btn btn-default" value="194">
 Laté 298B   </button><button class="btn btn-default" value="207">
-瑞雲(六三一空)   </button></dd><br><dd class="msg"></dd><dt><span class="bigfont">電探： </span>
+瑞雲(六三一空)   </button></dd><br><dd class="msg"></dd><dt class="bigfont">電探
 </dt> <dd><button class="btn btn-default" value="27">
 13号対空電探   </button><button class="btn btn-default" value="28">
 22号対水上電探   </button><button class="btn btn-default" value="29">
 33号対水上電探   </button><button class="btn btn-default" value="30">
 21号対空電探   </button><button class="btn btn-default" value="31">
 32号対水上電探   </button><button class="btn btn-default" value="32">
-42号対空電探   </button></dd><br><dd class="msg"></dd><dt><span class="bigfont">増設： </span>
+42号対空電探   </button></dd><br><dd class="msg"></dd><dt class="bigfont">増設
 </dt> <dd><button class="btn btn-default" value="33">
 改良型艦本式タービン   </button><button class="btn btn-default" value="34">
 強化型艦本式缶   </button><button class="btn btn-default" value="72">
 増設バルジ(中型艦)   </button><button class="btn btn-default" value="73">
-増設バルジ(大型艦)   </button></dd><br><dd class="msg"></dd><dt><span class="bigfont">砲弾： </span>
+増設バルジ(大型艦)   </button></dd><br><dd class="msg"></dd><dt class="bigfont">砲弾
 </dt> <dd><button class="btn btn-default" value="37">
 7.7mm機銃   </button><button class="btn btn-default" value="38">
 12.7mm単装機銃   </button><button class="btn btn-default" value="39">
@@ -166,16 +149,16 @@ Laté 298B   </button><button class="btn btn-default" value="207">
 25mm単装機銃   </button><button class="btn btn-default" value="51">
 12cm30連装噴進砲   </button><button class="btn btn-default" value="35">
 三式弾   </button><button class="btn btn-default" value="36">
-九一式徹甲弾   </button></dd><br><dd class="msg"></dd><dt><span class="bigfont">ソナー/爆雷： </span>
+九一式徹甲弾   </button></dd><br><dd class="msg"></dd><dt class="bigfont">ソナー/爆雷
 </dt> <dd><button class="btn btn-default" value="46">
 九三式水中聴音機   </button><button class="btn btn-default" value="47">
 三式水中探信儀   </button><button class="btn btn-default" value="44">
 九四式爆雷投射機   </button><button class="btn btn-default" value="45">
 三式爆雷投射機   </button><button class="btn btn-default" value="226">
-九五式爆雷   </button></dd><br><dd class="msg"></dd><dt><span class="bigfont">艦上偵察機： </span>
+九五式爆雷   </button></dd><br><dd class="msg"></dd><dt class="bigfont">艦上偵察機
 </dt> <dd><button class="btn btn-default" value="54">
 彩雲   </button><button class="btn btn-default" value="61">
-二式艦上偵察機   </button></dd><br><dd class="msg"></dd><dt><span class="bigfont">其の它： </span>
+二式艦上偵察機   </button></dd><br><dd class="msg"></dd><dt class="bigfont">其の它
 </dt> <dd><button class="btn btn-default" value="75">
 ドラム缶(輸送用)   </button><button class="btn btn-default" value="120">
 91式高射装置   </button><button class="btn btn-default" value="168">
@@ -347,7 +330,7 @@ Spitfire Mk.I   </button></dd><br></div>
 
     }
     function genShowContent(id, checkboxId, index, showText, idName) {
-      var showContent = "<dd class='msg'><dt><span class='bigfont'>".concat(StranText(showText)).concat("： </span>" +"</dt> <dd class='content' id='").concat(idName).concat("' ></dd></dd><br>");
+      var showContent = "<dd class='msg'><dt class='bigfont'>".concat(StranText(showText)).concat("：</dt> <dd class='content' id='").concat(idName).concat("' ></dd></dd><br>");
       $("#" + id).append(showContent);
     }
     function isAllCheck(name) {

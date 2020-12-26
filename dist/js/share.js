@@ -104,7 +104,7 @@ function getname(api,kj){
             name=english(api)
         }else{
             if($.cookie('JF_cn')=="1"){name=Traditionalized(name)}else{
-                if($.cookie('JF_cn')=="0"||$.cookie('JF_cn')==null){name=Simplized(name)}else{
+                if($.cookie('JF_cn')=="0"){name=Simplized(name)}else{
                     if($.cookie('JF_cn')=="2"){name=Japanized(name)}
                 }
             }

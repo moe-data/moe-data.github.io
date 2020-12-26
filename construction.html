@@ -21,19 +21,15 @@
   <title>萌萌数据库 - 多舰船建造统计</title>
   <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.css" rel="stylesheet"> -->
-  <!-- <link rel="stylesheet" href="dist/css/dashboard.css"> -->
-  <!-- <link rel="stylesheet" href="dist/css/all.css"> -->
+  <link rel="stylesheet" href="dist/css/dashboard.css">
   <style>
     body {
     padding-top: 50px;
-    /*background: rgb(185, 246, 246);*/
     background: var(--pic) no-repeat center;/*设置背景图片*/
     /* background-repeat:no-repeat;图片适应窗口大小，这里设置的是不进行平铺 */
     background-attachment: fixed;/*图片相对于浏览器固定,这里设置背景图片固定，不随内容滚动*/
     background-origin: border-box;/*从边框区域显示*/
     background-size:cover;/*指定图片大小，此时会保持图像的纵横比并将图像缩放成将完全覆盖背景定位区域的最小大小*/
-    /* align-items: center; */
-    /* text-shadow:1px 1px 2px #ddd,0px 0px 3px #ddd,0px 0px 3px #ddd,0px 0px 3px #ddd,0px 0px 5px #ddd,0px 0px 4px #ddd,0px 0px 4px #ddd,0px 0px 4px #ddd; */
     }
     .footer-list{
   background-color:#fffa;
@@ -43,34 +39,10 @@
       margin-left: 15px;
     }
     h3 {display : inline!important}
-    .off{    background-color: #eee;color: #000;}
-    .btnlg{width: 300px;height: 50px;font-size: large;font-weight: bold}
-    button.clicked.btn-default{color:darkblue;}
-    i.item{
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background-size: 25px 25px;
-    background-position: center center;
-    background-repeat: no-repeat;
-  }  
-  .flex{
-      display: flex;}
-  .hint{
-    line-height: 80%;
-  }
-  /* .three{
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background-size: 25px 25px;
-    color: #0000;
-    font-size: 24px;
-  } */
-    div.panel-info {line-height:19%}
-    .bigfont{font-size: 18px;}
-   .label, .btnlg, .btn, .panel{
-      border-radius: 20px;}
+  .label, .btnlg, .btn, .panel{
+    border-radius: 20px;} 
+  button.rare{border-right: groove;
+  border-bottom: groove;}
   </style>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"></script>
@@ -89,74 +61,12 @@
   <h1 align="center">萌萌数据库 - 多舰船建造统计</h1>
   <div id="bgpic">
     <div id="bgcolor">
-      <div class="panel panel-info col-sm-12">
-        <div class="panel-heading">
-          <h3 class="panel-title">舰船选择</h3>
-        </div>
-        <div class="panel-body">
-          <button class="btn btn-default" value="131">大和</button>
-<button class="btn btn-default" value="143">武蔵</button>
-<button class="btn btn-default" value="439">Warspite</button>
-<button class="btn btn-default" value="171">Bismarck</button>
-<button class="btn btn-default" value="80">長門</button>
-<button class="btn btn-default" value="81">陸奥</button>
-<button class="btn btn-default" value="78">金剛</button>
-<button class="btn btn-default" value="79">榛名</button>
-<button class="btn btn-default" value="85">霧島</button>
-<button class="btn btn-default" value="86">比叡</button>
-<button class="btn btn-default" value="26">扶桑</button>
-<button class="btn btn-default" value="27">山城</button>
-<button class="btn btn-default" value="77">伊勢</button>
-<button class="btn btn-default" value="87">日向</button>
-</div>
-    </div>
-    
-    <div class="panel panel-info col-sm-12">
-      <div class="panel-heading">
-        <h3 class="panel-title">舰船选择</h3>
-      </div>
-      <div class="panel-body">
-    </div>
-  </div>
-  <div class="panel panel-info col-sm-12">
-    <div class="panel-heading">
-      <h3 class="panel-title">舰船选择</h3>
-    </div>
-    <div class="panel-body">
-  </div>
-</div>
-<div class="panel panel-info col-sm-12">
-  <div class="panel-heading">
-    <h3 class="panel-title">舰船选择</h3>
-  </div>
-  <div class="panel-body"><button class="btn btn-default" value="102">千歳</button>
-    <button class="btn btn-default" value="103">千代田</button>
-    <button class="btn btn-default" value="451">瑞穂</button>
-    <button class="btn btn-default" value="161">あきつ丸</button>
-    <button class="btn btn-default" value="153">大鳳</button>
-    <button class="btn btn-default" value="154">香取</button>
-    <button class="btn btn-default" value="162">神威</button>
-    
-</div>
-</div>
-<div class="panel panel-info col-sm-12">
-  <div class="panel-heading">
-    <h3 class="panel-title">舰船选择</h3>
-  </div>
-  <div class="panel-body"><button class="btn btn-default" value="126">伊168</button>
-    <button class="btn btn-default" value="127">伊58</button>
-    <button class="btn btn-default" value="128">伊8</button>
-    <button class="btn btn-default" value="163">まるゆ</button>
-    <button class="btn btn-default" value="155">伊401</button>
-    
-</div>
-</div>
         <div class="panel panel-info col-sm-12">
           <div class="panel-heading">
             <h3 class="panel-title">舰船选择</h3>
           </div>
-          <div class="panel-body"><dl>2323</dl><dd>
-              <button class="btn btn-default" value="1">睦月</button>
+          <div class="panel-body"><dl class="dl-horizontal item-list"><dt class="bigfont">駆逐艦</dt> <dd>
+<button class="btn btn-default" value="1">睦月</button>
 <button class="btn btn-default" value="2">如月</button>
 <button class="btn btn-default" value="6">長月</button>
 <button class="btn btn-default" value="7">三日月</button>
@@ -170,7 +80,7 @@
 <button class="btn btn-default" value="16">潮</button>
 <button class="btn btn-default" value="17">陽炎</button>
 <button class="btn btn-default" value="18">不知火</button>
-<button class="btn btn-default" value="19">黒潮</button></dd>
+<button class="btn btn-default" value="19">黒潮</button>
 <button class="btn btn-default" value="20">雪風</button>
 <button class="btn btn-default" value="28">皐月</button>
 <button class="btn btn-default" value="29">文月</button>
@@ -204,7 +114,99 @@
 <button class="btn btn-default" value="132">秋雲</button>
 <button class="btn btn-default" value="164">弥生</button>
 <button class="btn btn-default" value="174">Z1</button>
-<button class="btn btn-default" value="175">Z3</button>
+<button class="btn btn-default" value="175">Z3</button></dd><br><br>
+<dt class="bigfont">軽巡洋艦</dt><dd>
+  <button class="btn btn-default" value="21">長良</button>
+<button class="btn btn-default" value="22">五十鈴</button>
+<button class="btn btn-default" value="23">由良</button>
+<button class="btn btn-default" value="24">大井</button>
+<button class="btn btn-default" value="25">北上</button>
+<button class="btn btn-default" value="51">天龍</button>
+<button class="btn btn-default" value="52">龍田</button>
+<button class="btn btn-default" value="53">名取</button>
+<button class="btn btn-default" value="54">川内</button>
+<button class="btn btn-default" value="55">神通</button>
+<button class="btn btn-default" value="56">那珂</button>
+<button class="btn btn-default" value="99">球磨</button>
+<button class="btn btn-default" value="100">多摩</button>
+<button class="btn btn-default" value="101">木曾</button>
+<button class="btn btn-default" value="113">鬼怒</button>
+<button class="btn btn-default" value="114">阿武隈</button>
+<button class="btn btn-default" value="115">夕張</button>
+<button class="btn btn-default rare" value="137">阿賀野</button>
+<button class="btn btn-default rare" value="138">能代</button>
+<button class="btn btn-default rare" value="139">矢矧</button></dd><br><br>
+<dt class="bigfont">重巡洋艦</dt><dd>
+  <button class="btn btn-default" value="59">古鷹</button>
+<button class="btn btn-default" value="60">加古</button>
+<button class="btn btn-default" value="61">青葉</button>
+<button class="btn btn-default" value="62">妙高</button>
+<button class="btn btn-default" value="63">那智</button>
+<button class="btn btn-default" value="64">足柄</button>
+<button class="btn btn-default" value="65">羽黒</button>
+<button class="btn btn-default" value="66">高雄</button>
+<button class="btn btn-default" value="67">愛宕</button>
+<button class="btn btn-default" value="68">摩耶</button>
+<button class="btn btn-default" value="69">鳥海</button>
+<button class="btn btn-default" value="70">最上</button>
+<button class="btn btn-default" value="71">利根</button>
+<button class="btn btn-default" value="72">筑摩</button>
+<button class="btn btn-default" value="120">三隈</button>
+<button class="btn btn-default" value="123">衣笠</button>
+<button class="btn btn-default" value="124">鈴谷</button>
+<button class="btn btn-default" value="125">熊野</button>
+<button class="btn btn-default rare" value="448">Zara</button></dd><br><br>
+<dt class="bigfont">戦艦</dt><dd>
+<button class="btn btn-default" value="78">金剛</button>
+<button class="btn btn-default" value="79">榛名</button>
+<button class="btn btn-default" value="85">霧島</button>
+<button class="btn btn-default" value="86">比叡</button>
+<button class="btn btn-default" value="171">Bismarck</button>
+<button class="btn btn-default" value="26">扶桑</button>
+<button class="btn btn-default" value="27">山城</button>
+<button class="btn btn-default" value="77">伊勢</button>
+<button class="btn btn-default" value="87">日向</button>
+<button class="btn btn-default" value="80">長門</button>
+<button class="btn btn-default" value="81">陸奥</button>
+<button class="btn btn-default rare" value="131">大和</button>
+<button class="btn btn-default rare" value="143">武蔵</button>
+<button class="btn btn-default rare" value="439">Warspite</button>
+</dd><br><br>
+<dt class="bigfont">軽空母</dt><dd>
+  <button class="btn btn-default" value="74">祥鳳</button>
+<button class="btn btn-default" value="75">飛鷹</button>
+<button class="btn btn-default" value="76">龍驤</button>
+<button class="btn btn-default" value="89">鳳翔</button>
+<button class="btn btn-default" value="92">隼鷹</button>
+<button class="btn btn-default" value="116">瑞鳳</button>
+</dd><br><br>
+<dt class="bigfont">空母</dt><dd>
+  <button class="btn btn-default" value="83">赤城</button>
+<button class="btn btn-default" value="84">加賀</button>
+<button class="btn btn-default" value="90">蒼龍</button>
+<button class="btn btn-default" value="91">飛龍</button>
+<button class="btn btn-default" value="110">翔鶴</button>
+<button class="btn btn-default" value="111">瑞鶴</button>
+<button class="btn btn-default rare" value="433">Saratoga</button>
+<button class="btn btn-default rare" value="515">Ark Royal</button>
+<button class="btn btn-default rare" value="153">大鳳</button>
+</dd><br><br>
+<dt class="bigfont">潜水艦</dt><dd>
+  <button class="btn btn-default" value="126">伊168</button>
+    <button class="btn btn-default" value="127">伊58</button>
+    <button class="btn btn-default" value="128">伊8</button>
+    <button class="btn btn-default rare" value="163">まるゆ</button>
+    <button class="btn btn-default" value="155">伊401</button>
+</dd><br><br>
+<dt class="bigfont">其の它</dt><dd>
+  <button class="btn btn-default" value="102">千歳</button>
+    <button class="btn btn-default" value="103">千代田</button>
+    <button class="btn btn-default rare" value="451">瑞穂</button>
+    <button class="btn btn-default rare" value="162">神威</button>
+    <button class="btn btn-default" value="161">あきつ丸</button>
+    <button class="btn btn-default" value="154">香取</button>
+</dd>
+</dl>
           </div>
         </div>
         <div align="center" class="panel-body  col-sm-12">
@@ -256,13 +258,13 @@
             <table cellpadding="50"><tr><th>时间</th><th>累计开发次数</th><th>&ensp;&ensp;&ensp;公式条数</th><th>&ensp;&ensp;&ensp;文件大小</th></tr>
             <tr><td><input class="time" type="checkbox" value="1" id="1">
             <label for ="1">2019年5月或更早</label></td><td align="right">16,256,435</td><td align="right"> 46655</td> <td align="right"> 24 MB</td> </tr> 
-            <tr><td><input class="time" type="checkbox" value="2" id="2" onclick="return false;">
-            <!-- <label for ="2">2019年6月~2020年3月</label></td><td align="right">6,499,665</td><td align="right"> 计算中</td> <td align="right"> 24 MB</td> </tr> 
+            <!-- <tr><td><input class="time" type="checkbox" value="2" id="2" onclick="return false;">
+            <label for ="2">2019年6月~2020年3月</label></td><td align="right">6,499,665</td><td align="right"> 计算中</td> <td align="right"> 24 MB</td> </tr> 
             <tr><td><input class="time" type="checkbox" value="3" id="3">
             <label for ="3">2020年4月~8月</label></td><td align="right">3,682,763</td><td align="right"> 14088</td> <td align="right"> 9.2 MB</td> </tr> 
             <tr><td><input class="time" type="checkbox" value="8"  id="8">
-            <label for ="8">2020年9月~10月</label></td><td align="right">1,214,965</td><td align="right"> 6520</td> <td align="right"> 4.4 MB</td> </tr> 
-            <tr><td><input class="time" type="checkbox" value="9"  id="9" checked="checked"> -->
+            <label for ="8">2020年9月~10月</label></td><td align="right">1,214,965</td><td align="right"> 6520</td> <td align="right"> 4.4 MB</td> </tr>  -->
+            <tr><td><input class="time" type="checkbox" value="9"  id="9" checked="checked">
             <label for ="9">2020年11月</label></td><td align="right">1,668,409</td><td align="right"> 8042</td> <td align="right"> 5.4 MB</td> </tr> 
           </table>
           </div>
