@@ -310,7 +310,10 @@
       console.log(extra,output)
       window.location.href=("result.html?t="+duration.reverse()+'&q='+'c'+'&o='+output+'&e='+extra+'&s='+$('#sorto').val()+'&a='+$("#a").val()+'&l='+$("#lv")[0].checked )
         }else{alert("您未选择时间范围！")}
-    }else{alert("您未选择舰娘！")}
+    }else{
+    if (confirm("您未选择舰船，是要查询所有舰船吗？")==true){
+      window.location.href=("result.html?t="+duration.reverse()+'&q='+'c'+'&o='+output+'&e='+extra+'&s='+$('#sorto').val()+'&a='+$("#a").val()+'&l='+$("#lv")[0].checked )
+    }else{alert("请点击舰船名称选择舰船。")}}
     })
     
   </script>

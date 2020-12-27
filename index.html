@@ -73,7 +73,7 @@
     <div id="bgcolor">
         <div class="panel panel-info col-sm-12">
           <div class="panel-heading">
-            <h3 class="panel-title">开发对象装备&ensp;&ensp;分类：
+            <h3 class="panel-title">开发装备选择&ensp;&ensp;分类：
               <select name="" id="sort" onchange="arrange(value)" >
                 <option value=-2 selected>默认</option>
                 <option value=-1>开发解禁时间</option>
@@ -292,7 +292,10 @@ Laté 298B   </button><button class="btn btn-default" value="207">
       console.log(extra,output)
       window.location.href=("result.html?t="+duration.reverse()+'&q='+'d'+'&o='+output+'&e='+extra+'&s='+$('#sorto').val()+'&a='+$("#a").val()+'&l='+$("#lv")[0].checked )
         }else{alert("您未选择时间范围！")}
-    }else{alert("您未选择装备！")}
+    }else{
+    if (confirm("您未选择装备，是要查询所有装备吗？")==true){
+      window.location.href=("result.html?t="+duration.reverse()+'&q='+'d'+'&o='+output+'&e='+extra+'&s='+$('#sorto').val()+'&a='+$("#a").val()+'&l='+$("#lv")[0].checked )
+    }else{alert("请点击装备名称选择装备。")}}
     })
     
     function genCheck(Obj) {
@@ -373,7 +376,7 @@ Laté 298B   </button><button class="btn btn-default" value="207">
           "2013/05/15":[54,55],
           "2013/05/08":[44,45,46,52],
           };
-          release["2013/04/23"] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]
+          release["2013/04/23"] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,-1]
         }else{if(value==-2){
           release=init}else{
           developable.forEach(function(d){
