@@ -46,13 +46,17 @@ var title={
     "n":"出货次数",
     "items":"公式",
     "secretary":"旗舰",
-    "i":"公式",
-    "s":"旗舰",
+    "i":"点击查看饼图",
+    "secretary":"旗舰",
     "times":"出货",
     "denominator":"公式次数",
     "ratio":"总确率",
     "l":"最低等级",
-    "developable":"开发"
+    "developable":"开发",
+    "fuel": "油",
+    "ammo": "弹",
+    "steel": "钢",
+    "bauxite": "铝",
     }
 var stype=[0,"海防艦","駆逐艦","軽巡洋艦","重雷装巡洋艦","重巡洋艦","航空巡洋艦","軽空母","戦艦","戦艦","航空戦艦","正規空母",
 "超弩級戦艦","潜水艦","潜水空母","補給艦","水上機母艦","揚陸艦","装甲空母","工作艦","潜水母艦","練習巡洋艦","補給艦"]
@@ -129,7 +133,7 @@ setTimeout(function(){
     // "2"
     Math.round(25*Math.random())
     +".jpg)");
-    console.log($('#logo').css("width"))
+    // console.log($('#logo').css("width"))
     $('#logo').attr("width","500px")}
         },     2000);
 //bootstrap出现特殊字符冲突
