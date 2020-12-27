@@ -31,7 +31,7 @@ function formatItemId(value) {
         if(slotitem[i]['api_id']==value){
             str=slotitem[i]['api_name']
             var newtag=''
-            if((value==78||value==147)&&"undefined" != typeof btninfo){newtag='<i style="background-image:url(https://img.lanrentuku.com/img/allimg/1206/5-120601152050-51.gif);" class="new"></i>'}
+            if(([78,147,194,242,249,250].indexOf(value)>-1)&&"undefined" != typeof btninfo){newtag='<i style="background-image:url(https://img.lanrentuku.com/img/allimg/1206/5-120601152050-51.gif);" class="new"></i>'}
     return '<span class="flex">'+itag(slotitem[i]['api_type'][3])+str+ newtag +'</sapn>';
         }
     }return str
