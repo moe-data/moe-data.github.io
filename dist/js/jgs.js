@@ -8,7 +8,7 @@ function replaceBy(selector, c, old, replace) {
       dropdown = document.getElementsByTagName(c)
     }
   }
-  for (i = 0, l = dropdown.length; i < l; i++) {
+  for (let i = 0, l = dropdown.length; i < l; i++) {
     dropdown[i].innerHTML = dropdown[i].innerHTML.replace(old, replace)
   }
 }

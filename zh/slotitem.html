@@ -229,7 +229,7 @@ if(!havelang){
         kj=true
     }
     selectlang=document.getElementById("locale")
-    for(i=0;i<selectlang.length;i++){
+    for(let i=0;i<selectlang.length;i++){
     if(selectlang[i].value==detect)
     selectlang[i].selected = true;
     }}
@@ -249,7 +249,7 @@ if(!havelang){
     // $("#foot").load("foot.html");
     $('.search-input').bind("input onchange", function() {
         setTimeout(function(){
-            for(i=0;i<document.getElementsByClassName('search-input').length;i++){
+            for(let i=0;i<document.getElementsByClassName('search-input').length;i++){
         //console.log(document.getElementsByClassName('search-input')[i])
             document.getElementsByClassName('search-input')[i].value=Japanized(document.getElementsByClassName('search-input')[i].value);}
             },     50);
@@ -308,10 +308,9 @@ for(el in eg){
 return col;
 }
 function itemicon(value,row,index){
-    for (i=0;i<slotitem.length;i++){
+    for (let i=0;i<slotitem.length;i++){
         if(slotitem[i]['name']==value){
-            str=slotitem[i]['type'][3]
-        return '<i style="background-image:url(https://fleet.diablohu.com/!/assets/images/itemicon/'+str+'.png);" class="item"></i>'+value
+        return itag(slotitem[i]['type'][3])+value
         }
     }
 }

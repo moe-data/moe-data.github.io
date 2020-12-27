@@ -66,7 +66,7 @@ function formatDtype(value,row,index) {
     }
 function formatshipId(value,row,index) {
     var str=value
-    for (i=0;i<csjson.length;i++){
+    for (let i=0;i<csjson.length;i++){
         if(csjson[i]['id']==value){
             str=csjson[i]['name'];break
         }
@@ -76,7 +76,7 @@ function formatshipId(value,row,index) {
 function addcol(result,col,old,n){
     l=result.length
     if(!l){console.log("empty");return}
-for(i=0;i<l;i++){
+for(let i=0;i<l;i++){
     result[i][col]=result[i][old][n]
 }}
 var sortkey
@@ -124,7 +124,7 @@ function api(name){
 function Width(){
     return document.body.clientWidth;}
 setTimeout(function(){
-    if(($('.loading').is(':hidden')||"undefined" != typeof warning)&&Width()>1000){
+    if(($('.loading').is(':hidden')||"undefined" != typeof btninfo)&&Width()>1000){
     document.body.style.setProperty('--pic', "url(https://fleet.diablohu.com/!/assets/images/homebg/"+
     // "2"
     Math.round(25*Math.random())
@@ -143,27 +143,30 @@ function clearall(){
     $('.btn').each(function(){
         $(this).addClass(btndef)
         $.cookie('d'+$(this).val(),null,{expires:365,path:'/'})
-        $(this).removeClass(warning)
+        $(this).removeClass(btninfo)
         $(this).removeClass(primary)
     })
   }
-  function btnbind(){
-    $('.btn').click(function () {
-        $(this).addClass('clicked')
-      if ($(this).hasClass(primary)) {
-        $(this).removeClass(btndef)
-        $(this).addClass(warning)
-        $.cookie('d'+$(this).val(),warning,{expires:365,path:'/'})
-        $(this).removeClass(primary)
-      } else {if ($(this).hasClass(warning)) {
-        $(this).addClass(btndef)
-        $.cookie('d'+$(this).val(),null,{expires:365,path:'/'})
-        $(this).removeClass(warning)
-        $(this).removeClass(primary)
-      } else {
-        $(this).addClass(primary)
-        $.cookie('d'+$(this).val(),primary,{expires:365,path:'/'})
-        $(this).removeClass(btndef)
-      }
-      }
-    })}
+function btnbind(){
+$('.btn').click(function () {
+    $(this).addClass('clicked')
+    if ($(this).hasClass(primary)) {
+    $(this).removeClass(btndef)
+    $(this).addClass(btninfo)
+    $.cookie('d'+$(this).val(),btninfo,{expires:365,path:'/'})
+    $(this).removeClass(primary)
+    } else {if ($(this).hasClass(btninfo)) {
+    $(this).addClass(btndef)
+    $.cookie('d'+$(this).val(),null,{expires:365,path:'/'})
+    $(this).removeClass(btninfo)
+    $(this).removeClass(primary)
+    } else {
+    $(this).addClass(primary)
+    $.cookie('d'+$(this).val(),primary,{expires:365,path:'/'})
+    $(this).removeClass(btndef)
+    }
+    }
+})}
+function itag(str){
+    return '<i style="background-image:url(https://fleet.diablohu.com/!/assets/images/itemicon/'+str+'.png);" class="item"></i>'
+}

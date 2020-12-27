@@ -68,7 +68,7 @@
 <script>
   function finish(){
     current=9;
-    for(i=0;i<data.nodes.length;i++){
+    for(let i=0;i<data.nodes.length;i++){
       if(data.nodes[i].id==current){
         data.nodes[i].cluster='a';
         data.nodes[i].style.stroke='#aaa';
@@ -9325,7 +9325,7 @@ function scaleNodeProp(elements, propName, refPropName, dataRange, outRange) {
 function newline(str){
   l=str.length
   var res=''
-  for(i=0;i<l;i++){
+  for(let i=0;i<l;i++){
     if(i%8==7){
       res+=str[i]+'\n'
     }else{res+=str[i]}
@@ -9335,7 +9335,7 @@ function newline(str){
 function seplink(str){
   var link=''
   var m=str.split(",")
-  for(i=0;i<m.length;i++){
+  for(let i=0;i<m.length;i++){
     link+=`<a href='javascript:jump("`+m[i]+`")'>`+m[i]+"</a> "
   }
   console.log(22)
@@ -9343,7 +9343,7 @@ function seplink(str){
 }
 function jump(str){
   graph.focusItem(str, true);
-  for(i=0;i<data.nodes.length;i++){
+  for(let i=0;i<data.nodes.length;i++){
     if(data.nodes[i].id==str){
           console.log(data.nodes[i])
       var model=data.nodes[i]

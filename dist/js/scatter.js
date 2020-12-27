@@ -33,7 +33,7 @@ function loadchart(){
     if(rawlen>325){
         if(isFirst){var temp=[]
             rnd=Math.round(1+21*Math.random())
-            for(i=0;i<rawlen;i++){
+            for(let i=0;i<rawlen;i++){
             if(raw[i][rawlen>600?'stype':'itype']==rnd&&(rawlen>600?raw[i]['final_form']=='yes':true)){temp.push(raw[i])};}
             raw=temp;}}
     info.innerHTML=(rawlen>325?"（默认加载全表数据，建议在表格中进行筛选）":'');
@@ -41,7 +41,7 @@ function loadchart(){
     rawlen=raw.length
     isFirst=false
     if(column.length<1||rawlen<1){
-        info.innerHTML=("服务器忙，请稍后重试"); console.log(raw,rnd)
+        info.innerHTML=("服务器忙，请在数秒后重试"); console.log(raw,rnd)
         return    }
     sortkey=$('#sort').val();
     if(sortkey!='unsort'&&(raw[0][sortkey]||raw[0][sortkey]==false)){
@@ -58,7 +58,7 @@ function loadchart(){
     gseries=getseries(raw,column,shapeval,stackval,sortkey)
     // var items=['总确率']
     // console.log(gseries[1])
-    // for(j=1;j<gseries[1].length;j++){
+    // for(let j=1;j<gseries[1].length;j++){
     //     console.log(gseries[1][j],j)
     //     items.push(gseries[1][j])//formatItemId(gseries[1][j].slice(1,gseries[1][j].length)))
     //     console.log(j)
@@ -88,8 +88,8 @@ function loadchart(){
     if($('#desc').length){inverse=!$('#desc')[0].checked}
     if(sortkey=='unsort'){inverse=!inverse}
     var dmin=0
-    for(i=0;i<gseries[0].length;i++){
-        for(j=0;j<gseries[0][i]['data'].length;j++){
+    for(let i=0;i<gseries[0].length;i++){
+        for(let j=0;j<gseries[0][i]['data'].length;j++){
             if (dmin>gseries[0][i]['data'][j])dmin=gseries[0][i]['data'][j]
         }
     }
@@ -102,7 +102,7 @@ function loadchart(){
             formatter: function(params) {
                 var res =  (params[0].name)+'<br><table>';
                 var myseries = '';
-                for(i=0;i<params.length;i++){
+                for(let i=0;i<params.length;i++){
                     num=params[i].value
                     if(num){
                         // console.log(params[i],i)
@@ -177,7 +177,7 @@ function getseries(r,c,shape,stack,sortkey){
         var name=getname(prot,kj)
         var data=[]
         var clr={}
-        for(i=0;i<rawlen;i++){
+        for(let i=0;i<rawlen;i++){
                     unit=(r[i][e])*100
             data.push(unit)
         }   
@@ -294,7 +294,7 @@ function getseries(r,c,shape,stack,sortkey){
     var shipname=[]
     var nametitle='title'
     if(!r[0][nametitle]){nametitle='i'}
-    for(i=0;i<rawlen;i++){
+    for(let i=0;i<rawlen;i++){
         shipname.push(r[i][nametitle])
     }
 

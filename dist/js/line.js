@@ -41,7 +41,7 @@ function loadchart(){
     if(rawlen>325){
         if(isFirst){var temp=[]
             rnd=Math.round(1+21*Math.random())
-            for(i=0;i<rawlen;i++){
+            for(let i=0;i<rawlen;i++){
             if(raw[i][rawlen>600?'stype':'itype']==rnd&&(rawlen>600?raw[i]['final_form']=='yes':true)){temp.push(raw[i])};}
             raw=temp;}}
     info.innerHTML=(rawlen>325?"（默认加载全表数据，建议在表格中进行筛选）":'');
@@ -87,8 +87,8 @@ function loadchart(){
     if($('#desc').length){inverse=!$('#desc')[0].checked}
     if(sortkey=='unsort'){inverse=!inverse}
     var dmin=0
-    for(i=0;i<gseries[0].length;i++){
-        for(j=0;j<gseries[0][i]['data'].length;j++){
+    for(let i=0;i<gseries[0].length;i++){
+        for(let j=0;j<gseries[0][i]['data'].length;j++){
             if (dmin>gseries[0][i]['data'][j])dmin=gseries[0][i]['data'][j]
         }
     }
@@ -150,7 +150,7 @@ function loadprot(prot){
                 keys.push(key)
                 stat[key]=prot[key].length
                 months[key]=[]
-                for (i=0;i<stat[key];i++){
+                for (let i=0;i<stat[key];i++){
                     months[key].push(i+1)
                 }
             }
@@ -188,7 +188,7 @@ function getseries(r,c,shape,stack,sortkey){
             }
         var name=getname(prot,kj)+suffix
         var data=[]
-        for(i=0;i<rawlen;i++){
+        for(let i=0;i<rawlen;i++){
             if(r[i][e]==null){  if(r[i][(e.split('#')[0])]==null){
                 unit=0}else{
                 unit=(r[i][(e.split('#')[0])][e.split('#')[1]])}}else{
@@ -232,7 +232,7 @@ function getseries(r,c,shape,stack,sortkey){
     var shipname=[]
     var nametitle='title'
     if(!r[0][nametitle]){nametitle='name'}
-    for(i=0;i<rawlen;i++){
+    for(let i=0;i<rawlen;i++){
         shipname.push(r[i][nametitle])
     }
 
@@ -286,7 +286,7 @@ function genCheck(years, months,stat) {
         // if(exclude.indexOf(years[i])>-1){}else{
         genShowContent("show", checkText + years[i], i, years[i], content + years[i],stat[years[i]]);}
     // }  
-    for (i in months){
+    for (let i in months){
         for(j in months[i]){
             genCheckBox(content + i, link + i, months[i][j], months[i][j], i, stat[i]);  }
         // var flag = isAllCheck(link + i);  

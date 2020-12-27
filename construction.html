@@ -39,6 +39,7 @@
       margin-left: 15px;
     }
     h3 {display : inline!important}
+  .hint{    line-height: 80%;  }
   .label, .btnlg, .btn, .panel{
     border-radius: 20px;} 
   button.rare{border-right: groove;
@@ -68,26 +69,30 @@
           <div class="panel-body"><dl class="dl-horizontal item-list"><dt class="bigfont">駆逐艦</dt> <dd>
 <button class="btn btn-default" value="1">睦月</button>
 <button class="btn btn-default" value="2">如月</button>
+<button class="btn btn-default" value="164">弥生</button>
 <button class="btn btn-default" value="6">長月</button>
 <button class="btn btn-default" value="7">三日月</button>
-<button class="btn btn-default" value="9">吹雪</button>
-<button class="btn btn-default" value="10">白雪</button>
-<button class="btn btn-default" value="11">深雪</button>
-<button class="btn btn-default" value="12">磯波</button>
-<button class="btn btn-default" value="13">綾波</button>
-<button class="btn btn-default" value="14">敷波</button>
-<button class="btn btn-default" value="15">曙</button>
-<button class="btn btn-default" value="16">潮</button>
-<button class="btn btn-default" value="17">陽炎</button>
-<button class="btn btn-default" value="18">不知火</button>
-<button class="btn btn-default" value="19">黒潮</button>
-<button class="btn btn-default" value="20">雪風</button>
 <button class="btn btn-default" value="28">皐月</button>
 <button class="btn btn-default" value="29">文月</button>
 <button class="btn btn-default" value="30">菊月</button>
 <button class="btn btn-default" value="31">望月</button>
+<button class="btn btn-default" value="9">吹雪</button>
+<button class="btn btn-default" value="10">白雪</button>
+<button class="btn btn-default" value="11">深雪</button>
 <button class="btn btn-default" value="32">初雪</button>
 <button class="btn btn-default" value="33">叢雲</button>
+<button class="btn btn-default" value="12">磯波</button>
+<button class="btn btn-default" value="13">綾波</button>  
+<button class="btn btn-default" value="14">敷波</button>
+<button class="btn btn-default" value="93">朧</button>
+<button class="btn btn-default" value="15">曙</button>
+<button class="btn btn-default" value="94">漣</button>
+<button class="btn btn-default" value="16">潮</button>
+<button class="btn btn-default" value="17">陽炎</button>
+<button class="btn btn-default" value="18">不知火</button>
+<button class="btn btn-default" value="19">黒潮</button>
+<button class="btn btn-default rare" value="20">雪風</button>
+<button class="btn btn-default" value="132">秋雲</button>
 <button class="btn btn-default" value="34">暁</button>
 <button class="btn btn-default" value="35">響</button>
 <button class="btn btn-default" value="36">雷</button>
@@ -104,15 +109,11 @@
 <button class="btn btn-default" value="47">涼風</button>
 <button class="btn btn-default" value="48">霰</button>
 <button class="btn btn-default" value="49">霞</button>
-<button class="btn btn-default" value="50">島風</button>
-<button class="btn btn-default" value="93">朧</button>
-<button class="btn btn-default" value="94">漣</button>
 <button class="btn btn-default" value="95">朝潮</button>
 <button class="btn btn-default" value="96">大潮</button>
 <button class="btn btn-default" value="97">満潮</button>
 <button class="btn btn-default" value="98">荒潮</button>
-<button class="btn btn-default" value="132">秋雲</button>
-<button class="btn btn-default" value="164">弥生</button>
+<button class="btn btn-default rare" value="50">島風</button>
 <button class="btn btn-default" value="174">Z1</button>
 <button class="btn btn-default" value="175">Z3</button></dd><br><br>
 <dt class="bigfont">軽巡洋艦</dt><dd>
@@ -170,7 +171,7 @@
 <button class="btn btn-default" value="81">陸奥</button>
 <button class="btn btn-default rare" value="131">大和</button>
 <button class="btn btn-default rare" value="143">武蔵</button>
-<button class="btn btn-default rare" value="439">Warspite</button>
+<button class="btn btn-default rare" value="439">Warspite<i style="background-image:url(https://img.lanrentuku.com/img/allimg/1206/5-120601152050-51.gif" class="item"></i></button>
 </dd><br><br>
 <dt class="bigfont">軽空母</dt><dd>
   <button class="btn btn-default" value="74">祥鳳</button>
@@ -240,12 +241,12 @@
           <div class="panel-body">
             <label for="">&ensp;&ensp;结果排序&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</label> 
             <select name="" id="sorto">
-            <option value=0>默认排序</option>
-            <option value=times selected>出货次数排序</option>
-            <option value=ratio>总确率排序</option>
-            </select> <br>
-            <label>&ensp;&ensp;公式次数(分母)&ensp;>&ensp;</label><input type="number" id="a" value="0" style="width: 108px;"> <br>
-            <input type="checkbox" id="lv"><label for="lv">计算出货最小Lv</label> <br> 
+              <option value=0>默认排序</option>
+              <option value=times selected>出货次数排序</option>
+              <option value=ratio>总确率排序</option>
+              </select> <br>
+              <label>&ensp;&ensp;公式次数(分母)&ensp;>&ensp;</label><input type="number" id="a" value="0" style="width: 108px;"> <br>
+              <input type="checkbox" id="lv"><label for="lv">计算出货最小Lv</label> <br> 
           </div>
         </div>
 
@@ -286,7 +287,7 @@
   <script type="text/javascript">
     var slotitem
     var primary = 'btn-primary'
-    var warning = 'btn-info'
+    var btninfo = 'btn-info'
     var btndef='btn-default'
     btnbind()
     $('.go').click(function () {

@@ -197,7 +197,7 @@ if(!havelang){
         kj=true
     }
     selectlang=document.getElementById("locale")
-    for(i=0;i<selectlang.length;i++){
+    for(let i=0;i<selectlang.length;i++){
     if(selectlang[i].value==detect)
     selectlang[i].selected = true;
     }}
@@ -216,7 +216,7 @@ $(document).ready(function() {
     // $("#foot").load("foot.html");
     $('.search-input').bind("input onchange", function() {
         setTimeout(function(){
-            for(i=0;i<document.getElementsByClassName('search-input').length;i++){
+            for(let i=0;i<document.getElementsByClassName('search-input').length;i++){
         //console.log(document.getElementsByClassName('search-input')[i])
             document.getElementsByClassName('search-input')[i].value=Japanized(document.getElementsByClassName('search-input')[i].value);}
             },     50);
@@ -328,7 +328,7 @@ if(value==0){
     str=kj?'改造不可':'unable';
     return str
 }else{
-for(i=0,l=mst_ship.length;i<l;i++){
+for(let i=0,l=mst_ship.length;i<l;i++){
     if(value==mst_ship[i]['id']){
         str=mst_ship[i]['name']
     }

@@ -42,9 +42,17 @@
     background-repeat: no-repeat;
   }  
   .flex{display: flex;}
-  /* .hint{    line-height: 80%;  } */
+  .hint{    line-height: 80%;  }
   .label, .btnlg, .btn, .panel{
-    border-radius: 20px;} 
+    border-radius: 20px;}
+  i.new{
+    display: inline-block;
+    width: 35px;
+    height: 13px;
+    background-size: 35px 13px;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
   </style>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"></script>
@@ -164,7 +172,8 @@ Laté 298B   </button><button class="btn btn-default" value="207">
 ドラム缶(輸送用)   </button><button class="btn btn-default" value="120">
 91式高射装置   </button><button class="btn btn-default" value="168">
 九六式陸攻   </button><button class="btn btn-default" value="250">
-Spitfire Mk.I   </button></dd><br></div>
+  Spitfire Mk.I   </button><button class="btn btn-default" value="-1">
+    🐧开发失败 </button></dd><br></div>
             </dl>
           </div>
         </div>
@@ -248,7 +257,7 @@ Spitfire Mk.I   </button></dd><br></div>
   <script type="text/javascript">
     var slotitem
     var primary = 'btn-primary'
-    var warning = 'btn-info'
+    var btninfo = 'btn-info'
     var btndef='btn-default'
     btnbind()
     $.getJSON("parsed/api_mst_slotitem_equiptype.json", function (res) {
@@ -310,7 +319,7 @@ Spitfire Mk.I   </button></dd><br></div>
       btnbind()
     }
     function genCheckBox(id, name, value, showText, parentIndex, isCheck) {
-      var checkbox = "<span class='la'><button class='btn "+ ($.cookie('d'+value)==warning?warning:($.cookie('d'+value)==primary?primary:btndef)) +"' parentIndex=" + parentIndex +(isCheck ? " checked='checked'" : '') + " value="+value+" >"+ StranText(formatItemId(showText)) + "</button></span>";
+      var checkbox = "<span class='la'><button class='btn "+ ($.cookie('d'+value)==btninfo?btninfo:($.cookie('d'+value)==primary?primary:btndef)) +"' parentIndex=" + parentIndex +(isCheck ? " checked='checked'" : '') + " value="+value+" >"+ StranText(formatItemId(showText)) + "</button></span>";
       $("#" + id).append(checkbox);
 
     }
@@ -331,7 +340,7 @@ Spitfire Mk.I   </button></dd><br></div>
       release={}
       if(isNaN(value)){
         developable.forEach(function(d){
-          for(i=0,l=slotitem.length;i<l;i++){
+          for(let i=0,l=slotitem.length;i<l;i++){
             e=slotitem[i]
           // slotitem.forEach(function(e){
             if(e['api_id']==d){
@@ -369,7 +378,7 @@ Spitfire Mk.I   </button></dd><br></div>
           release=init}else{
           developable.forEach(function(d){
             // for(e of slotitem){
-          for(j=0;j<slotitem.length;j++){
+          for(let j=0;j<slotitem.length;j++){
             e=slotitem[j];
             if(e['api_id']==d){
           var jstr
@@ -379,7 +388,7 @@ Spitfire Mk.I   </button></dd><br></div>
             jstr= formatItype(tn)
             break;
           case '3':
-            jstr= '<i style="background-image:url(https://fleet.diablohu.com/!/assets/images/itemicon/'+tn+'.png);" class="item"></i>'
+            jstr= itag(tn)
             break;
           default:
             
