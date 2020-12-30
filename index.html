@@ -167,7 +167,7 @@ Laté 298B   </button><button class="btn btn-default" value="207">
 九五式爆雷   </button></dd><br><dd class="msg"></dd><dt class="bigfont">艦上偵察機
 </dt> <dd><button class="btn btn-default" value="54">
 彩雲   </button><button class="btn btn-default" value="61">
-二式艦上偵察機   </button></dd><br><dd class="msg"></dd><dt class="bigfont">其の它
+二式艦上偵察機   </button></dd><br><dd class="msg"></dd><dt class="bigfont">その他
 </dt> <dd><button class="btn btn-default" value="75">
 ドラム缶(輸送用)   </button><button class="btn btn-default" value="120">
 91式高射装置   </button><button class="btn btn-default" value="168">
@@ -293,9 +293,9 @@ Laté 298B   </button><button class="btn btn-default" value="207">
       window.location.href=("result.html?t="+duration.reverse()+'&q='+'d'+'&o='+output+'&e='+extra+'&s='+$('#sorto').val()+'&a='+$("#a").val()+'&l='+$("#lv")[0].checked )
         }else{alert("您未选择时间范围！")}
     }else{
-    if (confirm("您未选择装备，是要查询所有装备吗？")==true){
+    if (confirm("您未选择装备，\n是要查询所有装备吗？\n(可点击装备名称选择装备)")==true){
       window.location.href=("result.html?t="+duration.reverse()+'&q='+'d'+'&o='+output+'&e='+extra+'&s='+$('#sorto').val()+'&a='+$("#a").val()+'&l='+$("#lv")[0].checked )
-    }else{alert("请点击装备名称选择装备。")}}
+    }}
     })
     
     function genCheck(Obj) {

@@ -311,9 +311,9 @@
       window.location.href=("result.html?t="+duration.reverse()+'&q='+'c'+'&o='+output+'&e='+extra+'&s='+$('#sorto').val()+'&a='+$("#a").val()+'&l='+$("#lv")[0].checked )
         }else{alert("您未选择时间范围！")}
     }else{
-    if (confirm("您未选择舰船，是要查询所有舰船吗？")==true){
+    if (confirm("您未选择舰船，\n是要查询所有舰船吗？\n(可点击舰船名称选择舰船)")==true){
       window.location.href=("result.html?t="+duration.reverse()+'&q='+'c'+'&o='+output+'&e='+extra+'&s='+$('#sorto').val()+'&a='+$("#a").val()+'&l='+$("#lv")[0].checked )
-    }else{alert("请点击舰船名称选择舰船。")}}
+    }}
     })
     
   </script>
