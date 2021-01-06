@@ -172,6 +172,8 @@
     {"id":18,"dtype":2,"cs":2030,"ctype":30,"stype":2,"total_eq":0,"name":"不知火","csname":"陽炎级"},
     {"id":19,"dtype":2,"cs":2030,"ctype":30,"stype":2,"total_eq":0,"name":"黒潮","csname":"陽炎级"},
     {"id":20,"dtype":2,"cs":2030,"ctype":30,"stype":2,"total_eq":0,"name":"雪風","csname":"陽炎级"},
+    {"id":651,"dtype":651,"cs":2030,"ctype":30,"stype":2,"total_eq":0,"name":"丹陽","csname":"陽炎级"},
+    {"id":656,"dtype":656,"cs":2030,"ctype":30,"stype":2,"total_eq":0,"name":"雪風改二","csname":"陽炎级"},
     {"id":122,"dtype":2,"cs":2030,"ctype":30,"stype":2,"total_eq":0,"name":"舞風","csname":"陽炎级"},
     {"id":132,"dtype":2,"cs":2030,"ctype":30,"stype":2,"total_eq":0,"name":"秋雲","csname":"陽炎级"},
     {"id":167,"dtype":2,"cs":2030,"ctype":30,"stype":2,"total_eq":0,"name":"磯風","csname":"陽炎级"},

@@ -1,1 +1,418 @@
-;eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('w[2K]="2L 2M";w[2N]="2O";w[2P]="2Q级";w[2R]="2S级";w[2T]="2U级";w[2V]="2W 2X";w[2Y]="2Z 30";w[31]="伊32";w[33]="34 35";w[36]="37-25";w[38]="伊勢改(二)";w[39]="日向改(二)";w[3a]="3b";w[3c]="L.d.S.D.d.3d级";8 1x=\'<3e 3f="1y://3g.3h.3i/3j/a/3k/3l.3m" 3n="资材" 1X="3o:3p;">\';q=O("q",1);8 K;8 1z=(q==\'d\')?\'3q\':\'\';8 1Y=(q==\'d\')?\'3r\':\'1Z\';8 P={i:"",1f:"",1g:"",1h:"",1i:"",資材:"",1A:"",E:\'\',12:\'\',G:\'\'};8 13=X;8 1Z;8 21=[];8 1j=1;$.1B("1k/3s.1l",9(a){21=a;Q++}).1C(9(d){F(5)});$.1B("1k/"+1Y+".1l",9(a){K=a;Q++}).1C(9(d){F(5)});Y=O("t",1);$(\'#E\').22(14(O("a",1)));8 1m=[];8 y=[];8 Q=0;8 1n=O("l")==\'x\'?x:X;9 F(p){1j+=p;$(\'.F-1j\').15("1D",1j+\'%\')};v(t=0;t<Y.m;t++){$.1B("1k/"+q+Y[t]+".1l",9(a){Q++;1m=1m.23(a[\'3t\']);$(\'1E.16-R\')[0].M=("正在下载 "+Q+" / "+(Y.m+2)+" 个文件，请耐心等待。。")}).1C(9(d){F(1/(Y.m+2)*3u);7(Q==Y.m+2){F(20);8 o=O("o",1);8 a=o;8 b=[];v(C j=0;j<a.m;j++){b.A(24(T(a[j])))}U.R=b;8 e=O("e",1);e=e.1o("")?e:[];8 c=26(27(1m,"i","s"),o);7(!c.m){$(\'1E.16-R\')[0].M=(\'无匹配的结果，请减少主查询个数，或将主查询改为副查询\')}N{o=o.23(e);1F=28(c,o);1F.Z(9(e){E=0;v(1G V e){7(1G[0]==\'n\'){E+=e[1G]}}e[\'E\']=E;e[\'G\']=0;e[\'12\']=0;v(u V e){7(u[0]==\'n\'){k=u.H(1,u.m);e[T(k)]=e[u]/e[\'E\'];7(o.1o(k)>-1){e[\'G\']+=e[T(k)];e[\'12\']+=e[\'n\'+k]}}}});29()}$(\'.3v\').2a()}}).2b(9(d){3w("文件  "+"1k/"+q+Q+".1l 读取失败"+d);1p.1q(d)})}8 W=(2c.3x||2c.3y);7(!2d){7(W.m>0){1p.1q(W)}N{W="1H-3z"};7(W.H(0,2)==\'1H\'||W.H(0,2)==\'2e\'){13=x}1r=U.1I("17");v(C i=0;i<1r.m;i++){7(1r[i].1s==W){1r[i].2f=x}}}9 29(){y=[];1F.Z(9(e){7(e[\'E\']>$(\'#E\').22()){y.A(e)}});7(y.m){$(\'1J.16\').2a();F(3A);2g=O("s");7(!2g==0){y.3B(3C);y.3D()}1K();$("#2h").3E("2h.2i")}N{$(\'1J.16\').3F();$(\'1E.16-R\')[0].M=(\'存在查询结果，但公式次数设置过大，请在上方重新设置\')}}$(U).3G(9(){$(\'#17\').3H(9(){F(5);3I();1K()});1L(9(){F(2);1t("1y://2j.3J.2k/3K/3L/2l-2m/1.18.0/2l-2m-17-3M.1t");1t("1y://2j.3N.2k/3O/2n/3P/2n.1M.1t");7(!2d){U.1I("17")[0].2f=x}},3Q);1L(9(){F(3);$(\'.1N-19\').3R("19 3S",9(){1L(9(){v(C i=0;i<2;i++){U.2o(\'1N-19\')[i].1s=3T(U.2o(\'1N-19\')[i].1s)}},2p)});$(\'1a.3U\').15("1D",(q==\'d\'?3V:3W)+"3X")},3Y)});9 1b(a,b){7(2q(b.M)==R[a])$(b).3Z(\'15\'+a)}9 1K(){2r(40());$(\'1J.41-42.1O.43\').44(9(){7([1x,\'油\',\'弹\',\'钢\',\'铝\'].1o(2q(I.M))>-1||!1P((I.M))){$(I).15("1D","2s");7(!1P((I.M)))$(I).15("2t","45");1b(\'1f\',I);1b(\'1g\',I);1b(\'1h\',I);1b(\'1i\',I)}})}9 2u(a){8 b=[];8 c=[];v(e V a){8 d=x;8 g=2v(e,13);8 h=2w;8 i=1n?3:2;8 j=1;8 k=X;7(e==\'i\'){i=1;j=2;h=2x}N{7(1c(e)){i=1;j=2;7(e==\'資材\'){g=1x;7(q==\'d\')d=X}}}7(e==\'G\'){i=2;g=\'主查询合计\';h=1Q}7(e==\'G\'||1c(e)||e[0]==\'n\'){7(!1P(e[e.m-1])){1R=e.H(1,e.m);g=(q==\'d\')?46(1R):2y(1R)}b.A({R:2v(g,13),2z:e,1O:x,47:\'19\',48:k,2A:h,49:i,4a:j,4b:d,})}}v(e V a){8 h=2w;8 f=\'出货\';7(e[0]==\'n\'){f=e.H(1,e.m)}7(e==\'G\'||(!1c(e)&&e!=\'12\'&&e[0]!=\'n\'&&e[0]!=\'l\')){f=\'%\';7(e==\'G\'){f=\'确率\'}h=1Q}7(e[0]==\'l\'){f=\'4c\'}7(e==\'12\'||e[0]==\'n\'||!1c(e)){c.A({R:f,2z:e,1O:x,2A:h,})}}B[b,c]}9 1c(e){B[\'i\',\'1f\',\'1g\',\'1h\',\'1i\',\'資材\',\'1A\',\'E\'].1o(e)>-1}9 1Q(a){B a?(a*1S).4d(2)+\'%\':4e}9 2x(a,b,c){4f(a,1);8 d=[];v(u V b){7(u[0]==\'n\'){8 e=u.H(1,u.m);8 f=24(T(e));d.A({1s:b[u],2B:f})}}d.A(a);B"<a 2C=\'4g:1u("+1T.1U(d)+")\'>"+a+"</a>"}9 1u(e){$.4h(\'1u\',1T.1U(e),{4i:4j,4k:\'/\'});4l.4m.2C="1u.2i"}9 27(a,i,s){C J={};a.Z(9(o){C 1v=1T.1U(o[i]+o[s]);J[1v]=J[1v]||[];J[1v].A(o)});C 1V=[];v(u V J){1V.A(J[u])}B 1V}9 26(r,o){8 e=[];r.Z(9(d){8 f=x;o.Z(9(b){8 c=X;d.Z(9(a){7(a[\'o\']==b){c=x}});7(!c){f=X}});7(f&&d[0][\'s\']!=0){e.A(d)}});B e}9 28(a,o){1p.1q(a);v(k=0;k<o.m;k++){1w(o[k])}7(q==\'d\'){1w(\'-1\')}C J=[];v(C i=0,l=a.m;i<l;i++){C 1d=a[i][0][\'i\'];7(q==\'d\'){1d.A(1);1d.A(4n(a[i][0][\'s\']))}N{1d.A(2y(a[i][0][\'s\']))}8 b={\'i\':(1d)};v(C j=0;j<a[i].m;j++){8 c=4o(a[i][j][\'o\']);1w(c);7(b[\'n\'+c]){b[\'n\'+c]+=14(a[i][j][\'n\'])}N{b[\'n\'+c]=0+14(a[i][j][\'n\'])};7(1n){7(b[\'l\'+c]){b[\'l\'+c]=2D.1M(b[\'l\'+c],14(a[i][j][\'l\']))}N{b[\'l\'+c]=2D.1M(4p,14(a[i][j][\'l\']))}}}J.A(b)};B(J)}9 1w(a){P[\'n\'+a]=0;P[T(a)]=0;7(1n){P[\'l\'+a]=0}}9 2r(a){7(a){13=(a.H(0,2)==\'1H\'||a.H(0,2)==\'2e\')}N{1p.1q(a)};2E={\'G\':""};v(u V P){7(u[0]==\'r\'&&u!=\'G\'){u=u.H(1,u.m);8 k=T(u);2E[k]=0}}4q(P);11(y,"1f","i",0);11(y,"1g","i",1);11(y,"1h","i",2);11(y,"1i","i",3);11(y,"資材","i",4);11(y,"1A","i",5);$(\'#4r\').2F(\'4s\').2F({4t:\'4u\',4v:y,4w:x,4x:x,4y:1,4z:x,4A:\'4B\',4C:20,4D:[10,2p,1S,4E],4F:x,4G:2G,4H:2G,17:a,4I:2u(P)});8 b=\'6\';U.1I("4J").M=(".4K-4L {4M-4N:"+b+"2s;4O: 4P !4Q;4R: 4S;  z-4T: 1S;}")}9 T(a){8 b=a;7(a==-1){B 2b};v(1e=0;1e<K.m;1e++){7(K[1e][1z+\'4U\']==a){b=K[1e][1z+\'2B\'];B 1W(b,1)}}B 1W(b,1)}9 4V(b,c){8 d=1W(b,0);8 e=c?\'<1a 1X="2t:\'+c+\';">▐</1a>\':\'\';v(C a=0;a<K.m;a++){7(K[a][\'4W\']==d){B\'<1a 2H="2I">\'+e+4X(K[a][\'4Y\'][3])+d+\'</2J>\'}}B\'<1a 2H="2I">\'+e+d+\'</2J>\'}',62,309,'|||||||if|var|function|||||||||||||length||||||||key|for|stype|true|sorted||push|return|let||denominator|progress|ratio|slice|this|groups|slotitem||innerHTML|else|GetRequest|lseg|jsindex|title||formatOnlyname|document|in|detect|false|ranget|forEach||addcol|times|kj|Number|css|panel|locale||input|span|bgclr|thls|is|nitem|fuel|ammo|steel|bauxite|bar|parsed|json|bigdata|minlv|indexOf|console|log|selectlang|value|js|pie|group|egnrl|devpic|https|api|secretary|getJSON|done|width|h3|isonl|keys|zh|getElementById|div|langchange|setTimeout|min|search|sortable|isNaN|formatR|showid|100|JSON|stringify|arr|bra|style|jsonfile|ship||csjson|val|concat|addemoji||filt|group2By|isonladd|setdeno|hide|fail|navigator|havelang|ja|selected|sortkey|foot|html|cdn|net|bootstrap|table|echarts|getElementsByClassName|50|Simplized|initTable|0px|color|thead|getname|undefined|formatLink|formatshipId|field|formatter|name|href|Math|lsegname|bootstrapTable|em|class|flex|sapn|174|Z1|Z3|439|Warspite|441|Littorio|443|Libeccio|448|Zara|491|Commandant|Teste|515|Ark|Royal|530|504|535|Luigi|Torelli|539|UIT|553|554|571|Nelson|589|Abruzzi|img|src|uploads|kcwiki|cn|commons|a8|IcoMaterial|png|alt|height|22px|api_|api_mst_slotitem|cstype|RECORDS|80|loading|alert|browserLanguage|language|CN|97|sort|sortby|reverse|load|show|ready|change|setlang|bootcdn|ajax|libs|all|jsdelivr|npm|dist|1200|bind|onchange|Japanized|msg|162|70|px|2000|addClass|locallang|th|inner|both|each|grey|formatItemId|filterControl|filterStrictSearch|colspan|rowspan|visible|Lv|toFixed|null|remove|javascript|cookie|expires|365|path|window|location|formatStype|jsonstr|121|loadprot|mytab|destroy|method|get|data|sortReset|striped|pageNumber|pagination|sidePagination|client|pageSize|pageList|500|stickyHeader|stickyHeaderOffsetLeft|stickyHeaderOffsetRight|columns|csscontainer|fix|sticky|padding|top|position|fixed|important|overflow|hidden|index|id|addicon|api_name|itag|api_type'.split('|'),0,{}));
+stype[174] = "Z1 Z3";
+stype[439] = "Warspite";
+stype[441] = "Littorio级";
+stype[443] = "Libeccio级";
+stype[448] = "Zara级";
+stype[491] = "Commandant Teste";
+stype[515] = "Ark Royal";
+stype[530] = "伊504";
+stype[535] = "Luigi Torelli";
+stype[539] = "UIT-25";
+stype[553] = "伊勢改(二)";
+stype[554] = "日向改(二)";
+stype[571] = "Nelson";
+stype[589] = "L.d.S.D.d.Abruzzi级";
+var devpic = '<img src="https://uploads.kcwiki.cn/commons/a/a8/IcoMaterial.png" alt="资材" style="height:22px;">';
+q = GetRequest("q", 1);
+var slotitem;
+var api=(q == 'd') ? 'api_' : '';
+var jsonfile= (q == 'd') ? 'api_mst_slotitem' : 'ship';
+var lseg = { i: "", fuel:"",  ammo:"",  steel:"",  bauxite:"", 資材:"", secretary:"", denominator: '', times: '', ratio: '' };
+var kj = false;
+var ship;
+var csjson = [];
+var bar = 1;
+$.getJSON("parsed/cstype.json", function (result) {
+    csjson = result;
+    jsindex++;
+}).done(function (d) {
+    progress(5);
+});
+$.getJSON("parsed/" + jsonfile + ".json", function (result) {
+    slotitem = result;
+    jsindex++;
+}).done(function (d) {
+    progress(5);
+});
+ranget = GetRequest("t", 1);
+$('#denominator').val(Number(GetRequest("a", 1)));
+var bigdata = [];
+var sorted = [];
+var jsindex = 0;
+var minlv = GetRequest("l")=='true'?true:false;
+function progress(p) {
+    bar += p;
+    $('.progress-bar').css("width", bar + '%');
+    if (jsindex == ranget.length + 1)$('h3.panel-title')[0].innerHTML = ("数据计算中。。。");
+};
+for (t = 0; t < ranget.length; t++) {
+    jsindex++;
+    $.getJSON("parsed/" + q + ranget[t] + ".json", function (result) {
+        bigdata = bigdata.concat(result['RECORDS']);
+        console.log(bigdata.length);
+    }).done(function (d) {
+        progress(1 / (ranget.length + 2) * 80);
+        $('h3.panel-title')[0].innerHTML = ("正在下载第 "+jsindex+" / "+(ranget.length + 2)+ " 个文件，请耐心等待。。");
+        jsonover()
+    }).fail(function (d) {
+        $('h3.panel-title')[0].innerHTML = ("文件  " + "parsed/" + q + jsindex + ".json 读取失败")
+        console.log(d);
+        jsonover()
+        alert("文件  " + "parsed/" + q + jsindex + ".json 读取失败" + d);
+    })
+}
+var detect = (navigator.browserLanguage || navigator.language);
+if (!havelang) {
+    if (detect.length > 0) { console.log(detect); } else { detect = "zh-CN" };
+    if (detect.slice(0, 2) == 'zh' || detect.slice(0, 2) == 'ja') {
+        kj = true;
+    }
+    selectlang = document.getElementById("locale");
+    for (let i = 0; i < selectlang.length; i++) {
+        if (selectlang[i].value == detect) {
+            selectlang[i].selected = true;
+        }
+    }
+}
+function jsonover(){
+    if (jsindex == ranget.length + 2) {
+    progress(20);
+    var o = GetRequest("o", 1);
+    var otwo=o;
+    var oname=[];
+    for(let j=0;j<otwo.length;j++){
+        oname.push(addemoji(formatOnlyname(otwo[j])))
+    }
+    document.title = oname;
+    var e = GetRequest("e", 1);
+    e = e.indexOf("") ? e : [];
+    var filted = filt(group2By(bigdata, "i", "s"), o);
+    if (!filted.length) {
+        $('h3.panel-title')[0].innerHTML = ('无匹配的结果，请减少主查询个数，或将主查询改为副查询')
+    } else {
+        o = o.concat(e);
+        console.log(filted.length);
+        isonl = isonladd(filted, o);
+        isonl.forEach(function(e) {
+            denominator = 0;
+            for (keys in e) {
+                if (keys[0] == 'n') {
+                    denominator += e[keys];
+                }
+            }
+            e['denominator'] = denominator;
+            e['ratio'] = 0;
+            e['times'] = 0;
+            for (key in e) {
+                if (key[0] == 'n') {
+                    k = key.slice(1, key.length);
+                    e[formatOnlyname(k)] = e[key] / e['denominator'];
+                    if (o.indexOf(k) > -1) {
+                        e['ratio'] += e[formatOnlyname(k)];
+                        e['times'] += e['n' + k];
+                    }
+                }
+            }
+        });
+        setdeno();
+
+    }
+    $('.loading').hide();
+}}
+function setdeno() {
+    sorted = [];
+    isonl.forEach(function(e) {
+        if (e['denominator'] > $('#denominator').val()) {
+            sorted.push(e);
+        };
+    });
+    if (sorted.length) {
+        $('div.panel').hide();
+        progress(97);
+        sortkey = GetRequest("s");
+        if(!sortkey==0){
+            sorted.sort(sortby);
+            sorted.reverse();
+        }
+        langchange();
+        $("#foot").load("foot.html");
+    } else {
+        $('div.panel').show();
+        $('h3.panel-title')[0].innerHTML = ('存在查询结果，但公式次数设置过大，请在上方重新设置');
+    }
+}
+$(document).ready(function () {
+    $('#locale').change(function () {
+        progress(5);
+        setlang();
+        langchange();
+    });
+    setTimeout(function () {
+        progress(2);
+        js("https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table-locale-all.js");
+        js("https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js");
+        if (!havelang) {
+            document.getElementById("locale")[0].selected = true;
+        }
+    }, 1200);
+    setTimeout(function () {
+        progress(3);
+        // $("#foot").load("foot.html");
+        $('.search-input').bind("input onchange", function () {
+            setTimeout(function () {
+                for (let i = 0; i < 2; i++) {
+                    document.getElementsByClassName('search-input')[i].value = Japanized(document.getElementsByClassName('search-input')[i].value);
+                }
+            }, 50);
+        });
+        // loadchart();
+    $('span.msg').css("width",(q=='d'?162:76)+"px");
+    }, 2000);
+});
+function bgclr(a,b){
+    if(Simplized(b.innerHTML)==title[a])$(b).addClass('css'+a);
+}
+function langchange() {
+    initTable(locallang());
+    $('div.th-inner.sortable.both').each(function(){
+        if([devpic,'油','弹','钢','铝'].indexOf(Simplized(this.innerHTML))>-1||!isNaN((this.innerHTML))){
+        $(this).css("width","0px");
+        if(!isNaN((this.innerHTML)))$(this).css("color","grey");
+        bgclr('fuel',this);
+        bgclr('ammo',this);
+        bgclr('steel',this);
+        bgclr('bauxite',this);
+        }
+    })
+}
+function thead(eg) {
+    var co = [];
+    var col = [];
+    for (e in eg) {
+        var visible = true;
+        var temp = getname(e, kj);
+        var formatter = undefined;
+        var colspan = minlv ? 3 : 2;
+        var rowspan = 1;
+        var strict = false;
+        if (e == 'i') {
+            colspan = 1;
+            rowspan = 2;
+            formatter = formatLink;
+        }else{if(thls(e)){
+            colspan = 1;
+            rowspan = 2;
+            if(e=='資材'){
+            temp=devpic;
+            if(q=='d')visible=false;}
+        }}
+        if (e == 'ratio') {
+            colspan = 2;
+            temp = '主查询合计';
+            formatter = formatR;
+        }
+        if (e == 'ratio' || thls(e)||e[0]=='n') {
+            if (!isNaN(e[e.length - 1])) {
+                showid = e.slice(1, e.length);
+                temp = (q == 'd') ? formatItemId(showid):formatshipId(showid);
+            }
+            co.push({
+                title: getname(temp,kj),
+                field: e,
+                sortable: true,
+                filterControl: 'input',
+                filterStrictSearch: strict,
+                formatter: formatter,
+                colspan: colspan,
+                rowspan: rowspan,
+                visible: visible,
+                // cellStyle:cellStyle,
+                // escape:escapes,
+            })
+        }
+    }
+    for (e in eg) {
+        var formatter = undefined;
+        var f = '出货';
+        if (e[0] == 'n') {
+            f = e.slice(1, e.length);
+        }
+        // if (e == 'ratio'||( e!='i'&& e!='fuel'&& e!='denominator'&& e!='times'&& e!='ammo'&& e[0]!='n'&& e[0]!='l')) {
+        if (e == 'ratio'||( !thls(e)&& e!='times'&& e[0]!='n'&& e[0]!='l')) {
+            f = '%';
+            if (e == 'ratio') {
+                f = '确率';
+            }
+            formatter = formatR
+        }
+        if (e[0] == 'l') {
+            f = 'Lv';
+        }
+        if (e == 'times' || e[0] == 'n' ||!thls(e)){
+            col.push({
+                title: f,
+                field: e,
+                sortable: true,
+                formatter: formatter,
+            })
+        }
+    }
+    return [co, col];
+}
+function thls(e){
+    return ['i','fuel','ammo','steel','bauxite','資材','secretary','denominator'].indexOf(e)>-1
+}
+function formatR(value) {
+    return value ? (value * 100).toFixed(2) + '%' : null;
+}
+function formatLink(value, row, index) {
+    remove(value,1);
+    var piedata=[];
+    for(key in row){
+        if(key[0]=='n'){
+            var itemID = key.slice(1,key.length);
+            var name=addemoji(formatOnlyname(itemID));
+            piedata.push({value: row[key], name: name});
+        }
+      }
+    piedata.push(value);
+    return "<a href='javascript:pie(" +JSON.stringify(piedata)+")'>"+value+"</a>";
+}
+function pie(e){
+    // alert(JSON.stringify(e));
+    $.cookie('pie',JSON.stringify(e), { expires: 365, path: '/' });
+    window.location.href="pie.html";
+}
+function group2By(array, i, s) {
+    let groups = {};
+    array.forEach(function (o) {
+        let group = JSON.stringify(o[i] + o[s]);
+        groups[group] = groups[group] || [];
+        groups[group].push(o);
+    });
+    let arr=[];
+    for (key in groups){
+        arr.push(groups[key]);
+    }
+    return arr;
+}
+function filt(r, o) {
+    var array = [];
+    r.forEach(function(element) {
+        var f = true;
+        o.forEach(function(oe) {
+            var ff = false;
+            element.forEach(function(el) {
+                // f = f && el['o'] == o[k]
+                if (el['o'] == oe) {
+                    ff = true;
+                }
+            });
+            if (!ff) { f = false };
+        });
+        if (f && element[0]['s'] != 0) {
+            array.push(element);
+        }
+    });
+    return array;
+}
+function isonladd(array, o) {
+    for (k = 0; k < o.length; k++) {
+        egnrl(o[k]);
+    }
+    if(q=='d'){
+    egnrl('-1');}
+    let groups = [];
+    // o.push(-1)
+    for (let i = 0, l = array.length; i < l; i++) {
+        let is = array[i][0]['i'];
+        if(q=='d'){is.push(1);
+            is.push(formatStype(array[i][0]['s']));}else{
+            is.push(formatshipId(array[i][0]['s']));
+        }
+        var onal = { 'i': (is) };
+        for(let j= 0; j < array[i].length; j++) {
+            var item = jsonstr(array[i][j]['o']);
+            egnrl(item);
+            if (onal['n' + item]) {
+                onal['n' + item] += Number(array[i][j]['n']);
+            } else {onal['n' + item] = 0 + Number(array[i][j]['n']) };
+            if (minlv) {
+                if (onal['l' + item]) {
+                    onal['l' + item] = Math.min(onal['l' + item], Number(array[i][j]['l']));
+                } else { onal['l' + item] = Math.min(121, Number(array[i][j]['l'])) }
+            }
+        }
+        groups.push(onal);
+    };
+    return (groups);
+}
+function egnrl(item) {
+    lseg['n' + item] = 0;
+    lseg[formatOnlyname(item)] = 0;
+    if (minlv) {
+        lseg['l' + item] = 0;
+    }
+}
+function initTable(lval) {
+    if (lval) { kj = (lval.slice(0, 2) == 'zh' || lval.slice(0, 2) == 'ja') } else { console.log(lval) };
+    lsegname={'ratio':""};
+    for(key in lseg){
+        if(key[0]=='r'&&key!='ratio'){
+            key = key.slice(1,key.length);
+            var k=formatOnlyname(key);
+            lsegname[k]=0;
+        }
+    }
+    loadprot(lseg);
+    // console.log("load table", sorted)
+    addcol(sorted,"fuel","i",0);
+    addcol(sorted,"ammo","i",1);
+    addcol(sorted,"steel","i",2);
+    addcol(sorted,"bauxite","i",3);
+    addcol(sorted,"資材","i",4);
+    addcol(sorted,"secretary","i",5);
+    $('#mytab').bootstrapTable('destroy').bootstrapTable({
+        method: 'get',
+        data: sorted,
+        sortReset: true,
+        striped: true, // 是否显示行间隔色
+        pageNumber: 1, // 初始化加载第一页
+        pagination: true, // 是否分页
+        sidePagination: 'client', // server:服务器端分页|client：前端分页
+        pageSize: 20, // 单页记录数
+        pageList: [10, 50, 100, 500],
+        stickyHeader: true,
+        stickyHeaderOffsetLeft: em,
+        stickyHeaderOffsetRight: em,
+        locale: lval,
+        columns: thead(lseg)
+    });
+    // if (Width() < 900 && kj) { $('.table .th-inner').css('writing-mode', 'vertical-lr'); }
+    var padding = '6';
+    // if (Width() < 1200) {
+    //     padding = kj ? '' : '4';
+    //     $('.table .th-inner').css('white-space', 'normal')}
+    document.getElementById("csscontainer").innerHTML = (".fix-sticky {padding-top:" + padding + "0px;position: fixed !important;overflow: hidden;  z-index: 100;}");
+}
+function formatOnlyname(value) {
+    var str=value;
+    if(value==-1){
+        return fail;
+    };
+    for (nitem=0;nitem<slotitem.length;nitem++){
+        if(slotitem[nitem][api+'id']==value){
+            str=slotitem[nitem][api+'name'];
+    return bra(str,1);
+        }
+    }return bra(str,1);
+    }
+function addicon(name,c){
+    var str=bra(name,0);
+    var color=c?'<span style="color:'+c+';">▐</span>':'';//▮∎■
+    for (let a=0;a<slotitem.length;a++){
+        if(slotitem[a]['api_name']==str){
+    return '<span class="flex">'+color+itag(slotitem[a]['api_type'][3])+str+'</sapn>';
+        }
+    }return '<span class="flex">'+color+str+'</sapn>';
+    }
