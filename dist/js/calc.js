@@ -43,7 +43,6 @@ var minlv = GetRequest("l")=='true'?true:false;
 function progress(p) {
     bar += p;
     $('.progress-bar').css("width", bar + '%');
-    if (jsindex == ranget.length + 1)$('h3.panel-title')[0].innerHTML = ("数据计算中。。。");
 };
 for (t = 0; t < ranget.length; t++) {
     jsindex++;
@@ -75,6 +74,7 @@ if (!havelang) {
     }
 }
 function jsonover(){
+    if (jsindex == ranget.length + 1)$('h3.panel-title')[0].innerHTML = ("数据计算中。。。");
     if (jsindex == ranget.length + 2) {
     progress(20);
     var o = GetRequest("o", 1);
