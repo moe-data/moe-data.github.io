@@ -22,7 +22,6 @@ var kj = false;
 var ship;
 var csjson = [];
 var bar = 1;
-var blink
 $('.loading').css("width",Width())
 $.getJSON("parsed/cstype.json", function (result) {
     csjson = result;
@@ -150,8 +149,8 @@ var filted = filt(group2By(bigdata, "i", "s"), o);
 }
 }}
 function setdeno(a) {
+    $(".deno").css("background","");
     sorted = [];
-    stopInterval()
     isonl.forEach(function(e) {
         if (e['denominator'] > $('#denominator').val()) {
             sorted.push(e);
@@ -163,7 +162,6 @@ function setdeno(a) {
             sorted.sort(sortby);
             sorted.reverse();
         }
-        // setInterval('changeColor()',9999999);
         langchange();
         if(a){
         progress(97);
@@ -172,23 +170,10 @@ function setdeno(a) {
     } else {
         $('div.panel').show();
         $('h3.panel-title')[0].innerHTML = ('存在查询结果，但公式次数设置过大，请在左上方重新设置');
-        blink = setInterval('changeColor()',1000);
+        $(".deno").css("background","gold");
             }
 }
 var colorFlag = 0;
-function changeColor() { 
-        if (!colorFlag){
-            $(".deno").css("background","gold");
-            colorFlag = 1;
-        }else{
-            $(".deno").css("background","");
-            colorFlag = 0;
-        }
-    }
-function stopInterval(){
-    $(".deno").css("background","");
-    for(var i=0;i<500;i++)clearInterval(i);
-}
 $(document).ready(function () {
     $('#locale').change(function () {
         progress(5);
@@ -196,9 +181,10 @@ $(document).ready(function () {
         langchange();
     });
     setTimeout(function () {
-        progress(2);
+        console.log(22)
         js("https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table-locale-all.js");
         js("https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js");
+        progress(2);
         if (!havelang) {
             document.getElementById("locale")[0].selected = true;
         }
