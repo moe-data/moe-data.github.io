@@ -45,10 +45,10 @@ function progress(p) {
     $('.progress-bar').css("width", bar + '%');
 };
 for (t = 0; t < ranget.length; t++) {
-    jsindex++;
     $.getJSON("parsed/" + q + ranget[t] + ".json", function (result) {
         bigdata = bigdata.concat(result['RECORDS']);
         console.log(bigdata.length);
+        jsindex++;
     }).done(function (d) {
         progress(1 / (ranget.length + 2) * 80);
         $('h3.panel-title')[0].innerHTML = ("正在下载第 "+jsindex+" / "+(ranget.length + 2)+ " 个文件，请耐心等待。。");
@@ -75,6 +75,7 @@ if (!havelang) {
 }
 function jsonover(){
     if (jsindex == ranget.length + 1)$('h3.panel-title')[0].innerHTML = ("数据计算中。。。");
+    console.log(jsindex ,ranget.length + 2)
     if (jsindex == ranget.length + 2) {
     progress(20);
     var o = GetRequest("o", 1);
