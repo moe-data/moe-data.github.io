@@ -22,6 +22,8 @@ var kj = false;
 var ship;
 var csjson = [];
 var bar = 1;
+var blink
+$('.loading').css("width",Width())
 $.getJSON("parsed/cstype.json", function (result) {
     csjson = result;
     jsindex++;
@@ -73,26 +75,55 @@ if (!havelang) {
         }
     }
 }
-function jsonover(){
-    if (jsindex == ranget.length + 1)$('h3.panel-title')[0].innerHTML = ("数据计算中。。。");
-    console.log(jsindex ,ranget.length + 2)
-    if (jsindex == ranget.length + 2) {
-    progress(20);
+function jsonover(){    
     var o = GetRequest("o", 1);
-    var otwo=o;
     var oname=[];
+    var otwo=o;
     for(let j=0;j<otwo.length;j++){
         oname.push(addemoji(formatOnlyname(otwo[j])))
     }
     document.title = oname;
     var e = GetRequest("e", 1);
     e = e.indexOf("") ? e : [];
+    if (jsindex == ranget.length + 1)$('h3.panel-title')[0].innerHTML = ("数据计算中。。。");
+    console.log(jsindex ,ranget.length + 2)
+    if (jsindex == ranget.length + 2) {
+    progress(20);
     var filted = filt(group2By(bigdata, "i", "s"), o);
     if (!filted.length) {
         $('h3.panel-title')[0].innerHTML = ('无匹配的结果，请减少主查询个数，或将主查询改为副查询')
     } else {
+        // console.log(filted.length);
         o = o.concat(e);
-        console.log(filted.length);
+        isonl = isonladd(filted, o);
+        isonl.forEach(function(e) {
+            denominator = 0;
+            for (keys in e) {
+                if (keys[0] == 'n') {
+                    denominator += e[keys];
+                }
+            }
+            e['denominator'] = denominator;
+            e['ratio'] = 0;
+            e['times'] = 0;
+            for (key in e) {
+                if (key[0] == 'n') {
+                    k = key.slice(1, key.length);
+                    e[formatOnlyname(k)] = e[key] / e['denominator'];
+                    if (o.indexOf(k) > -1) {
+                        e['ratio'] += e[formatOnlyname(k)];
+                        e['times'] += e['n' + k];
+                    }
+                }
+            }
+        });
+        setdeno(1);
+    }
+    $('.loading').hide();
+}else if(jsindex == 3) {
+var filted = filt(group2By(bigdata, "i", "s"), o);
+    if (filted.length){
+        o = o.concat(e);
         isonl = isonladd(filted, o);
         isonl.forEach(function(e) {
             denominator = 0;
@@ -116,31 +147,47 @@ function jsonover(){
             }
         });
         setdeno();
-
-    }
-    $('.loading').hide();
+}
 }}
-function setdeno() {
+function setdeno(a) {
     sorted = [];
+    stopInterval()
     isonl.forEach(function(e) {
         if (e['denominator'] > $('#denominator').val()) {
             sorted.push(e);
         };
     });
     if (sorted.length) {
-        $('div.panel').hide();
-        progress(97);
         sortkey = GetRequest("s");
         if(!sortkey==0){
             sorted.sort(sortby);
             sorted.reverse();
         }
+        // setInterval('changeColor()',9999999);
         langchange();
-        $("#foot").load("foot.html");
+        if(a){
+        progress(97);
+        $('div.panel').hide();
+        $("#foot").load("foot.html");}
     } else {
         $('div.panel').show();
-        $('h3.panel-title')[0].innerHTML = ('存在查询结果，但公式次数设置过大，请在上方重新设置');
+        $('h3.panel-title')[0].innerHTML = ('存在查询结果，但公式次数设置过大，请在左上方重新设置');
+        blink = setInterval('changeColor()',1000);
+            }
+}
+var colorFlag = 0;
+function changeColor() { 
+        if (!colorFlag){
+            $(".deno").css("background","gold");
+            colorFlag = 1;
+        }else{
+            $(".deno").css("background","");
+            colorFlag = 0;
+        }
     }
+function stopInterval(){
+    $(".deno").css("background","");
+    for(var i=0;i<500;i++)clearInterval(i);
 }
 $(document).ready(function () {
     $('#locale').change(function () {

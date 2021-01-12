@@ -59,7 +59,7 @@
     <div id="bgpic">
         <div id="bgcolor">
             <div class="remind  col-sm-12"> 
-        <div class="panel panel-success col-sm-6">
+        <div class="panel panel-success col-sm-6" style="z-index: 1;">
             <div class="panel-heading">
               <h3 class="panel-title"  align="center">检索中</h3>
             </div>
@@ -76,8 +76,8 @@
                                 <div id="toolbar" class="form-inline">
                                     <input id="page" class="form-control" style="width: 60px" type="number" value="1" min="1">
                                     <button id="jump" class="btn btn-secondary">跳页</button>
-                                    <input id="denominator" class="form-control" style="width: 60px" type="number" value="100" min="0">
-                                    <button class="btn btn-secondary" onclick="setdeno()">设置最小公式次数</button>
+                                    <input id="denominator" class="deno form-control" style="width: 60px" type="number" value="100" min="0">
+                                    <button class="btn btn-secondary deno" onclick="setdeno(1)">设置最小公式次数</button>
                                     <select class="form-control" id="locale">
                                         <option value="zh-CN" selected="selected">Language</option>
                                         <option value="en-US">English</option>
