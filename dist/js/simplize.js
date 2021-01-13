@@ -1,6 +1,5 @@
 !function (a) { "function" == typeof define && define.amd ? define(["jquery"], a) : "object" == typeof exports ? a(require("jquery")) : a(jQuery) }(function (a) { function b(a) { return h.raw ? a : encodeURIComponent(a) } function c(a) { return h.raw ? a : decodeURIComponent(a) } function d(a) { return b(h.json ? JSON.stringify(a) : String(a)) } function e(a) { 0 === a.indexOf('"') && (a = a.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, "\\")); try { return a = decodeURIComponent(a.replace(g, " ")), h.json ? JSON.parse(a) : a } catch (b) { } } function f(b, c) { var d = h.raw ? b : e(b); return a.isFunction(c) ? c(d) : d } var g = /\+/g, h = a.cookie = function (e, g, i) { if (void 0 !== g && !a.isFunction(g)) { if (i = a.extend({}, h.defaults, i), "number" == typeof i.expires) { var j = i.expires, k = i.expires = new Date; k.setTime(+k + 864e5 * j) } return document.cookie = [b(e), "=", d(g), i.expires ? "; expires=" + i.expires.toUTCString() : "", i.path ? "; path=" + i.path : "", i.domain ? "; domain=" + i.domain : "", i.secure ? "; secure" : ""].join("") } for (var l = e ? void 0 : {}, m = document.cookie ? document.cookie.split("; ") : [], n = 0, o = m.length; o > n; n++) { var p = m[n].split("="), q = c(p.shift()), r = p.join("="); if (e && e === q) { l = f(r, g); break } e || void 0 === (r = f(r)) || (l[q] = r) } return l }; h.defaults = {}, a.removeCookie = function (b, c) { return void 0 === a.cookie(b) ? !1 : (a.cookie(b, "", a.extend({}, c, { expires: -1 })), !a.cookie(b)) } });
 var Default_isFT = 4 //默认是否繁体，0-简体，1-繁体 , 2- Japan 3 english
-var StranIt_Delay = 1500 //翻译延时毫秒（设这个的目的是让网页先流畅的显现出来）
 var StranLink_Obj
 BodyIsFt = $.cookie('JF_cn')||Default_isFT
 //转换文本
@@ -15,6 +14,7 @@ function StranText(txt) {
 //转换对象，使用递归，逐层剥到文本
 var a = 1;
 function StranBody(fobj) {
+    console.log(BodyIsFt)
     if (typeof (fobj) == "object") { var obj = fobj.childNodes; }
     else {
         var tmptxt = StranLink_Obj.innerHTML.toString()
@@ -32,6 +32,7 @@ function StranBody(fobj) {
             StranLink_Obj.innerHTML = '和製漢字'// StranText(tmptxt, 1, 1)
             StranLink_Obj.title = '和製漢字'//  StranText(StranLink_Obj.title, 1, 1)}
         }}
+        console.log(BodyIsFt)
         $.cookie('JF_cn', BodyIsFt, { expires: 365, path: '/' })
         // console.log('JF_cn',BodyIsFt)
         var obj = document.body.childNodes
