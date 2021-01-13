@@ -14,9 +14,9 @@ function StranText(txt) {
 //转换对象，使用递归，逐层剥到文本
 var a = 1;
 function StranBody(fobj) {
-    console.log(BodyIsFt)
     if (typeof (fobj) == "object") { var obj = fobj.childNodes; }
     else {
+        console.log(BodyIsFt)
         var tmptxt = StranLink_Obj.innerHTML.toString()
         if (tmptxt.indexOf("和") > -1) {
             BodyIsFt = 2
