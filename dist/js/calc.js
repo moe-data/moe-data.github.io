@@ -13,6 +13,7 @@ stype[554] = "日向改(二)";
 stype[571] = "Nelson";
 stype[589] = "L.d.S.D.d.Abruzzi级";
 var devpic = '<img src="https://uploads.kcwiki.cn/commons/a/a8/IcoMaterial.png" alt="资材" style="height:22px;">';
+handlefile("https://pic3.zhimg.com/v2-61cc4410dd6c3efa5655fad381961c42_r.png")
 q = GetRequest("q", 1);
 var slotitem;
 var api=(q == 'd') ? 'api_' : '';

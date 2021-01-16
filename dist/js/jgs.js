@@ -99,3 +99,8 @@ function jsonstr(a){
   return JSON.stringify(a).replace("[", "").replace("]", "").replace(/"/g, '');
 }
 function sortNumber(a,b){return a - b}
+
+function handlefile(xhr){
+  $.get(xhr, function(result){
+  console.log(result);})
+}
