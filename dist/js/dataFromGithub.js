@@ -1,5 +1,7 @@
-// var k= handlefile("https://pic3.zhimg.com/v2-61cc4410dd6c3efa5655fad381961c42_r.png")
-// console.log(k)
+handlefile("https://pic3.zhimg.com/v2-61cc4410dd6c3efa5655fad381961c42_r.png")
+var q = GetRequest("q", 1);
+var ranget = GetRequest("t", 1);
+var bigdata = [];
 
 for (t = 0; t < ranget.length; t++) {
     $.getJSON("parsed/" + q + ranget[t] + ".json", function (result) {
@@ -18,9 +20,11 @@ for (t = 0; t < ranget.length; t++) {
     })
 }
 
-// function handlefile(xhr){
-//     $.get(xhr, function(result){
-//     var start = result.indexOf('{"RECORDS"');
-//     return JSON.parse(result.substring(start))
-//     ;},"text")
-//   }
+function handlefile(xhr){
+    $.get(xhr,success,"text")
+  }
+
+function success(result,status,xhr){
+    var start = result.indexOf('{"RECORDS"');
+    console.log(JSON.parse(result.substring(start)).RECORDS,status,xhr)
+    ;}
