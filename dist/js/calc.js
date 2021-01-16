@@ -13,8 +13,10 @@ stype[554] = "日向改(二)";
 stype[571] = "Nelson";
 stype[589] = "L.d.S.D.d.Abruzzi级";
 var devpic = '<img src="https://uploads.kcwiki.cn/commons/a/a8/IcoMaterial.png" alt="资材" style="height:22px;">';
-handlefile("https://pic3.zhimg.com/v2-61cc4410dd6c3efa5655fad381961c42_r.png")
-q = GetRequest("q", 1);
+
+var q = GetRequest("q", 1);
+var ranget = GetRequest("t", 1);
+var bigdata = [];
 var slotitem;
 var api=(q == 'd') ? 'api_' : '';
 var jsonfile= (q == 'd') ? 'api_mst_slotitem' : 'ship';
@@ -36,9 +38,7 @@ $.getJSON("parsed/" + jsonfile + ".json", function (result) {
 }).done(function (d) {
     progress(5);
 });
-ranget = GetRequest("t", 1);
 $('#denominator').val(Number(GetRequest("a", 1)));
-var bigdata = [];
 var sorted = [];
 var jsindex = 0;
 var minlv = GetRequest("l")=='true'?true:false;
@@ -46,22 +46,6 @@ function progress(p) {
     bar += p;
     $('.progress-bar').css("width", bar + '%');
 };
-for (t = 0; t < ranget.length; t++) {
-    $.getJSON("parsed/" + q + ranget[t] + ".json", function (result) {
-        bigdata = bigdata.concat(result['RECORDS']);
-        console.log(bigdata.length);
-        jsindex++;
-    }).done(function (d) {
-        progress(1 / (ranget.length + 2) * 80);
-        $('h3.panel-title')[0].innerHTML = ("正在下载第 "+jsindex+" / "+(ranget.length + 2)+ " 个文件，请耐心等待。。");
-        jsonover()
-    }).fail(function (d) {
-        $('h3.panel-title')[0].innerHTML = ("文件  " + "parsed/" + q + jsindex + ".json 读取失败")
-        console.log(d);
-        jsonover()
-        alert("文件  " + "parsed/" + q + jsindex + ".json 读取失败" + d);
-    })
-}
 var detect = (navigator.browserLanguage || navigator.language);
 if (!havelang) {
     if (detect.length > 0) { console.log(detect); } else { detect = "zh-CN" };
@@ -201,7 +185,9 @@ $(document).ready(function () {
             }, 50);
         });
         // loadchart();
-    $('span.msg').css("width",(q=='d'?162:76)+"px");
+if(q=='c'){
+    $('span.msg').css("width","76px");
+}
     }, 2000);
 });
 function bgclr(a,b){
