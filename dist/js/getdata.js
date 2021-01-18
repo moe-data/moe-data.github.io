@@ -68,7 +68,7 @@ $.getJSON("parsed/" + qn + ".json").done(function (result) {
 function download(result,com,qn,zhimg){
   try{
     bigdata = bigdata.concat(result['RECORDS']);
-    console.log(qn+": get "+zhimg?zhimg:("parsed/" + qn)+" success")
+    console.log(qn+": get "+(zhimg?zhimg:("parsed/" + qn))+" success")
     $('h3.panel-title')[0].innerHTML = ("正在从"+com+".com下载"+"。 请耐心等待。。共"+(jsindex-1)+" / "+(ranget.length + 2)+ " 个文件，");
     jsonover()}
   catch(err){
