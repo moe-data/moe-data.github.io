@@ -12,14 +12,15 @@ stype[553] = "伊勢改(二)";
 stype[554] = "日向改(二)";
 stype[571] = "Nelson";
 stype[589] = "L.d.S.D.d.Abruzzi级";
-var devpic = '<img src="https://uploads.kcwiki.cn/commons/a/a8/IcoMaterial.png" alt="资材" style="height:22px;">';
+const devpic = '<img src="https://uploads.kcwiki.cn/commons/a/a8/IcoMaterial.png" alt="资材" style="height:22px;">';
 
-var q = GetRequest("q", 1);
-var ranget = GetRequest("t", 1);
+const q = GetRequest("q", 1);
+const ranget = GetRequest("t", 1);
+var jsindex = 0;
 var bigdata = [];
 var slotitem;
-var api=(q == 'd') ? 'api_' : '';
-var jsonfile= (q == 'd') ? 'api_mst_slotitem' : 'ship';
+const api_=(q == 'd') ? 'api_' : '';
+const jsonfile= (q == 'd') ? 'api_mst_slotitem' : 'ship';
 var lseg = { i: "", fuel:"",  ammo:"",  steel:"",  bauxite:"", 資材:"", secretary:"", denominator: '', times: '', ratio: '' };
 var kj = false;
 var ship;
@@ -40,7 +41,6 @@ $.getJSON("parsed/" + jsonfile + ".json", function (result) {
 });
 $('#denominator').val(Number(GetRequest("a", 1)));
 var sorted = [];
-var jsindex = 0;
 var minlv = GetRequest("l")=='true'?true:false;
 function progress(p) {
     bar += p;
@@ -60,6 +60,9 @@ if (!havelang) {
     }
 }
 function jsonover(){    
+    console.log(bigdata.length);
+    jsindex++;
+    progress(1 / (ranget.length + 2) * 80);
     var o = GetRequest("o", 1);
     var oname=[];
     var otwo=o;
@@ -105,33 +108,33 @@ function jsonover(){
     }
     $('.loading').hide();
 }else if(jsindex == 3) {
-var filted = filt(group2By(bigdata, "i", "s"), o);
-    if (filted.length){
-        o = o.concat(e);
-        isonl = isonladd(filted, o);
-        isonl.forEach(function(e) {
-            denominator = 0;
-            for (keys in e) {
-                if (keys[0] == 'n') {
-                    denominator += e[keys];
-                }
-            }
-            e['denominator'] = denominator;
-            e['ratio'] = 0;
-            e['times'] = 0;
-            for (key in e) {
-                if (key[0] == 'n') {
-                    k = key.slice(1, key.length);
-                    e[formatOnlyname(k)] = e[key] / e['denominator'];
-                    if (o.indexOf(k) > -1) {
-                        e['ratio'] += e[formatOnlyname(k)];
-                        e['times'] += e['n' + k];
-                    }
-                }
-            }
-        });
-        setdeno();
-}
+// var filted = filt(group2By(bigdata, "i", "s"), o);
+//     if (filted.length){
+//         o = o.concat(e);
+//         isonl = isonladd(filted, o);
+//         isonl.forEach(function(e) {
+//             denominator = 0;
+//             for (keys in e) {
+//                 if (keys[0] == 'n') {
+//                     denominator += e[keys];
+//                 }
+//             }
+//             e['denominator'] = denominator;
+//             e['ratio'] = 0;
+//             e['times'] = 0;
+//             for (key in e) {
+//                 if (key[0] == 'n') {
+//                     k = key.slice(1, key.length);
+//                     e[formatOnlyname(k)] = e[key] / e['denominator'];
+//                     if (o.indexOf(k) > -1) {
+//                         e['ratio'] += e[formatOnlyname(k)];
+//                         e['times'] += e['n' + k];
+//                     }
+//                 }
+//             }
+//         });
+//         setdeno();
+// }
 }}
 function setdeno(a) {
     $(".deno").css("background","");
@@ -166,7 +169,6 @@ $(document).ready(function () {
         langchange();
     });
     setTimeout(function () {
-        console.log(22)
         js("https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table-locale-all.js");
         js("https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js");
         progress(2);
@@ -185,9 +187,6 @@ $(document).ready(function () {
             }, 50);
         });
         // loadchart();
-if(q=='c'){
-    $('span.msg').css("width","76px");
-}
     }, 2000);
 });
 function bgclr(a,b){
@@ -422,8 +421,8 @@ function formatOnlyname(value) {
         return fail;
     };
     for (nitem=0;nitem<slotitem.length;nitem++){
-        if(slotitem[nitem][api+'id']==value){
-            str=slotitem[nitem][api+'name'];
+        if(slotitem[nitem][api_+'id']==value){
+            str=slotitem[nitem][api_+'name'];
     return bra(str,1);
         }
     }return bra(str,1);
@@ -437,3 +436,10 @@ function addicon(name,c){
         }
     }return '<span class="flex">'+color+str+'</sapn>';
     }
+
+if(q=='c'){
+    // $('span.msg').css("width","76px");
+    document.getElementById('css').innerHTML+='span.msg{width:76px}' 
+}else{
+    document.getElementById('css').innerHTML+='span.msg{width:162px}' 
+}

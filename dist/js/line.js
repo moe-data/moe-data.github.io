@@ -2,7 +2,7 @@ isFirst=true
 // setcontainer();
 // function setcontainer(){
 // $('#container').attr( "style","width:"+(Width()-60)+"px;height:"+(400+Width()-60*2.22)+"px;")};
-var exclude = ["id", "sortno", "sort_id", "afterfuel", "afterbull",  "fuel_max", "bull_max", "aftershipid", "ctype", "backs", "afterlv", "slot_num", "type","stype","itype", "buildtime"];
+const exclude = ["id", "sortno", "sort_id", "afterfuel", "afterbull",  "fuel_max", "bull_max", "aftershipid", "ctype", "backs", "afterlv", "slot_num", "type","stype","itype", "buildtime"];
 function getcol(){
     var strIds=new Array();//声明一个存放id的数组 
     $("input[name=items]").each(function (i,d){ 
