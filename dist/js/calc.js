@@ -14,6 +14,9 @@ stype[571] = "Nelson";
 stype[589] = "L.d.S.D.d.Abruzzi级";
 const devpic = '<img src="https://uploads.kcwiki.cn/commons/a/a8/IcoMaterial.png" alt="资材" style="height:22px;">';
 
+var o = GetRequest("o", 1);
+var e = GetRequest("e", 1);
+e = e.indexOf("") ? e : [];
 const q = GetRequest("q", 1);
 const ranget = GetRequest("t", 1);
 var jsindex = 0;
@@ -32,6 +35,11 @@ $.getJSON("parsed/cstype.json", function (result) {
     jsindex++;
 }).done(function (d) {
     progress(5);
+    var oname=[];
+    for(let j=0;j<o.length;j++){
+        oname.push(addemoji(formatOnlyname(o[j])))
+    }
+    document.title = oname;
 });
 $.getJSON("parsed/" + jsonfile + ".json", function (result) {
     slotitem = result;
@@ -63,15 +71,6 @@ function jsonover(){
     console.log(bigdata.length);
     jsindex++;
     progress(1 / (ranget.length + 2) * 80);
-    var o = GetRequest("o", 1);
-    var oname=[];
-    var otwo=o;
-    for(let j=0;j<otwo.length;j++){
-        oname.push(addemoji(formatOnlyname(otwo[j])))
-    }
-    document.title = oname;
-    var e = GetRequest("e", 1);
-    e = e.indexOf("") ? e : [];
     if (jsindex == ranget.length + 1)$('h3.panel-title')[0].innerHTML = ("数据计算中。。。");
     console.log(jsindex ,ranget.length + 2)
     if (jsindex == ranget.length + 2) {

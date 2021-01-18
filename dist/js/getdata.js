@@ -1,7 +1,3 @@
-// handlefile("https://pic3.zhimg.com/v2-61cc4410dd6c3efa5655fad381961c42_r.png")//d9
-// handlefile("https://pic1.zhimg.com/v2-c6dafe84eb967c834630e94d442374a4_r.jpeg")//d8
-// handlefile("https://pic3.zhimg.com/v2-6eb39430e95d6eadfaaaec5f3c167862_r.jpeg")//d10
-// handlefile("https://pic3.zhimg.com/v2-02016abc4949fc2837b7465da187d712_r.jpeg")//c10
 // const q = GetRequest("q", 1);
 // const ranget = GetRequest("t", 1);
 var bigdata = [];
@@ -69,7 +65,7 @@ $.getJSON("parsed/" + qn + ".json", success).done(function (result) {
     // console.log(result)
     jsonover()
 }).fail(function (t) {
-    let msg = "文件  " + "parsed/" + qn + ".json 读取失败" +t
+    let msg = "文件  " + "parsed/" + qn + ".json 读取失败"
     alert(msg);
     $('h3.panel-title')[0].innerHTML = msg
     console.log(msg)
