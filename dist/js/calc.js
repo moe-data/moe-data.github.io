@@ -19,7 +19,7 @@ var e = GetRequest("e", 1);
 e = e.indexOf("") ? e : [];
 const q = GetRequest("q", 1);
 const ranget = GetRequest("t", 1);
-var jsindex = 0;
+let jsindex = 0;
 var bigdata = [];
 var slotitem;
 const api_=(q == 'd') ? 'api_' : '';
@@ -167,19 +167,19 @@ $(document).ready(function () {
         if (!havelang) {
             document.getElementById("locale")[0].selected = true;
         }
-    }, 1200);
+    }, 2400);
     setTimeout(function () {
         progress(3);
         // $("#foot").load("foot.html");
         $('.search-input').bind("input onchange", function () {
             setTimeout(function () {
-                for (let i = 0; i < 2; i++) {
+                for (let i = 0; i < 6; i++) {
                     document.getElementsByClassName('search-input')[i].value = Japanized(document.getElementsByClassName('search-input')[i].value);
                 }
             }, 50);
         });
         // loadchart();
-    }, 2000);
+    }, 2400);
 });
 function bgclr(a,b){
     if(Simplized(b.innerHTML)==title[a])$(b).addClass('css'+a);
