@@ -30,22 +30,20 @@ var ship;
 var csjson = [];
 var bar = 1;
 $('.loading').css("width",Width())
-$.getJSON("parsed/cstype.json", function (result) {
+$.getJSON("parsed/cstype.json").done(function (result) {
     csjson = result;
     jsindex++;
-}).done(function (d) {
+    progress(5);
+});
+$.getJSON("parsed/" + jsonfile + ".json").done(function (result) {
+    slotitem = result;
+    jsindex++;
     progress(5);
     var oname=[];
     for(let j=0;j<o.length;j++){
         oname.push(addemoji(formatOnlyname(o[j])))
     }
     document.title = oname;
-});
-$.getJSON("parsed/" + jsonfile + ".json", function (result) {
-    slotitem = result;
-    jsindex++;
-}).done(function (d) {
-    progress(5);
 });
 $('#denominator').val(Number(GetRequest("a", 1)));
 var sorted = [];
@@ -68,12 +66,11 @@ if (!havelang) {
     }
 }
 function jsonover(){    
-    console.log(bigdata.length);
     jsindex++;
+    console.log(jsindex ,ranget.length + 2,bigdata.length);
     progress(1 / (ranget.length + 2) * 80);
     if (jsindex == ranget.length + 1)$('h3.panel-title')[0].innerHTML = ("数据计算中。。。");
-    console.log(jsindex ,ranget.length + 2)
-    if (jsindex == ranget.length + 2) {
+    if (jsindex >= ranget.length + 2) {
     progress(20);
     var filted = filt(group2By(bigdata, "i", "s"), o);
     if (!filted.length) {
