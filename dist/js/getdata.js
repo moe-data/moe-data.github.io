@@ -19,7 +19,7 @@ for (t = 0; t < ranget.length; t++) {
             zhimg= "https://pic3.zhimg.com/v2-02016abc4949fc2837b7465da187d712_r.jpeg"
           break;
         case 'd0':
-            zhimg= "https://pic2.zhimg.com/v2-dd56a1f2793cd3cfdd5f5e7c52c6ef09_r.png"
+            zhimg= "https://pic4.zhimg.com/v2-cd4f54c3b4d71d6268af6a89a0eb687b_r.png"
           break;
         case 'd1':
             zhimg= "https://pic3.zhimg.com/v2-8ac36dc1f05ad90f076789c5acca19aa_r.png"
@@ -42,38 +42,40 @@ for (t = 0; t < ranget.length; t++) {
         }
     if(!zhimg){console.log(qn+": handle failed:zhimg = "+zhimg);spare(zhimg,qn)}else{
     $.get(zhimg,success,"text").done(function (result) {
-        console.log(qn+": get "+zhimg+" success")
         var start = result.indexOf('{"RECORDS"');
         if(start<0){console.log(qn+": handle failed:RECORDS not found",zhimg,result);spare(zhimg,qn)}else{
-        try{
-        bigdata = bigdata.concat(JSON.parse(result.substring(start)).RECORDS);
-        $('h3.panel-title')[0].innerHTML = ("正在从zhimg.com下载第 "+jsindex+" / "+(ranget.length + 2)+ " 个文件，请耐心等待。。");
-        // console.log(result)
-        jsonover()}catch(err){
-        console.log(qn,err);
-        spare(zhimg,qn)
-        }}
+        
+        download(JSON.parse(result.substring(start)),"zhimg",qn,zhimg)
+        // $('h3.panel-title')[0].innerHTML = ("正在从zhimg.com下载第 "+jsindex+" / "+(ranget.length + 2)+ " 个文件，请耐心等待。。");
+        }
     }).fail(function(result){console.log(qn+": get "+zhimg+" fail");spare(result,qn)})
 }}
 
 function spare(err,qn){
-$.getJSON("parsed/" + qn + ".json", success).done(function (result) {
+$.getJSON("parsed/" + qn + ".json").done(function (result) {
     console.log(qn +" fail info: ",!err?"link undefined":err)
-    console.log(qn+": get "+"parsed/" + qn + ".json"+" success")
-    bigdata = bigdata.concat(result['RECORDS']);
-    $('h3.panel-title')[0].innerHTML = ("正在从github.com下载第 "+jsindex+" / "+(ranget.length + 2)+ " 个文件，请耐心等待。。");
-    // console.log(result)
-    jsonover()
+    download(result,"github",qn)
+    // $('h3.panel-title')[0].innerHTML = ("正在从github.com下载第 "+jsindex+" / "+(ranget.length + 2)+ " 个文件，请耐心等待。。");
 }).fail(function (t) {
     let msg = "文件  " + "parsed/" + qn + ".json 读取失败"
     alert(msg);
     $('h3.panel-title')[0].innerHTML = msg
     console.log(msg)
     console.log(t);
-    jsindex++
+    jsonover()
 })
 }
-
+function download(result,com,qn,zhimg){
+  try{
+    bigdata = bigdata.concat(result['RECORDS']);
+    console.log(qn+": get "+zhimg?zhimg:("parsed/" + qn)+" success")
+    $('h3.panel-title')[0].innerHTML = ("正在从"+com+".com下载"+"。 请耐心等待。。共"+(jsindex-1)+" / "+(ranget.length + 2)+ " 个文件，");
+    jsonover()}
+  catch(err){
+    console.log(qn,err);
+    if(zhimg)spare(zhimg,qn);
+  }
+}
 function success(result,status,xhr){
     // console.log(status,xhr);
 }

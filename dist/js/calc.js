@@ -65,7 +65,7 @@ function jsonover(){
     jsindex++;
     console.log(jsindex ,ranget.length + 2,bigdata.length);
     progress(1 / (ranget.length + 2) * 80);
-    if (jsindex == ranget.length + 1)$('h3.panel-title')[0].innerHTML = ("数据计算中。。。");
+    // if (jsindex == ranget.length + 1)$('h3.panel-title')[0].innerHTML = ("数据计算中。。。");
     if (jsindex >= ranget.length + 2) {
     progress(20);
     var filted = filt(group2By(bigdata, "i", "s"), o);
