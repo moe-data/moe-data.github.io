@@ -175,7 +175,7 @@ $(document).ready(function () {
         // $("#foot").load("foot.html");
         $('.search-input').bind("input onchange", function () {
             setTimeout(function () {
-                for (let i = 0; i < 6; i++) {
+                for (let i = 0; i <7; i++) {
                     document.getElementsByClassName('search-input')[i].value = Japanized(document.getElementsByClassName('search-input')[i].value);
                 }
             }, 50);
