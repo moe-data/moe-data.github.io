@@ -172,14 +172,14 @@ function getseries(r,c,shape,stack,sortkey){
     var col=[]
     var rawlen=r.length
     for(k=0;k<c.length;k++){
-        var e=c[k]
+        var e=Japanized(c[k])
         var prot=c[k]
         var name=getname(prot,kj)
         var data=[]
         var clr={}
         for(let i=0;i<rawlen;i++){
                     unit=(r[i][e])*100
-                    if(i==0)console.log(r[i],e,r[i][e])
+                    // if(i==0)console.log(r[i],e,r[i][e])
             data.push(unit)
         }   
         var eie=exclude.indexOf(prot)>-1
