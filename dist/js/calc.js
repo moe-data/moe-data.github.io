@@ -31,10 +31,12 @@ var csjson = [];
 var bar = 1;
 $('.loading').css("width",Width())
 $.getJSON("parsed/cstype.json").done(function (result) {
-    csjson = result;jsonover()
+    csjson = result;
+    jsonover();
 });
 $.getJSON("parsed/" + jsonfile + ".json").done(function (result) {
-    slotitem = result;jsonover()
+    slotitem = result;
+    jsonover();
     var oname=[];
     for(let j=0;j<o.length;j++){
         oname.push(addemoji(formatOnlyname(o[j])))

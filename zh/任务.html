@@ -60,23 +60,23 @@
 <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g6-3.7.1/dist/g6.min.js"></script>
 <script>
-  function finish(){
-    current=9;
-    for(let i=0;i<data.nodes.length;i++){
-      if(data.nodes[i].id==current){
-        data.nodes[i].cluster='a';
-        data.nodes[i].style.stroke='#aaa';
-        break;
-      }
+function finish(){
+  current=9;
+  for(let i=0;i<data.nodes.length;i++){
+    if(data.nodes[i].id==current){
+      data.nodes[i].cluster='a';
+      data.nodes[i].style.stroke='#aaa';
+      break;
     }
-    // graph.data(data);
-    // graph.paint()
-    graph.refresh()
   }
-            function _defineProperty(obj, key, value) {
+  // graph.data(data);
+  // graph.paint()
+  graph.refresh()
+}
+function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
-      value,
+      value: value,
       enumerable: true,
       configurable: true,
       writable: true,
