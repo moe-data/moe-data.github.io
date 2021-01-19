@@ -56,7 +56,7 @@
       document.getElementById('container').style.width = Width()+'px'
       document.getElementById('container').style.height = Width()+'px'
       var title=piedata.pop()
-      document.title = title;
+      document.title = title||"饼图";
       document.getElementById("title").innerHTML=title
       var myChart = echarts.init(document.getElementById('container'));
       legend = Width()>400?{}:null;
