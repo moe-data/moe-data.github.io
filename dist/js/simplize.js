@@ -17,7 +17,7 @@ var a = 1;
 function StranBody(fobj) {
     if(fobj=='auto'){
         console.log("AUTO: ",BodyIsFt)
-    }else{
+    }
     if (typeof (fobj) == "object"||fobj=='auto') { var obj = fobj.childNodes; }
     else {
         var tmptxt = StranLink_Obj.innerHTML.toString()
@@ -39,7 +39,7 @@ function StranBody(fobj) {
         $.cookie('JF_cn', BodyIsFt, { expires: 365, path: '/' })
         // console.log('JF_cn',BodyIsFt)
         var obj = document.body.childNodes
-    }}
+    }
     for (var i = 0; i < obj.length; i++) {
         var OO = obj.item(i)
         if ("||BR|HR|TEXTAREA|".indexOf("|" + OO.tagName + "|") > 0 || OO == StranLink_Obj) continue;
