@@ -5,12 +5,15 @@ BodyIsFt = $.cookie('JF_cn')||Default_isFT
 console.log("FT: ",BodyIsFt)
 //转换文本
 function StranText(txt) {
-    if (txt == "" || txt == null||BodyIsFt==4) return txt;
+    if (txt == "" || txt == null||BodyIsFt==4){ return txt;}
+    else if(BodyIsFt==2){return Japanized(txt)}
+    else if(BodyIsFt==1){return Traditionalized(txt) }
+    else if(BodyIsFt==0){return Simplized(txt) }
     // toFT = toFT == null ? BodyIsFt : toFT
     // if (chgTxt)txt = txt.replace((toFT ? "简" : "繁"), (toFT ? "繁" : "简"))
     
-    if (BodyIsFt) { if(BodyIsFt==2){return Japanized(txt)}else{return Traditionalized(txt) }}
-    else { return Simplized(txt) }
+    // if (BodyIsFt) { if(BodyIsFt==2){return Japanized(txt)}else{return Traditionalized(txt) }}
+    // else { return Simplized(txt) }
 }
 //转换对象，使用递归，逐层剥到文本
 var a = 1;
