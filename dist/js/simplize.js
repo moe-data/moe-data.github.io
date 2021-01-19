@@ -15,9 +15,11 @@ function StranText(txt) {
 //转换对象，使用递归，逐层剥到文本
 var a = 1;
 function StranBody(fobj) {
+    if(fobj=='auto'){
+        console.log("AUTO: ",BodyIsFt)
+    }else{
     if (typeof (fobj) == "object") { var obj = fobj.childNodes; }
     else {
-        console.log("FT: ",BodyIsFt)
         var tmptxt = StranLink_Obj.innerHTML.toString()
         if (tmptxt.indexOf("和") > -1) {
             BodyIsFt = 2
@@ -37,7 +39,7 @@ function StranBody(fobj) {
         $.cookie('JF_cn', BodyIsFt, { expires: 365, path: '/' })
         // console.log('JF_cn',BodyIsFt)
         var obj = document.body.childNodes
-    }
+    }}
     for (var i = 0; i < obj.length; i++) {
         var OO = obj.item(i)
         if ("||BR|HR|TEXTAREA|".indexOf("|" + OO.tagName + "|") > 0 || OO == StranLink_Obj) continue;
