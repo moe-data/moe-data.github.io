@@ -179,6 +179,7 @@ function getseries(r,c,shape,stack,sortkey){
         var clr={}
         for(let i=0;i<rawlen;i++){
                     unit=(r[i][e])*100
+                    if(i==0)console.log(r[i],e,r[i][e])
             data.push(unit)
         }   
         var eie=exclude.indexOf(prot)>-1

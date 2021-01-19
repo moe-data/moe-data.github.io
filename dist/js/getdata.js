@@ -45,7 +45,7 @@ for (t = 0; t < ranget.length; t++) {
         var start = result.indexOf('{"RECORDS"');
         if(start<0){console.log(qn+": handle failed:RECORDS not found",zhimg,result);spare(zhimg,qn)}else{
         
-        download(JSON.parse(result.substring(start)),"zhimg",qn,zhimg)
+        download(JSON.parse(result.substring(start)),"拉取",qn,zhimg)
         // $('h3.panel-title')[0].innerHTML = ("正在从zhimg.com下载第 "+jsindex+" / "+(ranget.length + 2)+ " 个文件，请耐心等待。。");
         }
     }).fail(function(result){console.log(qn+": get "+zhimg+" fail");spare(result,qn)})
@@ -54,7 +54,7 @@ for (t = 0; t < ranget.length; t++) {
 function spare(err,qn){
 $.getJSON("parsed/" + qn + ".json").done(function (result) {
     console.log(qn +" fail info: ",!err?"link undefined":err)
-    download(result,"github",qn)
+    download(result,"下载",qn)
     // $('h3.panel-title')[0].innerHTML = ("正在从github.com下载第 "+jsindex+" / "+(ranget.length + 2)+ " 个文件，请耐心等待。。");
 }).fail(function (t) {
     let msg = "文件  " + "parsed/" + qn + ".json 读取失败"
@@ -69,7 +69,9 @@ function download(result,com,qn,zhimg){
   try{
     bigdata = bigdata.concat(result['RECORDS']);
     console.log(qn+": get "+(zhimg?zhimg:("parsed/" + qn))+" success")
-    $('h3.panel-title')[0].innerHTML = ("正在从"+com+".com下载"+"。 请耐心等待。。共"+(jsindex-1)+" / "+(ranget.length + 2)+ " 个文件，");
+    var TempDate = new Date("2019-04");
+    
+    $('h3.panel-title')[0].innerHTML = (TempDate.toLocaleDateString()+" 正在"+com+"数据"+"。 请耐心等待。。共"+(jsindex-1)+" / "+(ranget.length + 2)+ " 个文件，");
     jsonover()}
   catch(err){
     console.log(qn,err);
