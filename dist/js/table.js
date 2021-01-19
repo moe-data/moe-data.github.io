@@ -1,7 +1,7 @@
 var em='3em';
 var havelang=false
 if(document.body.clientWidth<768){em='0em'}
-console.log($.cookie('lang'))
+// console.log($.cookie('lang'))
 if($.cookie('lang')||$.cookie('lang')==0){havelang=true;
 document.getElementById("locale")[$.cookie('lang')].selected = true;}
 function setlang(){
