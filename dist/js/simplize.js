@@ -18,7 +18,7 @@ function StranBody(fobj) {
     if(fobj=='auto'){
         console.log("AUTO: ",BodyIsFt)
     }else{
-    if (typeof (fobj) == "object") { var obj = fobj.childNodes; }
+    if (typeof (fobj) == "object"||fobj=='auto') { var obj = fobj.childNodes; }
     else {
         var tmptxt = StranLink_Obj.innerHTML.toString()
         if (tmptxt.indexOf("和") > -1) {
