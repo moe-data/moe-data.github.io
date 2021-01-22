@@ -53,7 +53,7 @@ function getimg(zhimg,qn,n){
       getjson(result.length+result.slice(-200),qn)
     }
   }else{
-    download(JSON.parse(result.substring(start)),"拉取",qn,zhimg)
+    download(JSON.parse(result.substring(start)),"拉取",qn,zhimg[n%zhimg.length])
     }
   }).fail(function(result){
     console.log(n,qn+": get ",zhimg[n%zhimg.length] ,n%zhimg.length," fail");
