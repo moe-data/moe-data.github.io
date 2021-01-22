@@ -13,13 +13,7 @@ function replaceBy(selector, c, old, replace) {
   }
 }
 
-function z() {
-  var params = "";
-  for (var i = 0; i < arguments.length; i++) {
-    params = params + " " + arguments[i];
-  }
-  console.log(params)
-}
+z=console.log
 
 
 function valid(e) {
@@ -95,6 +89,17 @@ function remove(arr,b) {
   }
   return arr;
 };
+function find(arr,key){
+  const l = key.length
+  const idxMap = new Map()
+  // 具体小细节边界判断都忽略，实现功能为主
+  for(let i=0;i<arr.length;i++){
+    v=arr.substr(i,l)
+    idxMap.set(v, i)
+  }
+  return idxMap.has(key) ? idxMap.get(key) : -1
+}
+
 function jsonstr(a){
   return JSON.stringify(a).replace("[", "").replace("]", "").replace(/"/g, '');
 }
