@@ -41,7 +41,7 @@ $.getJSON("parsed/" + jsonfile + ".json").done(function (result) {
     for(let j=0;j<o.length;j++){
         oname.push(addemoji(formatOnlyname(o[j])))
     }
-    document.title = oname.length?oname:"全部"+(q==d?"装备":"舰娘")
+    document.title = oname.length?oname:"全部"+(q=='d'?"装备":"舰娘")
 });
 $('#denominator').val(Number(GetRequest("a", 1)));
 var sorted = [];
