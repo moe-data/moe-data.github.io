@@ -41,7 +41,7 @@ for (t = 0; t < ranget.length; t++) {
           break;
         }
     if(!zhimg){console.log(qn+": handle failed:zhimg = "+zhimg);getjson(zhimg,qn)}else{
-      zhimg=zhimg.replace("http:","https")
+      zhimg=zhimg.replace("http:","https:")
       getimg(zhimg,qn)
 }}
 function getimg(zhimg,qn,n){
