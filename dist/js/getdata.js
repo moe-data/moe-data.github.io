@@ -53,7 +53,7 @@ function getimg(zhimg,qn,n){
       getjson(result.length+result.slice(-200),qn)
     }
   }else{
-    download(JSON.parse(result.substring(start)),"拉取",qn,zhimg[n%zhimg.length])
+    download(JSON.parse(result.substring(start)),"拉取",qn,zhimg[n%zhimg.length],start)
     }
   }).fail(function(result){
     console.log(n,qn+": get ",zhimg[n%zhimg.length] ,n%zhimg.length," fail");
@@ -74,10 +74,10 @@ $.getJSON("parsed/" + qn + ".json").done(function (result) {
     jsonover()
 })
 }
-function download(result,com,qn,zhimg){
+function download(result,com,qn,zhimg,start){
   try{
     bigdata = bigdata.concat(result['RECORDS']);
-    console.log(qn+": get "+(zhimg?zhimg:("parsed/" + qn))+" success")
+    console.log(qn+": get "+(zhimg?zhimg+start:("parsed/" + qn))+" success")
     var TempDate = new Date("2019-04");
     
     $('h3.panel-title')[0].innerHTML = (TempDate.toLocaleDateString()+" 正在"+com+"数据"+"。 请耐心等待。。共"+(jsindex)+" / "+(ranget.length + 2)+ " 个文件，");
