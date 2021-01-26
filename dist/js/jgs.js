@@ -1,4 +1,3 @@
-
 function replaceBy(selector, c, old, replace) {
   var dropdown
   if (selector == 'class') {
@@ -13,7 +12,9 @@ function replaceBy(selector, c, old, replace) {
   }
 }
 
-z=console.log
+const w = console.warn
+const x = console.error
+const z = console.log
 
 
 function valid(e) {

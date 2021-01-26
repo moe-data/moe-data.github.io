@@ -272,7 +272,7 @@ Laté 298B   </button><button class="btn btn-default" value="207">
     }).fail(function (d) {
         alert("文件  " + "parsed/api_mst_slotitem.json" + " 读取失败"+d);
     })}).fail(function (d) {
-        alert("文件  " + "parsed/itype.json" + " 读取失败"+d);
+        alert("文件  " + "parsed/api_mst_slotitem_equiptype.json" + " 读取失败"+d);
     })
     $('.go').click(function () {
       var output=[]
@@ -411,6 +411,8 @@ Laté 298B   </button><button class="btn btn-default" value="207">
     }
   </script>
   <script>
+    $.getJSON("parsed/cstype.json").fail(function (d) {
+        w("文件  " + "parsed/cstype.json" + " 读取失败"+d);})
     $("#nav").load("zh/nav.html");
     $("#foot").load("foot.html");
   </script>
