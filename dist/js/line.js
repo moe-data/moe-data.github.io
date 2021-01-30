@@ -23,7 +23,7 @@ function loadchart(){
     if("undefined" == typeof echarts){
         if(isFirst){info.innerHTML=("默认加载全表数据，建议在表格中进行筛选");isFirst=false}else{
             info.innerHTML=(echarts); }            return    }
-    var w=Width()
+    var wi=Width()
     var myChart = echarts.init(document.getElementById("container"));
     option = null;
     var raw=[]
@@ -64,7 +64,7 @@ function loadchart(){
     var stackval=$('#stack').val()
     if(!stackval){stackval=0}
     gseries=getseries(raw,column,shapeval,stackval,sortkey)
-    lable=Math.round(gseries[1].length/4*22/w*375)+sqrtrl
+    lable=Math.round(gseries[1].length/4*22/wi*375)+sqrtrl
     if(h>2178){h=2178;extra=50}
     document.getElementById('container').style.height = lable+extra+h+'px'
     document.getElementById('container').style.width = Width()-60+'px'
@@ -81,7 +81,7 @@ function loadchart(){
     var temp=0
     var temp2=30
     if(rawlen<6){temp=30}
-    if(w<560){temp2=20}
+    if(wi<560){temp2=20}
     grid=lable+temp+temp2
     var inverse=true
     if($('#desc').length){inverse=!$('#desc')[0].checked}
@@ -164,9 +164,9 @@ function loadprot(prot){
         genCheck(years, months,stat);  
 }
 function getseries(r,c,shape,stack,sortkey){
-    w=Width()
-    // limit=w>1080?5:(w>900?20:25);
-    var limit=Math.round(4*2^(4-w/500));
+    wi=Width()
+    // limit=wi>1080?5:(wi>900?20:25);
+    var limit=Math.round(4*2^(4-wi/500));
     var s=[]
     var col=[]
     var rawlen=r.length
