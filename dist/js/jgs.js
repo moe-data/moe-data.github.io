@@ -17,7 +17,7 @@ const x = console.error
 const z = console.log
 
 
-function valid(e) {
+function isvalid(e) {
   return e ? (isNaN(e) ? e.length : true) : false
 }
 function insert_spacing(str) {
