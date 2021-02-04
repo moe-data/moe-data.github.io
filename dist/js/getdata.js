@@ -39,6 +39,9 @@ for (t = 0; t < ranget.length; t++) {
         case 'd10':
             zhimg= ["https://pic3.zhimg.com/v2-6eb39430e95d6eadfaaaec5f3c167862_r.jpeg","https://img-blog.csdnimg.cn/20210122151418288.jpg"]
           break;
+        default:
+            zhimg=qn
+          break
         }
     if(!zhimg){console.log(qn+": handle failed:zhimg = "+zhimg);getjson(zhimg,qn)}else{
       for(let i=0;i<zhimg.length;i++)zhimg[i]=zhimg[i].replace("http:","https:");
