@@ -21,20 +21,20 @@ for (t = 0; t < ranget.length; t++) {
         case 'd0':
             zhimg= ["https://pic4.zhimg.com/v2-cd4f54c3b4d71d6268af6a89a0eb687b_r.png"]
           break;
-        case 'd1':
+        case 'd1'://
             zhimg= ["https://pic3.zhimg.com/v2-8ac36dc1f05ad90f076789c5acca19aa_r.png"]
           break;
-        case 'd2':
+        case 'd2'://
             zhimg= ["https://pic2.zhimg.com/v2-7fa5e8dbf30474632ce928cd02ece519_r.png"]
           break;
         case 'd3':
-            zhimg= ["https://pic4.zhimg.com/v2-59e21663179b067feb3e4e04ae640ccf_r.png"]
+            zhimg= ["https://pic4.zhimg.com/v2-59e21663179b067feb3e4e04ae640ccf_r.png","https://img-blog.csdnimg.cn/20210204094830338.png"]
           break;
         case 'd8':
             zhimg= ["https://pic1.zhimg.com/v2-c6dafe84eb967c834630e94d442374a4_r.jpeg","https://img-blog.csdnimg.cn/20210122151422169.jpg"]
           break;
-        case 'd9':
-            zhimg= ["https://pic3.zhimg.com/v2-61cc4410dd6c3efa5655fad381961c42_r.png"]
+        case 'd9'://
+            zhimg= ["https://pic3.zhimg.com/v2-61cc4410dd6c3efa5655fad381961c42_r.png","https://img-blog.csdnimg.cn/20210122151422489.png"]
           break;
         case 'd10':
             zhimg= ["https://pic3.zhimg.com/v2-6eb39430e95d6eadfaaaec5f3c167862_r.jpeg","https://img-blog.csdnimg.cn/20210122151418288.jpg"]
