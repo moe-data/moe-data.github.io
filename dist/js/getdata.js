@@ -25,7 +25,7 @@ for (t = 0; t < ranget.length; t++) {
             zhimg= ["https://pic3.zhimg.com/v2-8ac36dc1f05ad90f076789c5acca19aa_r.png","https://img-blog.csdnimg.cn/20210205143035380.png"]
           break;
         case 'd2'://zhimg
-            zhimg= ["https://pic2.zhimg.com/v2-7fa5e8dbf30474632ce928cd02ece519_r.png" ]
+            zhimg= ["https://pic2.zhimg.com/v2-7fa5e8dbf30474632ce928cd02ece519_r.png","https://img-blog.csdnimg.cn/20210205144046641.png" ]
           break;
         case 'd3':
             zhimg= ["https://pic4.zhimg.com/v2-59e21663179b067feb3e4e04ae640ccf_r.png","https://img-blog.csdnimg.cn/20210204094830338.png"]
