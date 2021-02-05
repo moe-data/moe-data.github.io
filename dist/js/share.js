@@ -68,15 +68,15 @@ function formatStype(value) {
 function formatDtype(value,row,index) {
     return stype[value]==null?row["csname"]:stype[value];
     }
-function formatshipId(value,row,index) {
-    var str=value
-    for (let i=0;i<csjson.length;i++){
-        if(csjson[i]['id']==value){
-            str=csjson[i]['name'];break
-        }
-    }
-    return str;
-    }
+// function formatshipId(value,row,index) {
+//     var str=value
+//     for (let i=0;i<csjson.length;i++){
+//         if(csjson[i]['id']==value){
+//             str=csjson[i]['name'];break
+//         }
+//     }
+//     return str;
+//     }
 function addcol(result,col,old,n){
     l=result.length
     if(!l){console.log("empty");return}

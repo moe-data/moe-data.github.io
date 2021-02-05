@@ -230,7 +230,7 @@ function thead(eg) {
         if (e == 'ratio' || thls(e)||e[0]=='n') {
             if (!isNaN(e[e.length - 1])) {
                 showid = e.slice(1, e.length);
-                temp = (q == 'd') ? formatItemId(showid):formatshipId(showid);
+                temp = (q == 'd') ? formatItemId(showid):formatStype(showid);
             }
             co.push({
                 title: getname(temp,kj),
@@ -344,7 +344,7 @@ function isonladd(array, o) {
         let is = array[i][0]['i'];
         if(q=='d'){is.push(1);
             is.push(formatStype(array[i][0]['s']));}else{
-            is.push(formatshipId(array[i][0]['s']));
+            is.push(formatStype(array[i][0]['s']));
         }
         var onal = { 'i': (is) };
         for(let j= 0; j < array[i].length; j++) {
