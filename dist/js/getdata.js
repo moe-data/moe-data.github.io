@@ -42,9 +42,6 @@ for (t = 0; t < ranget.length; t++) {
         case 'd11':
             zhimg= ["https://img-blog.csdnimg.cn/20210205111352563.jpg"]
           break;
-        default:
-            zhimg
-          break
         }
     if(!zhimg){console.log(qn+": handle failed:zhimg = "+zhimg);getjson(zhimg,qn)}else{
       for(let i=0;i<zhimg.length;i++)zhimg[i]=zhimg[i].replace("http:","https:");
@@ -84,7 +81,6 @@ function download(result,com,qn,zhimg,start){
   let objdata=[]
   try{
     if(result['RECORDS'][0][0]){
-        z(qn+' is compressed');
         result['RECORDS'].forEach(function(b){
             objdata.push({
                 i:b[0],
@@ -95,6 +91,7 @@ function download(result,com,qn,zhimg,start){
             })
         })
     }else{
+      z(qn+' is NOT compressed');
     objdata=result['RECORDS']}
     bigdata = bigdata.concat(objdata);
     z(objdata.length)
