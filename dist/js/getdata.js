@@ -19,13 +19,13 @@ for (t = 0; t < ranget.length; t++) {
             zhimg= ["https://pic3.zhimg.com/v2-02016abc4949fc2837b7465da187d712_r.jpeg","https://img-blog.csdnimg.cn/2021012215141988.jpg"]
           break;
         case 'd0':
-            zhimg= ["https://pic4.zhimg.com/v2-cd4f54c3b4d71d6268af6a89a0eb687b_r.png"]
+            zhimg= ["https://pic4.zhimg.com/v2-cd4f54c3b4d71d6268af6a89a0eb687b_r.png","https://img-blog.csdnimg.cn/20210205142618636.png"]
           break;
-        case 'd1'://
-            zhimg= ["https://pic3.zhimg.com/v2-8ac36dc1f05ad90f076789c5acca19aa_r.png"]
+        case 'd1'://zhimg
+            zhimg= ["https://pic3.zhimg.com/v2-8ac36dc1f05ad90f076789c5acca19aa_r.png","https://img-blog.csdnimg.cn/20210205143035380.png"]
           break;
-        case 'd2'://
-            zhimg= ["https://pic2.zhimg.com/v2-7fa5e8dbf30474632ce928cd02ece519_r.png"]
+        case 'd2'://zhimg
+            zhimg= ["https://pic2.zhimg.com/v2-7fa5e8dbf30474632ce928cd02ece519_r.png" ]
           break;
         case 'd3':
             zhimg= ["https://pic4.zhimg.com/v2-59e21663179b067feb3e4e04ae640ccf_r.png","https://img-blog.csdnimg.cn/20210204094830338.png"]
