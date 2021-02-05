@@ -1,17 +1,15 @@
 stype[174] = "Z1 Z3";
 stype[439] = "Warspite";
 stype[441] = "Littorio级";
-stype[443] = "西北风级";
+stype[443] = "Libeccio级";
 stype[448] = "Zara级";
-stype[491] = "Teste";
+stype[491] = "Commandant Teste";
 stype[515] = "Ark Royal";
 stype[530] = "伊504";
 stype[535] = "Luigi Torelli";
 stype[539] = "UIT-25";
-stype[82] = "伊勢改";
-stype[88] = "日向改";
-stype[553] = "伊勢改二";
-stype[554] = "日向改二";
+stype[553] = "伊勢改(二)";
+stype[554] = "日向改(二)";
 stype[571] = "Nelson";
 stype[589] = "L.d.S.D.d.Abruzzi级";
 const devpic = '<img src="https://uploads.kcwiki.cn/commons/a/a8/IcoMaterial.png" alt="资材" style="height:22px;">';
@@ -230,7 +228,7 @@ function thead(eg) {
         if (e == 'ratio' || thls(e)||e[0]=='n') {
             if (!isNaN(e[e.length - 1])) {
                 showid = e.slice(1, e.length);
-                temp = (q == 'd') ? formatItemId(showid):formatStype(showid);
+                temp = (q == 'd') ? formatItemId(showid):formatshipId(showid);
             }
             co.push({
                 title: getname(temp,kj),
@@ -344,7 +342,7 @@ function isonladd(array, o) {
         let is = array[i][0]['i'];
         if(q=='d'){is.push(1);
             is.push(formatStype(array[i][0]['s']));}else{
-            is.push(formatStype(array[i][0]['s']));
+            is.push(formatshipId(array[i][0]['s']));
         }
         var onal = { 'i': (is) };
         for(let j= 0; j < array[i].length; j++) {

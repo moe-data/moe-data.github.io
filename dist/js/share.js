@@ -60,23 +60,21 @@ var title={
     }
 var stype=[0,"海防艦","駆逐艦","軽巡洋艦","重雷装巡洋艦","重巡洋艦","航空巡洋艦","軽空母","戦艦","低速戦艦","航空戦艦","正規空母",
 "超弩級戦艦","潜水艦","潜水空母","補給艦","水上機母艦","揚陸艦","装甲空母","工作艦","潜水母艦","練習巡洋艦","補給艦"]
-stype[651]='丹陽'
-stype[656]='"雪風改二"'
 function formatStype(value) {
     return stype[value]==null?value:stype[value];
     }
 function formatDtype(value,row,index) {
     return stype[value]==null?row["csname"]:stype[value];
     }
-// function formatshipId(value,row,index) {
-//     var str=value
-//     for (let i=0;i<csjson.length;i++){
-//         if(csjson[i]['id']==value){
-//             str=csjson[i]['name'];break
-//         }
-//     }
-//     return str;
-//     }
+function formatshipId(value,row,index) {
+    var str=value
+    for (let i=0;i<csjson.length;i++){
+        if(csjson[i]['id']==value){
+            str=csjson[i]['name'];break
+        }
+    }
+    return str;
+    }
 function addcol(result,col,old,n){
     l=result.length
     if(!l){console.log("empty");return}

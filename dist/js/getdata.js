@@ -13,7 +13,7 @@ for (t = 0; t < ranget.length; t++) {
             zhimg= ["https://pic4.zhimg.com/v2-69b7e5827f96e8e4f11ba2c10c42b53f_r.png"]
           break;
         case 'c9':
-            zhimg= ["https://img-blog.csdnimg.cn/20210122151445480.jpg","http://tiebapic.baidu.com/forum/pic/item/cd8f1d13495409235c4ca2398558d109b3de490b.jpg","https://pic2.zhimg.com/v2-b89b0f54795a654cdd095714701dcb4d_r.png","http://tiebapic.baidu.com/forum/abpic/item/cd8f1d13495409235c4ca2398558d109b3de490b.jpg"]
+            zhimg= ["https://pic2.zhimg.com/v2-b89b0f54795a654cdd095714701dcb4d_r.png","https://img-blog.csdnimg.cn/20210122151445480.jpg",]
           break;
         case 'c10':
             zhimg= ["https://pic3.zhimg.com/v2-02016abc4949fc2837b7465da187d712_r.jpeg","https://img-blog.csdnimg.cn/2021012215141988.jpg"]
@@ -33,7 +33,7 @@ for (t = 0; t < ranget.length; t++) {
         case 'd8':
             zhimg= ["https://pic1.zhimg.com/v2-c6dafe84eb967c834630e94d442374a4_r.jpeg","https://img-blog.csdnimg.cn/20210122151422169.jpg"]
           break;
-        case 'd9'://
+        case 'd9':
             zhimg= ["https://pic3.zhimg.com/v2-61cc4410dd6c3efa5655fad381961c42_r.png","https://img-blog.csdnimg.cn/20210205131439908.png", "https://img-blog.csdnimg.cn/20210122151422489.png"]
           break;
         case 'd10':
