@@ -37,10 +37,13 @@ for (t = 0; t < ranget.length; t++) {
             zhimg= ["https://pic3.zhimg.com/v2-61cc4410dd6c3efa5655fad381961c42_r.png","https://img-blog.csdnimg.cn/20210122151422489.png"]
           break;
         case 'd10':
-            zhimg= ["https://pic3.zhimg.com/v2-6eb39430e95d6eadfaaaec5f3c167862_r.jpeg","https://img-blog.csdnimg.cn/20210122151418288.jpg"]
+            zhimg= ["https://pic3.zhimg.com/v2-6eb39430e95d6eadfaaaec5f3c167862_r.jpeg","https://img-blog.csdnimg.cn/20210205110940408.jpg", "https://img-blog.csdnimg.cn/20210122151418288.jpg"]
+          break;
+        case 'd11':
+            zhimg= ["https://img-blog.csdnimg.cn/20210205111352563.jpg"]
           break;
         default:
-            zhimg=qn
+            zhimg
           break
         }
     if(!zhimg){console.log(qn+": handle failed:zhimg = "+zhimg);getjson(zhimg,qn)}else{
@@ -78,8 +81,23 @@ $.getJSON("parsed/" + qn + ".json").done(function (result) {
 })
 }
 function download(result,com,qn,zhimg,start){
+  let objdata=[]
   try{
-    bigdata = bigdata.concat(result['RECORDS']);
+    if(result['RECORDS'][0][0]){
+        z(qn+' is compressed');
+        result['RECORDS'].forEach(function(b){
+            objdata.push({
+                i:b[0],
+                s:b[1],
+                o:b[2],
+                n:b[3],
+                l:b[4],
+            })
+        })
+    }else{
+    objdata=result['RECORDS']}
+    z(objdata)
+    bigdata = bigdata.concat(objdata);
     console.log(qn+": get "+(zhimg?zhimg+start:("parsed/" + qn))+" success")
     var TempDate = new Date("2019-04");
     
