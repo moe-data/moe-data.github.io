@@ -18,6 +18,9 @@ for (t = 0; t < ranget.length; t++) {
         case 'c10':
             zhimg= ["https://pic3.zhimg.com/v2-02016abc4949fc2837b7465da187d712_r.jpeg","https://img-blog.csdnimg.cn/2021012215141988.jpg"]
           break;
+        case 'c11':
+            zhimg= ["https://img-blog.csdnimg.cn/20210206084142582.gif","https://pic2.zhimg.com/v2-894298321368004931eaecaa4000c7a1_r.gif"]
+          break;
         case 'd0':
             zhimg= ["https://pic4.zhimg.com/v2-cd4f54c3b4d71d6268af6a89a0eb687b_r.png","https://img-blog.csdnimg.cn/20210205142618636.png"]
           break;
