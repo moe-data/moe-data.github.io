@@ -1421,10 +1421,10 @@ function fistvisit() {
 		didperiod(2)
 	}
 	app.set('fistvisit', true)
-	z(app.get('fistvisit'))
-	z($.cookie('fistvisit'))
 }
 fistvisit()
+z(app.get('history'))
+z($.cookie('history'))
 
 
 // for (let i = 200; i < datalen; i++) {
