@@ -1421,6 +1421,8 @@ function fistvisit() {
 		didperiod(2)
 	}
 	app.set('fistvisit', true)
+	z(app.get('fistvisit'))
+	z($.cookie('fistvisit'))
 }
 fistvisit()
 
