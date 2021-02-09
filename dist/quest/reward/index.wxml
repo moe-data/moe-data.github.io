@@ -1,0 +1,41 @@
+
+<e-tabs
+  items='{{ ["进行中+未完成", "进行中", "未完成" , "已完成", "全部" ] }}'
+  selected='{{ 0 }}'
+  catchitemtap='tapguess'/>
+<e-tabs
+  items='{{ ["收藏", "不可开发", "可开发", "道具", "家具", "热点", "其他", "全部" ] }}'
+  selected='{{ 0 }}'
+  selectColor='#455488'
+  theme='smallBar'
+  catchitemtap='tapcate'
+  />
+  <!-- <e-sidebar
+  list='{{ ["全部", "最近", "发布", "最新", "热点", "最新", "热点" ]  }}'
+  height='600rpx' /> -->
+  <block wx:for-items="{{list}}" wx:for-index="idx" wx:key="{{item.name}}">
+  <view class="kind-list-item">
+    <view id="{{item.name}}" class="kind-list-item-hd {{item.open ? 'kind-list-item-hd-show' : ''}}">
+      <view style="display:contents" data-id="{{item.name}}"  bindtap="kindToggle">
+      <view class="kind-list-text">{{item.name}}</view>
+            <view class="navigator-arrow"></view>
+      <view class="kind-list-n">{{item.n}}</view></view>
+            <image src="../../img/star.svg" class="tar {{item.star?'':'gray'}}" data-name="{{item.name}}" data-idx="{{idx}}" bindtap="staritem"></image>
+            <image src="../../img/ta1.png" class="tar"  bindtap="targets"></image>
+            <image src="../../img/ta2.png" class="tar {{item.finished?'':'gray'}}"></image>
+    </view>
+    <view class="kind-list-item-bd {{item.open ? 'kind-list-item-bd-show' : ''}}">
+      <view class="navigator-box {{item.open ? 'navigator-box-show' : ''}}">
+        <block wx:for-items="{{item.pages}}" wx:for-item="page" wx:key="item">
+          <view url="pages/{{page}}/{{page}}" class="navigator">
+            <view class="navigator-text">{{index}}</view>
+            <view class="navigator-n">{{page.n}}</view>
+            <!-- <image src="../../img/star.svg" class="tar {{1==2?'':'gray'}}"></image> -->
+            <image src="../../img/ta1.png" class="tar" data-name="{{index}}" bindtap="target"></image>
+            <image src="../../img/ta2.png" class="tar {{page.finished?'':'gray'}}"></image>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+</block>

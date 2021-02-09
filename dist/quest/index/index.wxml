@@ -1,0 +1,118 @@
+<!--index.wxml-->
+<view class="global" disable-scroll="true">
+  <view id="up" class="sticky">
+    <image data-c="fm[0]" bindtap="expand" class="base" src="../../img/filter/hensei.png"></image>
+    <image class="progress" data-c="fs[0]" bindtap="filts" src="{{'../../img/locked'+(switches.fs[0]?'.png':'_gray.png')}}" alt="进行中" />
+    <image class="progress" data-c="fs[1]" bindtap="filts" src="{{'../../img/ongoing'+(switches.fs[1]?'.png':'_gray.png')}}" alt="进行中" />
+    <image class="progress" data-c="fs[2]" bindtap="filts" src="{{'../../img/finish'+(switches.fs[2]?'.png':'_gray.png')}}" alt="达成" />
+    <image class="star {{switches.fo[0]?'':'gray'}}" data-c="fo[0]" bindtap="filts" src="../../img/star.svg"></image>
+    <button bindtap="goreward" >装备奖励</button>
+    <!-- <button data-s="{{switches.fb}}" data-c="fb" bindtap="filts" size="mini">{{branches}}</button> -->
+      <picker bindchange="filts" value="{{switches.fb}}" data-c="fb" range="{{branches}}">
+        <view class="picker">
+          当前选择：{{branches[switches.fb]}}
+        </view>
+      </picker>
+    <!-- <block><image class="star {{switches.fp[1]?'':'gray'}}" data-s="{{switches.fp[1]}}" data-c="fp[1]" bindtap="filts" src="../../img/star.svg"></image></block> -->
+    <navigator url="../help/index">帮助</navigator>
+    <!-- <navigator url="../move/index">设置</navigator> -->
+    <button size="mini" bindtap="setchart">🔄</button>
+    <button size="mini" bindtap="clearStorage">清空本地缓存</button>
+  </view>
+  <!-- <view class="discount_wrap sticky" bindtap="toggleDiscountInfo" animation="{{toggleAnimationData}}" wx:if="{{discountInfo.length>0}}">
+      <view class="discount" wx:for="{{discountInfo}}" wx:key="index">
+        <view class="discount_title">{{item.preferenceName}}：</view>
+        <view class="discount_info">{{item.preferenceExplain}}</view>
+        <view wx:if="{{discountInfo.length>1&&index===0&&!isExpand}}" class="ellipsis">...</view>
+      </view>
+    </view> -->
+  <view class="topleft sticky" animation="{{toggleAnimationData}}">
+    <image class="menu {{switches.fm[0]?'':'gray'}}" data-c="fm[0]" bindtap="filts" src="../../img/filter/hensei.png">
+    </image>
+    <image class="menu {{switches.fm[1]?'':'gray'}}" data-c="fm[1]" bindtap="filts" src="../../img/filter/hensei.png">
+    </image>
+    <image class="menu {{switches.fm[2]?'':'gray'}}" data-c="fm[2]" bindtap="filts" src="../../img/filter/hensei.png">
+    </image>
+    <image class="menu {{switches.fm[3]?'':'gray'}}" data-c="fm[3]" bindtap="filts" src="../../img/filter/hensei.png">
+    </image>
+    <image class="menu {{switches.fm[4]?'':'gray'}}" data-c="fm[4]" bindtap="filts" src="../../img/filter/hensei.png">
+    </image>
+    <image class="menu {{switches.fm[0]?'':'gray'}}" data-c="fm[0]" bindtap="filts" src="../../img/filter/hensei.png">
+    </image>
+    <image class="menu {{switches.fm[0]?'':'gray'}}" data-c="fm[0]" bindtap="filts" src="../../img/filter/hensei.png">
+    </image>
+  </view>
+  <!-- <view id="sortie" class="sticky">
+  <block wx:for="{{sorties}}">
+  <text>{{index}}: {{item}}\n</text></block>
+</view> -->
+  <view class="container">
+    <ec-canvas id="mychart-dom" canvas-id="mychart-pie" ec="{{ ec }}"></ec-canvas>
+  </view>
+  <cover-view id="down" class="sticky" wx:if="{{current}}">
+    <cover-view class="flex width">
+      <cover-view>{{current.wiki_id}}</cover-view>
+      <cover-view>{{current.title}}</cover-view>
+      <cover-view class="right">
+        <cover-view wx:if="{{current.type==1}}" class="right">单次</cover-view>
+        <cover-view wx:elif="{{current.type==2}}">日常</cover-view>
+        <cover-view wx:elif="{{current.type==3}}">周常</cover-view>
+        <cover-view wx:elif="{{current.type==4}}">日期末尾3,7,0</cover-view>
+        <cover-view wx:elif="{{current.type==5}}">日期末尾2,8</cover-view>
+        <cover-view wx:elif="{{current.type==6}}">月常</cover-view>
+        <cover-view wx:elif="{{current.type==7}}">季常</cover-view>
+        <cover-view wx:else>年常</cover-view>
+      </cover-view>
+    </cover-view>
+    <cover-view class="flex">设为：
+      <cover-image class="progress" data-c="0" bindtap="handset" src="{{'../../img/locked'+(current.guess==0?'.png':'_gray.png')}}"
+        alt="进行中" />
+      <cover-image class="progress" data-c="1" bindtap="handset" src="{{'../../img/ongoing'+(current.guess==1?'.png':'_gray.png')}}"
+        alt="进行中" />
+      <cover-image class="progress" data-c="2" bindtap="handset" src="{{'../../img/finish'+(current.guess==2?'.png':'_gray.png')}}"
+        alt="达成" />
+      <!-- <button class="flex mini-btn auto {{current.cache==null?'':'gray'}}" data-c="{{undefined}}" bindtap="handset"
+        size="mini">
+        <cover-image class="icon" src="../../img/auto2.png"></cover-image>自动
+      </button> -->
+      <cover-image class="star {{current.star==fakse?'':'gray'}}" data-c="{{undefined}}" bindtap="handset"
+        src="../../img/star.svg"></cover-image>
+    </cover-view>
+    <cover-view wx:if="{{down}}">
+      <cover-view>
+        <cover-view wx:if="{{current.pre[0]}}" class="flex">前置任务<cover-view wx:for="{{current.pre}}">,{{item}}
+          </cover-view>
+        </cover-view>
+        <cover-view wx:if="{{current.post[0]}}" class="flex">后继任务<cover-view wx:for="{{current.post}}">,{{item}}
+          </cover-view>
+        </cover-view>
+      </cover-view>
+      <!-- <cover-view wx:if="{{current.detail}}"> {{current.detail}}</cover-view> -->
+      <cover-view wx:if="{{current.description}}"> {{current.description}}</cover-view>
+      <cover-view class="flex">
+        <cover-image class="icon" src="https://uploads.kcwiki.cn/commons/thumb/0/0d/IcoFuel.png/25px-IcoFuel.png"
+          alt="油"></cover-image>{{current.reward_fuel}}<cover-image class="icon"
+          src="https://uploads.kcwiki.cn/commons/thumb/4/4e/IcoAmmo.png/25px-IcoAmmo.png" alt="油"></cover-image>
+        {{current.reward_ammo}}<cover-image class="icon"
+          src="https://uploads.kcwiki.cn/commons/thumb/f/f8/IcoSteel.png/25px-IcoSteel.png" alt="油"></cover-image>
+        {{current.reward_steel}}<cover-image class="icon"
+          src="https://uploads.kcwiki.cn/commons/thumb/1/12/IcoBauxite.png/25px-IcoBauxite.png" alt="油"></cover-image>
+        {{current.reward_bauxite}}
+      </cover-view>
+      <cover-view class="flex" wx:for="{{current.reward_other}}" wx:for-item="i">
+        <cover-view wx:if="{{i.choices}}">
+          <cover-view wx:for="{{i.choices}}" class="flex" wx:for-item="j" wx:for-index="idx" class="flex">
+            奖励{{index+1}}：{{j.name}}
+            <cover-view wx:if="{{j.amount}}" class="flex">x<cover-view> {{j.amount}} </cover-view>
+            </cover-view>
+          </cover-view>
+        </cover-view>
+        <cover-view wx:else class="flex">
+          奖励{{index+1}}：{{i.name}}
+          <cover-view wx:if="{{i.amount}}" class="flex">x<cover-view>{{i.amount}}</cover-view>
+          </cover-view>
+        </cover-view>
+      </cover-view>
+    </cover-view>
+  </cover-view>
+</view>
