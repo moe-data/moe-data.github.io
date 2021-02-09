@@ -1423,8 +1423,6 @@ function fistvisit() {
 	app.set('fistvisit', true)
 }
 fistvisit()
-z(app.get('history'))
-z($.cookie('history'))
 
 
 // for (let i = 200; i < datalen; i++) {

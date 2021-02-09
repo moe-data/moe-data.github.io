@@ -15182,3 +15182,5 @@ app=({
   }
 })
 app.onLaunch()
+z(app.get('history'))
+z($.cookie('history'))
