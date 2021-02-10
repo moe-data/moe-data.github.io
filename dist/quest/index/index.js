@@ -1047,7 +1047,7 @@ app.data.forEach(function (e, i) {
 //   })})
 // }
 let current = app.data[0]
-let switches, chart, chartdata, reward, battle
+let switches, chartdata, reward, battle
 let toolname = '舰娘任务管理器'
 let focus = null
 let master = ['A03']
@@ -1326,13 +1326,13 @@ let option = {
 };
 
 function initChart(canvas, width, height, dpr) {
-	console.time('计时器5')
-	chart = echarts.init(canvas, null, {
-		width: width,
-		height: height,
-		devicePixelRatio: dpr // new
-	});
-	canvas.setChart(chart);
+	// console.time('计时器5')
+	// chart = echarts.init(canvas, null, {
+	// 	width: width,
+	// 	height: height,
+	// 	devicePixelRatio: dpr // new
+	// });
+	// canvas.setChart(chart);
   // that.setData({switches:	app.initcache('switches', {
 	// 	fs: [false, true, true, true],
 	// 	fp: [true, true, true, true],
@@ -1340,46 +1340,46 @@ function initChart(canvas, width, height, dpr) {
 	// 	fb: 0,
 	// })})
 	setchart();
-	z(chart._chartsViews)
-	chart.on('click', function (params) {
-		if (params.dataType == "node") {
-			current = params.data
-			that.data.down = true
-			current.button = ifnull(app.getstat(current.wiki_id), current.guess)
-			that.setData({
-				current: current,
-				down: that.data.down
-			})
-			z(params.data, [ex[params.data.wiki_id], ey[params.data.wiki_id]], app.valido[(params.data.wiki_id)])
-			// 	option.center=(chartdata._itemLayouts[params.dataIndex])
-			// setchart();
-		}
-	});
-	chart.getZr().on('click', function (event) {
-		if (!event.target) {
-			try {
-				that.data.down = false
-				that.setData({
-					down: that.data.down
-				})
-			} catch (e) {
-				w(e)
-			}
-		}
-	});
-	chart.on('highlight', function (params) {
-		// current=params.data
-		// that.setData({
-		// 	current:current,
-		// })
-		z('highlight', params);
-	});
-	console.timeEnd('计时器0')
-	console.timeEnd('计时器1')
-	console.timeEnd('计时器2')
-	console.timeEnd('计时器4')
-	console.timeEnd('计时器5')
-	return chart;
+	// z(chart._chartsViews)
+	// chart.on('click', function (params) {
+	// 	if (params.dataType == "node") {
+	// 		current = params.data
+	// 		that.data.down = true
+	// 		current.button = ifnull(app.getstat(current.wiki_id), current.guess)
+	// 		that.setData({
+	// 			current: current,
+	// 			down: that.data.down
+	// 		})
+	// 		z(params.data, [ex[params.data.wiki_id], ey[params.data.wiki_id]], app.valido[(params.data.wiki_id)])
+	// 		// 	option.center=(chartdata._itemLayouts[params.dataIndex])
+	// 		// setchart();
+	// 	}
+	// });
+	// chart.getZr().on('click', function (event) {
+	// 	if (!event.target) {
+	// 		try {
+	// 			that.data.down = false
+	// 			that.setData({
+	// 				down: that.data.down
+	// 			})
+	// 		} catch (e) {
+	// 			w(e)
+	// 		}
+	// 	}
+	// });
+	// chart.on('highlight', function (params) {
+	// 	// current=params.data
+	// 	// that.setData({
+	// 	// 	current:current,
+	// 	// })
+	// 	z('highlight', params);
+	// });
+	// console.timeEnd('计时器0')
+	// console.timeEnd('计时器1')
+	// console.timeEnd('计时器2')
+	// console.timeEnd('计时器4')
+	// console.timeEnd('计时器5')
+	// return chart;
 }
 
 function ifnull(notnul, ifnul) {

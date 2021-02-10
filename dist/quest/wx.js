@@ -18,3 +18,5 @@ const wx={
         z(localStorage.getItem(key))
     }
 }
+
+var chart = echarts.init(document.getElementById('container'));

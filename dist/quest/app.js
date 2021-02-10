@@ -15031,16 +15031,11 @@ app=({
   setstat: function (wkid, stat) {
     if (typeof wkid != 'string') x(wkid, stat);
     let history = app.get('history') || []
-    z(history)
     if(history.constructor != Array)history=[];
     let add = [wkid, stat, new Date()]
     try {
       history.push(add)
-      z(history)
       app.set('history', history)
-      z(app.get('history'))
-      z($.cookie('history'))
-      z(wx.getStorageSync('history'))
     } catch (e) {
       x(e, wkid, stat, history)
     }
