@@ -15031,7 +15031,7 @@ app=({
   setstat: function (wkid, stat) {
     if (typeof wkid != 'string') x(wkid, stat);
     let history = app.get('history') || []
-    if(typeof history!='object')history=[];
+    if(history.constructor != Array)history=[];
     let add = [wkid, stat, new Date()]
     try {
       history.push(add)
