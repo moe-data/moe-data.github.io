@@ -1741,3 +1741,5 @@ function addreward(e, r ,guess) {//remove reward
 
 	}
 }
+
+initChart()
