@@ -1,6 +1,7 @@
 function func(){}
 const wx={
-    clearStorage: func,
+    clearStorage: function(){localStorage.clear()
+    },
     getStorageSync:function(key){
         let value=localStorage.getItem(key)
         try {

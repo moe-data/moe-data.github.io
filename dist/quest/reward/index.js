@@ -1,9 +1,86 @@
 
-const app = getApp();
-let that, those
-const w = console.warn
-const x = console.error
-const z = console.log
+// const app = getApp();
+// let rewa, those
+// const w = console.warn
+// const x = console.error
+// const z = console.log
+const rewa=({
+  data: {
+    // list: []
+    list: [{
+      name: '加载中。。。',
+      n: '',
+      open: false,
+      pages: {B2:13,B23:23,B22:33}
+    }]
+  },
+  tapguess: function (e) {
+    let guess=e.detail.currentTarget.dataset.index
+    // x(guess,e);
+    sg=guess
+    loadlist()
+  },
+  tapcate: function (e) {
+    let guess=e.detail.currentTarget.dataset.index
+    // x(guess,e);
+      sc=guess
+    loadlist()
+  },
+  //收缩核心代码
+  staritem(e){
+    let list=this.data.list
+    let star=list[e.target.dataset.idx].star
+    if(star){
+    app.delarr(('starreward'),e.target.dataset.name)
+    list[e.target.dataset.idx].star=false
+    }else{
+    app.addarr(('starreward'),e.target.dataset.name)
+    list[e.target.dataset.idx].star=true}
+    this.setData({
+      list:list
+    })
+  },
+  target: function(e) {
+    app.target(e.target.dataset.name)
+  },
+  kindToggle(e) {
+    const name = e.currentTarget.dataset.id
+    const list = this.data.list
+    for (let i = 0, len = list.length; i < len; i++) {
+      if (list[i].name === name) {
+        list[i].open = !list[i].open
+      } else {
+        list[i].open = false
+      }
+    }
+    this.setData({
+      list
+    })
+  },
+  // onLoad: function (options) {
+	// 	this = this
+	// 	those = this.data
+  //   wx.setNavigationBarTitle({
+  //     title: '奖励列表'
+  //   })
+  // },
+  onShow(){
+    z('in test', app.reward)
+    loadlist()
+		// this.setData({
+		// 	list: reward[0]
+		// })
+  }
+})
+Object.defineProperty(rewa,"setData",{
+    value:function (e) { 
+	for(key in e){
+		this.data[key]=e[key]
+    if(key=='list'){
+     z( $('.reward').html(""))
+    }
+	}}
+   })
 var ships=[
   {
   "id":"1",
@@ -23833,76 +23910,8 @@ for(let keys in app.reward[guess]){
     pages: page})
   } 
  }
- that.setData({
+ rewa.setData({
    list:list
  })
  z(list)
 }
-Page({
-  data: {
-    // list: []
-    list: [{
-      name: '加载中。。。',
-      n: '',
-      open: false,
-      pages: {B2:13,B23:23,B22:33}
-    }]
-  },
-  tapguess: function (e) {
-    let guess=e.detail.currentTarget.dataset.index
-    // x(guess,e);
-    sg=guess
-    loadlist()
-  },
-  tapcate: function (e) {
-    let guess=e.detail.currentTarget.dataset.index
-    // x(guess,e);
-      sc=guess
-    loadlist()
-  },
-  //收缩核心代码
-  staritem(e){
-    let list=that.data.list
-    let star=list[e.target.dataset.idx].star
-    if(star){
-    app.delarr(('starreward'),e.target.dataset.name)
-    list[e.target.dataset.idx].star=false
-    }else{
-    app.addarr(('starreward'),e.target.dataset.name)
-    list[e.target.dataset.idx].star=true}
-    that.setData({
-      list:list
-    })
-  },
-  target: function(e) {
-    app.target(e.target.dataset.name)
-  },
-  kindToggle(e) {
-    const name = e.currentTarget.dataset.id
-    const list = this.data.list
-    for (let i = 0, len = list.length; i < len; i++) {
-      if (list[i].name === name) {
-        list[i].open = !list[i].open
-      } else {
-        list[i].open = false
-      }
-    }
-    this.setData({
-      list
-    })
-  },
-  onLoad: function (options) {
-		that = this
-		those = this.data
-    wx.setNavigationBarTitle({
-      title: '奖励列表'
-    })
-  },
-  onShow(){
-    z('in test', app.reward)
-    loadlist()
-		// this.setData({
-		// 	list: reward[0]
-		// })
-  }
-})

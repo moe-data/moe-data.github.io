@@ -1,81 +1,237 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta name="keywords" content="萌萌数据库,装备开发统计,舰队collection,舰船建造统计,舰娘数据库" />
-<meta name="description" content="本站支持多装备概率叠加显示，特定旗舰出货概率显示" />
-<meta content="yes" name="apple-mobile-web-app-capable" /><!--iphone设备中的safari私有meta标签，它表示：允许全屏模式浏览-->
-<meta content="black" name="apple-mobile-web-app-status-bar-style" /><!--iphone的私有标签，它指定的iphone中safari顶端的状态条的样式-->
-<meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="https://img.pddpic.com/mms-material-img/2021-01-16/e555cb1c-1339-48b5-9930-4101be911797.png">
-    <title>舰娘任务小工具</title>
-    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../dist/css/dashboard.css">
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-SQLQ5EBLTM');
-</script>
+<head>
+  <meta name="keywords" content="萌萌数据库,装备开发统计,舰队collection,舰船建造统计,舰娘数据库" />
+  <meta name="description" content="本站支持多装备概率叠加显示，特定旗舰出货概率显示" />
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <!--iphone设备中的safari私有meta标签，它表示：允许全屏模式浏览-->
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <!--iphone的私有标签，它指定的iphone中safari顶端的状态条的样式-->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="https://img.pddpic.com/mms-material-img/2021-01-16/e555cb1c-1339-48b5-9930-4101be911797.png">
+  <title>舰娘任务小工具</title>
+  <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../dist/css/dashboard.css">
+  <link rel="stylesheet" href="../dist/css/list.css">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-SQLQ5EBLTM');
+  </script>
 </head>
-  <body>
-    <div id="nav"></div>
-    <div id="bgpic"><div id="bgcolor">
+
+<body>
+  <div id="nav"></div>
+  <div id="bgpic">
+    <div id="bgcolor">
       <!-- <div align="center"><h2>为更好的保存用户数据，本功能开发中断，后续功能已迁移至微信小程序，目前功能正在内测中，请加入内测群体验。<br><br>
         qq群：73734742<br>
       <div>微信群：<a href="https://moe-data.github.io/zh/wechat.html">点我</a></div></h2> <br><br>
       <h4>后续功能：标记已出击海域，推荐出击海域，显示稀有物品获取，任务链可视化展示，管理和查看实时进度（实时展示未完成/进行中/已完成任务）</h4>
       <h4>您也可以在本页面查看全部任务</h4>
       </div> -->
-      
-    <div id="container" class="col-sm-8" style="min-height: 600px;max-width: 1920px;"></div>
-    <div class="col-sm-4">
-        <div class="center"><b class="id">C51</b>  &emsp;<b class="period">&emsp;</b> <input type="checkbox" id="finish" onchange="finish()"><label for="finish">已完成</label></div>
-        <div class="center"><h4><b class="description"> 奇跡の駆逐艦</b></h4></div>
+      <div class="col-sm-8">
+        <div id="container" style="min-height: 600px;max-width: 1920px;"></div>
+        <div class="center"><b class="id">C51</b> &emsp;<b class="period">&emsp;</b> <input type="checkbox" id="finish"
+            onchange="finish()"><label for="finish">已完成</label></div>
+        <div class="center">
+          <h4><b class="description"> 奇跡の駆逐艦</b></h4>
+        </div>
         <table border="1" class="mid" style="background: #fffe;">
-            <tr><td style="width: 60px;">前置任务</td><td class="before"><a href='javascript:jump("C21")'>C21</a> </td></tr>
-            <tr><td>后继任务</td><td class="after"></td></tr>
-            <tr><td colspan="2" class="content"> 旗艦「雪風」を含む合計4隻以上の駆逐艦を配備した精強な演習艦隊を編成、本日中に演習で【S判定】以上の勝利を4回以上達成せよ！ <br>
-                编成包含旗舰“雪风”总计驱逐舰4艘以上的精强演习部队，在同一日内在演习达成4次以上【S胜】！</td> </tr>
-                </table><br><table border="1" class="mid" style="background: #fffe;">
-            <tr><td class="cssfuel"><img src="https://uploads.kcwiki.cn/commons/thumb/0/0d/IcoFuel.png/25px-IcoFuel.png" alt="油"></td>
-                <td class="cssammo"><img src="https://uploads.kcwiki.cn/commons/thumb/4/4e/IcoAmmo.png/25px-IcoAmmo.png" alt="油"></td>
-                <td class="csssteel"><img src="https://uploads.kcwiki.cn/commons/thumb/f/f8/IcoSteel.png/25px-IcoSteel.png" alt="油"></td>
-                <td class="cssbauxite"><img src="https://uploads.kcwiki.cn/commons/thumb/1/12/IcoBauxite.png/25px-IcoBauxite.png" alt="油"></td></tr>
-            <tr><td class="cssfuel fuel">100</td><td class="cssammo ammo">100</td><td class="csssteel steel">100</td><td class="cssbauxite bauxite">100</td></tr>
-            <tr><td colspan="4"><div class="bonus">以下奖励三选一： <br>
-开发资材×8 <br>
-新型兵装资材 <br>
-改修资材×4 以下奖励二选一： <br>
-间宫 <br>
-高速修复材×5</div></tr>
-            <tr><td colspan="4" class="memo">雪风旗舰+3艘驱逐舰+其他，在一个任务周期内取得4次S胜</td></tr>
+          <tr>
+            <td style="width: 60px;">前置任务</td>
+            <td class="before"><a href='javascript:jump("C21")'>C21</a> </td>
+          </tr>
+          <tr>
+            <td>后继任务</td>
+            <td class="after"></td>
+          </tr>
+          <tr>
+            <td colspan="2" class="content"> 旗艦「雪風」を含む合計4隻以上の駆逐艦を配備した精強な演習艦隊を編成、本日中に演習で【S判定】以上の勝利を4回以上達成せよ！ <br>
+              编成包含旗舰“雪风”总计驱逐舰4艘以上的精强演习部队，在同一日内在演习达成4次以上【S胜】！</td>
+          </tr>
+        </table><br>
+        <table border="1" class="mid" style="background: #fffe;">
+          <tr>
+            <td class="cssfuel"><img src="https://uploads.kcwiki.cn/commons/thumb/0/0d/IcoFuel.png/25px-IcoFuel.png"
+                alt="油"></td>
+            <td class="cssammo"><img src="https://uploads.kcwiki.cn/commons/thumb/4/4e/IcoAmmo.png/25px-IcoAmmo.png"
+                alt="油"></td>
+            <td class="csssteel"><img src="https://uploads.kcwiki.cn/commons/thumb/f/f8/IcoSteel.png/25px-IcoSteel.png"
+                alt="油"></td>
+            <td class="cssbauxite"><img
+                src="https://uploads.kcwiki.cn/commons/thumb/1/12/IcoBauxite.png/25px-IcoBauxite.png" alt="油"></td>
+          </tr>
+          <tr>
+            <td class="cssfuel fuel">100</td>
+            <td class="cssammo ammo">100</td>
+            <td class="csssteel steel">100</td>
+            <td class="cssbauxite bauxite">100</td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              <div class="bonus">以下奖励三选一： <br>
+                开发资材×8 <br>
+                新型兵装资材 <br>
+                改修资材×4 以下奖励二选一： <br>
+                间宫 <br>
+                高速修复材×5</div>
+          </tr>
+          <tr>
+            <td colspan="4" class="memo">雪风旗舰+3艘驱逐舰+其他，在一个任务周期内取得4次S胜</td>
+          </tr>
         </table>
+
+      </div>
+      <div class="col-sm-4">
+
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#home" data-toggle="tab">首页</a></li>
+          <li><a href="#profile" data-toggle="tab">最新</a></li>
+          <li><a href="#message" data-toggle="tab">热门</a></li>
+          <li><a href="#settings" data-toggle="tab">排行</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="home">
+            <p>我是首页内容</p>
+          </div>
+          <div class="tab-pane" id="profile">
+            <p> 我是最新内容</p>
+          </div>
+          <div class="tab-pane" id="message">
+            <p>我是热门内容</p>
+          </div>
+          <div class="tab-pane" id="settings">
+            <p>我是排行内容</p>
+          </div>
+        </div>
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#home1" data-toggle="tab" onclick="cate(0)">收藏</a></li>
+          <li><a href="#profile1" data-toggle="tab" onclick="cate(1)">不可开发</a></li>
+          <li><a href="#message1" data-toggle="tab" onclick="cate(2)">可开发</a></li>
+          <li><a href="#settings1" data-toggle="tab" onclick="cate(3)">道具</a></li>
+          <li><a href="#profile1" data-toggle="tab" onclick="cate(4)">家具</a></li>
+          <li><a href="#message1" data-toggle="tab" onclick="cate(5)">热门</a></li>
+          <li><a href="#settings1" data-toggle="tab" onclick="cate(6)">排行</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="home1">
+            <p>我是首页内容</p>
+          </div>
+          <div class="tab-pane" id="profile1">
+            <p> 我是最新内容</p>
+          </div>
+          <div class="tab-pane" id="message1">
+            <p>我是热门内容</p>
+          </div>
+          <div class="tab-pane" id="settings1">
+            <p>我是排行内容</p>
+          </div>
+        </div>
+        <div>
+
+          <dl class="list_dl">
+
+            <dt class="list_dt"> <span class="_after"></span>
+
+              <p>选择器</p>
+
+              <i class="list_dt_icon"></i>
+            </dt>
+
+            <dd class="list_dd">
+
+              <ul>
+
+                <li class="list_li">#id</li>
+
+                <li class="list_li">element</li>
+
+                <li class="list_li">.class</li>
+
+                <li class="list_li">*</li>
+
+              </ul>
+
+            </dd>
+
+            <dt class="list_dt"> <span class="_after"></span>
+
+              <p>属性</p>
+
+              <i class="list_dt_icon"></i>
+            </dt>
+
+            <dd class="list_dd">
+
+              <ul>
+
+                <li class="list_li">attr</li>
+
+                <li class="list_li">removeAttr</li>
+
+                <li class="list_li">prop</li>
+
+                <li class="list_li">removeProp</li>
+
+                <li class="list_li">addClass</li>
+
+                <li class="list_li">removeClass</li>
+
+              </ul>
+
+            </dd>
+
+          </dl>
+
+        </div>
+      </div>
+      <div id="foot"></div>
     </div>
-<div id="foot"></div></div></div>
-<i id="js"></i>
-<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src= "../dist/js/jgs.js"> </script>  
-<script type="text/javascript" src= "../dist/js/simplize.js"> </script>  
-<script type="text/javascript" src= "../dist/js/share.js"> </script>  
-<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
-<!-- <script type="text/javascript" src= "../dist/quest/quest.js"> </script>   -->
-<script type="text/javascript" src= "../dist/quest/wx.js"> </script>  
-<script type="text/javascript" src= "../dist/quest/app.js"> </script>  
-<script type="text/javascript" src= "../dist/quest/index/index.js"> </script>  
-<script>
-  const width = Width()-80// container.scrollWidth*1.34;
-  const height = (width || 500) - 20;
-  // $('#container').css('width',width*2)
-    $("#nav").load("nav.html");
-    // $("#foot").load("../foot.html");
+  </div>
+  <i id="js"></i>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type="text/javascript" src="../dist/js/jgs.js"> </script>
+  <script type="text/javascript" src="../dist/js/simplize.js"> </script>
+  <script type="text/javascript" src="../dist/js/share.js"> </script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+  <!-- <script type="text/javascript" src= "../dist/quest/quest.js"> </script>   -->
+  <script type="text/javascript" src="../dist/quest/wx.js"> </script>
+  <script type="text/javascript" src="../dist/quest/app.js"> </script>
+  <script type="text/javascript" src="../dist/quest/index/index.js"> </script>
+  <script type="text/javascript" src="../dist/quest/reward/index.js"> </script>
+  <script type="text/javascript" src="../dist/quest/click.js"> </script>
+  <script>
+
+    $(".list_dt").on("click", function () {
+
+      $('.list_dd').stop();
+
+      $(this).siblings("dt").removeAttr("id");
+
+      if ($(this).attr("id") == "open") {
+
+        $(this).removeAttr("id").siblings("dd").slideUp();
+
+      } else {
+
+        $(this).attr("id", "open").next().slideDown().siblings("dd").slideUp();
+
+      }
+
+    });
+
   </script>
-  </body>
+</body>
+
 </html>

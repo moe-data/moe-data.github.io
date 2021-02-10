@@ -1074,7 +1074,6 @@ switches = those.switches
 // 	fb: 0,
 // })})
 
-didperiod(2)
 pushlink('A03')
 
 function pushlink(node) {
@@ -1422,15 +1421,15 @@ update()
 // 		z(m)
 // 	}
 // }
-// function fistvisit() {
-// 	if (!app.get('fistvisit')) {
-// 		z('fistvisit')
-// 		wx.clearStorage()
-// 		didperiod(2)
-// 	}
-// 	app.set('fistvisit', true)
-// }
-// fistvisit()
+function fistvisit() {
+	if (!app.get('fistvisit')) {
+		z('fistvisit')
+		wx.clearStorage()
+		didperiod(2)
+	}
+	app.set('fistvisit', true)
+}
+fistvisit()
 
 
 // for (let i = 200; i < datalen; i++) {
@@ -1708,7 +1707,7 @@ function setchart() {
 				}
 			}
 		})
-		z(reward)
+		// z(reward)
 
 		app.reward = reward
 	}, 1200);
