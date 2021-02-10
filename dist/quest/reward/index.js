@@ -88,10 +88,15 @@ Object.defineProperty(rewa, "setData", {
             + map + '<span class="right">' 
             + title.pages[map].n + '</span>'
             +`<img src="../dist/quest/img/ta1.png" class="right tar"  bindtap="targets"></img>
-            <img src="../dist/quest/img/ta2.png" class="right tar`+(title.pages[map].finished?'':' gray')+`"></img>`+'</li>'
+            <img src="../dist/quest/img/ta2.png" class="right tar`
+            +(title.pages[map].finished?'':' gray')+`"></img>`+'</li>'
           }
           html += `<dt class="list_dt"> <span class="_after"></span>
-        <p>`+ title.name + `</p>
+        <p>`+ title.name + `<span class="right">` 
+        + title.n + '</span>'
+        +`<img src="../dist/quest/img/ta1.png" class="right tar"  bindtap="targets"></img>
+        <img src="../dist/quest/img/ta2.png" class="right tar`
+        +(title.finished?'':' gray')+`"></img></p>
         <i class="list_dt_icon"></i>
       </dt>
       <dd class="list_dd">
