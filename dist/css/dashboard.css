@@ -1,6 +1,10 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 
-
+.gray{
+  -webkit-filter: grayscale(1); 
+ filter: gray;  /* IE6-9 */  
+  /*filter: grayscale(1);  W3C */
+}
 /*
  * Global add-ons
  */

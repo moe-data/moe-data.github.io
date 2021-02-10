@@ -5,7 +5,22 @@
 .right{
   float: right;
 }
+.n{
+  margin: 18px;
+}
+/* .container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}  */
 * {
   margin: 0;
   padding: 0;
@@ -17,7 +32,7 @@
   background: #333;
   color: white;
   width: 100%;
-  padding: 0 40px 0 20px;
+  padding: 0 10px 0 10px;
   height: 34px;
   line-height: 34px;
   cursor: pointer;
