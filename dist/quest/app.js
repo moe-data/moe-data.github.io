@@ -15034,6 +15034,7 @@ app=({
     let add = [wkid, stat, new Date()]
     try {
       history.push(add)
+      z(history)
       app.set('history', history)
     } catch (e) {
       x(e, wkid, stat, history)
