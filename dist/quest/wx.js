@@ -13,9 +13,9 @@ const wx={
     setStorageSync:function(key,value){
         // $.cookie(key,JSON.stringify(value), { expires: 999, path: '/' })
         localStorage.setItem(key,JSON.stringify(value))
-        z(value)
-        z(JSON.stringify(value))
-        z(localStorage.getItem(key))
+        // z(value)
+        // z(JSON.stringify(value))
+        // z(localStorage.getItem(key))
     }
 }
 
