@@ -15039,6 +15039,8 @@ app=({
       z(history)
       app.set('history', history)
       z(app.get('history'))
+      z($.cookie('history'))
+      z(wx.getStorageSync('history'))
     } catch (e) {
       x(e, wkid, stat, history)
     }
