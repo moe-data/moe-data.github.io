@@ -1445,7 +1445,7 @@ function update() {
 	}
 	let valid = [];
 	z(app.get('history'))
-	z($.cookie('history'))
+	z($.cookie('history'));
 	(app.get('history') || []).forEach(function (h) {
 		let vali = {}
 		vali[app.beginutc(h[0], h[2])] = [h[1], h[2]]
