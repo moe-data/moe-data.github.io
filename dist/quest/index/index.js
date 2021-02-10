@@ -1426,6 +1426,8 @@ update()
 // fistvisit()
 didperiod(2)
 app.setstat('A05', 2)
+app.getstat('A05')
+app.getstat('A15')
 
 
 // for (let i = 200; i < datalen; i++) {
