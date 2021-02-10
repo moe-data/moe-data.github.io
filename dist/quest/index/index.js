@@ -1399,6 +1399,7 @@ function eqifnull(notnul, ifnul) {
 function didperiod(type) {
 	app.data.forEach(function (e) {
 		let Bd0 = type == 2 ? e.type == 4 || e.type == 5 : false
+		z(Bd0)
 		if (e.type == 2 || Bd0) {
 			app.setstat(e.wiki_id, 2)
 		}
@@ -1424,6 +1425,7 @@ update()
 // }
 // fistvisit()
 didperiod(2)
+app.setstat('A05', 2)
 
 
 // for (let i = 200; i < datalen; i++) {
