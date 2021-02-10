@@ -15183,5 +15183,9 @@ app=({
   }
 })
 app.onLaunch()
-z(app.get('history'))
-z($.cookie('history'))
+z(app.set('ahistory'),[23,323,{name:3323}])
+z(app.get('ahistory'))
+z($.cookie('ahistory'))
+z($.cookie('ihistory'),[23,323,{name:3323}])
+z($.cookie('ihistory'))
+z(app.get('ihistory'))
