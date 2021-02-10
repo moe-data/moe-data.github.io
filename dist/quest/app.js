@@ -15073,9 +15073,9 @@ app=({
   get: function (key) {
     try {
       let value = wx.getStorageSync(key.toString())
-      if (value) {
+      // if (value) {
         return value
-      }
+      // }
     } catch (e) {
       x(e)
     }
