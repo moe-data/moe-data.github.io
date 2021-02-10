@@ -15031,6 +15031,7 @@ app=({
   setstat: function (wkid, stat) {
     if (typeof wkid != 'string') x(wkid, stat);
     let history = app.get('history') || []
+    z(history)
     if(history.constructor != Array)history=[];
     let add = [wkid, stat, new Date()]
     try {
@@ -15185,5 +15186,6 @@ app=({
 })
 app.onLaunch()
 app.setstat('A05', 2)
+app.get('history')
 app.getstat('A05')
 app.getstat('A15')
