@@ -15038,6 +15038,7 @@ app=({
       history.push(add)
       z(history)
       app.set('history', history)
+      z(app.get('history'))
     } catch (e) {
       x(e, wkid, stat, history)
     }
