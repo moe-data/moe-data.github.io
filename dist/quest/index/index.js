@@ -1405,6 +1405,10 @@ function didperiod(type) {
 		}
 	})
 }
+didperiod(2)
+app.setstat('A05', 2)
+app.getstat('A05')
+app.getstat('A15')
 let me = ['A62', 'A68', 'A70', 'A73', 'A78', 'A79', 'A80', 'A83', 'A87', 'B136', 'B138', 'B44', 'B137', 'B128', 'C22', 'C48', 'B58', 'B60']
 update()
 // for(let i=0;i<me.length;i++){
@@ -1424,10 +1428,6 @@ update()
 // 	app.set('fistvisit', true)
 // }
 // fistvisit()
-didperiod(2)
-app.setstat('A05', 2)
-app.getstat('A05')
-app.getstat('A15')
 
 
 // for (let i = 200; i < datalen; i++) {
