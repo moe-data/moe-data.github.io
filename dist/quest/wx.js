@@ -2,7 +2,7 @@ function func(){}
 const wx={
     clearStorage: func,
     getStorageSync:function(key){
-        z($.cookie(key))
+        if($.cookie(key)!=undefined)
        return JSON.parse($.cookie(key))
     },
     setStorageSync:function(key,value){
