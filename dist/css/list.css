@@ -1,3 +1,11 @@
+.tar{
+  width: 30px;
+  height: 30px;
+}
+.right{
+  float: right;
+}
+
 * {
   margin: 0;
   padding: 0;
