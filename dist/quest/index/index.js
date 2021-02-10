@@ -958,6 +958,9 @@ const that=({
 	}
 })
 
+Object.defineProperty(that,"setData",{
+    value:function (www) { console.log("Hi !") }
+   })
 const tcache = "tcache"
 const birth = app.periodstart('once', new Date())
 
