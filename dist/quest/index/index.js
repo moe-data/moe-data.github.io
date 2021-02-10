@@ -1414,15 +1414,16 @@ update()
 // 		z(m)
 // 	}
 // }
-function fistvisit() {
-	if (!app.get('fistvisit')) {
-		z('fistvisit')
-		wx.clearStorage()
-		didperiod(2)
-	}
-	app.set('fistvisit', true)
-}
-fistvisit()
+// function fistvisit() {
+// 	if (!app.get('fistvisit')) {
+// 		z('fistvisit')
+// 		wx.clearStorage()
+// 		didperiod(2)
+// 	}
+// 	app.set('fistvisit', true)
+// }
+// fistvisit()
+didperiod(2)
 
 
 // for (let i = 200; i < datalen; i++) {
