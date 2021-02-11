@@ -14983,7 +14983,9 @@ app=({
   ],
   fb:2,
   target(wk){
-    
+    switches.fb=1
+    those.branches[1]=["",[wk]]
+    setchart()
   },
   onLaunch: function () {
     // app=this
@@ -15183,7 +15185,4 @@ app=({
   }
 })
 app.onLaunch()
-app.setstat('A05', 2)
-app.get('history')
-app.getstat('A05')
-app.getstat('A15')
+z(app.get('switches'))

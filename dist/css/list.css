@@ -8,6 +8,40 @@
 .n{
   margin: 18px;
 }
+._after {
+  content: " ";
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+  border-width: 2px 2px 0 0;
+  border-color: #888;
+  border-style: solid;
+  transform: matrix(0.71, 0.71, 0.71, -0.71, 0, 0);
+  position: absolute;
+  top: 50%;
+  margin-top: -18px;
+  right: 128px;
+}
+.sticky{
+  position: absolute;
+  /* background-color:#eee9; */
+  z-index: 9;
+}
+#up {
+  top: 10%;
+  left: 10%
+}
+#down {
+  bottom: 0%;
+}
+.stat{
+  height: 30px;
+  /* width: 100px;  */
+}
+.star{
+  height:50px;
+  width: 50px; 
+}
 /* .container {
   position: absolute;
   top: 0;
@@ -78,12 +112,12 @@
   display: block;
   width: 16px;
   height: 16px;
-  background: url("../quest/img/ta1.png") no-repeat;
+  /* background: url("../quest/img/ta1.png") no-repeat; */
 }
 
-#open .list_dt_icon {
+/* #open .list_dt_icon {
   background: url("../quest/img/ta2.png") no-repeat;
-}
+} */
 
 .list_dd {
   display: none;
@@ -103,19 +137,4 @@
 
 .list_li:hover {
   background: #4285F4;
-}
-
-._after {
-  content: " ";
-  display: inline-block;
-  height: 15px;
-  width: 15px;
-  border-width: 2px 2px 0 0;
-  border-color: #888;
-  border-style: solid;
-  transform: matrix(0.71, 0.71, 0.71, -0.71, 0, 0);
-  position: absolute;
-  top: 50%;
-  margin-top: -18px;
-  right: 28px;
 }

@@ -21,3 +21,7 @@ const wx={
 }
 
 var chart = echarts.init(document.getElementById('container'));
+function graystyle(){
+    z(switches.fs)
+    $('.fs0').addClass('gray')
+}

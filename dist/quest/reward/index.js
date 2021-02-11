@@ -87,15 +87,15 @@ Object.defineProperty(rewa, "setData", {
             ulli += '<li class="list_li">' 
             + map + '<span class="right"><span class="n">' 
             + title.pages[map].n
-            +`</span><img src="../dist/quest/img/ta1.png" class="tar"  bindtap="targets"></img>
-            <img src="../dist/quest/img/ta2.png" class="tar`
+            +`</span><img src="../img/ta1.png" class="tar"  onclick="app.target('`+map+`')"></img>
+            <img src="../img/ta2.png" class="tar`
             +(title.pages[map].finished?'':' gray')+`"></img>` + '</span>'+'</li>'
           }
           html += `<dt class="list_dt"> <span class="_after"></span>
         <p>`+ title.name + '<span class="right"><span class="n">' 
         + title.n
-        +`</span><img src="../dist/quest/img/ta1.png" class="tar"  bindtap="targets"></img>
-        <img src="../dist/quest/img/ta2.png" class="tar`
+        +`</span><img src="../img/ta1.png" class="tar"  onclick="app.targets(2)"></img>
+        <img src="../img/ta2.png" class="tar`
         +(title.finished?'':' gray')+`"></img></p>
         <i class="list_dt_icon"></i>
       </dt>
@@ -108,23 +108,14 @@ Object.defineProperty(rewa, "setData", {
         }
         $('.list_dl').html(html)
         $(".list_dt").on("click", function () {
-
           $('.list_dd').stop();
-
           $(this).siblings("dt").removeAttr("id");
-
           if ($(this).attr("id") == "open") {
-
             $(this).removeAttr("id").siblings("dd").slideUp();
-
           } else {
-
             $(this).attr("id", "open").next().slideDown().siblings("dd").slideUp();
-
           }
-
         });
-
       }
     }
   }

@@ -866,7 +866,8 @@ const that=({
 		});
 	},
 	filts(o) {
-		let d = o.target.dataset
+		let d={}
+		d.c = o//.target.dataset
 		let s = this.data.switches
 		switch (d.c[1]) {
 			case 's':
@@ -889,6 +890,7 @@ const that=({
 		this.setData({
 			switches: s
 		})
+		graystyle()
 		setchart()
 	},
 	handset(o) {
@@ -952,11 +954,19 @@ const that=({
 		app.set('current', this.data.current)
 		app.set('switches', this.data.switches)
 	},
-	onUnlad() {
+	onUnload() {
+		alert(app.get('switches'))
 		app.set('current', this.data.current)
 		app.set('switches', this.data.switches)
 	}
 })
+window.Onbeforeunload =function(params) {
+	app.set('current', this.data.current)
+	app.set('switches', this.data.switches)
+	alert(app.get('switches'))
+}
+
+that.onUnload
 
 Object.defineProperty(that,"setData",{
     value:function (e) { 
@@ -1053,7 +1063,7 @@ app.data.forEach(function (e, i) {
 //   })})
 // }
 let current = app.data[0]
-let switches, chartdata, reward, battle
+let chartdata, reward, battle
 let toolname = '舰娘任务管理器'
 let focus = null
 let master = ['A03']
@@ -1063,7 +1073,7 @@ var ey = {}
 
 const those = that.data
 console.time('计时器1')
-switches = those.switches
+const switches = those.switches
 // this.setData({
 // 	current: ifnull(app.get('current'), app.data[0])
 // })

@@ -29,7 +29,13 @@
   </script>
 </head>
 
-<body>
+<body>  <span id="up" class="sticky">
+  <!-- <img data-c="fm[0]" onclick="expand" class="base" src="./../img/filter/hensei.png"></img> -->
+  <img class="stat fs0" data-c="fs[0]" onclick="that.filts('fs[0]')" src="./../img/locked.png" alt="未解锁" />
+  <img class="stat fs1" data-c="fs[1]" onclick="that.filts('fs[1]')" src="./../img/ongoing.png" alt="进行中" />
+  <img class="stat fs2" data-c="fs[2]" onclick="that.filts('fs[2]')" src="./../img/finish.png" alt="达成" />
+  <!-- <img class="star switches.fo[0]?'':'gray'" data-c="fo[0]" onclick="that.filts('fs[0]')" src="./../img/star.svg"></img> -->
+</span>
   <div id="nav"></div>
   <div id="bgpic">
     <div id="bgcolor">
@@ -213,6 +219,11 @@
   <script type="text/javascript" src="../dist/quest/click.js"> </script>
   <script>
 
+window.Onbeforeunload  =function(params) {
+	alert(app.get('switches'))
+	app.set('current', this.data.current)
+	app.set('switches', this.data.switches)
+}
   </script>
 </body>
 
