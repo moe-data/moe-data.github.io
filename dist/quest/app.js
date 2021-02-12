@@ -14975,7 +14975,8 @@ app=({
     app.branches[1]=["",[wk]]
     switches.fs=[1,1,1,1]
     that.setData({
-      switches:switches
+      switches:switches,
+      current:datawk(wk)
     })
     setchart()
   },

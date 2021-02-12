@@ -872,7 +872,6 @@ const that=({
 		this.setData({
 			switches: s
 		})
-		graystyle()
 		setchart()
 		that.onUnload()
 	},
@@ -953,6 +952,21 @@ Object.defineProperty(that,"setData",{
     value:function (e) { 
 	for(key in e){
 		this.data[key]=e[key]
+		if(key=='current'){
+			let model=e[key]
+			$('.description').html(model.title)
+			$('.id').html(model.wiki_id)
+			$('.content').html(model.description.replace(/\n/g,'<br/>'))
+			$('.after').html(seplink(model.post))
+			$('.ammo').html(model.reward_ammo)
+			$('.bauxite').html(model.reward_bauxite)
+			$('.before').html(seplink(model.pre));
+			$('.bonus').html(model.reward_other)
+			$('.fuel').html(model.reward_fuel)
+			$('.memo').html(model.memo)
+			$('.period').html(model.period)
+		}else if(key=='switches'){
+		graystyle()}
 	}}
    })
 const tcache = "tcache"
@@ -1067,6 +1081,13 @@ const switches = those.switches
 
 pushlink('A03')
 
+function seplink(m){
+	var link=''
+	for(let i=0;i<m.length;i++){
+	  link+=`<a href='javascript:jump("`+m[i]+`")'>`+m[i]+"</a> "
+	}
+	return link
+  }
 function pushlink(node) {
 	app.data.forEach(function (e) {
 		if (node == e.wiki_id) {
