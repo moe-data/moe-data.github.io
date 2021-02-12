@@ -2,10 +2,12 @@
 
 initChart()
 loadlist()
-graystyle()
-$("#nav").load("nav.html");
+// graystyle()
+// $("#nav").load("nav.html");
 // $("#foot").load("../foot.html");
-
+that.setData({
+  current:app.get('current')
+})
 function graystyle(){
   z(switches.fs)
   for(i=0;i<4;i++){
@@ -50,3 +52,7 @@ function loadquest() {
   });
   app.set('newload',newload)
 }
+
+
+$('#rewaguess').change(function(){
+  z($('#rewaguess').val())});

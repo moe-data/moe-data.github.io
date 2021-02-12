@@ -88,8 +88,8 @@ Object.defineProperty(rewa, "setData", {
             + map + '<span class="right"><span class="n">' 
             + title.pages[map].n
             +`</span><img src="../img/ta1.png" class="tar"  onclick="app.target('`+map+`')"></img>
-            <img src="../img/ta2.png" class="tar`
-            +(title.pages[map].finished?'':' gray')+`"></img>` + '</span>'+'</li>'
+            <img src="../img/`
+            +(title.pages[map].finished?(title.pages[map].finished==2?'finish':'ongoing'):'locked')+`.png" class="sta"></img>` + '</span>'+'</li>'
           }
           html += `<dt class="list_dt"> <span class="_after"></span>
         <p>`+ title.name + '<span class="right"><span class="n">' 
@@ -23933,14 +23933,14 @@ function loadlist() {
     let finished = true
     let sum = 0
     for (let key in pages) {
-      let fnshd = app.data[app.wktoi[key]].guess == 2
+      let fnshd = app.data[app.wktoi[key]].guess
       sum += pages[key]
       page[key] = {
         n: pages[key],
         // star:app.get('starwk').indexOf(key)>-1,
         finished: fnshd
       }
-      if (!fnshd) finished = false;
+      if (fnshd != 2) finished = false;
     }
     if (cate != cated ? cate.indexOf(keys) > -1 : cate.indexOf(keys) == -1) {
       list.push({

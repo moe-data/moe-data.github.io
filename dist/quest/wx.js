@@ -27,5 +27,5 @@ const height = document.documentElement.clientHeight-80
 let containerstyle="height: "+height+"px;max-width:"+width
 // $('#container').css('width',width*2)
 $('#container').attr("style",containerstyle)
-$('.list_dl').css("height",height-150+"px")
+$('.list_dl').css("height",height-120+"px")
 var chart = echarts.init(document.getElementById('container'));

@@ -965,6 +965,7 @@ Object.defineProperty(that,"setData",{
 			$('.fuel').html(model.reward_fuel)
 			$('.memo').html(model.memo)
 			$('.period').html(model.period)
+			app.set('current',this.data[key]);
 		}else if(key=='switches'){
 		graystyle()}
 	}}
@@ -1371,18 +1372,18 @@ function initChart(canvas, width, height, dpr) {
 			// setchart();
 		}
 	});
-	chart.getZr().on('click', function (event) {
-		if (!event.target) {
-			try {
-				that.data.down = false
-				that.setData({
-					down: that.data.down
-				})
-			} catch (e) {
-				w(e)
-			}
-		}
-	});
+	// chart.getZr().on('click', function (event) {
+	// 	if (!event.target) {
+	// 		try {
+	// 			that.data.down = false
+	// 			that.setData({
+	// 				down: that.data.down
+	// 			})
+	// 		} catch (e) {
+	// 			w(e)
+	// 		}
+	// 	}
+	// });
 	chart.on('highlight', function (params) {
 		// current=params.data
 		// that.setData({

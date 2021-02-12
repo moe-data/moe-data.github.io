@@ -36,7 +36,8 @@
   <img class="stat fs2" data-c="fs[2]" onclick="that.filts('fs[2]')" src="./../img/finish.png" alt="达成" />
   <!-- <img class="star switches.fo[0]?'':'gray'" data-c="fo[0]" onclick="that.filts('fs[0]')" src="./../img/star.svg"></img> -->
 </span>
-<span><button  id="import" class="sticky" onclick="showinput()">导入</button> </span>
+<span id="import" class="sticky" ><button onclick="showinput()">导入</button> 
+  <button onclick="wx.clearStorage()">清空缓存</button></span>
 <span><input  id="input" class="sticky" type="text" onchange="loadquest()"></span>
   <div id="nav"></div>
   <div id="bgpic">
@@ -52,15 +53,10 @@
 
       </div>
       <div id="right" class="sticky">
-        <button onclick="app.showall()">清空筛选</button>
-        <button onclick="wx.clearStorage()">清空缓存</button>
         <ul class="nav nav-tabs">
           <li class="active"><a href="#battle" data-toggle="tab">推图指南</a></li>
           <li><a href="#reward" data-toggle="tab">奖励列表</a></li>
-          <li><select name="" id="">
-            <option value="zh-TW">繁體中文</option>
-            <option value="ja-JP">日本語</option>
-            <option value="ko-KR">한국어</option></select></li>
+            <button onclick="app.showall()">清空筛选</button>
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="battle">
@@ -79,63 +75,17 @@
               <li><a href="#message1" data-toggle="tab" onclick="rewa.tapcate(2)">可开发</a></li>
               <li><a href="#settings1" data-toggle="tab" onclick="rewa.tapcate(3)">道具</a></li>
               <li><a href="#profile1" data-toggle="tab" onclick="rewa.tapcate(4)">家具</a></li>
-              <li><a href="#message1" data-toggle="tab" onclick="rewa.tapcate(5)">热门</a></li>
-              <li><a href="#settings1" data-toggle="tab" onclick="rewa.tapcate(6)">排行</a></li>
+              <li><a href="#message1" data-toggle="tab" onclick="rewa.tapcate(5)">舰娘</a></li>
+              <li><a href="#settings1" data-toggle="tab" onclick="rewa.tapcate(6)">其他</a></li>
+              <li><a href="#settings1" data-toggle="tab" onclick="rewa.tapcate(6)">所有</a></li>
             </ul>
             <div>
-    
+              <select name="" id="rewaguess">
+                <option value="zh-TW">未解锁+进行中</option>
+                <option value="ja-JP">日本語</option>
+                <option value="ko-KR">한국어</option>
+              </select>
               <dl class="list_dl">
-    
-                <dt class="list_dt"> <span class="_after"></span>
-    
-                  <p>选择器</p>
-    
-                  <i class="list_dt_icon"></i>
-                </dt>
-    
-                <dd class="list_dd">
-    
-                  <ul>
-    
-                    <li class="list_li">#id</li>
-    
-                    <li class="list_li">element</li>
-    
-                    <li class="list_li">.class</li>
-    
-                    <li class="list_li">*</li>
-    
-                  </ul>
-    
-                </dd>
-    
-                <dt class="list_dt"> <span class="_after"></span>
-    
-                  <p>属性</p>
-    
-                  <i class="list_dt_icon"></i>
-                </dt>
-    
-                <dd class="list_dd">
-    
-                  <ul>
-    
-                    <li class="list_li">attr</li>
-    
-                    <li class="list_li">removeAttr</li>
-    
-                    <li class="list_li">prop</li>
-    
-                    <li class="list_li">removeProp</li>
-    
-                    <li class="list_li">addClass</li>
-    
-                    <li class="list_li">removeClass</li>
-    
-                  </ul>
-    
-                </dd>
-    
               </dl>
     
             </div>
