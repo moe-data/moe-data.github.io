@@ -31,6 +31,19 @@
   top: 10%;
   left: 10%
 }
+#import {
+  top: 10%;
+  left: 50%
+}
+#input {
+  top: 50%;
+  left: 50%;
+  display:none
+}
+#right {
+  right: 0%;
+  width: 300px;
+}
 #down {
   bottom: 0%;
 }
@@ -42,6 +55,15 @@
   height:50px;
   width: 50px; 
 }
+/* .area{
+  margin: 0px;
+} */
+/* .areaa{
+  position: relative;
+  width: 73px;
+  height: 73px;
+  overflow: hidden;
+} */
 /* .container {
   position: absolute;
   top: 0;
@@ -63,7 +85,7 @@
 }
 
 .list_dt {
-  background: #333;
+  background: #333e;
   color: white;
   width: 100%;
   padding: 0 10px 0 10px;

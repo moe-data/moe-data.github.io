@@ -191,6 +191,7 @@
 var mst_ship
 var kj=false
 var ship
+let attr
 var detect=(navigator.browserLanguage || navigator.language)
 if(!havelang){
     if (detect.length>0){console.log(detect);}else{detect="zh-CN"}
@@ -203,6 +204,9 @@ if(!havelang){
     selectlang[i].selected = true;
     }}
 $(document).ready(function() {
+    $.getJSON("../parsed/ship.json",function(api_mst_ship){
+        attr=api_mst_ship
+    }).done(function() {
     langchange()
     $('#locale').change(function(){
         langchange();setlang();});
@@ -224,6 +228,7 @@ $(document).ready(function() {
          });
     loadchart();
     },   1200);
+    })
 });
 function langchange(){
     initTable(locallang());
@@ -283,7 +288,49 @@ return col;
 }
 function initTable(lval){
     if(lval){ kj=(lval.slice(0,2)=='zh'||lval.slice(0,2)=='ja')}else{console.log(lval)};
-    $.getJSON("../parsed/ship.json",function(result){
+    $.getJSON("../parsed/api_mst_ship.json",function(api_mst_ship){
+        let result=[]
+        api_mst_ship.forEach(function(e){
+            let id=e.api_id
+            if(id<1501)
+            result.push({
+            "id":e.api_id,
+            "name":e.api_name,
+            "stype":e.api_stype,
+            "buildtime":e.api_buildtime,
+            "afterlv":e.api_afterlv,
+            "afterbull":e.api_afterbull,
+            "afterfuel":e.api_afterfuel,
+            "aftershipid":e.api_aftershipid,
+            "backs":e.api_backs,
+            "broken":e.api_broken,
+            "bull_max":e.api_bull_max,
+            "ctype":e.api_ctype,
+            "fuel_max":e.api_fuel_max,
+            "getmes":e.api_getmes,
+            "houg":e.api_houg,
+            "leng":e.api_leng,
+            "luck":e.api_luck,
+            "maxeq":e.api_maxeq,
+            "powup":e.api_powup,
+            "raig":e.api_raig,
+            "slot_num":e.api_slot_num,
+            "soku":e.api_soku,
+            "sort_id":e.api_sort_id,
+            "sortno":e.api_sortno,
+            "souk":e.api_souk,
+            "taik":e.api_taik,
+            "tyku":e.api_tyku,
+            "final_form":at(id,"final_form"),
+            "anti_submarine":at(id,"anti_submarine"),
+            "total_eq":e.api_maxeq[0]+e.api_maxeq[1]+e.api_maxeq[2]+e.api_maxeq[3]+e.api_maxeq[4],
+            "evasion":at(id,"evasion"),
+            "sight":at(id,"sight"),
+            "yomi":e.api_yomi
+            })
+            if(id<11)
+        z(at(id,"final_form"))
+        });
     addcol(result,"HP","taik",0)
     mst_ship=result;
     loadprot(result[0]);
@@ -343,21 +390,29 @@ function formatSoku(value, row, index) {
     return value == 10 ? (kj?"高速":'high speed') : (value == 5 ? kj?"低速":'low speed':"陸上型");
 }
 function formatRange(value, row, index) {
-var str;
-switch(value) {
-    case 1:
-        str = "短";
-        break;
-    case 2:
-        str = "中";
-        break;
-    case 3:
-        str = "長";
-        break;
-    default:
-        str = "超長";}
-return str;
+    var str;
+    switch(value) {
+        case 1:
+            str = "短";
+            break;
+        case 2:
+            str = "中";
+            break;
+        case 3:
+            str = "長";
+            break;
+        default:
+            str = "超長";}
+    return str;
 }
+
+function at(id,att) {
+    for(let i=0;i<attr.length;i++){
+        let e=attr[i]
+        if(e.id==id){
+            return e[att]
+        }}
+    }
   </script>
   </body>
 </html>

@@ -14963,32 +14963,45 @@ app=({
       }]
     }
   }],
-  branches: [
-    ['所有任务',[]],
-    ['第一甲板链', ['F21']],
-    ['第二甲板链', ['F23']],
-    ['第三甲板链', ['B117']],
-    ['岩井队链', ['F27']],
-    ['岩本队链', ['F30']],
-    ['基地航空链', ['F43', 'B81']],
-    ['喷气机', ['F46']],
-    ['夜战甲板员链', ['F46']],
-    ['F6F-5N链', 'F63'],
-    ['司令部要员1', ['D18']],
-    ['司令部要员2', ['B134']],
-    ['司令部要员3', ['B159']],
-    ['独立任务'],
-    ['非独立任务'],
-    ['自定义任务链', '']
-  ],
+  newload:[],
+  branches: [],
   fb:2,
+  showall(){
+    those.switches.fb=0
+    setchart()
+  },
   target(wk){
     switches.fb=1
-    those.branches[1]=["",[wk]]
+    app.branches[1]=["",[wk]]
+    switches.fs=[1,1,1,1]
+    that.setData({
+      switches:switches
+    })
     setchart()
   },
   onLaunch: function () {
     // app=this
+    app.newload=app.initcache('newload',[])
+    app.branches=app.initcache('branches',[
+			['所有任务',[]],
+			['自定义',[]],
+			['第一甲板链', ['F21']],
+			['第二甲板链', ['F23']],
+			['第三甲板链', ['B117']],
+			['岩井队链', ['F27']],
+			['岩本队链', ['F30']],
+			['基地航空链', ['F43', 'B81']],
+			['喷气机', ['F46']],
+			['夜战甲板员链', ['F46']],
+			['F6F-5N链', 'F63'],
+			['司令部要员1', ['D18']],
+			['司令部要员2', ['B134']],
+			['司令部要员3', ['B159']],
+			['独立任务'],
+			['非独立任务']
+  ])
+
+    app.data=app.data.concat(app.newload)
     app.data.forEach(function (e, i) {
       app.wkid[String(e.game_id)] = e.wiki_id
       app.wktoi[String(e.wiki_id)] = i
@@ -14996,8 +15009,8 @@ app=({
     });
     console.time('计时器0')
     // 展示本地存储能力sss
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
+    // var logs = wx.getStorageSync('logs') || []
+    // logs.unshift(Date.now())
     // wx.setStorageSync('logs', logs)
 
     // 登录
@@ -15186,3 +15199,5 @@ app=({
 })
 app.onLaunch()
 z(app.get('switches'))
+z(app.get('branches'))
+z(app.branches)

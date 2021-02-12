@@ -27,7 +27,7 @@ let jsindex = 0;
 var bigdata = [];
 var slotitem;
 const api_=(q == 'd') ? 'api_' : '';
-const jsonfile= (q == 'd') ? 'api_mst_slotitem' : 'ship';
+const jsonfile= (q == 'd') ? 'api_mst_slotitem' : 'cstype';
 var lseg = { i: "", fuel:"",  ammo:"",  steel:"",  bauxite:"", 資材:"", secretary:"", denominator: '', times: '', ratio: '' };
 var kj = false;
 var ship;

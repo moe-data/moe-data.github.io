@@ -793,24 +793,6 @@ const datalen = app.data.length
 
 const that=({
 	data: {
-		branches: [
-			['所有任务',[]],
-			['自定义',[]],
-			['第一甲板链', ['F21']],
-			['第二甲板链', ['F23']],
-			['第三甲板链', ['B117']],
-			['岩井队链', ['F27']],
-			['岩本队链', ['F30']],
-			['基地航空链', ['F43', 'B81']],
-			['喷气机', ['F46']],
-			['夜战甲板员链', ['F46']],
-			['F6F-5N链', 'F63'],
-			['司令部要员1', ['D18']],
-			['司令部要员2', ['B134']],
-			['司令部要员3', ['B159']],
-			['独立任务'],
-			['非独立任务']
-		],
 		switches: app.initcache('switches', {
 			fs: [false, true, true, true],
 			fp: [true, true, true, true],
@@ -892,6 +874,7 @@ const that=({
 		})
 		graystyle()
 		setchart()
+		that.onUnload()
 	},
 	handset(o) {
 		let d = o.target.dataset.c
@@ -955,24 +938,22 @@ const that=({
 		app.set('switches', this.data.switches)
 	},
 	onUnload() {
-		alert(app.get('switches'))
 		app.set('current', this.data.current)
 		app.set('switches', this.data.switches)
 	}
 })
-window.Onbeforeunload =function(params) {
-	app.set('current', this.data.current)
-	app.set('switches', this.data.switches)
-	alert(app.get('switches'))
-}
+// window.Onbeforeunload =function(params) {
+// 	app.set('current', this.data.current)
+// 	app.set('switches', this.data.switches)
+// 	alert(app.get('switches'))
+// }
 
-that.onUnload
 
 Object.defineProperty(that,"setData",{
     value:function (e) { 
 	for(key in e){
 		this.data[key]=e[key]
-	} console.log(this.data)}
+	}}
    })
 const tcache = "tcache"
 const birth = app.periodstart('once', new Date())
@@ -1178,7 +1159,6 @@ function manual(node, stat) {
 }
 
 function affect(node, stat, n) {
-	if (node == 'A59') z(node, stat, n)
 	if (stat === null) return;
 	n = ifnull(n, 0);
 	n++
@@ -1513,13 +1493,13 @@ function update() {
 
 function setchart() {
 	//Filter
-	z(switches.fb) 
+	// z(switches.fb) 
 	chain = []
-	if (switches.fb != 0 && switches.fb < those.branches.length - 2) {
-		those.branches[switches.fb][1].forEach(wkid => {
+	if (switches.fb != 0 && switches.fb < app.branches.length - 2) {
+		app.branches[switches.fb][1].forEach(wkid => {
 			datawk(wkid).target = true
 		});
-		pushpre(those.branches[switches.fb][1]).forEach(function (wkid) {
+		pushpre(app.branches[switches.fb][1]).forEach(function (wkid) {
 			chain.push(datawk(wkid))
 		})
 	} else {
@@ -1528,12 +1508,12 @@ function setchart() {
 				chain = JSON.parse(JSON.stringify(app.data))
 				z(chain)
 				break;
-			case those.branches.length - 1:
+			case app.branches.length - 1:
 				app.data.forEach(function (e) {
 					if (master.indexOf(e.wiki_id) > -1) chain.push(e);
 				})
 				break;
-			case those.branches.length - 2:
+			case app.branches.length - 2:
 				app.data.forEach(function (e) {
 					if (master.indexOf(e.wiki_id) == -1) chain.push(e);
 				})
@@ -1621,7 +1601,7 @@ function setchart() {
 	option.series[0].data = chain
 	chart.setOption(option)
 	chartdata = chart._chartsViews[0]._symbolDraw._data
-	z(chartdata, app.data)
+	// z(chartdata, app.data)
 	for (let i = 0; i < chartdata._idList.length; i++) {
 		try {
 			if (chartdata._itemLayouts[i]) {
@@ -1633,7 +1613,7 @@ function setchart() {
 			break;
 		}
 	}
-	z('position', ex)
+	// z('position', ex)
 	if (chain.length) {
 		// z(ex[chain[0].wiki_id])
 		edge.forEach(function (link) {
@@ -1694,10 +1674,14 @@ function setchart() {
 		app.data.forEach(function (e, i) {
 			if (e.requirements.category == "sortie") {
 				addbattle(e,e.requirements)
+				addbattle(e,e.requirements,10)
+				addbattle(e,e.requirements,11)
 			}else if(e.requirements.list) {
 				for(i=0;i<e.requirements.list.length;i++){
 					if (e.requirements.list[i].category == "sortie") {
-					addbattle(e,e.requirements.list[i])}
+						addbattle(e,e.requirements.list[i])
+						addbattle(e,e.requirements.list[i],10)
+						addbattle(e,e.requirements.list[i],11)}
 				}
 			}
 			if (e.reward_other) {
@@ -1717,25 +1701,36 @@ function setchart() {
 				}
 			}
 		})
-		// z(reward)
+		z(battle)
 
 		app.reward = reward
 	}, 1200);
+	
+	app.set('switches', that.data.switches);
+	app.set('branches', app.branches);
 }
-
-function addbattle(e, r) {
-	// let name = r.name
-	// let amount = ifnull(r.amount, 1)
-	// if (!name) x(r)
-	// reward[e.guess] = ifnull(reward[e.guess], {})
-	// if (name.slice(0, 2) == "戦果") {
-	// 	amount = name.slice(2, name.length)
-	// 	name = "戦果"
-	// }
-	// reward[e.guess][name] = ifnull(reward[e.guess][name],{})
-	// reward[e.guess][name][e.wiki_id]=ifnull(reward[e.guess][name][e.wiki_id],0)
-	// reward[e.guess][name][e.wiki_id] += Number(amount)
-}
+function addbattle(e, r ,guess) {
+	let flag=false
+	if(!guess){guess=e.guess;flag=true}else 
+	if(guess==10){flag=e.guess<2}else
+	if(guess==11){flag=true}
+	if(flag){
+	let name = r.map||'任意'
+	if(typeof name=='string'){
+		battle[guess] = ifnull(battle[guess], {})
+		battle[guess][name] = ifnull(battle[guess][name],{})
+		// battle[guess][name][e.wiki_id]=ifnull(battle[guess][name][e.wiki_id],0)
+		// battle[guess][name][e.wiki_id] += Number(amount)}
+		battle[guess][name][e.wiki_id] = r
+	}else if(name.length>1){
+		for(let i=0;i<name.length;i++){
+			let namei=name[i]
+			battle[guess] = ifnull(battle[guess], {})
+			battle[guess][namei] = ifnull(battle[guess][namei],{})
+			battle[guess][namei][e.wiki_id] = r
+		}
+	}
+}}
 function addreward(e, r ,guess) {//remove reward
 	let name = r.name
 	if (!name){ x(r)}else{
@@ -1749,12 +1744,11 @@ function addreward(e, r ,guess) {//remove reward
 	if(guess==10){flag=e.guess<2}else
 	if(guess==11){flag=true}
 	if(flag)
-	{reward[guess] = ifnull(reward[guess], {})
-	reward[guess][name] = ifnull(reward[guess][name],{})
-	reward[guess][name][e.wiki_id]=ifnull(reward[guess][name][e.wiki_id],0)
-	reward[guess][name][e.wiki_id] += Number(amount)}
-
+		{reward[guess] = ifnull(reward[guess], {})
+		reward[guess][name] = ifnull(reward[guess][name],{})
+		reward[guess][name][e.wiki_id]=ifnull(reward[guess][name][e.wiki_id],0)
+		reward[guess][name][e.wiki_id] += Number(amount)
+		}
 	}
 }
 
-initChart()

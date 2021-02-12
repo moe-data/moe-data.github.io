@@ -1,6 +1,8 @@
 function func(){}
 const wx={
-    clearStorage: function(){localStorage.clear()
+    clearStorage: function(){
+        localStorage.clear()
+        z(localStorage.getItem('history'))
     },
     getStorageSync:function(key){
         let value=localStorage.getItem(key)
@@ -21,7 +23,3 @@ const wx={
 }
 
 var chart = echarts.init(document.getElementById('container'));
-function graystyle(){
-    z(switches.fs)
-    $('.fs0').addClass('gray')
-}

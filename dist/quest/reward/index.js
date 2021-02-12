@@ -21,9 +21,9 @@ const rewa = ({
     loadlist()
   },
   tapcate: function (e) {
-    let guess = e.detail.currentTarget.dataset.index
+    // let guess = e.detail.currentTarget.dataset.index
     // x(guess,e);
-    sc = guess
+    sc = e//guess
     loadlist()
   },
   //收缩核心代码

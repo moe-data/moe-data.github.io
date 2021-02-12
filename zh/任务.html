@@ -36,6 +36,8 @@
   <img class="stat fs2" data-c="fs[2]" onclick="that.filts('fs[2]')" src="./../img/finish.png" alt="达成" />
   <!-- <img class="star switches.fo[0]?'':'gray'" data-c="fo[0]" onclick="that.filts('fs[0]')" src="./../img/star.svg"></img> -->
 </span>
+<span><button  id="import" class="sticky" onclick="showinput()">导入</button> </span>
+<span><input  id="input" class="sticky" type="text" onchange="loadquest()"></span>
   <div id="nav"></div>
   <div id="bgpic">
     <div id="bgcolor">
@@ -45,7 +47,7 @@
       <h4>后续功能：标记已出击海域，推荐出击海域，显示稀有物品获取，任务链可视化展示，管理和查看实时进度（实时展示未完成/进行中/已完成任务）</h4>
       <h4>您也可以在本页面查看全部任务</h4>
       </div> -->
-      <div class="col-sm-8">
+      <div class="col-sm-12">
         <div id="container" style="min-height: 600px;max-width: 1920px;"></div>
         <div class="center"><b class="id">C51</b> &emsp;<b class="period">&emsp;</b> <input type="checkbox" id="finish"
             onchange="finish()"><label for="finish">已完成</label></div>
@@ -98,107 +100,95 @@
         </table>
 
       </div>
-      <div class="col-sm-4">
-
+      <div id="right" class="sticky">
+        <button onclick="app.showall()">清空筛选</button>
+        <button onclick="wx.clearStorage()">清空缓存</button>
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#home" data-toggle="tab">首页</a></li>
-          <li><a href="#profile" data-toggle="tab">最新</a></li>
-          <li><a href="#message" data-toggle="tab">热门</a></li>
-          <li><a href="#settings" data-toggle="tab">排行</a></li>
+          <li class="active"><a href="#battle" data-toggle="tab">推图指南</a></li>
+          <li><a href="#reward" data-toggle="tab">奖励列表</a></li>
+          <li><select name="" id="">
+            <option value="zh-TW">繁體中文</option>
+            <option value="ja-JP">日本語</option>
+            <option value="ko-KR">한국어</option></select></li>
         </ul>
         <div class="tab-content">
-          <div class="tab-pane active" id="home">
-            <p>我是首页内容</p>
+          <div class="tab-pane active" id="battle">
+            <img class="area" src="../img/area/1a.png" alt="">
+            <img class="area" src="../img/area/2b.png" alt="">
+            <img class="area" src="../img/area/3b.png" alt="">
+            <img class="area" src="../img/area/7b.png" alt="">
+            <img class="area" src="../img/area/2b.png" alt="">
+            <img class="area" src="../img/area/2b.png" alt="">
+            <img class="area" src="../img/area/2b.png" alt="">
           </div>
-          <div class="tab-pane" id="profile">
-            <p> 我是最新内容</p>
+          <div class="tab-pane" id="reward">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#home1" data-toggle="tab" onclick="rewa.cate(0)">收藏</a></li>
+              <li><a href="#profile1" data-toggle="tab" onclick="rewa.cate(1)">不可开发</a></li>
+              <li><a href="#message1" data-toggle="tab" onclick="rewa.cate(2)">可开发</a></li>
+              <li><a href="#settings1" data-toggle="tab" onclick="rewa.cate(3)">道具</a></li>
+              <li><a href="#profile1" data-toggle="tab" onclick="rewa.cate(4)">家具</a></li>
+              <li><a href="#message1" data-toggle="tab" onclick="rewa.cate(5)">热门</a></li>
+              <li><a href="#settings1" data-toggle="tab" onclick="rewa.cate(6)">排行</a></li>
+            </ul>
+            <div>
+    
+              <dl class="list_dl">
+    
+                <dt class="list_dt"> <span class="_after"></span>
+    
+                  <p>选择器</p>
+    
+                  <i class="list_dt_icon"></i>
+                </dt>
+    
+                <dd class="list_dd">
+    
+                  <ul>
+    
+                    <li class="list_li">#id</li>
+    
+                    <li class="list_li">element</li>
+    
+                    <li class="list_li">.class</li>
+    
+                    <li class="list_li">*</li>
+    
+                  </ul>
+    
+                </dd>
+    
+                <dt class="list_dt"> <span class="_after"></span>
+    
+                  <p>属性</p>
+    
+                  <i class="list_dt_icon"></i>
+                </dt>
+    
+                <dd class="list_dd">
+    
+                  <ul>
+    
+                    <li class="list_li">attr</li>
+    
+                    <li class="list_li">removeAttr</li>
+    
+                    <li class="list_li">prop</li>
+    
+                    <li class="list_li">removeProp</li>
+    
+                    <li class="list_li">addClass</li>
+    
+                    <li class="list_li">removeClass</li>
+    
+                  </ul>
+    
+                </dd>
+    
+              </dl>
+    
+            </div>
           </div>
-          <div class="tab-pane" id="message">
-            <p>我是热门内容</p>
-          </div>
-          <div class="tab-pane" id="settings">
-            <p>我是排行内容</p>
-          </div>
-        </div>
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#home1" data-toggle="tab" onclick="cate(0)">收藏</a></li>
-          <li><a href="#profile1" data-toggle="tab" onclick="cate(1)">不可开发</a></li>
-          <li><a href="#message1" data-toggle="tab" onclick="cate(2)">可开发</a></li>
-          <li><a href="#settings1" data-toggle="tab" onclick="cate(3)">道具</a></li>
-          <li><a href="#profile1" data-toggle="tab" onclick="cate(4)">家具</a></li>
-          <li><a href="#message1" data-toggle="tab" onclick="cate(5)">热门</a></li>
-          <li><a href="#settings1" data-toggle="tab" onclick="cate(6)">排行</a></li>
-        </ul>
-        <div class="tab-content">
-          <div class="tab-pane active" id="home1">
-            <p>我是首页内容</p>
-          </div>
-          <div class="tab-pane" id="profile1">
-            <p> 我是最新内容</p>
-          </div>
-          <div class="tab-pane" id="message1">
-            <p>我是热门内容</p>
-          </div>
-          <div class="tab-pane" id="settings1">
-            <p>我是排行内容</p>
-          </div>
-        </div>
-        <div>
-
-          <dl class="list_dl">
-
-            <dt class="list_dt"> <span class="_after"></span>
-
-              <p>选择器</p>
-
-              <i class="list_dt_icon"></i>
-            </dt>
-
-            <dd class="list_dd">
-
-              <ul>
-
-                <li class="list_li">#id</li>
-
-                <li class="list_li">element</li>
-
-                <li class="list_li">.class</li>
-
-                <li class="list_li">*</li>
-
-              </ul>
-
-            </dd>
-
-            <dt class="list_dt"> <span class="_after"></span>
-
-              <p>属性</p>
-
-              <i class="list_dt_icon"></i>
-            </dt>
-
-            <dd class="list_dd">
-
-              <ul>
-
-                <li class="list_li">attr</li>
-
-                <li class="list_li">removeAttr</li>
-
-                <li class="list_li">prop</li>
-
-                <li class="list_li">removeProp</li>
-
-                <li class="list_li">addClass</li>
-
-                <li class="list_li">removeClass</li>
-
-              </ul>
-
-            </dd>
-
-          </dl>
-
         </div>
       </div>
       <div id="foot"></div>
@@ -218,12 +208,6 @@
   <script type="text/javascript" src="../dist/quest/reward/index.js"> </script>
   <script type="text/javascript" src="../dist/quest/click.js"> </script>
   <script>
-
-window.Onbeforeunload  =function(params) {
-	alert(app.get('switches'))
-	app.set('current', this.data.current)
-	app.set('switches', this.data.switches)
-}
   </script>
 </body>
 

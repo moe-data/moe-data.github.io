@@ -146,13 +146,17 @@ function loadprot(prot){
     var stat=[]
     for(key in prot){
         if(isNaN(prot[key])){
-            if(isNaN(prot[key][0])){stat[key]=0}else{
-                keys.push(key)
-                stat[key]=prot[key].length
-                months[key]=[]
-                for (let i=0;i<stat[key];i++){
-                    months[key].push(i+1)
+            try {
+                if(isNaN(prot[key][0])){stat[key]=0}else{
+                    keys.push(key)
+                    stat[key]=prot[key].length
+                    months[key]=[]
+                    for (let i=0;i<stat[key];i++){
+                        months[key].push(i+1)
+                    }
                 }
+            } catch (error) {
+                x(prot,key)
             }
         }else{
         keys.push(key)

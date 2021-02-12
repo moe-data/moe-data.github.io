@@ -79,7 +79,11 @@ function addcol(result,col,old,n){
     l=result.length
     if(!l){console.log("empty");return}
 for(let i=0;i<l;i++){
-    result[i][col]=result[i][old][n]
+    try {
+        result[i][col]=result[i][old][n]
+    } catch (error) {
+        x(result[i],old,error)
+    }
 }}
 var sortkey
 function sortby(x,y){
