@@ -1377,13 +1377,13 @@ function initChart(canvas, width, height, dpr) {
 	return chart;
 }
 
-function ifnull(notnul, ifnul) {
-	if (typeof (notnul) === 'undefined') {
-		return ifnul
-	} else {
-		return notnul
-	}
-}
+// function ifnull(notnul, ifnul) {
+// 	if (typeof (notnul) === 'undefined') {
+// 		return ifnul
+// 	} else {
+// 		return notnul
+// 	}
+// }
 
 function eqifnull(notnul, ifnul) {
 	if (typeof (notnul) === 'undefined') {

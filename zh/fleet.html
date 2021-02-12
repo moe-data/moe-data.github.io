@@ -299,6 +299,20 @@ function initTable(lval){
             "stype":e.api_stype,
             "buildtime":e.api_buildtime,
             "afterlv":e.api_afterlv,
+            "final_form":at(id,"final_form"),
+            "houg":e.api_houg,
+            "raig":e.api_raig,
+            "HP":e.api_taik[0],
+            "souk":e.api_souk,
+            "evasion":at(id,"evasion"),
+            "tyku":e.api_tyku,
+            "anti_submarine":ifnull(at(id,"anti_submarine"),e.api_tais!=null?e.api_tais[0]:'?'),
+            "sight":at(id,"sight"),
+            "luck":e.api_luck,
+            "total_eq":e.api_maxeq[0]+e.api_maxeq[1]+e.api_maxeq[2]+e.api_maxeq[3]+e.api_maxeq[4],
+            "soku":e.api_soku,
+            "leng":e.api_leng,
+            "taik":e.api_taik,
             "afterbull":e.api_afterbull,
             "afterfuel":e.api_afterfuel,
             "aftershipid":e.api_aftershipid,
@@ -308,30 +322,17 @@ function initTable(lval){
             "ctype":e.api_ctype,
             "fuel_max":e.api_fuel_max,
             "getmes":e.api_getmes,
-            "houg":e.api_houg,
-            "leng":e.api_leng,
-            "luck":e.api_luck,
             "maxeq":e.api_maxeq,
             "powup":e.api_powup,
-            "raig":e.api_raig,
             "slot_num":e.api_slot_num,
-            "soku":e.api_soku,
             "sort_id":e.api_sort_id,
             "sortno":e.api_sortno,
-            "souk":e.api_souk,
-            "taik":e.api_taik,
-            "tyku":e.api_tyku,
-            "final_form":at(id,"final_form"),
-            "anti_submarine":at(id,"anti_submarine"),
-            "total_eq":e.api_maxeq[0]+e.api_maxeq[1]+e.api_maxeq[2]+e.api_maxeq[3]+e.api_maxeq[4],
-            "evasion":at(id,"evasion"),
-            "sight":at(id,"sight"),
             "yomi":e.api_yomi
             })
             if(id<11)
         z(at(id,"final_form"))
         });
-    addcol(result,"HP","taik",0)
+    // addcol(result,"HP","taik",0)
     mst_ship=result;
     loadprot(result[0]);
     $('#mytab').bootstrapTable('destroy').bootstrapTable({

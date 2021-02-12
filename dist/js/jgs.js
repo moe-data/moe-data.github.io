@@ -20,6 +20,13 @@ const z = console.log
 function isvalid(e) {
   return e ? (isNaN(e) ? e.length : true) : false
 }
+function ifnull(notnul, ifnul) {
+	if (typeof (notnul) === 'undefined') {
+		return ifnul
+	} else {
+		return notnul
+	}
+}
 function insert_spacing(str) {
   var p1 = /([A-Za-z_])([\u4e00-\u9fa5]+)/gi;
   var p2 = /([\u4e00-\u9fa5]+)([A-Za-z_])/gi;
