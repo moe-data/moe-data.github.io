@@ -1478,14 +1478,13 @@ function update() {
 				setwk(wkid, 'last', app.valido[wkid][app.beginutc(wkid, new Date())])
 		}
 	}
-	z('v: ', app.valido, valid)
+	// z('v: ', app.valido, valid)
 	//sort valid
 	// valid.sort(sortdate)
 	function sortdate(a, b) {
 		return a[1] - b[1]
 	}
-
-	z('v: ', app.valido, valid)
+	// z('v: ', app.valido, valid)
 	valid.forEach(function (v) {
 		if (typeof (app.valido[v[0]][app.beginutc(v[0], new Date())]) != 'undefined') {
 			let stat = app.valido[v[0]][app.beginutc(v[0], new Date())][0]

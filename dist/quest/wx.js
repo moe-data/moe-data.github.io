@@ -23,9 +23,9 @@ const wx={
 }
 
 const width = Width() - 60+"px;"// container.scrollWidth*1.34;
-const height = document.documentElement.clientHeight-80
+const height = document.documentElement.clientHeight-5
 let containerstyle="height: "+height+"px;max-width:"+width
 // $('#container').css('width',width*2)
 $('#container').attr("style",containerstyle)
-$('.list_dl').css("height",height-120+"px")
+$('.list_dl').css("height",height-180+"px")
 var chart = echarts.init(document.getElementById('container'));

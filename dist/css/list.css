@@ -32,6 +32,11 @@ body {
   /* background-color:#eee9; */
   z-index: 9;
 }
+.progress{
+  z-index: 10;
+  width: 60%;
+  height: 20px;
+}
 #up {
   top: 10%;
   left: 10%
