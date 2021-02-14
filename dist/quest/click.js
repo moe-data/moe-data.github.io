@@ -36,6 +36,7 @@ function jsonover(){
       })
       
       initChart()
+      loadbatl()
       loadlist()
     }
 }
@@ -60,10 +61,11 @@ function loadquest() {
   z(api_list.length)
   let newload=app.newload
   api_list.forEach(function(e) {
-    if(app.wkid[e.api_no.toString()]==null){
+    let id=e.api_no.toString()
+    if(app.wkid[id]==null){
       newload.push({
-        game_id: e.api_no,
-        wiki_id: e.api_no,
+        game_id: id,
+        wiki_id: id,
         category: e.api_category,
         type: e.api_type,
         name: e.api_title,
@@ -83,7 +85,7 @@ function loadquest() {
         }
       })
     }else{}
-      app.setstat(app.wkid[e.api_no.toString()]||e.api_no.toString(),e.api_state)
+      app.setstat(app.wkid[id]||id,e.api_state)
     
   });
   app.set('newload',newload)
@@ -91,4 +93,7 @@ function loadquest() {
 
 
 $('#rewaguess').change(function(){
-  z($('#rewaguess').val())});
+  rewa.tapguess($('#rewaguess').val())});
+
+$('#battguess').change(function(){
+  batt.tapguess($('#battguess').val())});

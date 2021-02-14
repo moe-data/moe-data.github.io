@@ -951,9 +951,9 @@ const that=({
 Object.defineProperty(that,"setData",{
     value:function (e) { 
 	for(key in e){
-		this.data[key]=e[key]
-		if(key=='current'){
-			let model=e[key]
+		let model=e[key]
+		this.data[key]=model
+		if(key=='current'&&model){
 			$('.description').html(model.title)
 			$('.id').html(model.wiki_id)
 			$('.content').html(model.description.replace(/\n/g,'<br/>'))
@@ -1134,6 +1134,16 @@ function pushpre(list) {
 			if (list.indexOf(pre) == -1) {
 				list.push(pre)
 				pushpre(list)
+			}
+		})
+	return list
+}
+function pushpost(list) {
+	for (let i = 0; i < list.length; i++)
+		datawk(list[i]).post.forEach(function (pre) {
+			if (list.indexOf(pre) == -1) {
+				list.push(pre)
+				pushpost(list)
 			}
 		})
 	return list
@@ -1520,13 +1530,14 @@ function setchart() {
 		app.branches[switches.fb][1].forEach(wkid => {
 			datawk(wkid).target = true
 		});
-		pushpre(app.branches[switches.fb][1]).forEach(function (wkid) {
+		let custom=pushpost(app.branches[switches.fb][1])
+		custom.forEach(function (wkid) {
 			chain.push(datawk(wkid))
 		})
 	} else {
 		switch (Number(switches.fb)) {
 			case 0:
-				chain = JSON.parse(JSON.stringify(app.data))
+				chain = JSON.parse(JSON.stringify(app.data)) 
 				z(chain)
 				break;
 			case app.branches.length - 1:
@@ -1723,7 +1734,7 @@ function setchart() {
 			}
 		})
 		z(battle)
-
+		app.battle = battle
 		app.reward = reward
 	}, 1200);
 	

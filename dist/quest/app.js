@@ -1,7 +1,7 @@
-var app
+// var app
 const TimezoneOffset = (new Date()).getTimezoneOffset() * 60000
 const araboffset = TimezoneOffset + 4 * 60 * 60000
-app=({
+const app=({
   data:[{
     game_id: 101,
     wiki_id: "A01",
@@ -14977,6 +14977,17 @@ app=({
     that.setData({
       switches:switches,
       current:datawk(wk)
+    })
+    setchart()
+  },
+  targets(wk){
+    wk=wk.split(',')
+    switches.fb=1
+    app.branches[1]=["",wk]
+    switches.fs=[1,1,1,1]
+    that.setData({
+      switches:switches,
+      current:datawk(wk[0])
     })
     setchart()
   },

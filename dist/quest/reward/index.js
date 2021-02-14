@@ -15,9 +15,9 @@ const rewa = ({
     }]
   },
   tapguess: function (e) {
-    let guess = e.detail.currentTarget.dataset.index
+    // let guess = e.detail.currentTarget.dataset.index
     // x(guess,e);
-    sg = guess
+    sg = e//guess
     loadlist()
   },
   tapcate: function (e) {
@@ -78,7 +78,7 @@ Object.defineProperty(rewa, "setData", {
     for (key in e) {
       this.data[key] = e[key]
       if (key == 'list') {
-        z(e[key])
+        // x(e[key])
         let html = ''
         for (let i = 0; i < e[key].length; i++) {
           let ulli = ''
@@ -91,15 +91,15 @@ Object.defineProperty(rewa, "setData", {
             <img src="../img/`
             +(title.pages[map].finished?(title.pages[map].finished==2?'finish':'ongoing'):'locked')+`.png" class="sta"></img>` + '</span>'+'</li>'
           }
-          html += `<dt class="list_dt"> <span class="_after"></span>
+          html += `<dt class="rewa_dt list_dt"> <span class="_after"></span>
         <p>`+ title.name + '<span class="right"><span class="n">' 
         + title.n
-        +`</span><img src="../img/ta1.png" class="tar"  onclick="app.targets(2)"></img>
+        +`</span><img src="../img/ta1.png" class="tar"  onclick="app.targets('`+title.map.join(',')+`')"></img>
         <img src="../img/ta2.png" class="tar`
         +(title.finished?'':' gray')+`"></img></p>
-        <i class="list_dt_icon"></i>
+        <i class="rewa_dt list_dt_icon"></i>
       </dt>
-      <dd class="list_dd">
+      <dd class="rewa_dd list_dd">
       <ul>
         `+ ulli + `
       </ul>
@@ -107,8 +107,8 @@ Object.defineProperty(rewa, "setData", {
 `
         }
         $('.list_dl').html(html)
-        $(".list_dt").on("click", function () {
-          $('.list_dd').stop();
+        $(".rewa_dt").on("click", function () {
+          $('.rewa_dd').stop();
           $(this).siblings("dt").removeAttr("id");
           if ($(this).attr("id") == "open") {
             $(this).removeAttr("id").siblings("dd").slideUp();
@@ -193,16 +193,17 @@ function loadlist() {
       cate = 'all'
       break;
   }
-  z(app.reward[guess], cate)
   list = []
   for (let keys in app.reward[guess]) {
     let pages = app.reward[guess][keys]
     let page = {}
     let finished = true
     let sum = 0
+    let map = []
     for (let key in pages) {
       let fnshd = app.data[app.wktoi[key]].guess
       sum += pages[key]
+      map.push(key)
       page[key] = {
         n: pages[key],
         // star:app.get('starwk').indexOf(key)>-1,
@@ -217,7 +218,8 @@ function loadlist() {
       star: app.get('starreward').indexOf(keys) > -1,
       finished: finished,
       open: false,
-      pages: page
+      pages: page,
+      map:map
     })
   }else if (cate != cated ? cate.indexOf(keys) > -1 : cate.indexOf(keys) == -1) {
       list.push({
@@ -226,7 +228,8 @@ function loadlist() {
         star: app.get('starreward').indexOf(keys) > -1,
         finished: finished,
         open: false,
-        pages: page
+        pages: page,
+        map:map
       })
     }
   }

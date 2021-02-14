@@ -66,19 +66,29 @@
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="battle">
-            <img class="area" src="../img/area/1a.png" alt="">
-            <img class="area" src="../img/area/2b.png" alt="">
-            <img class="area" src="../img/area/3b.png" alt="">
-            <img class="area" src="../img/area/7b.png" alt="">
-            <img class="area" src="../img/area/2b.png" alt="">
-            <img class="area" src="../img/area/2b.png" alt="">
-            <img class="area" src="../img/area/2b.png" alt="">
+            <img class="area" onclick="batt.tapcate(1)" src="../img/area/1a.png" alt="">
+            <img class="area" onclick="batt.tapcate(2)" src="../img/area/2b.png" alt="">
+            <img class="area" onclick="batt.tapcate(3)" src="../img/area/3b.png" alt="">
+            <img class="area" onclick="batt.tapcate(7)" src="../img/area/7b.png" alt="">
+            <img class="area" onclick="batt.tapcate(4)" src="../img/area/4b.png" alt="">
+            <img class="area" onclick="batt.tapcate(5)" src="../img/area/5b.png" alt="">
+            <img class="area" onclick="batt.tapcate(6)" src="../img/area/6b.png" alt="">
+            <img class="area" onclick="batt.tapcate('arbitary')" src="../img/area/ab.png" alt="任意海域">
+            <select name="" id="battguess">
+              <option value="10">未解锁+进行中</option>
+              <option value="1">未解锁</option>
+              <option value="2" selected>进行中</option>
+              <option value="3">已达成</option>
+              <option value="4">全部</option>
+            </select>
+            <dl class="batl_dl">
+            </dl>
           </div>
           <div class="tab-pane" id="reward">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#home1" data-toggle="tab" onclick="rewa.tapcate(0)">收藏</a></li>
-              <li><a href="#profile1" data-toggle="tab" onclick="rewa.tapcate(1)">不可开发</a></li>
-              <li><a href="#message1" data-toggle="tab" onclick="rewa.tapcate(2)">可开发</a></li>
+              <!-- <li class="active"><a href="#home1" data-toggle="tab" onclick="rewa.tapcate(0)">收藏</a></li> -->
+              <li><a href="#profile1" data-toggle="tab" onclick="rewa.tapcate(1)">不可开发装备</a></li>
+              <li><a href="#message1" data-toggle="tab" onclick="rewa.tapcate(2)">可开发装备</a></li>
               <li><a href="#settings1" data-toggle="tab" onclick="rewa.tapcate(3)">道具</a></li>
               <li><a href="#profile1" data-toggle="tab" onclick="rewa.tapcate(4)">家具</a></li>
               <li><a href="#message1" data-toggle="tab" onclick="rewa.tapcate(5)">舰娘</a></li>
@@ -87,9 +97,11 @@
             </ul>
             <div>
               <select name="" id="rewaguess">
-                <option value="zh-TW">未解锁+进行中</option>
-                <option value="ja-JP">日本語</option>
-                <option value="ko-KR">한국어</option>
+                <option value="10">未解锁+进行中</option>
+                <option value="1">未解锁</option>
+                <option value="2">进行中</option>
+                <option value="3">已达成</option>
+                <option value="4">全部</option>
               </select>
               <dl class="list_dl">
               </dl>
@@ -166,6 +178,7 @@
   <script type="text/javascript" src="../dist/quest/app.js"> </script>
   <script type="text/javascript" src="../dist/quest/index/index.js"> </script>
   <script type="text/javascript" src="../dist/quest/reward/index.js"> </script>
+  <script type="text/javascript" src="../dist/quest/battle/index.js"> </script>
   <script type="text/javascript" src="../dist/quest/click.js"> </script>
   <script>
   </script>
