@@ -965,6 +965,7 @@ Object.defineProperty(that,"setData",{
 			$('.fuel').html(model.reward_fuel)
 			$('.memo').html(model.memo)
 			$('.period').html(model.period)
+			$('.bonus').html(model.reward_other)
 			app.set('current',this.data[key]);
 		}else if(key=='switches'){
 		graystyle()}

@@ -84,7 +84,7 @@ Object.defineProperty(rewa, "setData", {
           let ulli = ''
           let title = e[key][i]
           for (let map in title.pages) {
-            ulli += '<li class="list_li">' 
+            ulli += '<li class="list_li" onclick="jump('+"'"+ map + "'"+')">' 
             + map + '<span class="right"><span class="n">' 
             + title.pages[map].n
             +`</span><img src="../img/ta1.png" class="tar"  onclick="app.target('`+map+`')"></img>
