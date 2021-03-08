@@ -948,7 +948,7 @@ const that = ({
 // }
 
 var slides
-var slidewk
+var slideq
 var sliden = 0
 const slideact = {
 	simple: "简单任务",
@@ -957,7 +957,7 @@ const slideact = {
 	sink: "击沉",
 	excercise: "演习",
 	expedition: "objects",
-	modelconversion: "consumptions",
+	modelconversion: "scraps",
 	scrapequipment: "list",
 	equipexchange: "scraps",
 	modernization: "近代化改修/舰装合成",
@@ -971,8 +971,8 @@ const requiredic = {
 	excercise: "演习",
 	expedition: "远征",
 	modelconversion: "机种转换",
-	scrapequipment: "废弃某种装备",
-	equipexchange: "装备准备",
+	scrapequipment: "废弃装备",
+	equipexchange: "准备装备",
 	modernization: "近代化改修/舰装合成",
 	"a-gou": "あ号作戦"
 }
@@ -982,7 +982,7 @@ Object.defineProperty(that, "setData", {
 			let model = e[key]
 			this.data[key] = model
 			if (key == 'current' && model) {
-				$('.description').html(model.title)
+				let newflag=!isNaN(model.reward_other)
 				$('.id').html(model.wiki_id)
 				$('.content').html(model.description.replace(/\n/g, '<br/>'))
 				$('.after').html(seplink(model.post))
@@ -992,6 +992,7 @@ Object.defineProperty(that, "setData", {
 				$('.fuel').html(model.reward_fuel)
 				$('.memo').html(model.memo)
 				$('.period').html(model.period)
+				if(!newflag){
 				let bonus = ""
 				model.reward_other.forEach(function (be, i) {
 					if (be.choices) {
@@ -1002,9 +1003,11 @@ Object.defineProperty(that, "setData", {
 						bonus += "奖励" + (i + 1) + ": " + be.name + 'x' + (be.amount ? be.amount : "") + "<br/>"
 					}
 				})
-				$('.bonus').html(bonus)
+				$('.bonus').html(bonus)}else{
+					$('.bonus').html(model.reward_other + "<br>未收录")
+				}
 				slides = ""
-				slidewk = model.wiki_id
+				slideq = model
 				sliden = 0
 				z(model.requirements)
 				let req = model.requirements
@@ -1017,6 +1020,7 @@ Object.defineProperty(that, "setData", {
 					x(req)
 				}
 				$('.slides').html(slides)
+				$('.description').html(model.title+(newflag?'<img src="https://pic2.zhimg.com/v2-894298321368004931eaecaa4000c7a1_r.gif" alt="">':""))
 				app.set('current', this.data[key]);
 			} else if (key == 'switches') {
 				graystyle()
@@ -1024,19 +1028,40 @@ Object.defineProperty(that, "setData", {
 		}
 	}
 })
+
 function addreq(req) {
+	let reqcate = requiredic[req.category]
+	if (req.category == 'simple') { reqcate = categories[slideq.category].name }
 	let times = req.times || req.amount || 1
-	if ()
-		slides += requiredic[req.category] + req.map + times +
-			slidehtml(0, times)
+	let map = req.map
+	if (map && typeof map != "string") {
+		map.forEach(function (m) {
+			slides += reqcate + ': ' + m +
+				slidehtml(times)
+		})
+	} else if (req[slideact[req.category]]) {
+		z(req[slideact[req.category]])
+		req[slideact[req.category]].forEach(function (m) {
+			if (slideact[req.category]== 'scraps') { reqcate = "废弃"}
+			slides += reqcate + ': ' + ifnull(m.id || m.name, '?') +
+				slidehtml(m.times || m.amount || 1)
+		})
+	} else {
+		slides += reqcate + ': ' + ifnull(req.map, '') +
+			slidehtml(times)
+	}
 }
-function slidehtml(value, max) {
-	let pram = ++sliden + (slidewk).toString()
-	return `<input type="range" id="` + pram + `" value="` + value + `" min="0" max="` + max + `" step="1" onchange="onslide('` + pram + `')">`
+function slidehtml(max) {
+	let actid = ++sliden + (slideq.wiki_id).toString()
+	let value = app.get(actid) || 0
+	return `<input type="range" id="` + actid +
+		`" value="` + value +
+		`" min="0" max="` + max +
+		`" step="1" onchange="onslide('` + actid + `')" list="tickmarks">`
 }
-function onslide(a) {
-	let range = document.getElementById(a);
-	console.log(a, range.value);
+function onslide(actid) {
+	let range = document.getElementById(actid);
+	app.set(actid, range.value);
 }
 const tcache = "tcache"
 const birth = app.periodstart('once', new Date())

@@ -27,5 +27,6 @@ const height = document.documentElement.clientHeight - 5
 let containerstyle = "height: " + height + "px;max-width:" + width
 // $('#container').css('width',width*2)
 $('#container').attr("style", containerstyle)
-$('.list_dl').css("height", height - 180 + "px")
+$('.rewa_dl').css("max-height", height - 180 + "px")
+$('.batl_dl').css("max-height", height - 230 + "px")
 var chart = echarts.init(document.getElementById('container'));
