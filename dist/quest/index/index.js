@@ -949,32 +949,32 @@ const that = ({
 
 var slides
 var slidewk
-var sliden=0
+var sliden = 0
 const slideact = {
-    simple: "简单任务",
-    fleet: "编成",
-    sortie: "出击",
-    sink: "击沉",
-    excercise: "演习",
-    expedition: "objects",
-    modelconversion: "consumptions",
-    scrapequipment: "list",
-    equipexchange: "scraps",
-    modernization: "近代化改修/舰装合成",
-    "a-gou": "あ号作戦"
+	simple: "简单任务",
+	fleet: "编成",
+	sortie: "出击",
+	sink: "击沉",
+	excercise: "演习",
+	expedition: "objects",
+	modelconversion: "consumptions",
+	scrapequipment: "list",
+	equipexchange: "scraps",
+	modernization: "近代化改修/舰装合成",
+	"a-gou": "あ号作戦"
 }
 const requiredic = {
-    simple: "简单任务",
-    fleet: "编成",
-    sortie: "出击",
-    sink: "击沉",
-    excercise: "演习",
-    expedition: "远征",
-    modelconversion: "机种转换",
-    scrapequipment: "废弃某种装备",
-    equipexchange: "装备准备",
-    modernization: "近代化改修/舰装合成",
-    "a-gou": "あ号作戦"
+	simple: "简单任务",
+	fleet: "编成",
+	sortie: "出击",
+	sink: "击沉",
+	excercise: "演习",
+	expedition: "远征",
+	modelconversion: "机种转换",
+	scrapequipment: "废弃某种装备",
+	equipexchange: "装备准备",
+	modernization: "近代化改修/舰装合成",
+	"a-gou": "あ号作戦"
 }
 Object.defineProperty(that, "setData", {
 	value: function (e) {
@@ -1011,9 +1011,9 @@ Object.defineProperty(that, "setData", {
 				let cn = requiredic[req.category]
 				if (requiredic[req.category]) {
 					addreq(req)
-				} else if(req.list) {
+				} else if (req.list) {
 					req.list.forEach(addreq)
-				} else{
+				} else {
 					x(req)
 				}
 				$('.slides').html(slides)
@@ -1026,16 +1026,17 @@ Object.defineProperty(that, "setData", {
 })
 function addreq(req) {
 	let times = req.times || req.amount || 1
-	slides += requiredic[req.category] + req.category + times +
-	slidehtml(0,times)
+	if ()
+		slides += requiredic[req.category] + req.map + times +
+			slidehtml(0, times)
 }
-function slidehtml(value,max) {
-	let pram=++sliden+(slidewk).toString()
-	return `<input type="range" id="`+pram+`" value="`+value+`" min="0" max="`+max+`" step="1" onchange="onslide('` + pram + `')">`
+function slidehtml(value, max) {
+	let pram = ++sliden + (slidewk).toString()
+	return `<input type="range" id="` + pram + `" value="` + value + `" min="0" max="` + max + `" step="1" onchange="onslide('` + pram + `')">`
 }
 function onslide(a) {
 	let range = document.getElementById(a);
-    console.log(a, range.value);
+	console.log(a, range.value);
 }
 const tcache = "tcache"
 const birth = app.periodstart('once', new Date())
