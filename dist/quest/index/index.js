@@ -947,7 +947,35 @@ const that = ({
 // 	alert(app.get('switches'))
 // }
 
-
+var slides
+var slidewk
+var sliden=0
+const slideact = {
+    simple: "简单任务",
+    fleet: "编成",
+    sortie: "出击",
+    sink: "击沉",
+    excercise: "演习",
+    expedition: "objects",
+    modelconversion: "consumptions",
+    scrapequipment: "list",
+    equipexchange: "scraps",
+    modernization: "近代化改修/舰装合成",
+    "a-gou": "あ号作戦"
+}
+const requiredic = {
+    simple: "简单任务",
+    fleet: "编成",
+    sortie: "出击",
+    sink: "击沉",
+    excercise: "演习",
+    expedition: "远征",
+    modelconversion: "机种转换",
+    scrapequipment: "废弃某种装备",
+    equipexchange: "装备准备",
+    modernization: "近代化改修/舰装合成",
+    "a-gou": "あ号作戦"
+}
 Object.defineProperty(that, "setData", {
 	value: function (e) {
 		for (key in e) {
@@ -968,13 +996,27 @@ Object.defineProperty(that, "setData", {
 				model.reward_other.forEach(function (be, i) {
 					if (be.choices) {
 						be.choices.forEach(function (ce) {
-						bonus += "奖励" + (i + 1) + ": " + ce.name + 'x' + (ce.amount ? ce.amount : "") + "<br/>"
-					})
+							bonus += "奖励" + (i + 1) + ": " + ce.name + 'x' + (ce.amount ? ce.amount : "") + "<br/>"
+						})
 					} else {
-						bonus +=  "奖励" + (i + 1) + ": " + be.name + 'x' + (be.amount ? be.amount : "") + "<br/>"
+						bonus += "奖励" + (i + 1) + ": " + be.name + 'x' + (be.amount ? be.amount : "") + "<br/>"
 					}
 				})
 				$('.bonus').html(bonus)
+				slides = ""
+				slidewk = model.wiki_id
+				sliden = 0
+				z(model.requirements)
+				let req = model.requirements
+				let cn = requiredic[req.category]
+				if (requiredic[req.category]) {
+					addreq(req)
+				} else if(req.list) {
+					req.list.forEach(addreq)
+				} else{
+					x(req)
+				}
+				$('.slides').html(slides)
 				app.set('current', this.data[key]);
 			} else if (key == 'switches') {
 				graystyle()
@@ -982,6 +1024,19 @@ Object.defineProperty(that, "setData", {
 		}
 	}
 })
+function addreq(req) {
+	let times = req.times || req.amount || 1
+	slides += requiredic[req.category] + req.category + times +
+	slidehtml(0,times)
+}
+function slidehtml(value,max) {
+	let pram=++sliden+(slidewk).toString()
+	return `<input type="range" id="`+pram+`" value="`+value+`" min="0" max="`+max+`" step="1" onchange="onslide('` + pram + `')">`
+}
+function onslide(a) {
+	let range = document.getElementById(a);
+    console.log(a, range.value);
+}
 const tcache = "tcache"
 const birth = app.periodstart('once', new Date())
 

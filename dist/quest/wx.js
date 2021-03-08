@@ -29,20 +29,3 @@ let containerstyle = "height: " + height + "px;max-width:" + width
 $('#container').attr("style", containerstyle)
 $('.list_dl').css("height", height - 180 + "px")
 var chart = echarts.init(document.getElementById('container'));
-const requiredic = {
-    simple: "简单任务",
-    fleet: "编成",
-    sortie: "出击",
-    sink: "击沉",
-    excercise: "演习",
-    expedition: "远征",
-    modelconversion: "机种转换",
-    scrapequipment: "废弃某种装备",
-    equipexchange: "装备准备",
-    modernization: "近代化改修/舰装合成",
-    "a-gou": "あ号作戦"
-}
-const range = document.getElementById('range');
-function changeV(a) {
-    console.log(a, range.value);
-}
