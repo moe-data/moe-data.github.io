@@ -791,7 +791,7 @@ const categories = [{
 }]
 const datalen = app.data.length
 
-const that=({
+const that = ({
 	data: {
 		switches: app.initcache('switches', {
 			fs: [false, true, true, true],
@@ -848,7 +848,7 @@ const that=({
 		});
 	},
 	filts(o) {
-		let d={}
+		let d = {}
 		d.c = o//.target.dataset
 		let s = this.data.switches
 		switch (d.c[1]) {
@@ -906,8 +906,8 @@ const that=({
 		return {
 			title: Math.random() > 0.5 ? '任务太多不知道做哪个？快用舰娘任务小程序' : '舰娘任务可以在小程序中管理啦！',
 			path: '/pages/index/index',
-			success: function () {},
-			fail: function () {}
+			success: function () { },
+			fail: function () { }
 		}
 	},
 	onShareTimeline(res) {
@@ -948,29 +948,40 @@ const that=({
 // }
 
 
-Object.defineProperty(that,"setData",{
-    value:function (e) { 
-	for(key in e){
-		let model=e[key]
-		this.data[key]=model
-		if(key=='current'&&model){
-			$('.description').html(model.title)
-			$('.id').html(model.wiki_id)
-			$('.content').html(model.description.replace(/\n/g,'<br/>'))
-			$('.after').html(seplink(model.post))
-			$('.ammo').html(model.reward_ammo)
-			$('.bauxite').html(model.reward_bauxite)
-			$('.before').html(seplink(model.pre));
-			$('.bonus').html(model.reward_other)
-			$('.fuel').html(model.reward_fuel)
-			$('.memo').html(model.memo)
-			$('.period').html(model.period)
-			$('.bonus').html(model.reward_other)
-			app.set('current',this.data[key]);
-		}else if(key=='switches'){
-		graystyle()}
-	}}
-   })
+Object.defineProperty(that, "setData", {
+	value: function (e) {
+		for (key in e) {
+			let model = e[key]
+			this.data[key] = model
+			if (key == 'current' && model) {
+				$('.description').html(model.title)
+				$('.id').html(model.wiki_id)
+				$('.content').html(model.description.replace(/\n/g, '<br/>'))
+				$('.after').html(seplink(model.post))
+				$('.ammo').html(model.reward_ammo)
+				$('.bauxite').html(model.reward_bauxite)
+				$('.before').html(seplink(model.pre));
+				$('.fuel').html(model.reward_fuel)
+				$('.memo').html(model.memo)
+				$('.period').html(model.period)
+				let bonus = ""
+				model.reward_other.forEach(function (be, i) {
+					if (be.choices) {
+						be.choices.forEach(function (ce) {
+						bonus += "奖励" + (i + 1) + ": " + ce.name + 'x' + (ce.amount ? ce.amount : "") + "<br/>"
+					})
+					} else {
+						bonus +=  "奖励" + (i + 1) + ": " + be.name + 'x' + (be.amount ? be.amount : "") + "<br/>"
+					}
+				})
+				$('.bonus').html(bonus)
+				app.set('current', this.data[key]);
+			} else if (key == 'switches') {
+				graystyle()
+			}
+		}
+	}
+})
 const tcache = "tcache"
 const birth = app.periodstart('once', new Date())
 
@@ -1083,13 +1094,13 @@ const switches = those.switches
 
 pushlink('A03')
 
-function seplink(m){
-	var link=''
-	for(let i=0;i<m.length;i++){
-	  link+=`<a href='javascript:jump("`+m[i]+`")'>`+m[i]+"</a> "
+function seplink(m) {
+	var link = ''
+	for (let i = 0; i < m.length; i++) {
+		link += `<a href='javascript:jump("` + m[i] + `")'>` + m[i] + "</a> "
 	}
 	return link
-  }
+}
 function pushlink(node) {
 	app.data.forEach(function (e) {
 		if (node == e.wiki_id) {
@@ -1166,7 +1177,7 @@ function pagecurrent() {
 // 	jump('B37')
 // }, 5000);
 
-function report() {}
+function report() { }
 // function wkid(n){
 // 	for(let i=0;i<datalen;i++){
 // 		if(n==app.data[i].game_id)return app.data[i].wiki_id;
@@ -1361,7 +1372,7 @@ function initChart(canvas, width, height, dpr) {
 	// 	devicePixelRatio: dpr // new
 	// });
 	// canvas.setChart(chart);
-  // that.setData({switches:	app.initcache('switches', {
+	// that.setData({switches:	app.initcache('switches', {
 	// 	fs: [false, true, true, true],
 	// 	fp: [true, true, true, true],
 	// 	fm: [true, true, true, true],
@@ -1531,14 +1542,14 @@ function setchart() {
 		app.branches[switches.fb][1].forEach(wkid => {
 			datawk(wkid).target = true
 		});
-		let custom=pushpost(app.branches[switches.fb][1])
+		let custom = pushpost(app.branches[switches.fb][1])
 		custom.forEach(function (wkid) {
 			chain.push(datawk(wkid))
 		})
 	} else {
 		switch (Number(switches.fb)) {
 			case 0:
-				chain = JSON.parse(JSON.stringify(app.data)) 
+				chain = JSON.parse(JSON.stringify(app.data))
 				z(chain)
 				break;
 			case app.branches.length - 1:
@@ -1561,7 +1572,7 @@ function setchart() {
 	var cl = chain.length;
 	while (cl--) {
 		let c = chain[cl].guess
-		if (switches.fs[0] && switches.fs[1] && switches.fs[2]) {} else {
+		if (switches.fs[0] && switches.fs[1] && switches.fs[2]) { } else {
 			let status = false
 			if ((!switches.fs[0]) && c == 0) status = true
 			if ((!switches.fs[1]) && c == 1) status = true
@@ -1706,15 +1717,16 @@ function setchart() {
 		battle = []
 		app.data.forEach(function (e, i) {
 			if (e.requirements.category == "sortie") {
-				addbattle(e,e.requirements)
-				addbattle(e,e.requirements,10)
-				addbattle(e,e.requirements,11)
-			}else if(e.requirements.list) {
-				for(i=0;i<e.requirements.list.length;i++){
+				addbattle(e, e.requirements)
+				addbattle(e, e.requirements, 10)
+				addbattle(e, e.requirements, 11)
+			} else if (e.requirements.list) {
+				for (i = 0; i < e.requirements.list.length; i++) {
 					if (e.requirements.list[i].category == "sortie") {
-						addbattle(e,e.requirements.list[i])
-						addbattle(e,e.requirements.list[i],10)
-						addbattle(e,e.requirements.list[i],11)}
+						addbattle(e, e.requirements.list[i])
+						addbattle(e, e.requirements.list[i], 10)
+						addbattle(e, e.requirements.list[i], 11)
+					}
 				}
 			}
 			if (e.reward_other) {
@@ -1722,14 +1734,15 @@ function setchart() {
 					if (e.reward_other[i].name) {
 						addreward(e, e.reward_other[i]);
 						// addreward(e, e.reward_other[i],5);
-						addreward(e, e.reward_other[i],10);
-						addreward(e, e.reward_other[i],11);
+						addreward(e, e.reward_other[i], 10);
+						addreward(e, e.reward_other[i], 11);
 					} else {
-						for (let j = 0; j < e.reward_other.length; j++){
+						for (let j = 0; j < e.reward_other.length; j++) {
 							addreward(e, e.reward_other[i].choices[j]);
 							// addreward(e, e.reward_other[i].choices[j],5);
-							addreward(e, e.reward_other[i].choices[j],10);
-							addreward(e, e.reward_other[i].choices[j],11);}
+							addreward(e, e.reward_other[i].choices[j], 10);
+							addreward(e, e.reward_other[i].choices[j], 11);
+						}
 					}
 				}
 			}
@@ -1738,49 +1751,51 @@ function setchart() {
 		app.battle = battle
 		app.reward = reward
 	}, 1200);
-	
+
 	app.set('switches', that.data.switches);
 	app.set('branches', app.branches);
 }
-function addbattle(e, r ,guess) {
-	let flag=false
-	if(!guess){guess=e.guess;flag=true}else 
-	if(guess==10){flag=e.guess<2}else
-	if(guess==11){flag=true}
-	if(flag){
-	let name = r.map||'任意'
-	if(typeof name=='string'){
-		battle[guess] = ifnull(battle[guess], {})
-		battle[guess][name] = ifnull(battle[guess][name],{})
-		// battle[guess][name][e.wiki_id]=ifnull(battle[guess][name][e.wiki_id],0)
-		// battle[guess][name][e.wiki_id] += Number(amount)}
-		battle[guess][name][e.wiki_id] = r
-	}else if(name.length>1){
-		for(let i=0;i<name.length;i++){
-			let namei=name[i]
+function addbattle(e, r, guess) {
+	let flag = false
+	if (!guess) { guess = e.guess; flag = true } else
+		if (guess == 10) { flag = e.guess < 2 } else
+			if (guess == 11) { flag = true }
+	if (flag) {
+		let name = r.map || '任意'
+		if (typeof name == 'string') {
 			battle[guess] = ifnull(battle[guess], {})
-			battle[guess][namei] = ifnull(battle[guess][namei],{})
-			battle[guess][namei][e.wiki_id] = r
+			battle[guess][name] = ifnull(battle[guess][name], {})
+			// battle[guess][name][e.wiki_id]=ifnull(battle[guess][name][e.wiki_id],0)
+			// battle[guess][name][e.wiki_id] += Number(amount)}
+			battle[guess][name][e.wiki_id] = r
+		} else if (name.length > 1) {
+			for (let i = 0; i < name.length; i++) {
+				let namei = name[i]
+				battle[guess] = ifnull(battle[guess], {})
+				battle[guess][namei] = ifnull(battle[guess][namei], {})
+				battle[guess][namei][e.wiki_id] = r
+			}
 		}
 	}
-}}
-function addreward(e, r ,guess) {//remove reward
+}
+function addreward(e, r, guess) {//remove reward
 	let name = r.name
-	if (!name){ x(r)}else{
-	let flag=false
-	let amount = ifnull(r.amount, 1)
-	if (name.slice(0, 2) == "戦果") {
-		amount = name.slice(2, name.length)
-		name = "戦果"}
-	if(!guess){guess=e.guess;flag=true}else 
-	// if(guess==5){flag= app.get('starreward').indexOf(name)>-1 }else
-	if(guess==10){flag=e.guess<2}else
-	if(guess==11){flag=true}
-	if(flag)
-		{reward[guess] = ifnull(reward[guess], {})
-		reward[guess][name] = ifnull(reward[guess][name],{})
-		reward[guess][name][e.wiki_id]=ifnull(reward[guess][name][e.wiki_id],0)
-		reward[guess][name][e.wiki_id] += Number(amount)
+	if (!name) { x(r) } else {
+		let flag = false
+		let amount = ifnull(r.amount, 1)
+		if (name.slice(0, 2) == "戦果") {
+			amount = name.slice(2, name.length)
+			name = "戦果"
+		}
+		if (!guess) { guess = e.guess; flag = true } else
+			// if(guess==5){flag= app.get('starreward').indexOf(name)>-1 }else
+			if (guess == 10) { flag = e.guess < 2 } else
+				if (guess == 11) { flag = true }
+		if (flag) {
+			reward[guess] = ifnull(reward[guess], {})
+			reward[guess][name] = ifnull(reward[guess][name], {})
+			reward[guess][name][e.wiki_id] = ifnull(reward[guess][name][e.wiki_id], 0)
+			reward[guess][name][e.wiki_id] += Number(amount)
 		}
 	}
 }

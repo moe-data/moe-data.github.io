@@ -142,3 +142,7 @@ button.clicked.btn-default{color:darkblue;}
 .cssammo{background-color: #fdf5e65e; text-align: center;}
 .csssteel{background: #f9f9f95e; text-align: center;}
 .cssbauxite{background-color: #ffe4b55e; text-align: center;}
+
+.block{
+  display: inline-block;
+}

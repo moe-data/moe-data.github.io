@@ -176,3 +176,7 @@ $('.btn').click(function () {
 function itag(str){
     return '<i style="background-image:url(https://fleet.diablohu.com/!/assets/images/itemicon/'+str+'.png);" class="item"></i>'
 }
+function lvplus(arr){
+    if(isNaN(arr))
+    return
+}

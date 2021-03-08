@@ -11,7 +11,7 @@ body {
   float: right;
 }
 .n{
-  margin: 18px;
+  margin: 13px;
 }
 ._after {
   content: " ";
@@ -160,7 +160,7 @@ body {
 }
 
 .list_li {
-  background: #4e4e4eee;
+  background: #666e;
   list-style-type: none;
   color: white;
   width: 100%;
@@ -169,6 +169,15 @@ body {
   line-height: 34px;
   cursor: pointer;
   border-bottom: 1px solid #6b6b6bee;
+}
+.list_l {
+  background: #8887;
+  list-style-type: none;
+  color: white;
+  width: 100%;
+  padding: 0 2px;
+  height: auto;
+  line-height: 24px;
 }
 
 .list_li:hover {

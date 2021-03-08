@@ -106,7 +106,7 @@ Object.defineProperty(rewa, "setData", {
     </dd>
 `
         }
-        $('.list_dl').html(html)
+        $('.rewa_dl').html(html)
         $(".rewa_dt").on("click", function () {
           $('.rewa_dd').stop();
           $(this).siblings("dt").removeAttr("id");

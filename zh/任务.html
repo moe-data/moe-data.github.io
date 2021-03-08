@@ -81,7 +81,7 @@
               <option value="3">已达成</option>
               <option value="4">全部</option>
             </select>
-            <dl class="batl_dl">
+            <dl class="batl_dl list_dl">
             </dl>
           </div>
           <div class="tab-pane" id="reward">
@@ -103,7 +103,7 @@
                 <option value="3">已达成</option>
                 <option value="4">全部</option>
               </select>
-              <dl class="list_dl">
+              <dl class="rewa_dl list_dl">
               </dl>
     
             </div>
@@ -118,7 +118,7 @@
       <div class="center">
         <h4><b class="description"> 奇跡の駆逐艦</b></h4>
       </div>
-      <table border="1" class="mid" style="background: #fffe;">
+      <table border="1" class="block mid" style="background: #fffe;max-width: 200px;">
         <tr>
           <td style="width: 60px;">前置任务</td>
           <td class="before"><a href='javascript:jump("C21")'>C21</a> </td>
@@ -132,7 +132,7 @@
             编成包含旗舰“雪风”总计驱逐舰4艘以上的精强演习部队，在同一日内在演习达成4次以上【S胜】！</td>
         </tr>
       </table><br>
-      <table border="1" class="mid" style="background: #fffe;">
+      <table border="1" class="block mid" style="background: #fffe;">
         <tr>
           <td class="cssfuel"><img src="https://uploads.kcwiki.cn/commons/thumb/0/0d/IcoFuel.png/25px-IcoFuel.png"
               alt="油"></td>
@@ -162,6 +162,12 @@
           <td colspan="4" class="memo">雪风旗舰+3艘驱逐舰+其他，在一个任务周期内取得4次S胜</td>
         </tr> -->
       </table>
+      <div class="block">
+        是是是： <input type="range" id="range" value="2" min="0" max="2" step="1" onchange="changeV()">
+        是是是： <input type="range" id="range" value="2" min="0" max="2" step="1" onchange="changeV()">
+        是是是： <input type="range" id="range" value="2" min="0" max="2" step="1" onchange="changeV()">
+        是是是： <input type="range" id="range" value="2" min="0" max="2" step="1" onchange="changeV()">
+      </div>
       </div>
       <div id="foot"></div>
     </div>

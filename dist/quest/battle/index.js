@@ -38,19 +38,45 @@ Object.defineProperty(batt, "setData", {
           let ulli = ''
           let title = e[key][i]
           for (let map in title.pages) {
-            ulli += '<li class="list_li" onclick="jump('+"'"+ map + "'"+')">' 
-            + map + '<span class="right"><span class="n">' 
-            + title.pages[map].n
-            +`</span><img src="../img/ta1.png" class="tar"  onclick="app.target('`+map+`')"></img>
+            let fleets=""
+            if (title.pages[map].groups) {
+              let fleet=[]
+              title.pages[map].groups.forEach(function (group) {
+                let member = ""
+                if (group.ship) {
+                  member = group.ship
+                } else if (group.shipclass) {
+                  member = group.shipclass + '级'
+                } else {
+                  x(group)
+                }
+                if (group.lv) {
+                  member +='(lv' + group.lv[0]+'+)'
+                }
+                if (group.flagship) {
+                  member += '❀'
+                }
+                if (group.amount) {
+                  member += 'x' + group.amount
+                }
+                fleet.push(member)
+                fleets='<li class="list_l">'+ fleet.join('+').replace(/,/g,'/') +'</li>'
+              });
+            }
+            ulli += '<li class="list_li" onclick="jump(' + "'" + map + "'" + ')">'
+              + map + '<span class="right"><span class="n">'
+              + title.pages[map].result + '</span><span class="n">' + title.pages[map].n
+              + `</span><img src="../img/ta1.png" class="tar"  onclick="app.target('` + map + `')"></img>
             <img src="../img/`
-            +(title.pages[map].finished?(title.pages[map].finished==2?'finish':'ongoing'):'locked')+`.png" class="sta"></img>` + '</span>'+'</li>'
+              + (title.pages[map].finished ? (title.pages[map].finished == 2 ? 'finish' : 'ongoing') : 'locked') + `.png" class="sta"></img>` + '</span>' + '</li>'
+              + fleets
           }
           html += `<dt class="batt_dt list_dt"> <span class="_after"></span>
-        <p>`+ title.name + '<span class="right"><span class="n">' 
-        + title.n
-        +`</span><img src="../img/ta1.png" class="tar"  onclick="app.targets('`+title.map.join(',')+`')"></img>
+        <p>`+ title.name + '<span class="right"><span class="n">'
+            + title.n
+            + `</span><img src="../img/ta1.png" class="tar"  onclick="app.targets('` + title.map.join(',') + `')"></img>
         <img src="../img/ta2.png" class="tar`
-        +(title.finished?'':' gray')+`"></img></p>
+            + (title.finished ? '' : ' gray') + `"></img></p>
         <i class="batt_dt list_dt_icon"></i>
       </dt>
       <dd class="batt_dd list_dd">
@@ -116,28 +142,22 @@ function loadbatl() {
     let sum = 0
     let map = []
     for (let key in pages) {
-      let mapinfo=pages[key]
+      let mapinfo = pages[key]
       let fnshd = app.data[app.wktoi[key]].guess
-      sum += mapinfo.times||1
+      sum += mapinfo.times || 1
       map.push(key)
-      page[key] = {
-        n: mapinfo.times||1,
-        // star:app.get('starwk').indexOf(key)>-1,
-        finished: fnshd
-      }
+      // z(mapinfo)
+      // page[key] = {
+      //   n: mapinfo.times||1,
+      //   // star:app.get('starwk').indexOf(key)>-1,
+      //   finished: fnshd
+      // }
+      page[key] = mapinfo
+      page[key].finished = fnshd
+      page[key].n = mapinfo.times || 1
       if (fnshd != 2) finished = false;
     }
-    if (bc == 'arbitary'&&isNaN(keys[0])) {
-      list.push({
-      name: keys,
-      n: sum,
-      star: app.get('starbattle').indexOf(keys) > -1,
-      finished: finished,
-      open: false,
-      pages: page,
-      map:map
-    })
-  }else if (bc == keys[0]) {
+    if (bc == 'arbitary' && isNaN(keys[0])) {
       list.push({
         name: keys,
         n: sum,
@@ -145,11 +165,21 @@ function loadbatl() {
         finished: finished,
         open: false,
         pages: page,
-        map:map
+        map: map
+      })
+    } else if (bc == keys[0]) {
+      list.push({
+        name: keys,
+        n: sum,
+        star: app.get('starbattle').indexOf(keys) > -1,
+        finished: finished,
+        open: false,
+        pages: page,
+        map: map
       })
     }
   }
-  list.sort(function(a,b){return a.name.localeCompare(b.name)})
+  list.sort(function (a, b) { return a.name.localeCompare(b.name) })
   batt.setData({
     list: list
   })
