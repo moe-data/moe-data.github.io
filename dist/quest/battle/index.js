@@ -65,7 +65,7 @@ Object.defineProperty(batt, "setData", {
             }
             ulli += '<li class="list_li" onclick="jump(' + "'" + map + "'" + ')">'
               + map + '<span class="right"><span class="n">'
-              + title.pages[map].result + '</span><span class="n">' + title.pages[map].n
+              + ifnull(title.pages[map].result,"") + '</span><span class="n">' + title.pages[map].n
               + `</span><img src="../img/ta1.png" class="tar"  onclick="app.target('` + map + `')"></img>
             <img src="../img/`
               + (title.pages[map].finished ? (title.pages[map].finished == 2 ? 'finish' : 'ongoing') : 'locked') + `.png" class="sta"></img>` + '</span>' + '</li>'
