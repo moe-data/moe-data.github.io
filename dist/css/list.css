@@ -183,3 +183,11 @@ body {
 .list_li:hover {
   background: #4285F4;
 }
+.outer{
+  position: absolute;
+  width:800px;
+  height: 800px;
+  left:100px;
+  top:100px;
+  -webkit-clip-path: inset(10% 80% 75% 0%);
+}  
