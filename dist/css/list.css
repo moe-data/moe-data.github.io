@@ -183,11 +183,22 @@ body {
 .list_li:hover {
   background: #4285F4;
 }
+
+.topbar{
+  position: absolute;
+  right:300px;
+  top:0px;
+  background:url(https://imgs.aixifan.com/FvLfnDzonSGgGOa4jGRTLr2S6CO2);
+  height: 150px;
+  width: 100%;
+  z-index: 1;
+}
 .outer{
   position: absolute;
   width:800px;
   height: 800px;
-  left:100px;
-  top:100px;
-  -webkit-clip-path: inset(10% 80% 75% 0%);
+  left:0px;
+  top:0px;
+  -webkit-clip-path: inset(9% 80% 70% 0%);
+  z-index: 2;
 }  
