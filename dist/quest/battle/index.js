@@ -38,9 +38,9 @@ Object.defineProperty(batt, "setData", {
           let ulli = ''
           let title = e[key][i]
           for (let map in title.pages) {
-            let fleets=""
+            let fleets = ""
             if (title.pages[map].groups) {
-              let fleet=[]
+              let fleet = []
               title.pages[map].groups.forEach(function (group) {
                 let member = ""
                 if (group.ship) {
@@ -51,7 +51,7 @@ Object.defineProperty(batt, "setData", {
                   x(group)
                 }
                 if (group.lv) {
-                  member +='(lv' + group.lv[0]+'+)'
+                  member += '(lv' + group.lv[0] + '+)'
                 }
                 if (group.flagship) {
                   member += '❀'
@@ -60,12 +60,12 @@ Object.defineProperty(batt, "setData", {
                   member += 'x' + group.amount
                 }
                 fleet.push(member)
-                fleets='<li class="list_l">'+ fleet.join('+').replace(/,/g,'/') +'</li>'
+                fleets = '<li class="list_l">' + fleet.join('+').replace(/,/g, '/') + '</li>'
               });
             }
             ulli += '<li class="list_li" onclick="jump(' + "'" + map + "'" + ')">'
               + map + '<span class="right"><span class="n">'
-              + ifnull(title.pages[map].result,"") + '</span><span class="n">' + title.pages[map].n
+              + ifnull(title.pages[map].result, "") + '</span><span class="n">' + title.pages[map].n
               + `</span><img src="../img/ta1.png" class="tar"  onclick="app.target('` + map + `')"></img>
             <img src="../img/`
               + (title.pages[map].finished ? (title.pages[map].finished == 2 ? 'finish' : 'ongoing') : 'locked') + `.png" class="sta"></img>` + '</span>' + '</li>'
@@ -87,6 +87,15 @@ Object.defineProperty(batt, "setData", {
 `
         }
         $('.batl_dl').html(html)
+        if(list.length==0){
+          $('.batl_dl').html(`<dl class="batl_dl list_dl" style="max-height: 709px;">
+          <dt class="batt_dt list_dt" id="open"> <span class="_after"></span>
+          <p>NO DATA<span class="right"><span class="n">0</span><img src="../img/ta1.png" class="tar">
+          <img src="../img/ta2.png" class="tar gray"></span></p>
+          </dt></dl>`)
+        }else if(list.length==1){
+          $(".batt_dt").attr("id", "open").next().slideDown()
+        }else{
         $(".batt_dt").on("click", function () {
           $('.batt_dd').stop();
           $(this).siblings("dt").removeAttr("id");
@@ -95,7 +104,7 @@ Object.defineProperty(batt, "setData", {
           } else {
             $(this).attr("id", "open").next().slideDown().siblings("dd").slideUp();
           }
-        });
+        });}
       }
     }
   }
@@ -161,7 +170,7 @@ function loadbatl() {
       list.push({
         name: keys,
         n: sum,
-        star: app.get('starbattle').indexOf(keys) > -1,
+        star: app.get('starbattle')?app.get('starbattle').indexOf(keys) > -1:false,
         finished: finished,
         open: false,
         pages: page,
@@ -171,7 +180,7 @@ function loadbatl() {
       list.push({
         name: keys,
         n: sum,
-        star: app.get('starbattle').indexOf(keys) > -1,
+        star: app.get('starbattle')?app.get('starbattle').indexOf(keys) > -1:false,
         finished: finished,
         open: false,
         pages: page,
@@ -183,5 +192,4 @@ function loadbatl() {
   batt.setData({
     list: list
   })
-  z(list)
 }

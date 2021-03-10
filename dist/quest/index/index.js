@@ -982,7 +982,7 @@ Object.defineProperty(that, "setData", {
 			let model = e[key]
 			this.data[key] = model
 			if (key == 'current' && model) {
-				let newflag=!isNaN(model.reward_other)
+				let newflag = model.newflag//!isNaN(model.reward_other)
 				$('.id').html(model.wiki_id)
 				$('.content').html(model.description.replace(/\n/g, '<br/>'))
 				$('.after').html(seplink(model.post))
@@ -992,18 +992,19 @@ Object.defineProperty(that, "setData", {
 				$('.fuel').html(model.reward_fuel)
 				$('.memo').html(model.memo)
 				$('.period').html(model.period)
-				if(!newflag){
-				let bonus = ""
-				model.reward_other.forEach(function (be, i) {
-					if (be.choices) {
-						be.choices.forEach(function (ce) {
-							bonus += "奖励" + (i + 1) + ": " + ce.name + 'x' + (ce.amount ? ce.amount : "") + "<br/>"
-						})
-					} else {
-						bonus += "奖励" + (i + 1) + ": " + be.name + 'x' + (be.amount ? be.amount : "") + "<br/>"
-					}
-				})
-				$('.bonus').html(bonus)}else{
+				if (!newflag) {
+					let bonus = ""
+					model.reward_other.forEach(function (be, i) {
+						if (be.choices) {
+							be.choices.forEach(function (ce) {
+								bonus += "奖励" + (i + 1) + ": " + ce.name + 'x' + (ce.amount ? ce.amount : "") + "<br/>"
+							})
+						} else {
+							bonus += "奖励" + (i + 1) + ": " + be.name + 'x' + (be.amount ? be.amount : "") + "<br/>"
+						}
+					})
+					$('.bonus').html(bonus)
+				} else {
 					$('.bonus').html(model.reward_other + "<br>未收录")
 				}
 				slides = ""
@@ -1020,7 +1021,7 @@ Object.defineProperty(that, "setData", {
 					x(req)
 				}
 				$('.slides').html(slides)
-				$('.description').html(model.title+(newflag?'<img src="https://pic2.zhimg.com/v2-894298321368004931eaecaa4000c7a1_r.gif" alt="">':""))
+				$('.description').html(model.title + (newflag ? '<img src="https://pic2.zhimg.com/v2-894298321368004931eaecaa4000c7a1_r.gif" alt="">' : ""))
 				app.set('current', this.data[key]);
 			} else if (key == 'switches') {
 				graystyle()
@@ -1040,9 +1041,8 @@ function addreq(req) {
 				slidehtml(times)
 		})
 	} else if (req[slideact[req.category]]) {
-		z(req[slideact[req.category]])
 		req[slideact[req.category]].forEach(function (m) {
-			if (slideact[req.category]== 'scraps') { reqcate = "废弃"}
+			if (slideact[req.category] == 'scraps') { reqcate = "废弃" }
 			slides += reqcate + ': ' + ifnull(m.id || m.name, '?') +
 				slidehtml(m.times || m.amount || 1)
 		})
@@ -1566,8 +1566,8 @@ function update() {
 		return
 	}
 	let valid = [];
-	z(app.get('history'))
-	z($.cookie('history'));
+	// z(app.get('history'))
+	// z($.cookie('history'));
 	(app.get('history') || []).forEach(function (h) {
 		let vali = {}
 		vali[app.beginutc(h[0], h[2])] = [h[1], h[2]]
@@ -1837,6 +1837,7 @@ function setchart() {
 	app.set('branches', app.branches);
 }
 function addbattle(e, r, guess) {
+
 	let flag = false
 	if (!guess) { guess = e.guess; flag = true } else
 		if (guess == 10) { flag = e.guess < 2 } else
@@ -1849,7 +1850,7 @@ function addbattle(e, r, guess) {
 			// battle[guess][name][e.wiki_id]=ifnull(battle[guess][name][e.wiki_id],0)
 			// battle[guess][name][e.wiki_id] += Number(amount)}
 			battle[guess][name][e.wiki_id] = r
-		} else if (name.length > 1) {
+		} else if (name.length >= 1) {
 			for (let i = 0; i < name.length; i++) {
 				let namei = name[i]
 				battle[guess] = ifnull(battle[guess], {})

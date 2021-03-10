@@ -107,6 +107,15 @@ Object.defineProperty(rewa, "setData", {
 `
         }
         $('.rewa_dl').html(html)
+        if(list.length==0){
+          $('.rewa_dl').html(`<dl class="batl_dl list_dl" style="max-height: 709px;">
+          <dt class="batt_dt list_dt" id="open"> <span class="_after"></span>
+          <p>NO DATA<span class="right"><span class="n">0</span><img src="../img/ta1.png" class="tar">
+          <img src="../img/ta2.png" class="tar gray"></span></p>
+          </dt></dl>`)
+        }else if(list.length==1){
+          $(".rewa_dt").attr("id", "open").next().slideDown()
+        }else{
         $(".rewa_dt").on("click", function () {
           $('.rewa_dd').stop();
           $(this).siblings("dt").removeAttr("id");
@@ -115,7 +124,7 @@ Object.defineProperty(rewa, "setData", {
           } else {
             $(this).attr("id", "open").next().slideDown().siblings("dd").slideUp();
           }
-        });
+        });}
       }
     }
   }

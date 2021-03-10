@@ -3,7 +3,8 @@ that.setData({
 })
 let jsindex=0
 let bar=0
-let ranget=['slotitem','useitem','furniture','cstype']
+let ranget=['slotitem','useitem','furniture','cstype','mapinfo']
+var mapinfo
 for(let i=0;i<ranget.length;i++){
 $.getJSON("../parsed/"+(i==3?"":"api_mst_")+ranget[i]+".json").done(function (result) {
   eval(ranget[i]+" = result")
@@ -63,7 +64,34 @@ function loadquest() {
   api_list.forEach(function(e) {
     let id=e.api_no.toString()
     if(app.wkid[id]==null){
+      let groups=[]
+      ship.forEach(function(sh) {
+        if(e.api_detail.indexOf(sh)>-1){
+          groups.push(sh)
+        }
+      });
+      let maps=[]
+      mapinfo.forEach(function(map) {
+        if(e.api_detail.indexOf(map.api_name)>-1||e.api_detail.indexOf(map.api_opetext)>-1){
+          maps.push(map.api_maparea_id+'-'+map.api_no)
+        }
+      });
+      let requirements={
+        category:"simple",
+      }
+      if(maps.length){
+        requirements={
+          category: "sortie",
+          times: 1,
+          map: maps,
+          groups: [{
+            ship: groups
+          }]
+        }
+      }
+      z(e.api_detail,groups,maps)
       newload.push({
+        newflag:1,
         game_id: id,
         wiki_id: id,
         category: e.api_category,
@@ -76,13 +104,7 @@ function loadquest() {
         reward_bauxite: e.api_get_material[3],
         reward_other: e.api_bonus_flag,
         prerequisite: [],
-        requirements: {
-          category: "fleet",
-          groups: [{
-            ship: "艦",
-            amount: 2
-          }]
-        }
+        requirements: requirements
       })
     }else{}
       app.setstat(app.wkid[id]||id,e.api_state)
