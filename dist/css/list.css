@@ -187,14 +187,14 @@ body {
 .topbar{
   position: absolute;
   right:300px;
-  top:0px;
+  top:66px;
   background:url(https://imgs.aixifan.com/FvLfnDzonSGgGOa4jGRTLr2S6CO2);
-  height: 150px;
+  height: 100px;
   width: 100%;
   z-index: 1;
 }
 .outer{
-  position: absolutF1j6e;
+  position: absolute;
   width:800px;
   height: 800px;
   left:0px;
