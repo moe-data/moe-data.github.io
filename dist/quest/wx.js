@@ -30,3 +30,12 @@ $('#container').attr("style", containerstyle)
 $('.rewa_dl').css("max-height", height - 180 + "px")
 $('.batl_dl').css("max-height", height - 230 + "px")
 var chart = echarts.init(document.getElementById('container'));
+var tickmarks=""
+for(let i=0;i<51;i++){
+    tickmarks+='<option value="'+i+'" label="'+i+'"></option>'
+}
+$('#tickmarks').html(tickmarks)
+
+const UI3="https://imgs.aixifan.com/FsqKbFRZZTqeQQoifufgyRY0LkW9"
+$('.UI3').attr("src", UI3)
+$('.topbar').css("background", "url("+UI3+")")

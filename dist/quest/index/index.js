@@ -1043,7 +1043,7 @@ function addreq(req) {
 	} else if (req[slideact[req.category]]) {
 		req[slideact[req.category]].forEach(function (m) {
 			if (slideact[req.category] == 'scraps') { reqcate = "废弃" }
-			slides += reqcate + ': ' + ifnull(m.id || m.name, '?') +
+			slides += reqcate + ': ' + ifnull(m.id || m.name, '') +
 				slidehtml(m.times || m.amount || 1)
 		})
 	} else {
@@ -1054,14 +1054,19 @@ function addreq(req) {
 function slidehtml(max) {
 	let actid = ++sliden + (slideq.wiki_id).toString()
 	let value = app.get(actid) || 0
-	return `<input type="range" id="` + actid +
+	return `<span class="right"><span class="` + actid + `">` + value + '</span>/' + max + `</span>` +
+		`<input type="range" id="` + actid +
 		`" value="` + value +
 		`" min="0" max="` + max +
-		`" step="1" onchange="onslide('` + actid + `')" list="tickmarks">`
+		`" step="1" onchange="onslide('` + actid + `')" oninput="inslide('` + actid + `')" list="tickmarks">`
 }
 function onslide(actid) {
 	let range = document.getElementById(actid);
 	app.set(actid, range.value);
+}
+function inslide(actid) {
+	let range = document.getElementById(actid);
+	$('.'+actid).html(range.value)
 }
 const tcache = "tcache"
 const birth = app.periodstart('once', new Date())

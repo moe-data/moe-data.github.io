@@ -187,18 +187,66 @@ body {
 .topbar{
   position: absolute;
   right:300px;
-  top:66px;
-  background:url(https://imgs.aixifan.com/FvLfnDzonSGgGOa4jGRTLr2S6CO2);
+  top:50px;
   height: 100px;
   width: 100%;
   z-index: 1;
 }
 .outer{
   position: absolute;
-  width:800px;
-  height: 800px;
+  width:1200px;
+  /* height: 1200px; */
+  left:-60px;
+  top:-220px;
+  clip-path: inset(12.5% 80% 61% 0%);
+  z-index: 1;
+  animation:turn 10s cubic-bezier(0.13, 0.97, 0.96, 0.18) infinite;
+  margin: 100px auto;
+  transform-origin:121px 236px;
+  -ms-transform:rotate(180deg);
+  overflow: hidden;
+}
+.border{
+  position: absolute;
+  width:1200px;
+  /* height: 1200px; */
+  left:-543px;
+  top:-220px;
+  clip-path: circle(110px at 600px 224px);;
+  z-index: 3;
+  margin: 100px auto;
+  transform-origin:600px 224px;
+  overflow: hidden;
+  transform: rotate(90deg);
+  -ms-transform: rotate(145deg); /* IE 9 */
+}
+.clip{
+  position: absolute;
+  overflow: hidden;
+}
+.leftline{
+  width:100px;
+  /* height: 1200px; */
   left:0px;
-  top:0px;
-  -webkit-clip-path: inset(9% 80% 70% 0%);
-  z-index: 2;
-}  
+  top:-220px;
+  z-index: -10;
+  margin: 100px auto;
+}
+.leftline-son{
+  margin-top: -150px;
+}
+/* 
+  turn : 定义的动画名称
+  1s : 动画时间
+  linear : 动画以何种运行轨迹完成一个周期
+  infinite :规定动画应该无限次播放
+ */
+@keyframes turn{
+  0%{-webkit-transform:rotate(170deg);
+    /* -ms-transform:rotate(90deg); */
+  }
+  25%{-webkit-transform:rotate(180deg);}
+  50%{-webkit-transform:rotate(190deg);}
+  75%{-webkit-transform:rotate(200deg);}
+  100%{-webkit-transform:rotate(210deg);}
+}

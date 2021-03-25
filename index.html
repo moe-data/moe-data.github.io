@@ -298,7 +298,7 @@ Laté 298B   </button><button class="btn btn-default" value="207">
         }else{alert("您未选择时间范围！")}
     }else{
     if (confirm("您未选择装备，\n是要查询所有装备吗？\n(可点击装备名称选择装备)")==true){
-      window.location.href=("result.html?t="+duration+'&q='+'d'+'&o='+output+'&e='+extra+'&s='+$('#sorto').val()+'&a='+$("#a").val()+'&l='+$("#lv")[0].checked )
+      window.location.href=("result.html?t="+duration+'&q='+'d'+'&o='+output+'&e='+[-1].concat(developable)+'&s='+$('#sorto').val()+'&a='+$("#a").val()+'&l='+$("#lv")[0].checked )
     }}
     })
     
