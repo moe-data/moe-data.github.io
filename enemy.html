@@ -11,15 +11,35 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="https://img.pddpic.com/mms-material-img/2021-01-16/e555cb1c-1339-48b5-9930-4101be911797.png">
-    <title>萌萌数据库 - 改造</title>
+    <title>萌萌数据库 - 深海栖舰</title>
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../dist/css/dashboard.css">
-    <link rel="stylesheet" href="../dist/css/selection.css">
+    <link rel="stylesheet" href="./dist/css/dashboard.css">
+    <link rel="stylesheet" href="./dist/css/selection.css">
     <style id='csscontainer'></style>
     <style>
         .fix-sticky table thead {background: #fff;}
         table tbody tr td{ white-space: nowrap !important; }
+        .bg {
+            float: left;
+            width: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            -webkit-filter: blur(15px);
+            -moz-filter: blur(15px);
+            -o-filter: blur(15px);
+            -ms-filter: blur(15px);
+            filter: blur(15px);
+        }
+        .content-front {
+          position:absolute;
+          left: 10px;
+          right: 10px;
+          height:600px;
+          line-height: 600px;
+          text-align: center;
+        }
     </style>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"></script>
@@ -37,7 +57,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="main">
-          <h1 class="page-header" align="center">改造</h1><div class="table-responsive">
+          <h1 class="page-header" align="center">舰船数值</h1><div class="table-responsive">
             <div class="bootstrap-table">
             <div id="toolbar" class="form-inline">
                 <input id="page" class="form-control" style="width: 60px" type="number" value="1" min="1">
@@ -140,11 +160,11 @@
 <div id="foot"></div></div></div></div></div>
 <i id="js"></i>
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src= "../dist/js/jgs.js"> </script>  
-<script type="text/javascript" src= "../dist/js/simplize.js"> </script>  
-<script type="text/javascript" src= "../dist/js/share.js"> </script>  
-<script type="text/javascript" src= "../dist/js/table.js"> </script>  
-<script type="text/javascript" src= "../dist/js/line.js"> </script>  
+<script type="text/javascript" src= "./dist/js/jgs.js"> </script>  
+<script type="text/javascript" src= "./dist/js/simplize.js"> </script>  
+<script type="text/javascript" src= "./dist/js/share.js"> </script>  
+<script type="text/javascript" src= "./dist/js/table.js"> </script>  
+<script type="text/javascript" src= "./dist/js/line.js"> </script>  
 <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/locale/bootstrap-table-zh-CN.min.js"></script>
@@ -152,7 +172,7 @@
 <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/extensions/sticky-header/bootstrap-table-sticky-header.min.js"></script>
 <script>
     $("#nav").load("nav.html");
-    $("#foot").load("../foot.html");
+    $("#foot").load("./foot.html");
 var mst_ship
 var kj=false
 var detect=(navigator.browserLanguage || navigator.language)
@@ -177,6 +197,17 @@ $(document).ready(function() {
     document.getElementById("locale")[0].selected = true;}
     $('.loading').hide();
     },   500);
+    setTimeout(function(){
+    // $("#foot").load("foot.html");
+    $('.search-input').bind("input onchange", function() {
+        setTimeout(function(){
+            for(let i=0;i<document.getElementsByClassName('search-input').length;i++){
+        //console.log(document.getElementsByClassName('search-input')[i])
+            document.getElementsByClassName('search-input')[i].value=Japanized(document.getElementsByClassName('search-input')[i].value);}
+            },     50);
+         });
+    loadchart();
+    },   600);
 });
 function langchange(){
     initTable(locallang());
@@ -191,15 +222,18 @@ for(el in eg){
     var strict=true
     if(e=='name'){
    strict=false;}
-    if(e=='description'){
-        cellStyle=formatTableUnit
-        formatter=paramsMatter;
-        // escapes=true;
-        }
-    // if(e=='stype'){
-    //     formatter=formatStype;
-    //     // width=120
-    //         }
+    // if(e=='description'){
+    //     cellStyle=formatTableUnit
+    //     formatter=paramsMatter;
+    //     // escapes=true;
+    //     }
+    if(e=='stype'){
+        formatter=formatStype;
+            }
+    if(e=='soku'){
+        formatter=formatSoku;}
+    if(e=='stype'||e=='ctype'||e=='sort_id'||e=='soku'||e=='yomi'||e=='slot_num'||e=='leng'){
+    filterControl="select";}
     var temp=getname(e,kj)
     var temp=(Width()<1080)?(temp):temp
     col.push({
@@ -219,10 +253,10 @@ return col;
 }
 function initTable(lval){
     if(lval){ kj=(lval.slice(0,2)=='zh'||lval.slice(0,2)=='ja')}else{console.log(lval)};
-    $.getJSON("../parsed/remodel.json",function(result){
+    $.getJSON("./parsed/api_mst_ship2.json",function(result){
     // addcol(result,"HP","taik",0)
     mst_ship=result;
-    loadprot(result[206]);
+    loadprot(result[0]);
     $('#mytab').bootstrapTable('destroy').bootstrapTable({
         method: 'get',
         data:mst_ship,
@@ -237,14 +271,33 @@ function initTable(lval){
         stickyHeaderOffsetLeft: em,
         stickyHeaderOffsetRight: em,
         locale: lval,
-        columns: thead(result[206])
+        columns: thead(result[0])
     })
     var padding='4'
-    if(Width()<1200){padding='4';
+    if(Width()<1200){padding='2';
         $('.table .th-inner').css( 'white-space','normal')}
     document.getElementById("csscontainer").innerHTML=(".fix-sticky {padding-top:"+padding+"0px;position: fixed !important;overflow: hidden;  z-index: 100;}")
     $('.loading').hide();
     });}
+function formatSoku(value, row, index) {
+    return value == 10 ? (kj?"高速":'high speed') : (value == 5 ? kj?"低速":'low speed':"陸上型");
+}
+function formatRange(value, row, index) {
+var str;
+switch(value) {
+    case 1:
+        str = "短";
+        break;
+    case 2:
+        str = "中";
+        break;
+    case 3:
+        str = "長";
+        break;
+    default:
+        str = "超長";}
+return str;
+}
   </script>
   </body>
 </html>

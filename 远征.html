@@ -11,11 +11,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="https://img.pddpic.com/mms-material-img/2021-01-16/e555cb1c-1339-48b5-9930-4101be911797.png">
-    <title>萌萌数据库 - 地图数据</title>
+    <title>萌萌数据库 - 远征</title>
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../dist/css/dashboard.css">
-    <link rel="stylesheet" href="../dist/css/selection.css">
+    <link rel="stylesheet" href="./dist/css/dashboard.css">
+    <link rel="stylesheet" href="./dist/css/selection.css">
     <style id='csscontainer'></style>
     <style>
         .fix-sticky table thead {background: #fff;}
@@ -37,7 +37,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="main">
-          <h1 class="page-header" align="center">地图数据</h1><div class="table-responsive">
+          <h1 class="page-header" align="center">远征</h1><div class="table-responsive">
             <div class="bootstrap-table">
             <div id="toolbar" class="form-inline">
                 <input id="page" class="form-control" style="width: 60px" type="number" value="1" min="1">
@@ -140,19 +140,17 @@
 <div id="foot"></div></div></div></div></div>
 <i id="js"></i>
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src= "../dist/js/jgs.js"> </script>  
-<script type="text/javascript" src= "../dist/js/simplize.js"> </script>  
-<script type="text/javascript" src= "../dist/js/share.js"> </script>  
-<script type="text/javascript" src= "../dist/js/table.js"> </script>  
-<script type="text/javascript" src= "../dist/js/line.js"> </script>  
+<script type="text/javascript" src= "./dist/js/jgs.js"> </script>  
+<script type="text/javascript" src= "./dist/js/simplize.js"> </script>  
+<script type="text/javascript" src= "./dist/js/share.js"> </script>  
+<script type="text/javascript" src= "./dist/js/table.js"> </script>  
+<script type="text/javascript" src= "./dist/js/line.js"> </script>  
 <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/locale/bootstrap-table-zh-CN.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/extensions/filter-control/bootstrap-table-filter-control.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/extensions/sticky-header/bootstrap-table-sticky-header.min.js"></script>
 <script>
-    $("#nav").load("nav.html");
-    $("#foot").load("../foot.html");
 var mst_ship
 var kj=false
 var detect=(navigator.browserLanguage || navigator.language)
@@ -178,15 +176,13 @@ $(document).ready(function() {
     $('.loading').hide();
     },   500);
     setTimeout(function(){
-    // $("#foot").load("foot.html");
     $('.search-input').bind("input onchange", function() {
         setTimeout(function(){
             for(let i=0;i<document.getElementsByClassName('search-input').length;i++){
-        //console.log(document.getElementsByClassName('search-input')[i])
             document.getElementsByClassName('search-input')[i].value=Japanized(document.getElementsByClassName('search-input')[i].value);}
             },     50);
          });
-    loadchart();
+    // loadchart();
     },   600);
 });
 function langchange(){
@@ -197,14 +193,9 @@ var col=[]
 for(el in eg){
     e=el.replace('api_','')
     var filterControl="input"
-    var formatter=undefined
-    var cellStyle=undefined
-    // var strict=true
-    if(e=='infotext'){
-        cellStyle=formatTableUnit
-        formatter=paramsMatter;
-        // escapes=true;
-        }
+    var strict=true
+    if(e=='name'||e=='description'){
+   strict=false;}
     var temp=getname(e,kj)
     var temp=(Width()<1080)?(temp):temp
     col.push({
@@ -212,10 +203,7 @@ for(el in eg){
             field: el,
             sortable: true,
             filterControl:filterControl,
-            formatter:formatter,
-            cellStyle:cellStyle,
-            // filterStrictSearch:strict ,
-            // escape:escapes,
+            filterStrictSearch:strict ,
             visible: true,
         }
     )
@@ -224,7 +212,7 @@ return col;
 }
 function initTable(lval){
     if(lval){ kj=(lval.slice(0,2)=='zh'||lval.slice(0,2)=='ja')}else{console.log(lval)};
-    $.getJSON("../parsed/api_mst_mapinfo.json",function(result){
+    $.getJSON("./parsed/api_mst_mission.json",function(result){
     // addcol(result,"HP","taik",0)
     mst_ship=result;
     loadprot(result[0]);
@@ -245,11 +233,13 @@ function initTable(lval){
         columns: thead(result[0])
     })
     var padding='4'
-    if(Width()<1200){padding='2';
+    if(Width()<1200){padding='4';
         $('.table .th-inner').css( 'white-space','normal')}
     document.getElementById("csscontainer").innerHTML=(".fix-sticky {padding-top:"+padding+"0px;position: fixed !important;overflow: hidden;  z-index: 100;}")
     $('.loading').hide();
     });}
+    $("#nav").load("nav.html");
+    $("#foot").load("./foot.html");
   </script>
   </body>
 </html>

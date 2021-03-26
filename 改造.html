@@ -8,29 +8,18 @@
 <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="https://img.pddpic.com/mms-material-img/2021-01-16/e555cb1c-1339-48b5-9930-4101be911797.png">
-    <title>萌萌数据库 - 装备数值</title>
-    <!-- Bootstrap core CSS -->
-    <!-- <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+    <title>萌萌数据库 - 改造</title>
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <!-- <link href="https://cdn.bootcss.com/bootstrap-table/1.18.0/bootstrap-table.min.css" rel="stylesheet"> -->
     <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../dist/css/dashboard.css">
-    <link rel="stylesheet" href="../dist/css/selection.css">
+    <link rel="stylesheet" href="./dist/css/dashboard.css">
+    <link rel="stylesheet" href="./dist/css/selection.css">
     <style id='csscontainer'></style>
     <style>
-        /* .fix-sticky {padding-top: 40px;        position: fixed !important;        overflow: hidden;        z-index: 100;} */
-        /* .sticky-header-container {margin-top: 40px;} */
         .fix-sticky table thead {background: #fff;}
         table tbody tr td{ white-space: nowrap !important; }
-        /* .table thead th .th-inner { white-space: normal !important; } */
-        .bootstrap-table table tbody tr td:nth-of-type(2){
-        display: flex;
-        align-items: center;
-        }
     </style>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"></script>
@@ -42,16 +31,14 @@
   gtag('config', 'G-SQLQ5EBLTM');
 </script>
 </head>
-
   <body>
     <div id="nav"></div>
     <div id="bgpic"><div id="bgcolor">
     <div class="container-fluid">
       <div class="row">
         <div class="main">
-          <h1 class="page-header" align="center">装备数值</h1><div class="table-responsive">
+          <h1 class="page-header" align="center">改造</h1><div class="table-responsive">
             <div class="bootstrap-table">
-             
             <div id="toolbar" class="form-inline">
                 <input id="page" class="form-control" style="width: 60px" type="number" value="1" min="1">
                 <button id="jump" class="btn btn-secondary">跳页</button>
@@ -127,27 +114,15 @@
             >
                                <tr> <th class="center">少女祈祷中。。。</th> </tr>
             </table></span>
-            
         </div>
-    
     <h1 class="page-header" align="center">数据可视化</h1>
     <div class="table-responsive"> 
   <div class="show text-nowrap" id="show"></div>  
 <div class="cstype"></div><div class="cfinal"></div>   <button id='selectAll'>全选</button> <button id='ReverseSelect'>反选</button>
 排序：<select title="可在表格中对内容进行排序" id="sort">
-    <option value='sum' selected>属性值</option>
-    <option value="itype">类型</option>
-    <option value="houg">火力</option>
-    <option value="raig">雷装</option>
-    <option value="HP">HP</option>
-    <option value="souk">装甲</option>
-    <option value="evasion">回避</option>
-    <option value="tyku">对空</option>
-    <option value="anti_submarine">对潜</option>
-    <option value="sight">索敌</option>
-    <option value="luck">运</option>
+    <option value='unsort'  selected>表格顺序</option>
+    <option value='sum'>属性值</option>
     <option value="id">ID</option>
-    <option value='unsort' >表格顺序</option>
 </select>
 <input type="checkbox" checked='checked' id="desc">降序排列
 <select name="" id="stack">
@@ -160,65 +135,26 @@
     <option value="line">折线图</option>
 </select>
 <button id="button2" title="可在表格中对内容进行排序" classs="btn btn-secondary">选中数据生成图表</button><span id="inform"></span></div></div>
-<div id="container"></div><!--row-->
-</div><!--container-fluid-->
-
+<div id="container"></div>
+</div>
 <div id="foot"></div></div></div></div></div>
 <i id="js"></i>
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- <script>window.jQuery || document.write('<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"><\/script>')</script> -->
-<!-- <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-<script type="text/javascript" src= "../dist/js/jgs.js"> </script>  
-<script type="text/javascript" src= "../dist/js/simplize.js"> </script>  
-<script type="text/javascript" src="../dist/js/item.js"> </script>
-<script type="text/javascript" src= "../dist/js/share.js"> </script>  
-<script type="text/javascript" src= "../dist/js/table.js"> </script>  
-<script type="text/javascript" src= "../dist/js/line.js"> </script>  
+<script type="text/javascript" src= "./dist/js/jgs.js"> </script>  
+<script type="text/javascript" src= "./dist/js/simplize.js"> </script>  
+<script type="text/javascript" src= "./dist/js/share.js"> </script>  
+<script type="text/javascript" src= "./dist/js/table.js"> </script>  
+<script type="text/javascript" src= "./dist/js/line.js"> </script>  
 <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<!-- <script src="https://cdn.bootcss.com/bootstrap-table/1.18.0/bootstrap-table.min.js"></script> -->
 <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.js"></script>
-<!-- <script src="../dist/js/tableExport.min.js"></script> -->
-<!-- <script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script> -->
-<!-- <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/extensions/export/bootstrap-table-export.min.js"></script> -->
-<!-- <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table-locale-all.js"></script> -->
 <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/locale/bootstrap-table-zh-CN.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/extensions/filter-control/bootstrap-table-filter-control.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/extensions/sticky-header/bootstrap-table-sticky-header.min.js"></script>
-<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script> -->
-<script type="text/javascript">
-</script>
-<script>    //language
+<script>
+    $("#nav").load("nav.html");
+    $("#foot").load("./foot.html");
+var mst_ship
 var kj=false
-var cm12={
-    "id": 1,
-    "name": "12cm単装砲",
-    "itype":1,
-    "developable":"",
-    "houg": 1,
-    "raig": 0,
-    "baku": 0,
-    "tyku": 1,
-    "tais": 0,
-    "saku": 0,
-    "houm": 0,
-    "broken": [0, 1, 1, 0],
-    "houk": 0,
-    "souk": 0,
-    "leng": 1,
-    "luck": 0,
-    "raik": 0,
-    "raim": 0,
-    "rare": 0,
-    "sakb": 0,
-    "soku": 0,
-    "sortno": 1,
-    "taik": 0,
-    "type": [1, 1, 1, 1, 0],
-    "usebull": 0,
-    "atap": 0,
-    "bakk": 0,
-    "version": 2
-}
 var detect=(navigator.browserLanguage || navigator.language)
 if(!havelang){
     if (detect.length>0){console.log(detect);}else{detect="zh-CN"}
@@ -230,8 +166,7 @@ if(!havelang){
     if(selectlang[i].value==detect)
     selectlang[i].selected = true;
     }}
-    $.getJSON("../parsed/api_mst_slotitem_equiptype.json", function (result) {
-    itype=result}).done(function (){
+$(document).ready(function() {
     langchange()
     $('#locale').change(function(){
         langchange();setlang();});
@@ -242,17 +177,6 @@ if(!havelang){
     document.getElementById("locale")[0].selected = true;}
     $('.loading').hide();
     },   500);
-    setTimeout(function(){
-    // $("#foot").load("foot.html");
-    $('.search-input').bind("input onchange", function() {
-        setTimeout(function(){
-            for(let i=0;i<document.getElementsByClassName('search-input').length;i++){
-        //console.log(document.getElementsByClassName('search-input')[i])
-            document.getElementsByClassName('search-input')[i].value=Japanized(document.getElementsByClassName('search-input')[i].value);}
-            },     50);
-         });
-    loadchart();
-    },   600);
 });
 function langchange(){
     initTable(locallang());
@@ -260,32 +184,22 @@ function langchange(){
 function thead(eg) {
 var col=[]
 for(el in eg){
-    e=api(el)
+    e=el.replace('api_','')
     var filterControl="input"
     var formatter=undefined
     var cellStyle=undefined
     var strict=true
-    // var escapes=false
-    var visible=(title[e]==undefined?false:true)
-    var cwidth=""
     if(e=='name'){
-        formatter=itemicon
-        strict=false;}
-    if(e=='rare'){
-        filterControl="select";}
-    if(e=='soku'){
-        formatter=formatSoku;}
-    if(e=='leng'){
-        formatter=formatRange;}
-    if(e=='itype'){
-        strict=false
-        formatter=formatItype;}
-    if(e=='developable'){filterControl="select";
-        formatter=formatDev;}
-    if(e=='soku'||e=='backs'||e=='slot_num'||e=='leng'){
-        filterControl="select";}
-    if(e=='luck'||e=='soku'||e=='broken'||e=='backs'||e=='slot_num'||e=='taik'){
-        visible=false;}
+   strict=false;}
+    if(e=='description'){
+        cellStyle=formatTableUnit
+        formatter=paramsMatter;
+        // escapes=true;
+        }
+    // if(e=='stype'){
+    //     formatter=formatStype;
+    //     // width=120
+    //         }
     var temp=getname(e,kj)
     var temp=(Width()<1080)?(temp):temp
     col.push({
@@ -295,41 +209,25 @@ for(el in eg){
             filterControl:filterControl,
             formatter:formatter,
             cellStyle:cellStyle,
-            filterStrictSearch:strict,
+            filterStrictSearch:strict ,
             // escape:escapes,
-            visible: visible,
-            width:cwidth,
+            visible: true,
         }
     )
 }   
 return col;
 }
-function itemicon(value,row,index){
-    for (let i=0;i<slotitem.length;i++){
-        if(slotitem[i]['name']==value){
-        return itag(slotitem[i]['type'][3])+value
-        }
-    }
-}
 function initTable(lval){
     if(lval){ kj=(lval.slice(0,2)=='zh'||lval.slice(0,2)=='ja')}else{console.log(lval)};
-    $.getJSON("../parsed/api_mst_slotitem.json",function(result){
-    slotitem=[];
-    result.forEach(el => {
-        if((el['api_id']>500)){
-        var i={}
-        for(key in el){
-            i[api(key)]=el[key]
-        }
-        slotitem.push(i)}
-    });
-    addcol(slotitem,"itype","type",2)
-    loadprot(cm12);
+    $.getJSON("./parsed/remodel.json",function(result){
+    // addcol(result,"HP","taik",0)
+    mst_ship=result;
+    loadprot(result[206]);
     $('#mytab').bootstrapTable('destroy').bootstrapTable({
         method: 'get',
-        data:slotitem,
+        data:mst_ship,
         sortReset: true,
-        striped: false, // 是否显示行间隔色
+        striped: true, // 是否显示行间隔色
         pageNumber: 1, // 初始化加载第一页
         pagination: true, // 是否分页
         sidePagination: 'client', // server:服务器端分页|client：前端分页
@@ -339,55 +237,14 @@ function initTable(lval){
         stickyHeaderOffsetLeft: em,
         stickyHeaderOffsetRight: em,
         locale: lval,
-        columns: thead(cm12)
-        // showRefresh : true,// 刷新按钮
-        // queryParams: function(params) { // 上传服务器的参数
-        //     var temp = {
-        //         name: $("#sname").val(),
-        //         viewReason: $("#viewReason").val(),
-        //     };
-        //     return temp;
-        // },
-    });
+        columns: thead(result[206])
+    })
     var padding='4'
-    // if(Width()<1200){padding=kj?'2':'2';
-    //     $('.table .th-inner').css( 'white-space','normal')}
+    if(Width()<1200){padding='4';
+        $('.table .th-inner').css( 'white-space','normal')}
     document.getElementById("csscontainer").innerHTML=(".fix-sticky {padding-top:"+padding+"0px;position: fixed !important;overflow: hidden;  z-index: 100;}")
     $('.loading').hide();
     });}
   </script>
-  <script>
-// $('#mytab').find('th').attr("data-sortable","true");
-// $('#mytab').find('.th-inner').attr("class","sortable both");
-function formatLv(value){
-    return kj?(value=='no'?'否':'是'):value
-}
-function formatDev(value, row, index){
-    return developable.indexOf(row["id"])>-1?'可':'不可'
-}
-function formatSoku(value, row, index) {
-    return value == 10 ? (kj?"高速":'high speed') : (kj?"低速":'low speed');
-}
-function formatRange(value, row, index) {
-var str;
-switch(value) {
-    case 1:
-        str = "短";
-        break;
-    case 2:
-        str = "中";
-        break;
-    case 3:
-        str = "長";
-        break;
-    default:
-        str = "超長";}
-return str;
-}
-  </script>
-<script>
-    $("#nav").load("nav.html");
-    $("#foot").load("../foot.html");
-</script>
   </body>
 </html>

@@ -16,8 +16,8 @@
   <link rel="icon" href="https://img.pddpic.com/mms-material-img/2021-01-16/e555cb1c-1339-48b5-9930-4101be911797.png">
   <title>萌萌任务链</title>
   <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../dist/css/dashboard.css">
-  <link rel="stylesheet" href="../dist/css/list.css">
+  <link rel="stylesheet" href="./dist/css/dashboard.css">
+  <link rel="stylesheet" href="./dist/css/list.css">
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"></script>
   <script>
@@ -30,11 +30,11 @@
 </head>
 
 <body> <span id="up" class="sticky">
-    <!-- <img data-c="fm[0]" onclick="expand" class="base" src="./../img/filter/hensei.png"></img> -->
-    <img class="stat fs0" data-c="fs[0]" onclick="that.filts('fs[0]')" src="./../img/locked.png" alt="未解锁" />
-    <img class="stat fs1" data-c="fs[1]" onclick="that.filts('fs[1]')" src="./../img/ongoing.png" alt="进行中" />
-    <img class="stat fs2" data-c="fs[2]" onclick="that.filts('fs[2]')" src="./../img/finish.png" alt="达成" />
-    <!-- <img class="star switches.fo[0]?'':'gray'" data-c="fo[0]" onclick="that.filts('fs[0]')" src="./../img/star.svg"></img> -->
+    <!-- <img data-c="fm[0]" onclick="expand" class="base" src="././img/filter/hensei.png"></img> -->
+    <img class="stat fs0" data-c="fs[0]" onclick="that.filts('fs[0]')" src="././img/locked.png" alt="未解锁" />
+    <img class="stat fs1" data-c="fs[1]" onclick="that.filts('fs[1]')" src="././img/ongoing.png" alt="进行中" />
+    <img class="stat fs2" data-c="fs[2]" onclick="that.filts('fs[2]')" src="././img/finish.png" alt="达成" />
+    <!-- <img class="star switches.fo[0]?'':'gray'" data-c="fo[0]" onclick="that.filts('fs[0]')" src="././img/star.svg"></img> -->
   </span>
   <span id="import" class="sticky"><button onclick="showinput()">导入</button>
     <button onclick="wx.clearStorage()">清空缓存</button></span>
@@ -44,7 +44,7 @@
     <div id="bgcolor">
       <!-- <div align="center"><h2>为更好的保存用户数据，本功能开发中断，后续功能已迁移至微信小程序，目前功能正在内测中，请加入内测群体验。<br><br>
         qq群：73734742<br>
-      <div>微信群：<a href="https://moe-data.github.io/zh/wechat.html">点我</a></div></h2> <br><br>
+      <div>微信群：<a href="./wechat.html">点我</a></div></h2> <br><br>
       <h4>后续功能：标记已出击海域，推荐出击海域，显示稀有物品获取，任务链可视化展示，管理和查看实时进度（实时展示未完成/进行中/已完成任务）</h4>
       <h4>您也可以在本页面查看全部任务</h4>
       </div> -->
@@ -73,14 +73,14 @@
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="battle">
-            <img class="area" onclick="batt.tapcate(1)" src="../img/area/1a.png" alt="">
-            <img class="area" onclick="batt.tapcate(2)" src="../img/area/2b.png" alt="">
-            <img class="area" onclick="batt.tapcate(3)" src="../img/area/3b.png" alt="">
-            <img class="area" onclick="batt.tapcate(7)" src="../img/area/7b.png" alt="">
-            <img class="area" onclick="batt.tapcate(4)" src="../img/area/4b.png" alt="">
-            <img class="area" onclick="batt.tapcate(5)" src="../img/area/5b.png" alt="">
-            <img class="area" onclick="batt.tapcate(6)" src="../img/area/6b.png" alt="">
-            <img class="area" onclick="batt.tapcate('arbitary')" src="../img/area/ab.png" alt="任意海域">
+            <img class="area" onclick="batt.tapcate(1)" src="./img/area/1a.png" alt="">
+            <img class="area" onclick="batt.tapcate(2)" src="./img/area/2b.png" alt="">
+            <img class="area" onclick="batt.tapcate(3)" src="./img/area/3b.png" alt="">
+            <img class="area" onclick="batt.tapcate(7)" src="./img/area/7b.png" alt="">
+            <img class="area" onclick="batt.tapcate(4)" src="./img/area/4b.png" alt="">
+            <img class="area" onclick="batt.tapcate(5)" src="./img/area/5b.png" alt="">
+            <img class="area" onclick="batt.tapcate(6)" src="./img/area/6b.png" alt="">
+            <img class="area" onclick="batt.tapcate('arbitary')" src="./img/area/ab.png" alt="任意海域">
             <select name="" id="battguess">
               <option value="10">未解锁+进行中</option>
               <option value="1">未解锁</option>
@@ -180,18 +180,18 @@
   </div>
   <i id="js"></i>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script type="text/javascript" src="../dist/js/jgs.js"> </script>
-  <script type="text/javascript" src="../dist/js/simplize.js"> </script>
-  <script type="text/javascript" src="../dist/js/share.js"> </script>
+  <script type="text/javascript" src="./dist/js/jgs.js"> </script>
+  <script type="text/javascript" src="./dist/js/simplize.js"> </script>
+  <script type="text/javascript" src="./dist/js/share.js"> </script>
   <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
-  <!-- <script type="text/javascript" src= "../dist/quest/quest.js"> </script>   -->
-  <script type="text/javascript" src="../dist/quest/wx.js"> </script>
-  <script type="text/javascript" src="../dist/quest/app.js"> </script>
-  <script type="text/javascript" src="../dist/quest/index/index.js"> </script>
-  <script type="text/javascript" src="../dist/quest/reward/index.js"> </script>
-  <script type="text/javascript" src="../dist/quest/battle/index.js"> </script>
-  <script type="text/javascript" src="../dist/quest/click.js"> </script>
+  <!-- <script type="text/javascript" src= "./dist/quest/quest.js"> </script>   -->
+  <script type="text/javascript" src="./dist/quest/wx.js"> </script>
+  <script type="text/javascript" src="./dist/quest/app.js"> </script>
+  <script type="text/javascript" src="./dist/quest/index/index.js"> </script>
+  <script type="text/javascript" src="./dist/quest/reward/index.js"> </script>
+  <script type="text/javascript" src="./dist/quest/battle/index.js"> </script>
+  <script type="text/javascript" src="./dist/quest/click.js"> </script>
   <script>
     $("#nav").load("nav.html");
   </script>

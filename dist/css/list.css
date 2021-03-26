@@ -148,11 +148,11 @@ body {
   display: block;
   width: 16px;
   height: 16px;
-  /* background: url("../quest/img/ta1.png") no-repeat; */
+  /* background: url("./quest/img/ta1.png") no-repeat; */
 }
 
 /* #open .list_dt_icon {
-  background: url("../quest/img/ta2.png") no-repeat;
+  background: url("./quest/img/ta2.png") no-repeat;
 } */
 
 .list_dd {

@@ -6,7 +6,7 @@ let bar=0
 let ranget=['slotitem','useitem','furniture','cstype','mapinfo']
 var mapinfo
 for(let i=0;i<ranget.length;i++){
-$.getJSON("../parsed/"+(i==3?"":"api_mst_")+ranget[i]+".json").done(function (result) {
+$.getJSON("./parsed/"+(i==3?"":"api_mst_")+ranget[i]+".json").done(function (result) {
   eval(ranget[i]+" = result")
   jsonover();
 });

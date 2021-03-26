@@ -66,16 +66,16 @@ Object.defineProperty(batt, "setData", {
             ulli += '<li class="list_li" onclick="jump(' + "'" + map + "'" + ')">'
               + map + '<span class="right"><span class="n">'
               + ifnull(title.pages[map].result, "") + '</span><span class="n">' + title.pages[map].n
-              + `</span><img src="../img/ta1.png" class="tar"  onclick="app.target('` + map + `')"></img>
-            <img src="../img/`
+              + `</span><img src="./img/ta1.png" class="tar"  onclick="app.target('` + map + `')"></img>
+            <img src="./img/`
               + (title.pages[map].finished ? (title.pages[map].finished == 2 ? 'finish' : 'ongoing') : 'locked') + `.png" class="sta"></img>` + '</span>' + '</li>'
               + fleets
           }
           html += `<dt class="batt_dt list_dt"> <span class="_after"></span>
         <p>`+ title.name + '<span class="right"><span class="n">'
             + title.n
-            + `</span><img src="../img/ta1.png" class="tar"  onclick="app.targets('` + title.map.join(',') + `')"></img>
-        <img src="../img/ta2.png" class="tar`
+            + `</span><img src="./img/ta1.png" class="tar"  onclick="app.targets('` + title.map.join(',') + `')"></img>
+        <img src="./img/ta2.png" class="tar`
             + (title.finished ? '' : ' gray') + `"></img></p>
         <i class="batt_dt list_dt_icon"></i>
       </dt>
@@ -90,8 +90,8 @@ Object.defineProperty(batt, "setData", {
         if(list.length==0){
           $('.batl_dl').html(`<dl class="batl_dl list_dl" style="max-height: 709px;">
           <dt class="batt_dt list_dt" id="open"> <span class="_after"></span>
-          <p>NO DATA<span class="right"><span class="n">0</span><img src="../img/ta1.png" class="tar">
-          <img src="../img/ta2.png" class="tar gray"></span></p>
+          <p>NO DATA<span class="right"><span class="n">0</span><img src="./img/ta1.png" class="tar">
+          <img src="./img/ta2.png" class="tar gray"></span></p>
           </dt></dl>`)
         }else if(list.length==1){
           $(".batt_dt").attr("id", "open").next().slideDown()
