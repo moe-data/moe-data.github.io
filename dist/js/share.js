@@ -57,6 +57,13 @@ var title={
     "ammo": "弹",
     "steel": "钢",
     "bauxite": "铝",
+    "reward_fuel": "油",
+    "reward_ammo": "弹",
+    "reward_steel": "钢",
+    "reward_bauxite": "铝",
+    prerequisite:'前置任务',
+    requirements:'需求',
+    reward_other:'其他奖励'
     }
 var stype=[0,"海防艦","駆逐艦","軽巡洋艦","重雷装巡洋艦","重巡洋艦","航空巡洋艦","軽空母","戦艦","低速戦艦","航空戦艦","正規空母",
 "超弩級戦艦","潜水艦","潜水空母","補給艦","水上機母艦","揚陸艦","装甲空母","工作艦","潜水母艦","練習巡洋艦","補給艦"]

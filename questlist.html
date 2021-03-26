@@ -24,10 +24,6 @@
         .fix-sticky table thead {
             background: #fff;
         }
-
-        table tbody tr td {
-            white-space: nowrap !important;
-        }
     </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"></script>
@@ -224,19 +220,23 @@
                 var formatter = undefined
                 var cellStyle = undefined
                 var strict = true
+                let wid = null
+                let visible = true
                 if (e == 'name') {
                     strict = false;
                 }
-                if (e == 'description' || e == 'shop_description') {
+                if (e == 'detail' || e == 'shop_description') {
                     strict = false
                     cellStyle = formatTableUnit
                     formatter = paramsMatter;
                     // escapes=true;
                 }
-                // if(e=='stype'){
-                //     formatter=formatStype;
-                //     // width=120
-                //         }
+                if (e == 'name' || e == 'description' || e == 'reward_other' || e == 'name') {
+                    wid = 520
+                }
+                if (e == 'category' || e == 'type') {
+                    visible = false
+                }
                 var temp = getname(e, kj)
                 var temp = (Width() < 1080) ? (temp) : temp
                 col.push({
@@ -248,7 +248,8 @@
                     cellStyle: cellStyle,
                     filterStrictSearch: strict,
                     // escape:escapes,
-                    visible: true,
+                    visible: visible,
+                    width: wid
                 }
                 )
             }
@@ -259,8 +260,8 @@
             // addcol(result,"HP","taik",0)
             let mst_ship = []
             app.data.forEach(function (que) {
-                let nque = que
                 let bonus = ""
+                let slides = ""
                 que.reward_other.forEach(function (be, i) {
                     if (be.choices) {
                         be.choices.forEach(function (ce) {
@@ -270,7 +271,39 @@
                         bonus += "奖励" + (i + 1) + ": " + be.name + 'x' + (be.amount ? be.amount : "") + "<br/>"
                     }
                 })
+                let slideq = que
+                let req = que.requirements
+                if (app.requiredic[req.category]) {
+                    addreq(req)
+                } else if (req.list) {
+                    req.list.forEach(addreq)
+                } else {
+                    x(req)
+                }
+                function addreq(req) {
+                    let reqcate = app.requiredic[req.category]
+                    if (req.category == 'simple') { reqcate = categories[slideq.category].name }
+                    let times = req.times || req.amount || 1
+                    let map = req.map
+                    if (map && typeof map != "string") {
+                        map.forEach(function (m) {
+                            slides += reqcate + ': ' + m + times
+                        })
+                    } else if (req[app.slideact[req.category]]) {
+                        req[app.slideact[req.category]].forEach(function (m) {
+                            if (app.slideact[req.category] == 'scraps') { reqcate = "废弃" }
+                            slides += reqcate + ': ' + ifnull(m.id || m.name, '') + (m.times || m.amount || 1)
+                        })
+                    } else {
+                        slides += reqcate + ': ' + ifnull(req.map, '') + (times)
+                    }
+                }
+                let nque = que
+                nque.id = que.game_id
                 nque.reward_other = bonus
+                nque.requirements = slides
+                nque.prerequisite = wkids(que.prerequisite)
+                delete nque.game_id
                 mst_ship.push(nque)
             });
             loadprot(mst_ship[0]);
