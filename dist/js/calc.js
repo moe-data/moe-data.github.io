@@ -344,7 +344,9 @@ function isonladd(array, o) {
     // o.push(-1)
     for (let i = 0, l = array.length; i < l; i++) {
         let is = array[i][0]['i'];
-        if(q=='d'){is.push(1);
+        if(q=='d'){
+            if(typeof is=='string')is=JSON.parse(is);
+            is.push(1);
             is.push(formatStype(array[i][0]['s']));}else{
             is.push(formatshipId(array[i][0]['s']));
         }

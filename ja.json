@@ -1,0 +1,178 @@
+[
+  {
+    "origin": "萌萌数据库 - 多装备开发统计",
+    "local": "萌えデータベース-多装備開発統計"
+  },
+  {
+    "origin": "萌萌数据库 - 多装备开发统计",
+    "local": "萌えデータベース-多装備開発統計"
+  },
+  {
+    "origin": "开发装备选择&ensp;&ensp;分类：",
+    "local": "開発装備選択&ensp;&ensp;分類："
+  },
+  {
+    "origin": "默认",
+    "local": "デフォルト"
+  },
+  {
+    "origin": "开发解禁时间",
+    "local": "開発解禁時間"
+  },
+  {
+    "origin": "图标",
+    "local": "アイコン"
+  },
+  {
+    "origin": "稀有",
+    "local": "希少価値"
+  },
+  {
+    "origin": "对空",
+    "local": "対空"
+  },
+  {
+    "origin": "小类",
+    "local": "小カテゴリー"
+  },
+  {
+    "origin": "中类",
+    "local": "中カテゴリー"
+  },
+  {
+    "origin": "大类",
+    "local": "大カテゴリー"
+  },
+  {
+    "origin": "清空选择",
+    "local": "選択をクリア"
+  },
+  {
+    "origin": "检索",
+    "local": "検索"
+  },
+  {
+    "origin": "提示",
+    "local": "ヒント"
+  },
+  {
+    "origin": "主查询",
+    "local": "メインクエリ"
+  },
+  {
+    "origin": "&ensp;&ensp;目标出货率必须>0，计入总确率（点击一次）",
+    "local": "&ensp;&ensp;目標出荷率は>0で、総確定率に計上しなければなりません（一回クリックしてください）。"
+  },
+  {
+    "origin": "副查询",
+    "local": "クエリー"
+  },
+  {
+    "origin": "&ensp;&ensp;目标出货率允许=0，计入总确率（点击两次）",
+    "local": "&ensp;&ensp;目標出荷率許容=0を合計します(2回クリックします)"
+  },
+  {
+    "origin": "不查询",
+    "local": "検索しない"
+  },
+  {
+    "origin": "&ensp;&ensp;目标不计入总确率（不点击或点击三次）",
+    "local": "&ensp;&ensp;目標は総確定率に算入しません（クリックしないまたは3回クリックしない）"
+  },
+  {
+    "origin": "开发数据来自POI",
+    "local": "開発データはPOIから来ています。"
+  },
+  {
+    "origin": "第一次所需的查询时间可能较长，请耐心等待。",
+    "local": "初めてのお問い合わせは時間が長いかもしれませんので、お待ちください。"
+  },
+  {
+    "origin": "时间范围勾选的越少，加载速度越快",
+    "local": "時間範囲のチェックが少ないほど、ロード速度が速くなります。"
+  },
+  {
+    "origin": "加载速度和装备选择数量无关",
+    "local": "ロード速度と装備選択数は関係ありません。"
+  },
+  {
+    "origin": "建造统计",
+    "local": "建築統計"
+  },
+  {
+    "origin": "(beta)施工完成！",
+    "local": "（ベータ）工事完了！"
+  },
+  {
+    "origin": "不兼容IE8以下浏览器",
+    "local": "互換性のないIE 8以下のブラウザ"
+  },
+  {
+    "origin": "设置",
+    "local": "設定"
+  },
+  {
+    "origin": "&ensp;&ensp;结果排序&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;",
+    "local": "&ensp;&ensp;結果並べ替え&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;"
+  },
+  {
+    "origin": "默认排序",
+    "local": "標準の並べ替え"
+  },
+  {
+    "origin": "出货次数排序",
+    "local": "出荷回数のソート"
+  },
+  {
+    "origin": "总确率排序",
+    "local": "全体的な順序付け"
+  },
+  {
+    "origin": "&ensp;&ensp;公式次数(分母)&ensp;>&ensp;",
+    "local": "&ensp;&ensp;数式の回数(分母)&ensp;&ensp;"
+  },
+  {
+    "origin": "计算出货最小Lv",
+    "local": "出荷最小Lvを計算します"
+  },
+  {
+    "origin": "🐧开发失败",
+    "local": "開発失敗"
+  },
+  {
+    "origin": "*强烈建议将开发失败作为",
+    "local": "*開発失敗を"
+  },
+  {
+    "origin": "副查询",
+    "local": "クエリー"
+  },
+  {
+    "origin": "，",
+    "local": "を選択します"
+  },
+  {
+    "origin": "可有效节省开发资材",
+    "local": "開発資材を効果的に節約できます。"
+  },
+  {
+    "origin": "时间范围",
+    "local": "時間の範囲"
+  },
+  {
+    "origin": "时间",
+    "local": "時間"
+  },
+  {
+    "origin": "累计开发次数",
+    "local": "開発回数積算"
+  },
+  {
+    "origin": "&ensp;&ensp;&ensp;公式条数",
+    "local": "&ensp;&ensp;公式の数"
+  },
+  {
+    "origin": "&ensp;&ensp;&ensp;文件大小",
+    "local": "&ensp;&ensp;ファイルサイズ"
+  }
+]
