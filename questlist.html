@@ -260,7 +260,7 @@
             let mst_ship = []
             app.data.forEach(function (que) {
                 let nque = que
-                let bonus
+                let bonus = ""
                 que.reward_other.forEach(function (be, i) {
                     if (be.choices) {
                         be.choices.forEach(function (ce) {
@@ -271,8 +271,7 @@
                     }
                 })
                 nque.reward_other = bonus
-                mst_ship
-
+                mst_ship.push(nque)
             });
             loadprot(mst_ship[0]);
             $('#mytab').bootstrapTable('destroy').bootstrapTable({
