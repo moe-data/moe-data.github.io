@@ -235,7 +235,7 @@ return col;
 }
 function initTable(lval){
     if(lval){ kj=(lval.slice(0,2)=='zh'||lval.slice(0,2)=='ja')}else{console.log(lval)};
-    $.getJSON("../parsed/cstype.json",function(result){
+    $.getJSON("../parsed/dtype.json",function(result){
     // addcol(result,"HP","taik",0)
     mst_ship=result;
     loadprot(result[0]);
