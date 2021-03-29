@@ -30,12 +30,24 @@ $('#container').attr("style", containerstyle)
 $('.rewa_dl').css("max-height", height - 180 + "px")
 $('.batl_dl').css("max-height", height - 230 + "px")
 var chart = echarts.init(document.getElementById('container'));
-var tickmarks=""
-for(let i=0;i<51;i++){
-    tickmarks+='<option value="'+i+'" label="'+i+'"></option>'
+var tickmarks = ""
+for (let i = 0; i < 51; i++) {
+    tickmarks += '<option value="' + i + '" label="' + i + '"></option>'
 }
 $('#tickmarks').html(tickmarks)
 
-const UI3="https://imgs.aixifan.com/FsqKbFRZZTqeQQoifufgyRY0LkW9"
+const UI1 = "https://imgs.aixifan.com/FvLfnDzonSGgGOa4jGRTLr2S6CO2"
+const UI2 = "https://imgs.aixifan.com/Fqqs-w0UfARqZCcd0uVsrIDL1TWb"
+const UI3 = "https://imgs.aixifan.com/FsqKbFRZZTqeQQoifufgyRY0LkW9"
+$('.UI1').attr("src", UI1)
+$('.UI2').attr("src", UI2)
 $('.UI3').attr("src", UI3)
-$('.topbar').css("background", "url("+UI3+")")
+$('.topbar').css("background", "url(" + UI3 + ")")
+homepos(853, 447)
+function homepos(x, y) {
+    $('.home').css("left", 124 - x + "px")
+    $('.home').css("top", 124 - y + "px")
+    $('.home').css("transform-origin", x + "px " + y + "px")
+    $('.home').css("transform-origin", x + "px " + y + "px")
+    $('.home').css("clip-path", "circle(98px at " + x + "px " + y + "px)")
+}

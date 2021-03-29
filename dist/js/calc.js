@@ -16,7 +16,6 @@ stype[554] = "日向改二";
 // stype[554] = "日向改(二)";
 stype[571] = "Nelson";
 stype[589] = "L.d.S.D.d.Abruzzi级";
-const devpic = '<img src="https://uploads.kcwiki.cn/commons/a/a8/IcoMaterial.png" alt="资材" style="height:22px;">';
 
 var o = GetRequest("o", 1);
 var e = GetRequest("e", 1);

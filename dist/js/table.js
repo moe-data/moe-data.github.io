@@ -1,5 +1,7 @@
 var em = '3em';
 var havelang = false
+const devpic = '<img src="https://uploads.kcwiki.cn/commons/a/a8/IcoMaterial.png" alt="资材" style="height:22px;">';
+
 if (document.body.clientWidth < 768) { em = '0em' }
 // console.log($.cookie('lang'))
 if ($.cookie('lang') || $.cookie('lang') == 0) {

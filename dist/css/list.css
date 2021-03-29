@@ -1,16 +1,16 @@
-
 body {
-  padding-top: 0px;}
-.tar{
+  padding-top: 0px;
+}
+.tar {
   height: 30px;
 }
-.sta{
+.sta {
   height: 30px;
 }
-.right{
+.right {
   float: right;
 }
-.n{
+.n {
   margin: 9px;
 }
 ._after {
@@ -27,46 +27,46 @@ body {
   margin-top: -18px;
   right: 128px;
 }
-.sticky{
+.sticky {
   position: absolute;
   /* background-color:#eee9; */
   z-index: 9;
 }
-.progress{
+.progress {
   z-index: 10;
   width: 60%;
   height: 20px;
 }
 #up {
   top: 10%;
-  left: 10%
+  left: 10%;
 }
 #import {
   top: 10%;
-  left: 50%
+  left: 50%;
 }
 #input {
   top: 50%;
   left: 50%;
-  display:none
+  display: none;
 }
 #right {
   right: 0%;
   width: 300px;
 }
-.list_dl{
+.list_dl {
   overflow-y: auto;
 }
 #down {
   bottom: 0%;
 }
-.stat{
+.stat {
   height: 30px;
   /* width: 100px;  */
 }
-.star{
-  height:50px;
-  width: 50px; 
+.star {
+  height: 50px;
+  width: 50px;
 }
 /* .area{
   margin: 0px;
@@ -90,7 +90,7 @@ body {
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box; */
-} 
+}
 * {
   margin: 0;
   padding: 0;
@@ -124,7 +124,7 @@ body {
   position: absolute;
   left: 0;
   top: 0;
-  background: #4285F4;
+  background: #4285f4;
 }
 
 #open {
@@ -138,7 +138,7 @@ body {
   position: absolute;
   left: 0;
   top: 0;
-  background: #4285F4;
+  background: #4285f4;
 }
 
 .list_dt_icon {
@@ -181,58 +181,74 @@ body {
 }
 
 .list_li:hover {
-  background: #4285F4;
+  background: #4285f4;
 }
 
-.topbar{
+.topbar {
   position: absolute;
-  right:300px;
-  top:50px;
+  right: 300px;
+  top: 50px;
   height: 100px;
   width: 100%;
-  z-index: 1;
-}
-.outer{
-  position: absolute;
-  width:1200px;
-  /* height: 1200px; */
-  left:-60px;
-  top:-220px;
-  clip-path: inset(12.5% 80% 61% 0%);
-  z-index: 1;
-  animation:turn 10s cubic-bezier(0.13, 0.97, 0.96, 0.18) infinite;
-  margin: 100px auto;
-  transform-origin:121px 236px;
-  -ms-transform:rotate(180deg);
-  overflow: hidden;
-}
-.border{
-  position: absolute;
-  width:1200px;
-  /* height: 1200px; */
-  left:-543px;
-  top:-220px;
-  clip-path: circle(110px at 600px 224px);;
   z-index: 3;
+}
+.outer {
+  position: absolute;
+  width: 1200px;
+  /* height: 1200px; */
+  left: 0px;
+  top: -210px;
+  clip-path: inset(12.5% 80% 61% 0%);
+  z-index: 2;
+  animation: swing 10s cubic-bezier(0.13, 0.97, 0.96, 0.18) infinite;
   margin: 100px auto;
-  transform-origin:600px 224px;
+  transform-origin: 121px 236px;
+  -ms-transform: rotate(180deg);
   overflow: hidden;
-  transform: rotate(90deg);
+}
+.border {
+  position: absolute;
+  width: 1200px;
+  /* height: 1200px; */
+  left: -478px;
+  top: -198px;
+  clip-path: circle(110px at 600px 224px);
+  z-index: 4;
+  margin: 100px auto;
+  animation: turn 30s infinite linear;
+  transform-origin: 600px 224px;
+  overflow: hidden;
+  /* transform: rotate(90deg); */
   -ms-transform: rotate(145deg); /* IE 9 */
 }
-.clip{
+.home {
+  opacity: 0.7;
+  z-index: 16;
+  position: absolute;
+  animation: hometurn 30s infinite linear;
+  transform-origin: 0px 224px;
+  clip-path: circle(110px at 000px 224px);
+  -ms-transform: rotate(145deg); /* IE 9 */
+}
+.clip {
   position: absolute;
   overflow: hidden;
 }
-.leftline{
-  width:100px;
+.spin {
+  left: -60px;
+  top: -20px;
+  width: 237px;
+  height: 247px;
+}
+.leftline {
+  width: 100px;
   /* height: 1200px; */
-  left:0px;
-  top:-220px;
-  z-index: -10;
+  left: 0px;
+  top: -220px;
+  z-index: 3;
   margin: 100px auto;
 }
-.leftline-son{
+.leftline-son {
   margin-top: -150px;
 }
 /* 
@@ -241,12 +257,85 @@ body {
   linear : 动画以何种运行轨迹完成一个周期
   infinite :规定动画应该无限次播放
  */
-@keyframes turn{
-  0%{-webkit-transform:rotate(170deg);
+@keyframes swing {
+  0% {
+    -webkit-transform: rotate(170deg);
     /* -ms-transform:rotate(90deg); */
   }
-  25%{-webkit-transform:rotate(180deg);}
-  50%{-webkit-transform:rotate(190deg);}
-  75%{-webkit-transform:rotate(200deg);}
-  100%{-webkit-transform:rotate(210deg);}
+  25% {
+    -webkit-transform: rotate(180deg);
+  }
+  50% {
+    -webkit-transform: rotate(190deg);
+  }
+  75% {
+    -webkit-transform: rotate(200deg);
+  }
+  100% {
+    -webkit-transform: rotate(210deg);
+  }
+}
+@keyframes hometurn {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  25% {
+    -webkit-transform: rotate(90deg);
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+  }
+  75% {
+    -webkit-transform: rotate(270deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes turn {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -webkit-transition: all 1.5s;
+    -moz-transition: all 1.5s;
+    -ms-transition: all 1.5s;
+    -o-transition: all 1.5s;
+    transition: all 1.5s;
+    opacity: 0.6;
+  }
+  25% {
+    -webkit-transform: rotate(90deg);
+    -webkit-transition: all 1.5s;
+    -moz-transition: all 1.5s;
+    -ms-transition: all 1.5s;
+    -o-transition: all 1.5s;
+    transition: all 1.5s;
+    opacity: 1;
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+    -webkit-transition: all 1.5s;
+    -moz-transition: all 1.5s;
+    -ms-transition: all 1.5s;
+    -o-transition: all 1.5s;
+    transition: all 1.5s;
+    opacity: 0.6;
+  }
+  75% {
+    -webkit-transform: rotate(270deg);
+    -webkit-transition: all 1.5s;
+    -moz-transition: all 1.5s;
+    -ms-transition: all 1.5s;
+    -o-transition: all 1.5s;
+    transition: all 1.5s;
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -webkit-transition: all 1.5s;
+    -moz-transition: all 1.5s;
+    -ms-transition: all 1.5s;
+    -o-transition: all 1.5s;
+    transition: all 1.5s;
+    opacity: 0.6;
+  }
 }
