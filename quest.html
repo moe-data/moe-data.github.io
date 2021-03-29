@@ -36,8 +36,16 @@
     <img class="stat fs2" data-c="fs[2]" onclick="that.filts('fs[2]')" src="././img/finish.png" alt="达成" />
     <!-- <img class="star switches.fo[0]?'':'gray'" data-c="fo[0]" onclick="that.filts('fs[0]')" src="././img/star.svg"></img> -->
   </span>
-  <span id="import" class="sticky"><button onclick="showinput()">导入</button>
-    <button onclick="wx.clearStorage()">清空缓存</button></span>
+  <span id="barmenu" class="sticky">
+    <div class="import" onclick="showinput()">导入</div>
+    <div onclick="wx.clearStorage()">清空缓存</div>
+    <div onclick="app.showall()">清空筛选</div>
+    <a href="./questlist.html">任務(クエスト)</a>
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#battle" data-toggle="tab">推图指南</a></li>
+      <li><a href="#reward" data-toggle="tab">奖励列表</a></li>
+    </ul>
+  </span>
   <span><input id="input" class="sticky" type="text" onchange="loadquest()"></span>
   <div id="nav"></div>
   <div id="bgpic">
@@ -68,11 +76,6 @@
 
       </div>
       <div id="right" class="sticky">
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#battle" data-toggle="tab">推图指南</a></li>
-          <li><a href="#reward" data-toggle="tab">奖励列表</a></li>
-          <button onclick="app.showall()">清空筛选</button>
-        </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="battle">
             <img class="area" onclick="batt.tapcate(1)" src="./img/area/1a.png" alt="">

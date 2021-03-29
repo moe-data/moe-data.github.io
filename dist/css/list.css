@@ -1,16 +1,16 @@
+
 body {
-  padding-top: 0px;
-}
-.tar {
+  padding-top: 0px;}
+.tar{
   height: 30px;
 }
-.sta {
+.sta{
   height: 30px;
 }
-.right {
+.right{
   float: right;
 }
-.n {
+.n{
   margin: 9px;
 }
 ._after {
@@ -27,46 +27,42 @@ body {
   margin-top: -18px;
   right: 128px;
 }
-.sticky {
+.sticky{
   position: absolute;
   /* background-color:#eee9; */
   z-index: 9;
 }
-.progress {
+.progress{
   z-index: 10;
   width: 60%;
   height: 20px;
 }
 #up {
-  top: 10%;
-  left: 10%;
-}
-#import {
-  top: 10%;
-  left: 50%;
+  top: 6%;
+  left: 19%
 }
 #input {
   top: 50%;
   left: 50%;
-  display: none;
+  display:none
 }
 #right {
+  top:60px;
   right: 0%;
   width: 300px;
 }
-.list_dl {
+.list_dl{
   overflow-y: auto;
 }
 #down {
   bottom: 0%;
 }
-.stat {
+/* .stat{
   height: 30px;
-  /* width: 100px;  */
-}
-.star {
-  height: 50px;
-  width: 50px;
+} */
+.star{
+  height:50px;
+  width: 50px; 
 }
 /* .area{
   margin: 0px;
@@ -90,7 +86,7 @@ body {
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box; */
-}
+} 
 * {
   margin: 0;
   padding: 0;
@@ -124,7 +120,7 @@ body {
   position: absolute;
   left: 0;
   top: 0;
-  background: #4285f4;
+  background: #4285F4;
 }
 
 #open {
@@ -138,7 +134,7 @@ body {
   position: absolute;
   left: 0;
   top: 0;
-  background: #4285f4;
+  background: #4285F4;
 }
 
 .list_dt_icon {
@@ -181,74 +177,73 @@ body {
 }
 
 .list_li:hover {
-  background: #4285f4;
+  background: #4285F4;
 }
 
-.topbar {
+.topbar{
   position: absolute;
-  right: 300px;
-  top: 50px;
+  right:300px;
+  top:50px;
   height: 100px;
   width: 100%;
   z-index: 3;
+  -moz-box-shadow: 0px 10px 5px #888; /* 老的 Firefox */
+  box-shadow: 0px 10px 5px #888;
 }
-.outer {
+.outer{
   position: absolute;
-  width: 1200px;
+  width:1200px;
   /* height: 1200px; */
-  left: 0px;
-  top: -210px;
+  left:0px;
+  top:-210px;
   clip-path: inset(12.5% 80% 61% 0%);
   z-index: 2;
-  animation: swing 10s cubic-bezier(0.13, 0.97, 0.96, 0.18) infinite;
+  animation:swing 10s cubic-bezier(0.13, 0.97, 0.96, 0.18) infinite;
   margin: 100px auto;
-  transform-origin: 121px 236px;
-  -ms-transform: rotate(180deg);
+  transform-origin:121px 236px;
+  -ms-transform:rotate(180deg);
   overflow: hidden;
 }
-.border {
+.border{
   position: absolute;
-  width: 1200px;
+  width:1200px;
   /* height: 1200px; */
-  left: -478px;
-  top: -198px;
+  left:-478px;
+  top:-198px;
   clip-path: circle(110px at 600px 224px);
   z-index: 4;
   margin: 100px auto;
-  animation: turn 30s infinite linear;
-  transform-origin: 600px 224px;
+  animation:turn 30s infinite linear;
+  transform-origin:600px 224px;
   overflow: hidden;
-  /* transform: rotate(90deg); */
-  -ms-transform: rotate(145deg); /* IE 9 */
 }
-.home {
+.home{
   opacity: 0.7;
   z-index: 16;
   position: absolute;
-  animation: hometurn 30s infinite linear;
-  transform-origin: 0px 224px;
+  animation:hometurn 30s infinite linear;
+  transform-origin:0px 224px;
   clip-path: circle(110px at 000px 224px);
-  -ms-transform: rotate(145deg); /* IE 9 */
 }
-.clip {
+.clip{
   position: absolute;
   overflow: hidden;
 }
-.spin {
-  left: -60px;
-  top: -20px;
-  width: 237px;
-  height: 247px;
+.spin{
+  left:-60px;
+  top:-20px;
+  width:237px;
+  height:247px;
 }
-.leftline {
-  width: 100px;
+.leftline{
+  width:29px;
   /* height: 1200px; */
-  left: 0px;
-  top: -220px;
+  left:0px;
+  top:-220px;
   z-index: 3;
   margin: 100px auto;
 }
-.leftline-son {
+.leftline-son{
   margin-top: -150px;
 }
 /* 
@@ -257,85 +252,109 @@ body {
   linear : 动画以何种运行轨迹完成一个周期
   infinite :规定动画应该无限次播放
  */
-@keyframes swing {
-  0% {
-    -webkit-transform: rotate(170deg);
+@keyframes swing{
+  0%{-webkit-transform:rotate(170deg);
     /* -ms-transform:rotate(90deg); */
   }
-  25% {
-    -webkit-transform: rotate(180deg);
-  }
-  50% {
-    -webkit-transform: rotate(190deg);
-  }
-  75% {
-    -webkit-transform: rotate(200deg);
-  }
-  100% {
-    -webkit-transform: rotate(210deg);
-  }
+  25%{-webkit-transform:rotate(180deg);}
+  50%{-webkit-transform:rotate(190deg);}
+  75%{-webkit-transform:rotate(200deg);}
+  100%{-webkit-transform:rotate(210deg);}
 }
-@keyframes hometurn {
-  0% {
-    -webkit-transform: rotate(0deg);
-  }
-  25% {
-    -webkit-transform: rotate(90deg);
-  }
-  50% {
-    -webkit-transform: rotate(180deg);
-  }
-  75% {
-    -webkit-transform: rotate(270deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
+@keyframes turn{
+  0%{-webkit-transform:rotate(0deg);}
+  25%{-webkit-transform:rotate(90deg);}
+  50%{-webkit-transform:rotate(180deg);}
+  75%{-webkit-transform:rotate(270deg);}
+  100%{-webkit-transform:rotate(360deg);}
 }
-@keyframes turn {
-  0% {
-    -webkit-transform: rotate(0deg);
-    -webkit-transition: all 1.5s;
-    -moz-transition: all 1.5s;
-    -ms-transition: all 1.5s;
-    -o-transition: all 1.5s;
-    transition: all 1.5s;
+@keyframes hometurn{
+  0%{-webkit-transform:rotate(0deg);
+    -webkit-transition: all 1.5s;  
+    -moz-transition: all 1.5s;  
+    -ms-transition: all 1.5s;  
+    -o-transition: all 1.5s;  
+    transition: all 1.5s;  
     opacity: 0.6;
+    -webkit-filter:brightness(1);
+    -o-filter:brightness(1);
+    -moz-filter:brightness(1);
+    filter:brightness(1);
   }
-  25% {
-    -webkit-transform: rotate(90deg);
-    -webkit-transition: all 1.5s;
-    -moz-transition: all 1.5s;
-    -ms-transition: all 1.5s;
-    -o-transition: all 1.5s;
-    transition: all 1.5s;
+  25%{-webkit-transform:rotate(90deg);
+    -webkit-transition: all 1.5s;  
+    -moz-transition: all 1.5s;  
+    -ms-transition: all 1.5s;  
+    -o-transition: all 1.5s;  
+    transition: all 1.5s;  
     opacity: 1;
-  }
-  50% {
-    -webkit-transform: rotate(180deg);
-    -webkit-transition: all 1.5s;
-    -moz-transition: all 1.5s;
-    -ms-transition: all 1.5s;
-    -o-transition: all 1.5s;
-    transition: all 1.5s;
+    -webkit-filter:brightness(1.3);
+    -o-filter:brightness(1.3);
+    -moz-filter:brightness(1.3);
+    filter:brightness(1.3);
+   }
+  50%{-webkit-transform:rotate(180deg);
+    -webkit-transition: all 1.5s;  
+    -moz-transition: all 1.5s;  
+    -ms-transition: all 1.5s;  
+    -o-transition: all 1.5s;  
+    transition: all 1.5s;  
     opacity: 0.6;
-  }
-  75% {
-    -webkit-transform: rotate(270deg);
-    -webkit-transition: all 1.5s;
-    -moz-transition: all 1.5s;
-    -ms-transition: all 1.5s;
-    -o-transition: all 1.5s;
-    transition: all 1.5s;
+    -webkit-filter:brightness(0.9);
+    -o-filter:brightness(0.9);
+    -moz-filter:brightness(0.9);
+    filter:brightness(0.9);}
+  75%{-webkit-transform:rotate(270deg);
+    -webkit-transition: all 1.5s;  
+    -moz-transition: all 1.5s;  
+    -ms-transition: all 1.5s;  
+    -o-transition: all 1.5s;  
+    transition: all 1.5s;  
     opacity: 1;
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    -webkit-transition: all 1.5s;
-    -moz-transition: all 1.5s;
-    -ms-transition: all 1.5s;
-    -o-transition: all 1.5s;
-    transition: all 1.5s;
-    opacity: 0.6;
-  }
+    -webkit-filter:brightness(1.3);
+    -o-filter:brightness(1.3);
+    -moz-filter:brightness(1.3);
+    filter:brightness(1.3);
+   }
+  100%{-webkit-transform:rotate(360deg);
+    -webkit-transition: all 1.5s;  
+    -moz-transition: all 1.5s;  
+    -ms-transition: all 1.5s;  
+    -o-transition: all 1.5s;  
+    transition: all 1.5s;  
+    opacity: 0.6;}
+}
+
+
+#barmenu {
+  top: 10%;
+  right: 300px;
+  display: flex;
+}
+
+#barmenu > div,#barmenu > a,#barmenu > ul > li {
+  cursor:pointer;
+  font-size: 22px;
+  font-family: "华文中宋";
+  font-weight: 900;
+  margin: 10px;
+  color: white;
+  text-shadow: 0px 0px 5px darkturquoise,0px 0px 5px darkturquoise,0px 0px 5px darkturquoise,0px 0px 5px darkturquoise,0px 0px 5px darkturquoise,0px 0px 15px darkturquoise,0px 0px 15px darkturquoise,0px 0px 15px darkturquoise,0px 0px 10px darkturquoise;
+}
+
+#barmenu>.nav-tabs>li.active>a, #barmenu>.nav-tabs>li.active>a:focus, #barmenu>.nav-tabs>li.active>a:hover {
+  cursor: default;
+  background-color: #9990;
+  border-bottom-color: transparent;text-shadow: 0px 0px 5px gray,0px 0px 5px gray,0px 0px 5px gray,0px 0px 5px gray,0px 0px 5px gray,0px 0px 15px gray,0px 0px 15px gray,0px 0px 15px gray,0px 0px 10px gray;
+}
+
+#barmenu>.nav-tabs>li>a {
+  font-size: 22px;
+  font-family: "华文中宋";
+  font-weight: 900;
+  color: white;
+  margin-right: 0px;
+  line-height: 0.4;
+  border-radius: 4px 4px 0 0;
+  border-bottom-color: transparent;text-shadow: 0px 0px 5px aqua,0px 0px 5px aqua,0px 0px 5px aqua,0px 0px 5px aqua,0px 0px 15px aqua,0px 0px 15px gray,0px 0px 10px gray;
 }
