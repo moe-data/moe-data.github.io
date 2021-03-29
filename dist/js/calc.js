@@ -187,21 +187,9 @@ $(document).ready(function () {
         // loadchart();
     }, 2400);
 });
-function bgclr(a,b){
-    if(Simplized(b.innerHTML)==title[a])$(b).addClass('css'+a);
-}
 function langchange() {
     initTable(locallang());
-    $('div.th-inner.sortable.both').each(function(){
-        if([devpic,'油','弹','钢','铝'].indexOf(Simplized(this.innerHTML))>-1||!isNaN((this.innerHTML))){
-        $(this).css("width","0px");
-        if(!isNaN((this.innerHTML)))$(this).css("color","grey");
-        bgclr('fuel',this);
-        bgclr('ammo',this);
-        bgclr('steel',this);
-        bgclr('bauxite',this);
-        }
-    })
+    thclr()
 }
 function thead(eg) {
     var co = [];
