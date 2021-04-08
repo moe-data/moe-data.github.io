@@ -51,3 +51,28 @@ function homepos(x, y) {
     $('.home').css("transform-origin", x + "px " + y + "px")
     $('.home').css("clip-path", "circle(98px at " + x + "px " + y + "px)")
 }
+
+
+$(function(){
+    //读取cookie
+    var res=app.get('guide');
+    z(res)
+    //如果没有cookie,执行以下动作
+    if(res!="guide"){
+    $('#mask,#searchTip,#searchTip div:eq(0)').show();
+    $('#searchTip div a').click(function(){
+        var current=$(this).parent();
+        current.hide();
+        current.next().show();
+    })
+
+    $('#searchTip div span,#searchTip div a:last').click(function(){
+        $('#mask,#searchTip').hide();
+    })
+
+    //添加cookie
+    var oDate=new Date();
+    oDate.setDate(oDate.getDate()+30);
+    app.set('guide','guide')
+    }
+})

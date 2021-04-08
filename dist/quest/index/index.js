@@ -576,7 +576,7 @@ let option = {
 	legend: [{
 		orient: 'vertical',
 		icon: 'circle',
-		left: 0,
+		left: 10,
 		top: "30%",
 		data: categories.slice(1, 8),
 		selectedMode: 'multiple'

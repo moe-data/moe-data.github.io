@@ -37,6 +37,7 @@
     <!-- <img class="star switches.fo[0]?'':'gray'" data-c="fo[0]" onclick="that.filts('fs[0]')" src="././img/star.svg"></img> -->
   </span>
   <span id="barmenu" class="sticky">
+    <div onclick="app.help()">帮助</div>
     <div class="import" onclick="showinput()">进度导入</div>
     <a href="./questlist.html">任務(リスト)</a>
     <div onclick="wx.clearStorage()">清空缓存</div>
@@ -183,6 +184,16 @@
       <div class="topbar"></div>
     </div>
   </div>
+  <!--黑色蒙版-->
+  <div id="mask"></div>
+  <!--引导区-->
+  <div id="searchTip">
+       <div class="stepA"><a>下一步</a><span title="关闭">关闭</span></div>
+       <div class="stepB"><a>下一步</a><span title="关闭">关闭</span></div>
+       <div class="stepC"><a>下一步</a><span title="关闭">关闭</span></div>
+       <div class="stepD"><a>下一步</a><span title="关闭">关闭</span></div>
+       <div class="stepE"><a>下一步</a></div>
+  
   <i id="js"></i>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script type="text/javascript" src="./dist/js/jgs.js"> </script>
