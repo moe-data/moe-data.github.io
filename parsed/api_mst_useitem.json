@@ -364,7 +364,7 @@
     "api_usetype": 0
 }, {
     "api_category": 0,
-    "api_description": ["最大保有艦娘数＋10(最大480)。最大保有アイテム数＋40(最大2060)。", ""],
+    "api_description": ["最大保有艦娘数＋10(最大490)。最大保有アイテム数＋40(最大2110)。", ""],
     "api_id": 53,
     "api_name": "母港拡張",
     "api_price": 0,
@@ -654,6 +654,13 @@
     "api_description": ["新型兵装の開発及び実戦配備　<br>に必要な技術図面と資材です。<br>※装備改修等で使用すること　<br>で、各種新型兵装の開発及び　<br>実戦配備が可能となります。", ""],
     "api_id": 94,
     "api_name": "新型兵装資材",
+    "api_price": 0,
+    "api_usetype": 0
+}, {
+    "api_category": 0,
+    "api_description": ["旗艦潜水母艦によって指揮され<br>た潜水艦隊が潜水艦隊攻撃実施<br>時に使用する補給物資です。<br>※同攻撃実施で消費します。", ""],
+    "api_id": 95,
+    "api_name": "潜水艦補給物資",
     "api_price": 0,
     "api_usetype": 0
 }]
