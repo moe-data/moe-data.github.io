@@ -15934,7 +15934,7 @@ const app = ({
   delarr: function (arr, item) {
     let list = app.get(arr)
     if (!list) return;
-    app.remove(list, item)
+    app.arrsplice(list, item)
     app.set(arr, list)
   },
   // staritem: function(e){
@@ -15943,7 +15943,7 @@ const app = ({
   // unstaritem: function(e){
   //  app.delarr(('starreward'),e)
   // },
-  remove: function (arr, item) {
+  arrsplice: function (arr, item) {
     if (!arr) return;
     let i = arr.length
     while (i--) {

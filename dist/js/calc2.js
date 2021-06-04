@@ -282,7 +282,7 @@ function formatR(value) {
     return value ? (value * 100).toFixed(2) + '%' : null;
 }
 function formatLink(value, row, index) {
-    remove(value,1);
+    arrsplice(value,1);
     var piedata=[];
     for(key in row){
         if(key[0]=='n'){

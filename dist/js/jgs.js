@@ -82,7 +82,7 @@ function GetRequest(a, b) {
   }
   if (b==1) {
     char = char.split(",")
-    remove(char,"")
+    arrsplice(char,"")
   }else{if(!isNaN(char)){char=Number(char)}}
   return char;
 }
@@ -90,7 +90,7 @@ function GetRequest(a, b) {
 function if1eq() {
   return "if *\(\w*\[?'?[0-9a-zA-Z_]*'?\]?=[^=]"
 }
-function remove(arr,b) {
+function arrsplice(arr,b) {
   var index = arr.indexOf(b);
   if (index >= 0) {
     arr.splice(index, 1);
