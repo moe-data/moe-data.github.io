@@ -100,7 +100,7 @@ function download(result,com,qn,zhimg,start){
     z(objdata.length)
     z(bigdata.length)
     console.log(qn+": get "+(zhimg?zhimg+start:("parsed/" + qn))+" success")
-    $('h3.panel-title')[0].innerHTML = (" 正在"+com+qndate(qn).toLocaleDateString()+"的数据"+"。 请耐心等待。。共"+(jsindex)+" / "+(ranget.length + 2)+ " 个文件，");
+    $('h3.panel-title')[0].innerHTML = (" 正在"+com+qndate(qn)+"的数据"+"。 请耐心等待。。共"+(jsindex)+" / "+(ranget.length + 2)+ " 个文件，");
     jsonover()}
   catch(err){
     console.log(qn,err);
@@ -109,7 +109,4 @@ function download(result,com,qn,zhimg,start){
 }
 function success(result,status,xhr){
     // console.log(status,xhr);
-}
-function qndate(qn){
-  return new Date(2020,+qn.slice(1)+2);
 }

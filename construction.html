@@ -255,7 +255,8 @@
             <h3 class="panel-title">时间范围</h3>
           </div>
           <div class="panel-body"  align="center">
-            <table cellpadding="50"><tr><th>时间</th><th>累计建造次数</th><th>&ensp;&ensp;&ensp;公式条数</th><th>&ensp;&ensp;&ensp;文件大小</th></tr>
+            <table cellpadding="50">
+             <tbody class="list"><tr><th>时间</th><th>累计建造次数</th><th>&ensp;&ensp;&ensp;公式条数</th><th>&ensp;&ensp;&ensp;文件大小</th></tr>
             <tr><td><input class="time" type="checkbox" value="0,1" id="1">
             <label for ="1">2019年5月或更早</label></td><td align="right">10,448,671</td><td align="right"> 74751</td> <td align="right"> 10 MB</td> </tr> 
             <!-- <tr><td><input class="time" type="checkbox" value="2" id="2" onclick="return false;">
@@ -272,6 +273,7 @@
               <label for ="11">2021年1月</label></td><td align="right">299,103</td><td align="right"> 3917 </td> <td align="right"> 1.2 MB</td> </tr> 
               <tr><td><input class="time" type="checkbox" value="12"  id="12" checked="checked">
               <label for ="12">2021年2月</label></td><td align="right">813,669</td><td align="right"> 6120 </td> <td align="right"> 0.7 MB</td> </tr> 
+            </tbody> 
           </table>
           </div>
         </div>
@@ -291,6 +293,23 @@
   <!-- <script type="text/javascript" src="dist/js/line.js"> </script> -->
   <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script type="text/javascript">
+    var timelist=$('.list').html()
+    var t=[ [13,496905,7840,2.1],
+            [14,354012,4845,1.5],
+          ]
+    t.forEach(e=>{
+    timelist+='<tr><td><input class="time" type="checkbox" value="'+e[0]+
+      '"  id="'+e[0]+
+      '" checked="checked"><label for ="'+e[0]+
+      '">'+qndate(e[0])+
+      '</label></td><td align="right">'+e[1]+
+      '</td><td align="right">'+e[2]+
+      '</td> <td align="right">'+e[3]+
+      'MB</td> </tr>'
+      
+    })
+    z(timelist)
+    $('.list').html(timelist)
     var slotitem
     var primary = 'btn-primary'
     var btninfo = 'btn-info'

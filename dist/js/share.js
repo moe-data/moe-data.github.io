@@ -188,3 +188,9 @@ function lvplus(arr){
     if(isNaN(arr))
     return
 }
+
+
+function qndate(qn){
+    var date=new Date(2020,+(qn+"").slice(1)+2).toLocaleDateString()
+    return date.slice(0,date.length-2)
+  }
