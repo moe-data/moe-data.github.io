@@ -197,7 +197,7 @@ function lvplus(arr) {
 
 
 function qndate(qn) {
-    var date = new Date(2020, qn + 1).toLocaleDateString()
+    var date = new Date(2020, Number(qn) + 1).toLocaleDateString()
     z(qn, date)
     return date.slice(0, -2)
 }
