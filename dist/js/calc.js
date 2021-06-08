@@ -264,7 +264,6 @@ function thead(eg) {
                 formatter: formatter,
             })
         }
-        z(e, f)
     }
     return [co, col];
 }
@@ -361,6 +360,10 @@ function isonladd(array, o) {
     return (groups);
 }
 function egnrl(item) {
+    if (item == 0) {
+        x("dev res 0")
+        return
+    }
     lseg['n' + item] = 0;
     lseg[formatOnlyname(item)] = 0;
     if (minlv) {
