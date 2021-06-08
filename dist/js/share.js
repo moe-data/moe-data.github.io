@@ -191,6 +191,21 @@ function lvplus(arr){
 
 
 function qndate(qn){
-    var date=new Date(2020,+(qn+"").slice(1)+2).toLocaleDateString()
-    return date.slice(0,date.length-2)
+    var date=new Date(2020,qn+1).toLocaleDateString()
+    return date.slice(0,-2)
   }
+function timetable(t) {
+    var timelist=$('.list').html()
+    t.forEach(e=>{
+    timelist+='<tr><td><input class="time" type="checkbox" value="'+e[0]+
+      '"  id="'+e[0]+
+      '" checked="checked"><label for ="'+e[0]+
+      '">'+qndate(e[0])+
+      '</label></td><td align="right">'+e[1]+
+      '</td><td align="right">'+e[2]+
+      '</td> <td align="right">'+e[3]+
+      'MB</td> </tr>'
+      
+    })
+    $('.list').html(timelist)
+}

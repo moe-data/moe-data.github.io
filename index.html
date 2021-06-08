@@ -225,7 +225,7 @@ Laté 298B   </button><button class="btn btn-default" value="207">
             <h3 class="panel-title">时间范围</h3>
           </div>
           <div class="panel-body"  align="center">
-            <table cellpadding="50"><tbody class="list"></tbody><tr><th>时间</th><th>累计开发次数</th><th>&ensp;&ensp;&ensp;公式条数</th><th>&ensp;&ensp;&ensp;文件大小</th></tr>
+            <table cellpadding="50"><tbody class="list"><tr><th>时间</th><th>累计开发次数</th><th>&ensp;&ensp;&ensp;公式条数</th><th>&ensp;&ensp;&ensp;文件大小</th></tr>
             <tr><td><input class="time" type="checkbox" value="0,1" id="1">
             <label for ="1">2019年5月或更早</label></td><td align="right">16,256,435</td><td align="right"> 46655</td> <td align="right"> 6.3 MB</td> </tr> 
             <tr><td><input class="time" type="checkbox" value="2" id="2">
@@ -242,10 +242,6 @@ Laté 298B   </button><button class="btn btn-default" value="207">
             <label for ="11">2021年1月</label></td><td align="right">563,301</td><td align="right"> 4079 </td> <td align="right"> 0.7 MB</td> </tr> 
             <tr><td><input class="time" type="checkbox" value="12"  id="12" checked="checked">
             <label for ="12">2021年2月</label></td><td align="right">813,669</td><td align="right"> 4013 </td> <td align="right"> 0.5 MB</td> </tr> 
-            <tr><td><input class="time" type="checkbox" value="13"  id="13" checked="checked">
-            <label for ="12">2021年3月</label></td><td align="right"> </td><td align="right">  3388 </td> <td align="right"> 0.4 MB</td> </tr> 
-            <tr><td><input class="time" type="checkbox" value="14"  id="14" checked="checked">
-            <label for ="12">2021年4月</label></td><td align="right"> </td><td align="right">  3388 </td> <td align="right"> 0.4 MB</td> </tr> 
           </tbody> </table>
           </div>
         </div>
@@ -265,6 +261,10 @@ Laté 298B   </button><button class="btn btn-default" value="207">
   <!-- <script type="text/javascript" src="dist/js/line.js"> </script> -->
   <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script type="text/javascript">
+    timetable([ [13,496905,3388,0.4],
+                [14,560579,3137,0.4],
+                [15,698848,3379,0.4],
+          ])
     var slotitem
     var primary = 'btn-primary'
     var btninfo = 'btn-info'

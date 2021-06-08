@@ -293,23 +293,10 @@
   <!-- <script type="text/javascript" src="dist/js/line.js"> </script> -->
   <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script type="text/javascript">
-    var timelist=$('.list').html()
-    var t=[ [13,496905,7840,2.1],
-            [14,354012,4845,1.5],
-          ]
-    t.forEach(e=>{
-    timelist+='<tr><td><input class="time" type="checkbox" value="'+e[0]+
-      '"  id="'+e[0]+
-      '" checked="checked"><label for ="'+e[0]+
-      '">'+qndate(e[0])+
-      '</label></td><td align="right">'+e[1]+
-      '</td><td align="right">'+e[2]+
-      '</td> <td align="right">'+e[3]+
-      'MB</td> </tr>'
-      
-    })
-    z(timelist)
-    $('.list').html(timelist)
+    timetable([ [13,496905,7840,2.1],
+                [14,354012,4845,1.5],
+                [15,401632,4845,1.5],
+          ])
     var slotitem
     var primary = 'btn-primary'
     var btninfo = 'btn-info'
