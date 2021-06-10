@@ -1,4 +1,31 @@
+const qtar=tar=="装备"?'d':'c'
 
+$('.go').click(function () {
+    var output = []
+    var extra = []
+    var duration = []
+    $('button.btn-primary').each(function () {
+        output.push($(this).val());
+    });
+    $('button.btn-info').each(function () {
+        extra.push($(this).val());
+    });
+    $("input.time").each(function () {
+        if ($(this).prop("checked")) {
+            duration.push($(this).val());
+        }
+    });
+    if (output.length + extra.length > 0) {
+        if (duration.length > 0) {
+            console.log(extra, output)
+            window.location.href = ("result.html?t=" + duration.reverse() + '&q=' + qtar + '&o=' + output + '&e=' + extra + '&s=' + $('#sorto').val() + '&a=' + $("#a").val() + '&l=' + $("#lv")[0].checked)
+        } else { alert("您未选择时间范围！") }
+    } else {
+        if (confirm("您未选择"+tar+"，\n是要查询所有"+tar+"吗？\n(可点击"+tar+"名称选择"+tar+")") == true) {
+            window.location.href = ("result.html?t=" + duration.reverse() + '&q=' + qtar + '&o=' + output + '&e=' + extra + '&s=' + $('#sorto').val() + '&a=' + $("#a").val() + '&l=' + $("#lv")[0].checked)
+        }
+    }
+})
 btnbind()
 $('.hint').html(`
 <div class="panel-heading">
@@ -14,7 +41,7 @@ $('.hint').html(`
      <li>建造数据来自POI</li><br>
      <li>第一次所需的查询时间可能较长，请耐心等待。</li><br>
      <li>时间范围勾选的越少，加载速度越快</li><br>
-     <li>加载速度和选择目标数量无关</li><br>
+     <li>加载速度和`+tar+`选择数量无关</li><br>
      <li>不兼容IE浏览器</li><br>
     </ul>  
   </div>`)

@@ -165,6 +165,11 @@ function clearall() {
         $(this).removeClass(primary)
     })
 }
+
+var primary = 'btn-primary'
+var btninfo = 'btn-info'
+var btndef = 'btn-default'
+
 function btnbind() {
     $('.btn').click(function () {
         $(this).addClass('clicked')

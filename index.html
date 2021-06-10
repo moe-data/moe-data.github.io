@@ -243,14 +243,12 @@ Laté 298B   </button><button class="btn btn-default" value="207">
   <!-- <script type="text/javascript" src="dist/js/line.js"> </script> -->
   <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script type="text/javascript">
+    tar="装备"
     timetable([ [13,496905,3388,0.4],
                 [14,560579,3137,0.4],
                 [15,698848,3379,0.4],
           ])
     var slotitem
-    var primary = 'btn-primary'
-    var btninfo = 'btn-info'
-    var btndef='btn-default'
     $.getJSON("parsed/api_mst_slotitem_equiptype.json", function (res) {
     itype=res}).done(function () {
     $.getJSON("parsed/api_mst_slotitem.json", function (result) {
@@ -262,31 +260,6 @@ Laté 298B   </button><button class="btn btn-default" value="207">
         alert("文件  " + "parsed/api_mst_slotitem.json" + " 读取失败"+d);
     })}).fail(function (d) {
         alert("文件  " + "parsed/api_mst_slotitem_equiptype.json" + " 读取失败"+d);
-    })
-    $('.go').click(function () {
-      var output=[]
-      var extra = []
-      var duration=[]
-      $('button.btn-primary').each(function(){
-        output.push($(this).val());
-        });
-      $('button.btn-info').each(function(){
-        extra.push($(this).val());
-        });
-      $("input.time").each(function () {
-        if ($(this).prop("checked")) {
-          duration.push($(this).val());
-        }
-      });
-      if(output.length+extra.length>0){
-        if(duration.length>0){
-      console.log(extra,output)
-      window.location.href=("result.html?t="+duration+'&q='+'d'+'&o='+output+'&e='+extra+'&s='+$('#sorto').val()+'&a='+$("#a").val()+'&l='+$("#lv")[0].checked )
-        }else{alert("您未选择时间范围！")}
-    }else{
-    if (confirm("您未选择装备，\n是要查询所有装备吗？\n(可点击装备名称选择装备)")==true){
-      window.location.href=("result.html?t="+duration+'&q='+'d'+'&o='+output+'&e='+[-1].concat(developable)+'&s='+$('#sorto').val()+'&a='+$("#a").val()+'&l='+$("#lv")[0].checked )
-    }}
     })
     
     function genCheck(Obj) {
