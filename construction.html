@@ -203,44 +203,7 @@
         <div align="center" class="panel-body  col-sm-12">
           <button type="button" class="btnlg btn-success go" value="">检索</button>
         </div>
-        <div class="panel panel-warning col-sm-12 hint">
-        <div class="panel-heading">
-              <h3 class="panel-title ">提示</h3>
-            </div> <div class="col-sm-7"><table  align="center"><br><br>
-            <tr><td><h3><span class="label label-primary">主查询</span></h3><span>&ensp;&ensp;目标出货率必须>0，计入总确率（点击一次）</span> <br> <br>
-            <tr><td><h3><span class="label label-info">副查询</span></h3><span>&ensp;&ensp;目标出货率允许=0，计入总确率（点击两次）</span> <br> <br>
-           <tr><td><h3><span class="label label-default off">不查询</span></h3><span>&ensp;&ensp;目标不计入总确率（不点击或点击三次）</span>  <br> <br>
-          </table></div> 
-
-          <div class="col-sm-5">
-            <ul type="circle">
-              <br>
-             <li>建造数据来自POI</li><br>
-             <li>第一次所需的查询时间可能较长，请耐心等待。</li><br>
-             <li>时间范围勾选的越少，加载速度越快</li><br>
-             <li>加载速度和舰船选择数量无关</li><br>
-             <li>不兼容IE8以下浏览器</li><br>
-            </ul>  
-            
-          </div>
-        </div>
-        <div class="panel panel-default col-sm-5">
-          <div class="panel-heading">
-            <h3 class="panel-title">设置</h3>
-          </div>
-          <div class="panel-body">
-            <label for="">&ensp;&ensp;结果排序&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</label> 
-            <select name="" id="sorto">
-              <option value=0>默认排序</option>
-              <option value=times selected>出货次数排序</option>
-              <option value=ratio>总确率排序</option>
-              </select> <br>
-              <label>&ensp;&ensp;公式次数(分母)&ensp;>&ensp;</label><input type="number" id="a" value="0" style="width: 108px;"> <br>
-              <input type="checkbox" id="lv"><label for="lv">计算出货最小Lv</label> <br> 
-          </div>
-        </div>
-
-        <div class="panel panel-success col-sm-7">
+        <div class="panel panel-success col-sm-6">
           <div class="panel-heading">
             <h3 class="panel-title">时间范围</h3>
           </div>
@@ -253,7 +216,7 @@
             <tr><td><input class="time" type="checkbox" value="2"  id="2">
             <label for ="2">2019年6月~2020年3月</label></td><td align="right">4,975,716</td><td align="right">42040 </td> <td align="right">6.8 MB</td> </tr> 
             <tr><td><input class="time" type="checkbox" value="3" id="3">
-            <label for ="3">2020年4月~8月</label></td><td align="right">2,383,653</td><td align="right"></td>19309 <td align="right"> 3.4 MB</td> </tr> 
+            <label for ="3">2020年4月~8月</label></td><td align="right">2,383,653</td><td align="right">19309</td> <td align="right"> 3.4 MB</td> </tr> 
             <tr><td><input class="time" type="checkbox" value="8"  id="8">
             <label for ="8">2020年9月~10月</label></td><td align="right">716,524</td><td align="right"> 7094</td> <td align="right"> 1.8MB</td> </tr> 
             <tr><td><input class="time" type="checkbox" value="9"  id="9" checked="checked">
@@ -268,6 +231,24 @@
           </table>
           </div>
         </div>
+        <div class="panel panel-default col-sm-6">
+          <div class="panel-heading">
+            <h3 class="panel-title">设置</h3>
+          </div>
+          <div class="panel-body">
+            <label for="">&ensp;&ensp;结果排序&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</label> 
+            <select name="" id="sorto">
+              <option value=0>默认排序</option>
+              <option value=times selected>出货次数排序</option>
+              <option value=ratio>总确率排序</option>
+              </select> <br>
+              <label>&ensp;&ensp;公式次数(分母)&ensp;>&ensp;</label><input type="number" id="a" value="0" style="width: 108px;"> <br>
+              <input type="checkbox" id="lv"><label for="lv">计算出货最小Lv</label> <br> 
+          </div>
+        </div>
+        <div class="panel panel-warning col-sm-6 hint">
+        </div>
+        
       </div>
 
       <div id="foot"></div>
