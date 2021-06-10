@@ -16,7 +16,6 @@ stype[554] = "日向改二";
 // stype[554] = "日向改(二)";
 stype[571] = "Nelson";
 stype[589] = "L.d.S.D.d.Abruzzi级";
-
 var o = GetRequest("o", 1);
 var e = GetRequest("e", 1);
 e = e.indexOf("") ? e : [];
@@ -74,6 +73,47 @@ function jsonover() {
     if (jsindex >= ranget.length + 2) {
         progress(20);
         var filted = filt(group2By(bigdata, "i", "s"), o);
+
+        // -  - -
+        var norate = {}
+        // console.log(filted)
+        filted.forEach(formula => {
+            outlist = {}
+            formula.forEach(iso => {
+                outlist[iso.o] = true
+            })
+            norate[JSON.stringify(Object.getOwnPropertyNames(outlist))] = true
+        });
+        var nrlist = []
+        Object.getOwnPropertyNames(norate).forEach(nr => {
+            olist = []
+            JSON.parse(nr).forEach(num => {
+                olist.push(Number(num))
+            })
+            nrlist.push(olist)
+        })
+        z(nrlist.length)
+        var j = nrlist.length
+        while (j--) {
+            for (let i = 0; i < nrlist.length; i++) {
+                if (i != j && isContain(nrlist[i], nrlist[j])) {
+                    nrlist.splice(j, 1)
+                    break
+                }
+            }
+        }
+        z((nrlist))
+        z(JSON.stringify(nrlist))
+        function isContain(parent, son) {
+            for (var i = son.length - 1; i >= 0; i--) {
+                if (parent.indexOf(son[i]) == -1) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // -  - -
         if (!filted.length) {
             $('h3.panel-title')[0].innerHTML = ('无匹配的结果，请减少主查询个数，或将主查询改为副查询')
         } else {
