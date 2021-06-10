@@ -75,35 +75,35 @@ function jsonover() {
         var filted = filt(group2By(bigdata, "i", "s"), o);
 
         // -  - -
-        var norate = {}
-        // console.log(filted)
-        filted.forEach(formula => {
-            outlist = {}
-            formula.forEach(iso => {
-                outlist[iso.o] = true
-            })
-            norate[JSON.stringify(Object.getOwnPropertyNames(outlist))] = true
-        });
-        var nrlist = []
-        Object.getOwnPropertyNames(norate).forEach(nr => {
-            olist = []
-            JSON.parse(nr).forEach(num => {
-                olist.push(Number(num))
-            })
-            nrlist.push(olist)
-        })
-        z(nrlist.length)
-        var j = nrlist.length
-        while (j--) {
-            for (let i = 0; i < nrlist.length; i++) {
-                if (i != j && isContain(nrlist[i], nrlist[j])) {
-                    nrlist.splice(j, 1)
-                    break
-                }
-            }
-        }
-        z((nrlist))
-        z(JSON.stringify(nrlist))
+        // var norate = {}
+        // // console.log(filted)
+        // filted.forEach(formula => {
+        //     outlist = {}
+        //     formula.forEach(iso => {
+        //         outlist[iso.o] = true
+        //     })
+        //     norate[JSON.stringify(Object.getOwnPropertyNames(outlist))] = true
+        // });
+        // var nrlist = []
+        // Object.getOwnPropertyNames(norate).forEach(nr => {
+        //     olist = []
+        //     JSON.parse(nr).forEach(num => {
+        //         olist.push(Number(num))
+        //     })
+        //     nrlist.push(olist)
+        // })
+        // z(nrlist.length)
+        // var j = nrlist.length
+        // while (j--) {
+        //     for (let i = 0; i < nrlist.length; i++) {
+        //         if (i != j && isContain(nrlist[i], nrlist[j])) {
+        //             nrlist.splice(j, 1)
+        //             break
+        //         }
+        //     }
+        // }
+        // z((nrlist))
+        // z(JSON.stringify(nrlist))
 
         // -  - -
         if (!filted.length) {
