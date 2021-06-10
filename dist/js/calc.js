@@ -16,13 +16,15 @@ stype[554] = "日向改二";
 // stype[554] = "日向改(二)";
 stype[571] = "Nelson";
 stype[589] = "L.d.S.D.d.Abruzzi级";
-var o = GetRequest("o", 1);
-var e = GetRequest("e", 1);
-e = e.indexOf("") ? e : [];
+const output = GetRequest("o", 1);
+var extra = GetRequest("e", 1);
+extra = extra.indexOf("") ? extra : [];
 const q = GetRequest("q", 1);
 const ranget = GetRequest("t", 1);
 let jsindex = 0;
 var bigdata = [];
+var isonl=[]
+var sorted = [];
 var slotitem;
 const api_ = (q == 'd') ? 'api_' : '';
 const jsonfile = (q == 'd') ? 'api_mst_slotitem' : 'cstype';
@@ -40,13 +42,12 @@ $.getJSON("parsed/" + jsonfile + ".json").done(function (result) {
     slotitem = result;
     jsonover();
     var oname = [];
-    for (let j = 0; j < o.length; j++) {
-        oname.push(addemoji(formatOnlyname(o[j])))
+    for (let j = 0; j < output.length; j++) {
+        oname.push(addemoji(formatOnlyname(output[j])))
     }
     document.title = oname.length ? oname : "全部" + (q == 'd' ? "装备" : "舰娘")
 });
 $('#denominator').val(Number(GetRequest("a", 1)));
-var sorted = [];
 var minlv = GetRequest("l") == 'true' ? true : false;
 function progress(p) {
     bar += p;
@@ -72,7 +73,7 @@ function jsonover() {
     // if (jsindex == ranget.length + 1)$('h3.panel-title')[0].innerHTML = ("数据计算中。。。");
     if (jsindex >= ranget.length + 2) {
         progress(20);
-        var filted = filt(group2By(bigdata, "i", "s"), o);
+        var filted = filt(group2By(bigdata, "i", "s"), output);
 
         // -  - -
         // var norate = {}
@@ -110,8 +111,44 @@ function jsonover() {
             $('h3.panel-title')[0].innerHTML = ('无匹配的结果，请减少主查询个数，或将主查询改为副查询')
         } else {
             // console.log(filted.length);
-            o = o.concat(e);
-            isonl = isonladd(filted, o);
+            const oute = output.concat(extra);
+            isonl = isonladd(filted, oute);
+            function isonladd(array, o) {
+                for (k = 0; k < o.length; k++) {
+                    egnrl(o[k]);
+                }
+                if (q == 'd') {
+                    egnrl('-1');
+                }
+                let groups = [];
+                // o.push(-1)
+                for (let i = 0, l = array.length; i < l; i++) {
+                    let is = array[i][0]['i'];
+                    if (q == 'd') {
+                        if (typeof is == 'string') is = JSON.parse(is);
+                        is.push(1);
+                        is.push(formatStype(array[i][0]['s']));
+                    } else {
+                        is.push(formatshipId(array[i][0]['s']));
+                    }
+                    var onal = { 'i': (is) };
+                    for (let j = 0; j < array[i].length; j++) {
+                        var item = jsonstr(array[i][j]['o']);
+                        egnrl(item);
+                        if (onal['n' + item]) {
+                            onal['n' + item] += Number(array[i][j]['n']);
+                        } else { onal['n' + item] = 0 + Number(array[i][j]['n']) };
+                        if (minlv) {
+                            if (onal['l' + item]) {
+                                onal['l' + item] = Math.min(onal['l' + item], Number(array[i][j]['l']));
+                            } else { onal['l' + item] = Math.min(121, Number(array[i][j]['l'])) }
+                        }
+                    }
+                    groups.push(onal);
+                };
+                return (groups);
+            }
+            z(filted, isonl)
             isonl.forEach(function (e) {
                 denominator = 0;
                 for (keys in e) {
@@ -126,7 +163,7 @@ function jsonover() {
                     if (key[0] == 'n') {
                         k = key.slice(1, key.length);
                         e[formatOnlyname(k)] = e[key] / e['denominator'];
-                        if (o.indexOf(k) > -1) {
+                        if (oute.indexOf(k) > -1) {
                             e['ratio'] += e[formatOnlyname(k)];
                             e['times'] += e['n' + k];
                         }
@@ -137,7 +174,7 @@ function jsonover() {
         }
         $('.loading').hide();
     } else if (jsindex == 3) {
-        // var filted = filt(group2By(bigdata, "i", "s"), o);
+        // var filted = filt(group2By(bigdata, "i", "s"));
         //     if (filted.length){
         //         o = o.concat(e);
         //         isonl = isonladd(filted, o);
@@ -336,14 +373,14 @@ function group2By(array, i, s) {
     }
     return arr;
 }
-function filt(r, o) {
+function filt(r) {
     var array = [];
     r.forEach(function (element) {
         var f = true;
-        o.forEach(function (oe) {
+        output.forEach(function (oe) {
             var ff = false;
             element.forEach(function (el) {
-                // f = f && el['o'] == o[k]
+                // f = f && el['o'] == output[k]
                 if (el['o'] == oe) {
                     ff = true;
                 }
@@ -355,41 +392,6 @@ function filt(r, o) {
         }
     });
     return array;
-}
-function isonladd(array, o) {
-    for (k = 0; k < o.length; k++) {
-        egnrl(o[k]);
-    }
-    if (q == 'd') {
-        egnrl('-1');
-    }
-    let groups = [];
-    // o.push(-1)
-    for (let i = 0, l = array.length; i < l; i++) {
-        let is = array[i][0]['i'];
-        if (q == 'd') {
-            if (typeof is == 'string') is = JSON.parse(is);
-            is.push(1);
-            is.push(formatStype(array[i][0]['s']));
-        } else {
-            is.push(formatshipId(array[i][0]['s']));
-        }
-        var onal = { 'i': (is) };
-        for (let j = 0; j < array[i].length; j++) {
-            var item = jsonstr(array[i][j]['o']);
-            egnrl(item);
-            if (onal['n' + item]) {
-                onal['n' + item] += Number(array[i][j]['n']);
-            } else { onal['n' + item] = 0 + Number(array[i][j]['n']) };
-            if (minlv) {
-                if (onal['l' + item]) {
-                    onal['l' + item] = Math.min(onal['l' + item], Number(array[i][j]['l']));
-                } else { onal['l' + item] = Math.min(121, Number(array[i][j]['l'])) }
-            }
-        }
-        groups.push(onal);
-    };
-    return (groups);
 }
 function egnrl(item) {
     if (item == 0) {

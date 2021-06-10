@@ -108,7 +108,7 @@ function download(result, com, qn, zhimg, start) {
     jsonover()
   }
   catch (err) {
-    console.log(qn, err);
+    console.error(qn, err);
     if (zhimg) getjson(zhimg, qn);
   }
 }
