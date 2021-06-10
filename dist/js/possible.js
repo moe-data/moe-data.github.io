@@ -1,5 +1,40 @@
 const qtar = tar == "装备" ? 'd' : 'c'
 var active = {}
+
+function clearall() {
+    $('.btn').each(function () {
+        $(this).addClass(btndef)
+        $.cookie('d' + $(this).val(), null, { expires: 365, path: '/' })
+        $(this).removeClass(btninfo)
+        $(this).removeClass(primary)
+    })
+    btnclick()
+}
+function btnbind() {
+    $('.btn').click(function () {
+        $(this).addClass('clicked')
+        if ($(this).hasClass(primary)) {
+            $(this).removeClass(btndef)
+            $(this).addClass(btninfo)
+            $.cookie('d' + $(this).val(), btninfo, { expires: 365, path: '/' })
+            $(this).removeClass(primary)
+        } else {
+            if ($(this).hasClass(btninfo)) {
+                $(this).addClass(btndef)
+                $.cookie('d' + $(this).val(), null, { expires: 365, path: '/' })
+                $(this).removeClass(btninfo)
+                $(this).removeClass(primary)
+            } else {
+                $(this).addClass(primary)
+                $.cookie('d' + $(this).val(), primary, { expires: 365, path: '/' })
+                $(this).removeClass(btndef)
+            }
+        }
+    })
+}
+var primary = 'btn-primary'
+var btninfo = 'btn-info'
+var btndef = 'btn-default'
 if (tar == "装备") {
     $.getJSON("parsed/api_mst_slotitem_equiptype.json", function (res) {
         itype = res
@@ -201,7 +236,6 @@ function btnclick() {
                 })
             }
         });
-        z(active)
         $("button.btn").each(function () {
             if (!active[$(this).val()]) {
                 $(this).addClass('active').addClass('disabled')

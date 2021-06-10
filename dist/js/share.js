@@ -157,41 +157,6 @@ function bra(value, x) {
     }
 }
 
-function clearall() {
-    $('.btn').each(function () {
-        $(this).addClass(btndef)
-        $.cookie('d' + $(this).val(), null, { expires: 365, path: '/' })
-        $(this).removeClass(btninfo)
-        $(this).removeClass(primary)
-    })
-}
-
-var primary = 'btn-primary'
-var btninfo = 'btn-info'
-var btndef = 'btn-default'
-
-function btnbind() {
-    $('.btn').click(function () {
-        $(this).addClass('clicked')
-        if ($(this).hasClass(primary)) {
-            $(this).removeClass(btndef)
-            $(this).addClass(btninfo)
-            $.cookie('d' + $(this).val(), btninfo, { expires: 365, path: '/' })
-            $(this).removeClass(primary)
-        } else {
-            if ($(this).hasClass(btninfo)) {
-                $(this).addClass(btndef)
-                $.cookie('d' + $(this).val(), null, { expires: 365, path: '/' })
-                $(this).removeClass(btninfo)
-                $(this).removeClass(primary)
-            } else {
-                $(this).addClass(primary)
-                $.cookie('d' + $(this).val(), primary, { expires: 365, path: '/' })
-                $(this).removeClass(btndef)
-            }
-        }
-    })
-}
 function itag(str) {
     return '<i style="background-image:url(https://fleet.diablohu.com/!/assets/images/itemicon/' + str + '.png);" class="item"></i>'
 }
