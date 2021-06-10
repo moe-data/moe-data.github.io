@@ -104,14 +104,6 @@ function jsonover() {
         }
         z((nrlist))
         z(JSON.stringify(nrlist))
-        function isContain(parent, son) {
-            for (var i = son.length - 1; i >= 0; i--) {
-                if (parent.indexOf(son[i]) == -1) {
-                    return false;
-                }
-            }
-            return true;
-        }
 
         // -  - -
         if (!filted.length) {

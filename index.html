@@ -243,12 +243,13 @@ Laté 298B   </button><button class="btn btn-default" value="207">
   <!-- <script type="text/javascript" src="dist/js/line.js"> </script> -->
   <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script type="text/javascript">
-    tar="装备"
+    const tar="装备"
     timetable([ [13,496905,3388,0.4],
                 [14,560579,3137,0.4],
                 [15,698848,3379,0.4],
           ])
     var slotitem
+    const possibles=
     $.getJSON("parsed/api_mst_slotitem_equiptype.json", function (res) {
     itype=res}).done(function () {
     $.getJSON("parsed/api_mst_slotitem.json", function (result) {
