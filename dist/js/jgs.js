@@ -21,11 +21,11 @@ function isvalid(e) {
   return e ? (isNaN(e) ? e.length : true) : false
 }
 function ifnull(notnul, ifnul) {
-	if (typeof (notnul) === 'undefined') {
-		return ifnul
-	} else {
-		return notnul
-	}
+  if (typeof (notnul) === 'undefined') {
+    return ifnul
+  } else {
+    return notnul
+  }
 }
 function insert_spacing(str) {
   var p1 = /([A-Za-z_])([\u4e00-\u9fa5]+)/gi;
@@ -67,7 +67,7 @@ function js(url) {
 }
 
 function GetRequest(a, b) {
-  char=''
+  char = ''
   var url = location.search; //获取url中"?"符后的字串
   var theRequest = new Object();
   if (url.indexOf("?") != -1) {
@@ -75,40 +75,40 @@ function GetRequest(a, b) {
     strs = str.split("&");
     for (var i = 0; i < strs.length; i++) {
       // theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
-      if(a==strs[i].split("=")[0]){
-        char= unescape(strs[i].split("=")[1]);
+      if (a == strs[i].split("=")[0]) {
+        char = unescape(strs[i].split("=")[1]);
       }
     }
   }
-  if (b==1) {
+  if (b == 1) {
     char = char.split(",")
-    arrsplice(char,"")
-  }else{if(!isNaN(char)){char=Number(char)}}
+    arrsplice(char, "")
+  } else { if (!isNaN(char)) { char = Number(char) } }
   return char;
 }
 
 function if1eq() {
   return "if *\(\w*\[?'?[0-9a-zA-Z_]*'?\]?=[^=]"
 }
-function arrsplice(arr,b) {
+function arrsplice(arr, b) {
   var index = arr.indexOf(b);
   if (index >= 0) {
     arr.splice(index, 1);
   }
   return arr;
-};
-function find(arr,key){
+}
+function find(arr, key) {
   const l = key.length
   const idxMap = new Map()
   // 具体小细节边界判断都忽略，实现功能为主
-  for(let i=0;i<arr.length;i++){
-    v=arr.substr(i,l)
+  for (let i = 0; i < arr.length; i++) {
+    v = arr.substr(i, l)
     idxMap.set(v, i)
   }
   return idxMap.has(key) ? idxMap.get(key) : -1
 }
 
-function jsonstr(a){
+function jsonstr(a) {
   return JSON.stringify(a).replace("[", "").replace("]", "").replace(/"/g, '');
 }
-function sortNumber(a,b){return a - b}
+function sortNumber(a, b) { return a - b }

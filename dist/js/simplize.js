@@ -1,49 +1,52 @@
 !function (a) { "function" == typeof define && define.amd ? define(["jquery"], a) : "object" == typeof exports ? a(require("jquery")) : a(jQuery) }(function (a) { function b(a) { return h.raw ? a : encodeURIComponent(a) } function c(a) { return h.raw ? a : decodeURIComponent(a) } function d(a) { return b(h.json ? JSON.stringify(a) : String(a)) } function e(a) { 0 === a.indexOf('"') && (a = a.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, "\\")); try { return a = decodeURIComponent(a.replace(g, " ")), h.json ? JSON.parse(a) : a } catch (b) { } } function f(b, c) { var d = h.raw ? b : e(b); return a.isFunction(c) ? c(d) : d } var g = /\+/g, h = a.cookie = function (e, g, i) { if (void 0 !== g && !a.isFunction(g)) { if (i = a.extend({}, h.defaults, i), "number" == typeof i.expires) { var j = i.expires, k = i.expires = new Date; k.setTime(+k + 864e5 * j) } return document.cookie = [b(e), "=", d(g), i.expires ? "; expires=" + i.expires.toUTCString() : "", i.path ? "; path=" + i.path : "", i.domain ? "; domain=" + i.domain : "", i.secure ? "; secure" : ""].join("") } for (var l = e ? void 0 : {}, m = document.cookie ? document.cookie.split("; ") : [], n = 0, o = m.length; o > n; n++) { var p = m[n].split("="), q = c(p.shift()), r = p.join("="); if (e && e === q) { l = f(r, g); break } e || void 0 === (r = f(r)) || (l[q] = r) } return l }; h.defaults = {}, a.removeCookie = function (b, c) { return void 0 === a.cookie(b) ? !1 : (a.cookie(b, "", a.extend({}, c, { expires: -1 })), !a.cookie(b)) } });
 var Default_isFT = 4 //默认是否繁体，0-简体，1-繁体 , 2- Japan 3 english
 var StranLink_Obj
-BodyIsFt = $.cookie('JF_cn')||Default_isFT
-console.log("FT: ",BodyIsFt)
+BodyIsFt = $.cookie('JF_cn') || Default_isFT
+console.log("FT: ", BodyIsFt)
 //转换文本
 function StranText(txt) {
-    if (txt == "" || txt == null||BodyIsFt==4){ return txt;}
-    else if(BodyIsFt==2){return Japanized(txt)}
-    else if(BodyIsFt==1){return Traditionalized(txt) }
-    else if(BodyIsFt==0){return Simplized(txt) }
+    if (txt == "" || txt == null || BodyIsFt == 4) { return txt; }
+    else if (BodyIsFt == 2) { return Japanized(txt) }
+    else if (BodyIsFt == 1) { return Traditionalized(txt) }
+    else if (BodyIsFt == 0) { return Simplized(txt) }
     // toFT = toFT == null ? BodyIsFt : toFT
     // if (chgTxt)txt = txt.replace((toFT ? "简" : "繁"), (toFT ? "繁" : "简"))
-    
+
     // if (BodyIsFt) { if(BodyIsFt==2){return Japanized(txt)}else{return Traditionalized(txt) }}
     // else { return Simplized(txt) }
 }
 //转换对象，使用递归，逐层剥到文本
 var a = 1;
 function StranBody(fobj) {
-    if(fobj=='auto'){
-        console.log("AUTO: ",BodyIsFt)
+    if (fobj == 'auto') {
+        console.log("AUTO: ", BodyIsFt)
         var obj = document.body.childNodes
-    }else{
-    if (typeof (fobj) == "object") { var obj = fobj.childNodes; }
-    else {
-        var tmptxt = StranLink_Obj.innerHTML.toString()
-        if (tmptxt.indexOf("和") > -1) {
-            BodyIsFt = 2
-            StranLink_Obj.innerHTML = '繁體中文'// StranText(tmptxt, 0, 1)
-            StranLink_Obj.title = '繁體中文'// StranText(StranLink_Obj.title, 0, 1)
-        }
+    } else {
+        if (typeof (fobj) == "object") { var obj = fobj.childNodes; }
         else {
-            if(tmptxt.indexOf("繁") > -1){
-                BodyIsFt = 1
-            StranLink_Obj.innerHTML = '简体中文'// StranText(tmptxt, 1, 1)
-            StranLink_Obj.title = '简体中文'// StranText(StranLink_Obj.title, 1, 1)
-            }else{BodyIsFt = 0
-            StranLink_Obj.innerHTML = '和製漢字'// StranText(tmptxt, 1, 1)
-            StranLink_Obj.title = '和製漢字'//  StranText(StranLink_Obj.title, 1, 1)}
-        }}
-        console.log("FT: ",BodyIsFt)
-        $.cookie('JF_cn', BodyIsFt, { expires: 365, path: '/' })
-        // console.log('JF_cn',BodyIsFt)
-        var obj = document.body.childNodes
-    }}
+            var tmptxt = StranLink_Obj.innerHTML.toString()
+            if (tmptxt.indexOf("和") > -1) {
+                BodyIsFt = 2
+                StranLink_Obj.innerHTML = '繁體中文'// StranText(tmptxt, 0, 1)
+                StranLink_Obj.title = '繁體中文'// StranText(StranLink_Obj.title, 0, 1)
+            }
+            else {
+                if (tmptxt.indexOf("繁") > -1) {
+                    BodyIsFt = 1
+                    StranLink_Obj.innerHTML = '简体中文'// StranText(tmptxt, 1, 1)
+                    StranLink_Obj.title = '简体中文'// StranText(StranLink_Obj.title, 1, 1)
+                } else {
+                    BodyIsFt = 0
+                    StranLink_Obj.innerHTML = '和製漢字'// StranText(tmptxt, 1, 1)
+                    StranLink_Obj.title = '和製漢字'//  StranText(StranLink_Obj.title, 1, 1)}
+                }
+            }
+            console.log("FT: ", BodyIsFt)
+            $.cookie('JF_cn', BodyIsFt, { expires: 365, path: '/' })
+            // console.log('JF_cn',BodyIsFt)
+            var obj = document.body.childNodes
+        }
+    }
     for (var i = 0; i < obj.length; i++) {
         var OO = obj.item(i)
         if ("||BR|HR|TEXTAREA|".indexOf("|" + OO.tagName + "|") > 0 || OO == StranLink_Obj) continue;

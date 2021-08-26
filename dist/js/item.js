@@ -51,8 +51,8 @@ function formatItemId(value) {
             str = slotitem[i]['api_name']
             var newtag = ''
             let newest
-            for(let t in releasetime){
-                newest=releasetime[t]
+            for (let t in releasetime) {
+                newest = releasetime[t]
                 break
             }
             if ((newest.indexOf(value) > -1) && "undefined" != typeof btninfo) { newtag = '<i style="background-image:url(https://pic4.zhimg.com/v2-338655a5d330e7af1ef36a314c689637_r.gif);" class="new"></i>' }

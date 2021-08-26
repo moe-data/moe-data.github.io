@@ -23,7 +23,7 @@ const q = GetRequest("q", 1);
 const ranget = GetRequest("t", 1);
 let jsindex = 0;
 var bigdata = [];
-var isonl=[]
+var isonl = []
 var sorted = [];
 var slotitem;
 const api_ = (q == 'd') ? 'api_' : '';
