@@ -1003,7 +1003,8 @@
     "api_tais": 0,
     "api_tyku": 2,
     "api_type": [4, 6, 21, 15, 0],
-    "api_usebull": "0"
+    "api_usebull": "0",
+    "api_version": 2
 }, {
     "api_atap": 0,
     "api_bakk": 0,
@@ -1029,7 +1030,8 @@
     "api_tais": 0,
     "api_tyku": 3,
     "api_type": [4, 6, 21, 15, 0],
-    "api_usebull": "0"
+    "api_usebull": "0",
+    "api_version": 2
 }, {
     "api_atap": 0,
     "api_bakk": 0,
@@ -11748,6 +11750,32 @@
     "api_tais": 0,
     "api_tyku": 13,
     "api_type": [3, 5, 6, 6, 34],
+    "api_usebull": "0"
+}, {
+    "api_atap": 0,
+    "api_bakk": 0,
+    "api_baku": 0,
+    "api_broken": [0, 0, 2, 4],
+    "api_houg": 0,
+    "api_houk": 1,
+    "api_houm": 2,
+    "api_id": 438,
+    "api_leng": 0,
+    "api_luck": 0,
+    "api_name": "三式水中探信儀改",
+    "api_raig": 0,
+    "api_raik": 0,
+    "api_raim": 0,
+    "api_rare": 4,
+    "api_sakb": 0,
+    "api_saku": 0,
+    "api_soku": 0,
+    "api_sortno": 438,
+    "api_souk": 1,
+    "api_taik": 0,
+    "api_tais": 11,
+    "api_tyku": 0,
+    "api_type": [7, 10, 14, 18, 0],
     "api_usebull": "0"
 }, {
     "api_atap": 0,
