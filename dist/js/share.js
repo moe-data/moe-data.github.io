@@ -169,7 +169,7 @@ function lvplus(arr) {
 function qndate(qn) {
     var date = new Date(2020, Number(qn) + 1)
     z(qn, date)
-    return date.getFullYear() + "/" + data.getMonth()
+    return date.getFullYear() + "/" + date.getMonth()
 }
 function timetable(t) {
     var timelist = $('.list').html()
