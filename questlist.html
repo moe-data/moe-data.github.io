@@ -263,15 +263,19 @@
             app.data.forEach(function (que) {
                 let bonus = ""
                 let slides = ""
-                que.reward_other?.forEach(function (be, i) {
-                    if (be.choices) {
-                        be.choices.forEach(function (ce) {
-                            bonus += "奖励" + (i + 1) + ": " + ce.name + 'x' + (ce.amount ? ce.amount : "") + "<br/>"
-                        })
-                    } else {
-                        bonus += "奖励" + (i + 1) + ": " + be.name + 'x' + (be.amount ? be.amount : "") + "<br/>"
-                    }
-                })
+                if (que.reward_other?.length && que.reward_other?.length > -1) {
+                    que.reward_other.forEach(function (be, i) {
+                        if (be.choices) {
+                            be.choices.forEach(function (ce) {
+                                bonus += "奖励" + (i + 1) + ": " + ce.name + 'x' + (ce.amount ? ce.amount : "") + "<br/>"
+                            })
+                        } else {
+                            bonus += "奖励" + (i + 1) + ": " + be.name + 'x' + (be.amount ? be.amount : "") + "<br/>"
+                        }
+                    })
+                } else {
+                    w(que.reward_other)
+                }
                 let slideq = que
                 let req = que.requirements
                 if (app.requiredic[req.category]) {
