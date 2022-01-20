@@ -1,5 +1,14 @@
 const kcurl = "https://kcwikizh.github.io/kcQuests/quests-scn.json"
 
+const URL_PREFIX = 'https://raw.githubusercontent.com/antest1/kcanotify-gamedata/master'
+const VERSION_URL = `${URL_PREFIX}/KCAINFO`
+const DATA_URL = `${URL_PREFIX}/files`
+const LANGS = ['scn', 'tcn', 'jp', 'en', 'ko']
+const LOCALES = ['zh-CN', 'zh-TW', 'ja-JP', 'en-US', 'ko-KR']
+LANGS.map((lang) => {
+    const filename = `quests-${lang}.json`
+    const fileURL = `${DATA_URL}/${filename}`
+})
 
 svdata = {
     "api_result": 1,
