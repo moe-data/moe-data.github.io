@@ -87,24 +87,25 @@ Object.defineProperty(batt, "setData", {
 `
         }
         $('.batl_dl').html(html)
-        if(list.length==0){
+        if (list.length == 0) {
           $('.batl_dl').html(`<dl class="batl_dl list_dl" style="max-height: 709px;">
           <dt class="batt_dt list_dt" id="open"> <span class="_after"></span>
           <p>NO DATA<span class="right"><span class="n">0</span><img src="./img/ta1.png" class="tar">
           <img src="./img/ta2.png" class="tar gray"></span></p>
           </dt></dl>`)
-        }else if(list.length==1){
+        } else if (list.length == 1) {
           $(".batt_dt").attr("id", "open").next().slideDown()
-        }else{
-        $(".batt_dt").on("click", function () {
-          $('.batt_dd').stop();
-          $(this).siblings("dt").removeAttr("id");
-          if ($(this).attr("id") == "open") {
-            $(this).removeAttr("id").siblings("dd").slideUp();
-          } else {
-            $(this).attr("id", "open").next().slideDown().siblings("dd").slideUp();
-          }
-        });}
+        } else {
+          $(".batt_dt").on("click", function () {
+            $('.batt_dd').stop();
+            $(this).siblings("dt").removeAttr("id");
+            if ($(this).attr("id") == "open") {
+              $(this).removeAttr("id").siblings("dd").slideUp();
+            } else {
+              $(this).attr("id", "open").next().slideDown().siblings("dd").slideUp();
+            }
+          });
+        }
       }
     }
   }
@@ -114,7 +115,7 @@ var bc = 1
 
 var batl
 app.initcache('starbattle', ['戦果', '試製甲板カタパルト', '司令部要員', '橘花改', '夜間作戦航空要員', '強風改', '流星改(一航戦/熟練)', '勲章', '補強増設', '熟練搭乗員', '戦闘詳報', '新型砲熕兵装資材', '新型航空兵装資材', '特注家具職人', '応急修理要員', '設営隊', 'F6F-5N'])
-z('stat', app.getstat('A03'))
+z('stat', app.getstat('A3'))
 z(app.valido)
 
 function loadbatl() {
@@ -170,7 +171,7 @@ function loadbatl() {
       list.push({
         name: keys,
         n: sum,
-        star: app.get('starbattle')?app.get('starbattle').indexOf(keys) > -1:false,
+        star: app.get('starbattle') ? app.get('starbattle').indexOf(keys) > -1 : false,
         finished: finished,
         open: false,
         pages: page,
@@ -180,7 +181,7 @@ function loadbatl() {
       list.push({
         name: keys,
         n: sum,
-        star: app.get('starbattle')?app.get('starbattle').indexOf(keys) > -1:false,
+        star: app.get('starbattle') ? app.get('starbattle').indexOf(keys) > -1 : false,
         finished: finished,
         open: false,
         pages: page,

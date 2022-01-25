@@ -84,19 +84,19 @@ Object.defineProperty(rewa, "setData", {
           let ulli = ''
           let title = e[key][i]
           for (let map in title.pages) {
-            ulli += '<li class="list_li" onclick="jump('+"'"+ map + "'"+')">' 
-            + map + '<span class="right"><span class="n">' 
-            + title.pages[map].n
-            +`</span><img src="./img/ta1.png" class="tar"  onclick="app.target('`+map+`')"></img>
+            ulli += '<li class="list_li" onclick="jump(' + "'" + map + "'" + ')">'
+              + map + '<span class="right"><span class="n">'
+              + title.pages[map].n
+              + `</span><img src="./img/ta1.png" class="tar"  onclick="app.target('` + map + `')"></img>
             <img src="./img/`
-            +(title.pages[map].finished?(title.pages[map].finished==2?'finish':'ongoing'):'locked')+`.png" class="sta"></img>` + '</span>'+'</li>'
+              + (title.pages[map].finished ? (title.pages[map].finished == 2 ? 'finish' : 'ongoing') : 'locked') + `.png" class="sta"></img>` + '</span>' + '</li>'
           }
           html += `<dt class="rewa_dt list_dt"> <span class="_after"></span>
-        <p>`+ title.name + '<span class="right"><span class="n">' 
-        + title.n
-        +`</span><img src="./img/ta1.png" class="tar"  onclick="app.targets('`+title.map.join(',')+`')"></img>
+        <p>`+ title.name + '<span class="right"><span class="n">'
+            + title.n
+            + `</span><img src="./img/ta1.png" class="tar"  onclick="app.targets('` + title.map.join(',') + `')"></img>
         <img src="./img/ta2.png" class="tar`
-        +(title.finished?'':' gray')+`"></img></p>
+            + (title.finished ? '' : ' gray') + `"></img></p>
         <i class="rewa_dt list_dt_icon"></i>
       </dt>
       <dd class="rewa_dd list_dd">
@@ -107,24 +107,25 @@ Object.defineProperty(rewa, "setData", {
 `
         }
         $('.rewa_dl').html(html)
-        if(list.length==0){
+        if (list.length == 0) {
           $('.rewa_dl').html(`<dl class="batl_dl list_dl" style="max-height: 709px;">
           <dt class="batt_dt list_dt" id="open"> <span class="_after"></span>
           <p>NO DATA<span class="right"><span class="n">0</span><img src="./img/ta1.png" class="tar">
           <img src="./img/ta2.png" class="tar gray"></span></p>
           </dt></dl>`)
-        }else if(list.length==1){
+        } else if (list.length == 1) {
           $(".rewa_dt").attr("id", "open").next().slideDown()
-        }else{
-        $(".rewa_dt").on("click", function () {
-          $('.rewa_dd').stop();
-          $(this).siblings("dt").removeAttr("id");
-          if ($(this).attr("id") == "open") {
-            $(this).removeAttr("id").siblings("dd").slideUp();
-          } else {
-            $(this).attr("id", "open").next().slideDown().siblings("dd").slideUp();
-          }
-        });}
+        } else {
+          $(".rewa_dt").on("click", function () {
+            $('.rewa_dd').stop();
+            $(this).siblings("dt").removeAttr("id");
+            if ($(this).attr("id") == "open") {
+              $(this).removeAttr("id").siblings("dd").slideUp();
+            } else {
+              $(this).attr("id", "open").next().slideDown().siblings("dd").slideUp();
+            }
+          });
+        }
       }
     }
   }
@@ -146,7 +147,7 @@ var sc = 0// var reward= app.reward[guess]
 
 var list
 app.initcache('starreward', ['戦果', '試製甲板カタパルト', '司令部要員', '橘花改', '夜間作戦航空要員', '強風改', '流星改(一航戦/熟練)', '勲章', '補強増設', '熟練搭乗員', '戦闘詳報', '新型砲熕兵装資材', '新型航空兵装資材', '特注家具職人', '応急修理要員', '設営隊', 'F6F-5N'])
-z('stat', app.getstat('A03'))
+z('stat', app.getstat('A3'))
 z(app.valido)
 
 function loadlist() {
@@ -220,17 +221,7 @@ function loadlist() {
       }
       if (fnshd != 2) finished = false;
     }
-    if (cate == 'all') {  
-      list.push({
-      name: keys,
-      n: sum,
-      star: app.get('starreward').indexOf(keys) > -1,
-      finished: finished,
-      open: false,
-      pages: page,
-      map:map
-    })
-  }else if (cate != cated ? cate.indexOf(keys) > -1 : cate.indexOf(keys) == -1) {
+    if (cate == 'all') {
       list.push({
         name: keys,
         n: sum,
@@ -238,11 +229,21 @@ function loadlist() {
         finished: finished,
         open: false,
         pages: page,
-        map:map
+        map: map
+      })
+    } else if (cate != cated ? cate.indexOf(keys) > -1 : cate.indexOf(keys) == -1) {
+      list.push({
+        name: keys,
+        n: sum,
+        star: app.get('starreward').indexOf(keys) > -1,
+        finished: finished,
+        open: false,
+        pages: page,
+        map: map
       })
     }
   }
-  list.sort(function(a,b){return a.name.localeCompare(b.name)})
+  list.sort(function (a, b) { return a.name.localeCompare(b.name) })
   rewa.setData({
     list: list
   })

@@ -40,7 +40,7 @@ const categories = [{
 const app = ({
   data: [{
     game_id: 101,
-    wiki_id: "A01",
+    wiki_id: "A1",
     category: 1,
     type: 1,
     name: "はじめての「編成」！",
@@ -64,7 +64,7 @@ const app = ({
     }
   }, {
     game_id: 102,
-    wiki_id: "A02",
+    wiki_id: "A2",
     category: 1,
     type: 1,
     name: "「駆逐隊」を編成せよ！",
@@ -87,7 +87,7 @@ const app = ({
     }
   }, {
     game_id: 103,
-    wiki_id: "A03",
+    wiki_id: "A3",
     category: 1,
     type: 1,
     name: "「水雷戦隊」を編成せよ！",
@@ -113,7 +113,7 @@ const app = ({
     }
   }, {
     game_id: 104,
-    wiki_id: "A04",
+    wiki_id: "A4",
     category: 1,
     type: 1,
     name: "６隻編成の艦隊を編成せよ！",
@@ -135,7 +135,7 @@ const app = ({
     }
   }, {
     game_id: 105,
-    wiki_id: "A05",
+    wiki_id: "A5",
     category: 1,
     type: 1,
     name: "軽巡２隻を擁する隊を編成せよ！",
@@ -158,7 +158,7 @@ const app = ({
     }
   }, {
     game_id: 106,
-    wiki_id: "A07",
+    wiki_id: "A7",
     category: 1,
     type: 1,
     name: "「重巡戦隊」を編成せよ！",
@@ -207,7 +207,7 @@ const app = ({
     }
   }, {
     game_id: 108,
-    wiki_id: "A08",
+    wiki_id: "A8",
     category: 1,
     type: 1,
     name: "「天龍」型軽巡姉妹の全２艦を編成せよ！",
@@ -400,7 +400,7 @@ const app = ({
     }
   }, {
     game_id: 115,
-    wiki_id: "A06",
+    wiki_id: "A6",
     category: 1,
     type: 1,
     name: "第２艦隊を編成せよ！",
@@ -424,7 +424,7 @@ const app = ({
     }
   }, {
     game_id: 116,
-    wiki_id: "A09",
+    wiki_id: "A9",
     category: 1,
     type: 1,
     name: "「水上機母艦」を配備せよ！",
@@ -2840,7 +2840,7 @@ const app = ({
     }
   }, {
     game_id: 201,
-    wiki_id: "Bd01",
+    wiki_id: "Bd1",
     category: 2,
     type: 2,
     name: "敵艦隊を撃破せよ！",
@@ -2861,7 +2861,7 @@ const app = ({
     }
   }, {
     game_id: 202,
-    wiki_id: "B01",
+    wiki_id: "B1",
     category: 2,
     type: 1,
     name: "はじめての「出撃」！",
@@ -2881,7 +2881,7 @@ const app = ({
     }
   }, {
     game_id: 203,
-    wiki_id: "B02",
+    wiki_id: "B2",
     category: 2,
     type: 1,
     name: "鎮守府正面海域を護れ！",
@@ -2904,7 +2904,7 @@ const app = ({
     }
   }, {
     game_id: 204,
-    wiki_id: "B04",
+    wiki_id: "B4",
     category: 2,
     type: 1,
     name: "南西諸島沖に出撃せよ！",
@@ -2925,7 +2925,7 @@ const app = ({
     }
   }, {
     game_id: 205,
-    wiki_id: "B05",
+    wiki_id: "B5",
     category: 2,
     type: 1,
     name: "接近する「敵前衛艦隊」を迎撃せよ！",
@@ -2952,7 +2952,7 @@ const app = ({
     }
   }, {
     game_id: 206,
-    wiki_id: "B06",
+    wiki_id: "B6",
     category: 2,
     type: 1,
     name: "「水雷戦隊」で出撃せよ！",
@@ -2980,7 +2980,7 @@ const app = ({
     }
   }, {
     game_id: 207,
-    wiki_id: "B07",
+    wiki_id: "B7",
     category: 2,
     type: 1,
     name: "「重巡洋艦」を出撃させよ！",
@@ -3004,7 +3004,7 @@ const app = ({
     }
   }, {
     game_id: 208,
-    wiki_id: "B08",
+    wiki_id: "B8",
     category: 2,
     type: 1,
     name: "「戦艦」を出撃させよ！",
@@ -3029,7 +3029,7 @@ const app = ({
     }
   }, {
     game_id: 209,
-    wiki_id: "B09",
+    wiki_id: "B9",
     category: 2,
     type: 1,
     name: "「空母機動部隊」出撃せよ！",
@@ -3059,7 +3059,7 @@ const app = ({
     }
   }, {
     game_id: 210,
-    wiki_id: "Bd03",
+    wiki_id: "Bd3",
     category: 2,
     type: 2,
     name: "敵艦隊を10回邀撃せよ！",
@@ -3080,7 +3080,7 @@ const app = ({
     }
   }, {
     game_id: 211,
-    wiki_id: "Bd04",
+    wiki_id: "Bd4",
     category: 2,
     type: 4,
     name: "敵空母を３隻撃沈せよ！",
@@ -3101,7 +3101,7 @@ const app = ({
     }
   }, {
     game_id: 212,
-    wiki_id: "Bd06",
+    wiki_id: "Bd6",
     category: 2,
     type: 5,
     name: "敵輸送船団を叩け！",
@@ -3165,7 +3165,7 @@ const app = ({
     }
   }, {
     game_id: 215,
-    wiki_id: "B03",
+    wiki_id: "B3",
     category: 2,
     type: 1,
     name: "第２艦隊、出撃せよ！",
@@ -3186,7 +3186,7 @@ const app = ({
     }
   }, {
     game_id: 216,
-    wiki_id: "Bd02",
+    wiki_id: "Bd2",
     category: 2,
     type: 2,
     name: "敵艦隊主力を撃滅せよ！",
@@ -3231,7 +3231,7 @@ const app = ({
     }
   }, {
     game_id: 218,
-    wiki_id: "Bd05",
+    wiki_id: "Bd5",
     category: 2,
     type: 2,
     name: "敵補給艦を3隻撃沈せよ！",
@@ -3459,7 +3459,7 @@ const app = ({
     }
   }, {
     game_id: 226,
-    wiki_id: "Bd07",
+    wiki_id: "Bd7",
     category: 2,
     type: 2,
     name: "南西諸島海域の制海権を握れ！",
@@ -3568,7 +3568,7 @@ const app = ({
     }
   }, {
     game_id: 230,
-    wiki_id: "Bd08",
+    wiki_id: "Bd8",
     category: 2,
     type: 2,
     name: "敵潜水艦を制圧せよ！",
@@ -6000,7 +6000,7 @@ const app = ({
     }
   }, {
     game_id: 301,
-    wiki_id: "C01",
+    wiki_id: "C1",
     category: 3,
     type: 1,
     name: "はじめての「演習」！",
@@ -6020,7 +6020,7 @@ const app = ({
     }
   }, {
     game_id: 302,
-    wiki_id: "C04",
+    wiki_id: "C4",
     category: 3,
     type: 3,
     name: "大規模演習",
@@ -6044,7 +6044,7 @@ const app = ({
     }
   }, {
     game_id: 303,
-    wiki_id: "C02",
+    wiki_id: "C2",
     category: 3,
     type: 2,
     name: "「演習」で練度向上！",
@@ -6064,7 +6064,7 @@ const app = ({
     }
   }, {
     game_id: 304,
-    wiki_id: "C03",
+    wiki_id: "C3",
     category: 3,
     type: 2,
     name: "「演習」で他提督を圧倒せよ！",
@@ -6107,7 +6107,7 @@ const app = ({
     }
   }, {
     game_id: 307,
-    wiki_id: "C05",
+    wiki_id: "C5",
     category: 3,
     type: 1,
     name: "艦隊の練度向上に努めよ！",
@@ -6129,7 +6129,7 @@ const app = ({
     }
   }, {
     game_id: 308,
-    wiki_id: "C06",
+    wiki_id: "C6",
     category: 3,
     type: 1,
     name: "演習を強化、艦隊の練度向上に努めよ！",
@@ -6154,7 +6154,7 @@ const app = ({
     }
   }, {
     game_id: 309,
-    wiki_id: "C07",
+    wiki_id: "C7",
     category: 3,
     type: 1,
     name: "北方再突入に備え、練度向上に努めよ！",
@@ -6179,7 +6179,7 @@ const app = ({
     }
   }, {
     game_id: 311,
-    wiki_id: "C08",
+    wiki_id: "C8",
     category: 3,
     type: 6,
     name: "精鋭艦隊演習",
@@ -6205,7 +6205,7 @@ const app = ({
     }
   }, {
     game_id: 312,
-    wiki_id: "C09",
+    wiki_id: "C9",
     category: 3,
     type: 1,
     name: "上陸部隊演習",
@@ -7148,7 +7148,7 @@ const app = ({
     }
   }, {
     game_id: 401,
-    wiki_id: "D01",
+    wiki_id: "D1",
     category: 4,
     type: 1,
     name: "はじめての「遠征」！",
@@ -7170,7 +7170,7 @@ const app = ({
     }
   }, {
     game_id: 402,
-    wiki_id: "D02",
+    wiki_id: "D2",
     category: 4,
     type: 2,
     name: "「遠征」を３回成功させよう！",
@@ -7192,7 +7192,7 @@ const app = ({
     }
   }, {
     game_id: 403,
-    wiki_id: "D03",
+    wiki_id: "D3",
     category: 4,
     type: 2,
     name: "「遠征」を１０回成功させよう！",
@@ -7217,7 +7217,7 @@ const app = ({
     }
   }, {
     game_id: 404,
-    wiki_id: "D04",
+    wiki_id: "D4",
     category: 4,
     type: 3,
     name: "大規模遠征作戦、発令！",
@@ -7242,7 +7242,7 @@ const app = ({
     }
   }, {
     game_id: 405,
-    wiki_id: "D05",
+    wiki_id: "D5",
     category: 4,
     type: 1,
     name: "第一次潜水艦派遣作戦",
@@ -7265,7 +7265,7 @@ const app = ({
     }
   }, {
     game_id: 406,
-    wiki_id: "D06",
+    wiki_id: "D6",
     category: 4,
     type: 1,
     name: "第二次潜水艦派遣作戦",
@@ -7289,7 +7289,7 @@ const app = ({
     }
   }, {
     game_id: 408,
-    wiki_id: "D07",
+    wiki_id: "D7",
     category: 4,
     type: 1,
     name: "潜水艦派遣作戦による技術入手の継続！",
@@ -7316,7 +7316,7 @@ const app = ({
     }
   }, {
     game_id: 409,
-    wiki_id: "D08",
+    wiki_id: "D8",
     category: 4,
     type: 1,
     name: "潜水艦派遣による海外艦との接触作戦",
@@ -7340,7 +7340,7 @@ const app = ({
     }
   }, {
     game_id: 410,
-    wiki_id: "D09",
+    wiki_id: "D9",
     category: 4,
     type: 3,
     name: "南方への輸送作戦を成功させよ！",
@@ -8083,7 +8083,7 @@ const app = ({
     }
   }, {
     game_id: 501,
-    wiki_id: "E01",
+    wiki_id: "E1",
     category: 5,
     type: 1,
     name: "はじめての「補給」！",
@@ -8104,7 +8104,7 @@ const app = ({
     }
   }, {
     game_id: 502,
-    wiki_id: "E02",
+    wiki_id: "E2",
     category: 5,
     type: 1,
     name: "はじめての「入渠」！",
@@ -8125,7 +8125,7 @@ const app = ({
     }
   }, {
     game_id: 503,
-    wiki_id: "E03",
+    wiki_id: "E3",
     category: 5,
     type: 2,
     name: "艦隊大整備！",
@@ -8146,7 +8146,7 @@ const app = ({
     }
   }, {
     game_id: 504,
-    wiki_id: "E04",
+    wiki_id: "E4",
     category: 5,
     type: 2,
     name: "艦隊酒保祭り！",
@@ -8170,7 +8170,7 @@ const app = ({
     }
   }, {
     game_id: 601,
-    wiki_id: "F01",
+    wiki_id: "F1",
     category: 6,
     type: 1,
     name: "はじめての「建造」！",
@@ -8191,7 +8191,7 @@ const app = ({
     }
   }, {
     game_id: 602,
-    wiki_id: "F02",
+    wiki_id: "F2",
     category: 6,
     type: 1,
     name: "はじめての「開発」！",
@@ -8212,7 +8212,7 @@ const app = ({
     }
   }, {
     game_id: 603,
-    wiki_id: "F03",
+    wiki_id: "F3",
     category: 6,
     type: 1,
     name: "はじめての「解体」！",
@@ -8236,7 +8236,7 @@ const app = ({
     }
   }, {
     game_id: 604,
-    wiki_id: "F04",
+    wiki_id: "F4",
     category: 6,
     type: 1,
     name: "はじめての「廃棄」！",
@@ -8261,7 +8261,7 @@ const app = ({
     }
   }, {
     game_id: 605,
-    wiki_id: "F05",
+    wiki_id: "F5",
     category: 6,
     type: 2,
     name: "新装備「開発」指令",
@@ -8285,7 +8285,7 @@ const app = ({
     }
   }, {
     game_id: 606,
-    wiki_id: "F06",
+    wiki_id: "F6",
     category: 6,
     type: 2,
     name: "新造艦「建造」指令",
@@ -8309,7 +8309,7 @@ const app = ({
     }
   }, {
     game_id: 607,
-    wiki_id: "F07",
+    wiki_id: "F7",
     category: 6,
     type: 2,
     name: "装備「開発」集中強化！",
@@ -8330,7 +8330,7 @@ const app = ({
     }
   }, {
     game_id: 608,
-    wiki_id: "F08",
+    wiki_id: "F8",
     category: 6,
     type: 2,
     name: "艦娘「建造」艦隊強化！",
@@ -8354,7 +8354,7 @@ const app = ({
     }
   }, {
     game_id: 609,
-    wiki_id: "F09",
+    wiki_id: "F9",
     category: 6,
     type: 2,
     name: "軍縮条約対応！",
@@ -11043,7 +11043,7 @@ const app = ({
     }
   }, {
     game_id: 701,
-    wiki_id: "G01",
+    wiki_id: "G1",
     category: 7,
     type: 1,
     name: "はじめての「近代化改修」！",
@@ -11064,7 +11064,7 @@ const app = ({
     }
   }, {
     game_id: 702,
-    wiki_id: "G02",
+    wiki_id: "G2",
     category: 7,
     type: 2,
     name: "艦の「近代化改修」を実施せよ！",
@@ -11085,7 +11085,7 @@ const app = ({
     }
   }, {
     game_id: 703,
-    wiki_id: "G03",
+    wiki_id: "G3",
     category: 7,
     type: 3,
     name: "「近代化改修」を進め、戦備を整えよ！",
@@ -11109,7 +11109,7 @@ const app = ({
     }
   }, {
     game_id: 704,
-    wiki_id: "G04",
+    wiki_id: "G4",
     category: 7,
     type: 1,
     name: "「大型艦建造」の準備！(その壱)",
@@ -11130,7 +11130,7 @@ const app = ({
     }
   }, {
     game_id: 705,
-    wiki_id: "G05",
+    wiki_id: "G5",
     category: 7,
     type: 1,
     name: "航空艤装の近代化改修",
@@ -15831,6 +15831,9 @@ const app = ({
 
     app.data = app.data.concat(app.newload)
     app.data.forEach(function (e, i) {
+      // if (e.wiki_id.length == 3 && e.wiki_id[1] == 0) {
+      //   e.wiki_id = e.wiki_id[0] + e.wiki_id[2]
+      // }
       app.wkid[String(e.game_id)] = e.wiki_id
       app.wktoi[String(e.wiki_id)] = i
       e.description = ifnull(app.zhCN[String(e.game_id)], e.detail)
@@ -15956,7 +15959,7 @@ const app = ({
     if (app.wktoi[wkid] != null && app.data[app.wktoi[wkid]] != null) {
       return app.data[app.wktoi[wkid]][key]
     } else {
-      x(wkid, ' is not in data!', app.wktoi[wkid], app.data)
+      x(wkid, ' is not in data!', app.wktoi[wkid], app.wktoi)
       option.title.text = '未找到目标任务：' + wkid
     }
   },
