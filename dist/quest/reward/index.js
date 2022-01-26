@@ -247,5 +247,5 @@ function loadlist() {
   rewa.setData({
     list: list
   })
-  z(list)
+  z({ list })
 }

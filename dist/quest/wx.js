@@ -16,7 +16,7 @@ const wx = {
     setStorageSync: function (key, value) {
         // $.cookie(key,JSON.stringify(value), { expires: 999, path: '/' })
         localStorage.setItem(key, JSON.stringify(value))
-        // z(value)
+        // z({value})
         // z(JSON.stringify(value))
         // z(localStorage.getItem(key))
     }
@@ -53,26 +53,26 @@ function homepos(x, y) {
 }
 
 
-$(function(){
+$(function () {
     //读取cookie
-    var res=app.get('guide');
-    z(res)
+    var res = app.get('guide');
+    z({ res })
     //如果没有cookie,执行以下动作
-    if(res!="guide"){
-    $('#mask,#searchTip,#searchTip div:eq(0)').show();
-    $('#searchTip div a').click(function(){
-        var current=$(this).parent();
-        current.hide();
-        current.next().show();
-    })
+    if (res != "guide") {
+        $('#mask,#searchTip,#searchTip div:eq(0)').show();
+        $('#searchTip div a').click(function () {
+            var current = $(this).parent();
+            current.hide();
+            current.next().show();
+        })
 
-    $('#searchTip div span,#searchTip div a:last').click(function(){
-        $('#mask,#searchTip').hide();
-    })
+        $('#searchTip div span,#searchTip div a:last').click(function () {
+            $('#mask,#searchTip').hide();
+        })
 
-    //添加cookie
-    var oDate=new Date();
-    oDate.setDate(oDate.getDate()+30);
-    app.set('guide','guide')
+        //添加cookie
+        var oDate = new Date();
+        oDate.setDate(oDate.getDate() + 30);
+        app.set('guide', 'guide')
     }
 })

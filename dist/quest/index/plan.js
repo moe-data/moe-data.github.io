@@ -69,14 +69,14 @@ function prop(obj){
 			var Eck=Eca[k]
 			if(Eck){
 		if(boo(Eck)){
-			z(Eck);
+			z({Eck});
 		}else{
 			
 		for (let k in Eck){
 			var Ecb=Eck[k]
 			if(Ecb){
 		if(boo(Ecb)){
-			z(Ecb);
+			z({Ecb});
 		}else{
 			
 		for (let k in Ecb){
@@ -209,7 +209,7 @@ function prop(obj){
 	// 		// 	that.setData({
 	// 		// 		current:current,
 	// 		// 	})
-	// 		// 	z(params);
+	// 		// 	z({params});
 	// 		// });
 	// 		console.timeEnd('计时器0')
 	// 		console.timeEnd('计时器1')

@@ -156,7 +156,7 @@ function loadbatl() {
       let fnshd = app.data[app.wktoi[key]].guess
       sum += mapinfo.times || 1
       map.push(key)
-      // z(mapinfo)
+      // z({mapinfo})
       // page[key] = {
       //   n: mapinfo.times||1,
       //   // star:app.get('starwk').indexOf(key)>-1,

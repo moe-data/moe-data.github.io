@@ -36,7 +36,7 @@ const categories = [{
     name: "其他",
     symbol: `diamond`
 }]
-const questarray = [{
+const fewarray = [{
     game_id: 101,
     wiki_id: "A1",
     category: 1,
@@ -3120,7 +3120,7 @@ const questarray = [{
     }
 }, {
     game_id: 213,
-    wiki_id: "Bw03",
+    wiki_id: "Bw3",
     category: 2,
     type: 3,
     name: "海上通商破壊作戦",
@@ -3141,7 +3141,7 @@ const questarray = [{
     }
 }, {
     game_id: 214,
-    wiki_id: "Bw01",
+    wiki_id: "Bw1",
     category: 2,
     type: 3,
     name: "あ号作戦",
@@ -3287,7 +3287,7 @@ const questarray = [{
     }
 }, {
     game_id: 220,
-    wiki_id: "Bw02",
+    wiki_id: "Bw2",
     category: 2,
     type: 3,
     name: "い号作戦",
@@ -3308,7 +3308,7 @@ const questarray = [{
     }
 }, {
     game_id: 221,
-    wiki_id: "Bw04",
+    wiki_id: "Bw4",
     category: 2,
     type: 3,
     name: "ろ号作戦",
@@ -3519,7 +3519,7 @@ const questarray = [{
     }
 }, {
     game_id: 228,
-    wiki_id: "Bw05",
+    wiki_id: "Bw5",
     category: 2,
     type: 3,
     name: "海上護衛戦",
@@ -3543,7 +3543,7 @@ const questarray = [{
     }
 }, {
     game_id: 229,
-    wiki_id: "Bw06",
+    wiki_id: "Bw6",
     category: 2,
     type: 3,
     name: "敵東方艦隊を撃滅せよ！",
@@ -3895,7 +3895,7 @@ const questarray = [{
     }
 }, {
     game_id: 241,
-    wiki_id: "Bw07",
+    wiki_id: "Bw7",
     category: 2,
     type: 3,
     name: "敵北方艦隊主力を撃滅せよ！",
@@ -3921,7 +3921,7 @@ const questarray = [{
     }
 }, {
     game_id: 242,
-    wiki_id: "Bw08",
+    wiki_id: "Bw8",
     category: 2,
     type: 3,
     name: "敵東方中枢艦隊を撃破せよ！",
@@ -3947,7 +3947,7 @@ const questarray = [{
     }
 }, {
     game_id: 243,
-    wiki_id: "Bw09",
+    wiki_id: "Bw9",
     category: 2,
     type: 3,
     name: "南方海域珊瑚諸島沖の制空権を握れ！",
@@ -4126,7 +4126,7 @@ const questarray = [{
     }
 }, {
     game_id: 249,
-    wiki_id: "Bm01",
+    wiki_id: "Bm1",
     category: 2,
     type: 6,
     name: "「第五戦隊」出撃せよ！",
@@ -4352,7 +4352,7 @@ const questarray = [{
     }
 }, {
     game_id: 256,
-    wiki_id: "Bm02",
+    wiki_id: "Bm2",
     category: 2,
     type: 6,
     name: "「潜水艦隊」出撃せよ！",
@@ -4378,7 +4378,7 @@ const questarray = [{
     }
 }, {
     game_id: 257,
-    wiki_id: "Bm03",
+    wiki_id: "Bm3",
     category: 2,
     type: 6,
     name: "「水雷戦隊」南西へ！",
@@ -4446,7 +4446,7 @@ const questarray = [{
     }
 }, {
     game_id: 259,
-    wiki_id: "Bm04",
+    wiki_id: "Bm4",
     category: 2,
     type: 6,
     name: "「水上打撃部隊」南方へ！",
@@ -4609,7 +4609,7 @@ const questarray = [{
     }
 }, {
     game_id: 264,
-    wiki_id: "Bm06",
+    wiki_id: "Bm6",
     category: 2,
     type: 6,
     name: "「空母機動部隊」西へ！",
@@ -4642,7 +4642,7 @@ const questarray = [{
     }
 }, {
     game_id: 265,
-    wiki_id: "Bm05",
+    wiki_id: "Bm5",
     category: 2,
     type: 6,
     name: "海上護衛強化月間",
@@ -4668,7 +4668,7 @@ const questarray = [{
     }
 }, {
     game_id: 266,
-    wiki_id: "Bm07",
+    wiki_id: "Bm7",
     category: 2,
     type: 6,
     name: "「水上反撃部隊」突入せよ！",
@@ -5178,7 +5178,7 @@ const questarray = [{
     }
 }, {
     game_id: 280,
-    wiki_id: "Bm08",
+    wiki_id: "Bm8",
     category: 2,
     type: 6,
     name: "兵站線確保！海上警備を強化実施せよ！",
@@ -11739,7 +11739,7 @@ const questarray = [{
     }
 }, {
     game_id: 822,
-    wiki_id: "Bq01",
+    wiki_id: "Bq1",
     category: 2,
     type: 7,
     name: "沖ノ島海域迎撃戦",
@@ -12683,7 +12683,7 @@ const questarray = [{
     }
 }, {
     game_id: 854,
-    wiki_id: "Bq02",
+    wiki_id: "Bq2",
     category: 2,
     type: 7,
     name: "戦果拡張任務！「Z作戦」前段作戦",
@@ -13072,7 +13072,7 @@ const questarray = [{
     }
 }, {
     game_id: 861,
-    wiki_id: "Bq03",
+    wiki_id: "Bq3",
     category: 2,
     type: 7,
     name: "強行輸送艦隊、抜錨！",
@@ -13101,7 +13101,7 @@ const questarray = [{
     }
 }, {
     game_id: 862,
-    wiki_id: "Bq04",
+    wiki_id: "Bq4",
     category: 2,
     type: 7,
     name: "前線の航空偵察を実施せよ！",
@@ -13458,7 +13458,7 @@ const questarray = [{
     }
 }, {
     game_id: 873,
-    wiki_id: "Bq05",
+    wiki_id: "Bq5",
     category: 2,
     type: 7,
     name: "北方海域警備を実施せよ！",
@@ -13546,7 +13546,7 @@ const questarray = [{
     }
 }, {
     game_id: 875,
-    wiki_id: "Bq06",
+    wiki_id: "Bq6",
     category: 2,
     type: 7,
     name: "精鋭「三一駆」、鉄底海域に突入せよ！",
@@ -14145,7 +14145,7 @@ const questarray = [{
     }
 }, {
     game_id: 888,
-    wiki_id: "Bq07",
+    wiki_id: "Bq7",
     category: 2,
     type: 7,
     name: "新編成「三川艦隊」、鉄底海峡に突入せよ！",
@@ -14358,7 +14358,7 @@ const questarray = [{
     }
 }, {
     game_id: 893,
-    wiki_id: "Bq08",
+    wiki_id: "Bq8",
     category: 2,
     type: 7,
     name: "泊地周辺海域の安全確保を徹底せよ！",
@@ -14391,7 +14391,7 @@ const questarray = [{
     }
 }, {
     game_id: 894,
-    wiki_id: "Bq09",
+    wiki_id: "Bq9",
     category: 2,
     type: 7,
     name: "空母戦力の投入による兵站線戦闘哨戒",

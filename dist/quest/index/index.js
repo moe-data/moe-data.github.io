@@ -86,7 +86,7 @@ const that = ({
 	handset(o) {
 		let d = o.target.dataset.c
 		if (d == app.getstat(this.data.current.wiki_id)) return
-		// z(d)
+		// z({d})
 		// 		z(app.getstat(this.data.current.wiki_id))
 		// 		z((this.data.current.wiki_id))
 		// 		z((current.wiki_id))
@@ -275,24 +275,33 @@ const fileURL = `${DATA_URL}/${filename}`
 // })
 $.getJSON(fileURL, function (latest) {
 	app.onLaunch()
-	// app.data.forEach(function (e, i) {
-	// 	try { delete latest[e.id] } catch (err) { x(e, err) }
-	// })
+	for (let i in app.data) {
+		let e = app.data[i]
+		if (!e) continue;
+		try { delete latest[e.id] } catch (err) { x(e, err) }
+	}
 	// for (let i in latest) {
 	// 	let o = latest[i]
-	// 	app.data.push(
-	// 		{
-	// 			game_id: Number(i),
-	// 			wiki_id: o.code,
-	// 			category: 4,
-	// 			type: 1,
-	// 			name: o.name,
-	// 			detail: o.desc,
-	// 			// prerequisite: [869],
-	// 		})
+	// 	app.data[i] = {
+	// 		game_id: Number(i),
+	// 		wiki_id: o.code,
+	// 		category: 4,
+	// 		type: 1,
+	// 		name: o.name,
+	// 		detail: o.desc,
+	// 		reward_fuel: 0,
+	// 		reward_ammo: 0,
+	// 		reward_steel: 0,
+	// 		reward_bauxite: 0,
+	// 		reward_other: [],
+	// 		prerequisite: [],
+	// 		requirements: {}
+	// 	}
 	// }
 	$.getJSON(kcurl, function (kcpre) {
-		app.data.forEach(function (e, i) {
+		for (let e of app.data) {
+			if (!e) continue;
+
 			e.guess = ifnull(app.getstat(e.wiki_id), 0)
 			// e.star = ifnull(app.get('star'+e.wiki_id),false)
 			// e.del = ifnull(app.get('del'+e.wiki_id),false)
@@ -356,19 +365,33 @@ $.getJSON(fileURL, function (latest) {
 					e.period = 'annual'
 					break;
 			}
-		})
+		}
 		pushlink('A3')
 		update()
 		let me = ['A62', 'A68', 'A70', 'A73', 'A78', 'A79', 'A80', 'A83', 'A87', 'B136', 'B138', 'B44', 'B137', 'B128', 'C22', 'C48', 'B58', 'B60']
-		// for(let i=0;i<me.length;i++){
-		// 	let m=me[i]
-		// 	try {
-		// 	app.setstat(app.data[app.wktoi[m]],1)
-		// 	} catch (error) {
-		// 		z(m)
-		// 	}
-		// }
+		for (let m of me) {
+			try {
+				app.setstat(m, 1)
+			} catch (error) {
+				z({ m })
+			}
+		}
 	})
+	for (let i in app.newload) {
+		app.data[i] = app.newload[i]
+	}
+	for (let i in app.data) {
+		let e = app.data[i]
+		if (!e) continue;
+		// if (e.wiki_id.length == 3 && e.wiki_id[1] == 0) {
+		//   e.wiki_id = e.wiki_id[0] + e.wiki_id[2]
+		// }
+		app.wkid[String(e.game_id)] = e.wiki_id
+		app.wktoi[String(e.wiki_id)] = i
+		e.description = ifnull(app.zhCN[String(e.game_id)], e.detail)
+		e.postQuest = ifnull(app.postQuest[String(e.game_id)], [])
+		// gameid[String(e.wiki_id)] = e.game_id
+	};
 })
 // import * as echarts from '../../ec-canvas/echarts';
 
@@ -387,7 +410,7 @@ let chartdata, reward, battle
 let toolname = '舰娘任务管理器'
 let focus = null
 let master = ['A3']
-let chain = []
+let block = []
 var ex = {}
 var ey = {}
 
@@ -414,7 +437,8 @@ function seplink(m) {
 	return link
 }
 function pushlink(node) {
-	app.data.forEach(function (e) {
+	for (let e of app.data) {
+		if (!e) continue;
 		if (node == e.wiki_id) {
 			try {
 				e.pre.forEach(function (pre) {
@@ -434,7 +458,7 @@ function pushlink(node) {
 			}
 		}
 		return
-	})
+	}
 }
 
 function datawk(wkid) {
@@ -476,7 +500,7 @@ function pushpost(list) {
 		})
 	return list
 }
-// z(master)
+// z({master})
 
 function jump(wkid) {
 	current = datawk(wkid)
@@ -536,7 +560,7 @@ function affect(node, stat, n) {
 	// 	let d = app.data[i]
 	// 	if (node == d.wiki_id) {
 	// 		d.guess = ifnull(stat, 0)
-	// console.log(d.itemStyle)
+	// z(d.itemStyle)
 	// setTimeout(function(){
 	// if(Math.random()>0.94)setchart()
 	// return
@@ -596,7 +620,7 @@ let option = {
 	animationEasingUpdate: 'quinticInOut',
 	nodeScaleRatio: 0.9,
 	series: [{
-		data: chain,
+		data: block,
 		links: edge,
 		symbolSize: size * 5,
 		type: 'graph',
@@ -729,29 +753,20 @@ function initChart(canvas, width, height, dpr) {
 	return chart;
 }
 
-// function ifnull(notnul, ifnul) {
-// 	if (typeof (notnul) === 'undefined') {
-// 		return ifnul
-// 	} else {
-// 		return notnul
-// 	}
-// }
-
 function eqifnull(notnul, ifnul) {
 	if (typeof (notnul) === 'undefined') {
 		notnul = ifnul
 	}
 }
 
-
 function didperiod(type) {
-	app.data.forEach(function (e) {
+	for (let e of app.data) {
+		if (!e) continue;
 		let Bd0 = type == 2 ? e.type == 4 || e.type == 5 : false
-		z(Bd0)
 		if (e.type == 2 || Bd0) {
 			app.setstat(e.wiki_id, 2)
 		}
-	})
+	}
 }
 function fistvisit() {
 	if (!app.get('fistvisit')) {
@@ -763,21 +778,12 @@ function fistvisit() {
 }
 fistvisit()
 
-
-// for (let i = 200; i < datalen; i++) {
-// 	if (app.data[i].type > 1)
-// 		z(app.beginutc(app.data[i].wiki_id, new Date()),app.data[i].period, )
-// }
-// setTimeout(() => {
-// 	update();
-// 	var dawn = app.periodstart('daily', String(new Date()))
-// }, dawn + 10000000000);
-
 function update() {
 	try {
-		app.data.forEach(function (e) {
+		for (let e of app.data) {
+			if (!e) continue;
 			e.guess = 0
-		})
+		}
 	} catch (error) {
 		z(app.data);
 		return
@@ -813,13 +819,14 @@ function update() {
 		}
 	})
 	//guess s1
-	app.data.forEach(function (e) {
+	for (let e of app.data) {
+		if (!e) continue;
 		if (e.guess != 2) {
 			let flag = true
 			e.pre.forEach(function (p) {
 				for (let i = 0; i < datalen; i++) {
 					let node = app.data[i]
-					if (node.wiki_id == p) {
+					if (node && node.wiki_id == p) {
 						if (node.guess != 2) flag = false
 						break
 					}
@@ -829,60 +836,66 @@ function update() {
 				e.guess = 1
 			}
 		}
-	})
+	}
 }
 
 function setchart() {
 	//Filter
 	// z(switches.fb) 
-	chain = []
+	block = []
 	if (switches.fb != 0 && switches.fb < app.branches.length - 2) {
 		app.branches[switches.fb][1].forEach(wkid => {
 			datawk(wkid).target = true
 		});
 		let custom = pushpost(app.branches[switches.fb][1])
 		custom.forEach(function (wkid) {
-			chain.push(datawk(wkid))
+			block.push(datawk(wkid))
 		})
 	} else {
 		switch (Number(switches.fb)) {
 			case 0:
-				chain = JSON.parse(JSON.stringify(app.data))
-				z(chain)
+				for (let e of app.data) {
+					if (e) block.push(e);
+				}
 				break;
 			case app.branches.length - 1:
-				app.data.forEach(function (e) {
-					if (master.indexOf(e.wiki_id) > -1) chain.push(e);
-				})
+				for (let e of app.data) {
+					if (!e) continue;
+					if (master.indexOf(e.wiki_id) > -1) block.push(e);
+				}
 				break;
 			case app.branches.length - 2:
-				app.data.forEach(function (e) {
-					if (master.indexOf(e.wiki_id) == -1) chain.push(e);
-				})
+				for (let e of app.data) {
+					if (!e) continue;
+					if (master.indexOf(e.wiki_id) == -1) block.push(e);
+				}
 				break;
 			default:
 				break;
 		}
+		z({ block })
 	}
 	that.setData({
 		switches: switches
 	})
-	var cl = chain.length;
+	var cl = block.length;
 	while (cl--) {
-		let c = chain[cl].guess
+		if (!block[cl]) continue;
+		let c = block[cl].guess
 		if (switches.fs[0] && switches.fs[1] && switches.fs[2]) { } else {
 			let status = false
 			if ((!switches.fs[0]) && c == 0) status = true
 			if ((!switches.fs[1]) && c == 1) status = true
 			if ((!switches.fs[2]) && c == 2) status = true
 			if (status) {
-				chain.splice(cl, 1)
+				block.splice(cl, 1)
 			}
 		}
 	}
 	edge = []
-	chain.forEach(function (e) {
-		e.pre.forEach(function (p) {
+	block.forEach(function (e) {
+		e?.pre?.forEach(function (p) {
+			if (!e) return;
 			edge.push({
 				source: String(app.wktoi[p]),
 				target: String(e.id),
@@ -892,17 +905,18 @@ function setchart() {
 			})
 		})
 	})
-	z(edge)
-	if (chain.length + edge.length > 920) {
+	z({ edge })
+	if (block.length + edge.length > 920) {
 		option.title.text = '画布承载超限\n\n部分箭头未显示'
-		z("chain too lonng", chain.length, edge.length);
+		z("block too lonng", block.length, edge.length);
 		// edge = link.slice(edge.length - 950 + edge.length, edge.length)
-		edge = link.slice(0, 920 - edge.length - chain.length)
+		edge = link.slice(0, 920 - edge.length - block.length)
 	} else {
 		option.title.text = ''
 	}
-	chain.forEach(function (e) {
-		switch (Number(e.guess)) {
+	block.forEach(function (e) {
+		if (!e) return;
+		switch (Number(e?.guess)) {
 			case 0:
 				s0(e)
 				break;
@@ -940,8 +954,8 @@ function setchart() {
 			e.y = ey[e.wiki_id]
 		}
 	})
-	z('chain:', chain.length, 'edge:', edge.length)
-	option.series[0].data = chain
+	z('block:', block.length, 'edge:', edge.length)
+	option.series[0].data = block
 	chart.setOption(option)
 	chartdata = chart._chartsViews[0]._symbolDraw._data
 	// z(chartdata, app.data)
@@ -957,11 +971,11 @@ function setchart() {
 		}
 	}
 	// z('position', ex)
-	if (chain.length) {
-		// z(ex[chain[0].wiki_id])
+	if (block.length) {
+		// z(ex[block[0].wiki_id])
 		edge.forEach(function (link) {
-			for (let ii = 0; ii < chain.length; ii++) {
-				var ch = chain[ii]
+			for (let ii = 0; ii < block.length; ii++) {
+				var ch = block[ii]
 				if (ex[ch.wiki_id] == null) break;
 				if (ch.game_id == link.source) {
 					try { //先得到id后渲染
@@ -1014,7 +1028,9 @@ function setchart() {
 	setTimeout(() => {
 		reward = []
 		battle = []
-		app.data.forEach(function (e, i) {
+		for (let e of app.data) {
+			if (!e) continue;
+
 			if (e.requirements.category == "sortie") {
 				addbattle(e, e.requirements)
 				addbattle(e, e.requirements, 10)
@@ -1045,8 +1061,8 @@ function setchart() {
 					}
 				}
 			}
-		})
-		z(battle)
+		}
+		z({ battle })
 		app.battle = battle
 		app.reward = reward
 	}, 1200);

@@ -1,10 +1,9 @@
-const questdic = {}
-questarray.forEach(e => {
-  questdic[e.game_id] = e
+const fewdic = []
+fewarray.forEach(e => {
+  fewdic[e.game_id] = e
 })
-
 const app = ({
-  data: questdic,
+  data: fewdic,
   zhCN,
   postQuest: {
     "101": [102],
@@ -338,7 +337,7 @@ const app = ({
     modernization: "近代化改修/舰装合成",
     "a-gou": "あ号作戦"
   },
-  newload: [],
+  newload: {},
   branches: [],
   fb: 2,
   showall() {
@@ -368,7 +367,7 @@ const app = ({
   },
   onLaunch: function () {
     // app=this
-    app.newload = app.initcache('newload', [])
+    app.newload = app.initcache('newload', {})
     app.branches = app.initcache('branches', [
       ['所有任务', []],
       ['自定义', []],
@@ -387,64 +386,20 @@ const app = ({
       ['独立任务'],
       ['非独立任务']
     ])
-
-    app.data = app.data.concat(app.newload)
-    app.data.forEach(function (e, i) {
-      // if (e.wiki_id.length == 3 && e.wiki_id[1] == 0) {
-      //   e.wiki_id = e.wiki_id[0] + e.wiki_id[2]
-      // }
-      app.wkid[String(e.game_id)] = e.wiki_id
-      app.wktoi[String(e.wiki_id)] = e.game_id
-      e.description = ifnull(app.zhCN[String(e.game_id)], e.detail)
-      e.postQuest = ifnull(app.postQuest[String(e.game_id)], [])
-      // gameid[String(e.wiki_id)] = e.game_id
-    });
     console.time('计时器0')
-    // 展示本地存储能力sss
-    // var logs = wx.getStorageSync('logs') || []
-    // logs.unshift(Date.now())
-    // wx.setStorageSync('logs', logs)
-
-    // 登录
-    // wx.login({
-    //   success: res => {
-    //     // 发送 res.code 到后台换取 openId, sessionKey, unionId
-    //   }
-    // })
-    // // 获取用户信息
-    // wx.getSetting({
-    //   success: res => {
-    //     if (res.authSetting['scope.userInfo']) {
-    //       // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-    //       wx.getUserInfo({
-    //         success: res => {
-    //           // 可以将 res 发送给后台解码出 unionId
-    //           app.globalData.userInfo = res.userInfo
-
-    //           // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-    //           // 所以此处加入 callback 以防止这种情况
-    //           if (app.userInfoReadyCallback) {
-    //             app.userInfoReadyCallback(res)
-    //           }
-    //         }
-    //       })
-    //     }
-    //   }
-    // })
   },
   wkid: {},
   wktoi: {},
-  // let gameid = {},
-  setstat: function (wkid, stat) {
-    if (typeof wkid != 'string') x(wkid, stat);
+  setstat: function (wk, s) {
+    if (typeof wk != 'string') x(wk, s);
     let history = app.get('history') || []
     if (history.constructor != Array) history = [];
-    let add = [wkid, stat, new Date()]
+    let add = [wk, s, new Date()]
     try {
       history.push(add)
       app.set('history', history)
     } catch (e) {
-      x(e, wkid, stat, history)
+      x(e, wk, s, history)
     }
   },
   getstat: function (wkid) {
