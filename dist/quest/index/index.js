@@ -258,7 +258,7 @@ const birth = app.periodstart('once', new Date())
 const blank = '    '
 var size = 5
 var repulsion = 1
-let link = []
+// let link = []
 let edge = []
 let valid = []
 // let dawn = app.periodstart('daily', String(new Date()))
@@ -310,15 +310,15 @@ $.getJSON(fileURL, function (latest) {
 			e.pre = kcpre[e.game_id]?.pre
 			if (!e.pre) { e.pre = [] }
 			if (e.id == 192) z(e.pre, e.id, app.wkid[e.id])
-			e.pre.forEach(function (wkid) {
-				link.push({
-					source: String(app.wktoi[wkid]),
-					target: String(e.id),
-					// lineStyle:{
-					// 	color:'#333'
-					// }
-				})
-			})
+			// e.pre.forEach(function (wkid) {
+			// 	link.push({
+			// 		source: String(app.wktoi[wkid]),
+			// 		target: String(e.id),
+			// lineStyle:{
+			// 	color:'#333'
+			// }
+			// 	})
+			// })
 			// e.post = wkids(postQuest[String(e.game_id)])
 			e.post = wkids(e.postQuest)
 			e.categories = e.category
@@ -904,13 +904,17 @@ function setchart() {
 	edge = []
 	block.forEach(function (e) {
 		e?.pre?.forEach(function (p) {
-			if (!e) return;
+			let flag = false
+			for (let b of block) {
+				if (p == b.wiki_id) {
+					flag = true
+					break
+				}
+			}
+			if (!flag) return;
 			edge.push({
 				source: String(app.wktoi[p]),
 				target: String(e.id),
-				// lineStyle:{
-				// 	color:'#333'
-				// }
 			})
 		})
 	})
@@ -919,7 +923,7 @@ function setchart() {
 		option.title.text = '画布承载超限\n\n部分箭头未显示'
 		z("block too lonng", block.length, edge.length);
 		// edge = link.slice(edge.length - 950 + edge.length, edge.length)
-		edge = link.slice(0, 920 - edge.length - block.length)
+		edge = edge.slice(0, 920 - edge.length - block.length)
 	} else {
 		option.title.text = ''
 	}
