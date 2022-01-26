@@ -392,6 +392,7 @@ $.getJSON(fileURL, function (latest) {
 		e.postQuest = ifnull(app.postQuest[String(e.game_id)], [])
 		// gameid[String(e.wiki_id)] = e.game_id
 	};
+	loadbatl()
 })
 // import * as echarts from '../../ec-canvas/echarts';
 
