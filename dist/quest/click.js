@@ -36,8 +36,8 @@ function jsonover() {
       cated.push(e.api_title)
     })
     initChart()
-    loadbatl()
     loadlist()
+    loadbatl()
   }
 }
 
