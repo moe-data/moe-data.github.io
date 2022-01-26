@@ -301,8 +301,6 @@ $.getJSON(fileURL, function (latest) {
 	$.getJSON(kcurl, function (kcpre) {
 		for (let e of app.data) {
 			if (!e) continue;
-
-			e.guess = ifnull(app.getstat(e.wiki_id), 0)
 			// e.star = ifnull(app.get('star'+e.wiki_id),false)
 			// e.del = ifnull(app.get('del'+e.wiki_id),false)
 			e.id = String(e.game_id)
@@ -366,6 +364,22 @@ $.getJSON(fileURL, function (latest) {
 					break;
 			}
 		}
+		for (let i in app.newload) {
+			app.data[i] = app.newload[i]
+		}
+		for (let i in app.data) {
+			let e = app.data[i]
+			if (!e) continue;
+			// if (e.wiki_id.length == 3 && e.wiki_id[1] == 0) {
+			//   e.wiki_id = e.wiki_id[0] + e.wiki_id[2]
+			// }
+			app.wkid[String(e.game_id)] = e.wiki_id
+			app.wktoi[String(e.wiki_id)] = i
+			e.description = ifnull(app.zhCN[String(e.game_id)], e.detail)
+			e.postQuest = ifnull(app.postQuest[String(e.game_id)], [])
+			// gameid[String(e.wiki_id)] = e.game_id
+		};
+		app.ready = true
 		pushlink('A3')
 		update()
 		let me = ['A62', 'A68', 'A70', 'A73', 'A78', 'A79', 'A80', 'A83', 'A87', 'B136', 'B138', 'B44', 'B137', 'B128', 'C22', 'C48', 'B58', 'B60']
@@ -376,23 +390,11 @@ $.getJSON(fileURL, function (latest) {
 				z({ m })
 			}
 		}
+		for (let e of app.data) {
+			if (!e) continue;
+			e.guess = ifnull(app.getstat(e.wiki_id), 0)
+		}
 	})
-	for (let i in app.newload) {
-		app.data[i] = app.newload[i]
-	}
-	for (let i in app.data) {
-		let e = app.data[i]
-		if (!e) continue;
-		// if (e.wiki_id.length == 3 && e.wiki_id[1] == 0) {
-		//   e.wiki_id = e.wiki_id[0] + e.wiki_id[2]
-		// }
-		app.wkid[String(e.game_id)] = e.wiki_id
-		app.wktoi[String(e.wiki_id)] = i
-		e.description = ifnull(app.zhCN[String(e.game_id)], e.detail)
-		e.postQuest = ifnull(app.postQuest[String(e.game_id)], [])
-		// gameid[String(e.wiki_id)] = e.game_id
-	};
-	app.ready = true
 })
 // import * as echarts from '../../ec-canvas/echarts';
 
@@ -479,7 +481,6 @@ function setwk(wkid, key, value) {
 		option.title.text = '未找到目标任务：' + wkid
 	}
 }
-
 
 function pushpre(list) {
 	for (let i = 0; i < list.length; i++)
@@ -923,10 +924,6 @@ function setchart() {
 		option.title.text = ''
 	}
 	block.forEach(function (e) {
-		if (e.guess == null) {
-			x({ e, guess: e.guess })
-			return
-		}
 		switch (Number(e.guess)) {
 			case 0:
 				s0(e)
@@ -938,7 +935,7 @@ function setchart() {
 				s2(e)
 				break;
 			default:
-				x(e)
+				x({ e, guess: e.guess })
 				break;
 		}
 		if (app.getstat(e.wiki_id) == e.guess) {
