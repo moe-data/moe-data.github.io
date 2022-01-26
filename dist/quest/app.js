@@ -16030,7 +16030,6 @@ const app = ({
     userInfo: null
   }
 })
-app.onLaunch()
 // z(app.get('switches'))
 // z(app.get('branches'))
 // z(app.branches)

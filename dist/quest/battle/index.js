@@ -115,7 +115,7 @@ var bc = 1
 
 var batl
 app.initcache('starbattle', ['戦果', '試製甲板カタパルト', '司令部要員', '橘花改', '夜間作戦航空要員', '強風改', '流星改(一航戦/熟練)', '勲章', '補強増設', '熟練搭乗員', '戦闘詳報', '新型砲熕兵装資材', '新型航空兵装資材', '特注家具職人', '応急修理要員', '設営隊', 'F6F-5N'])
-z('stat', app.getstat('A3'))
+// z('stat', app.getstat('A3'))
 z(app.valido)
 
 function loadbatl() {

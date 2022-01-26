@@ -274,6 +274,23 @@ const filename = `quests-${LANGS[0]}.json`
 const fileURL = `${DATA_URL}/${filename}`
 // })
 $.getJSON(fileURL, function (latest) {
+	app.onLaunch()
+	// app.data.forEach(function (e, i) {
+	// 	try { delete latest[e.id] } catch (err) { x(e, err) }
+	// })
+	// for (let i in latest) {
+	// 	let o = latest[i]
+	// 	app.data.push(
+	// 		{
+	// 			game_id: Number(i),
+	// 			wiki_id: o.code,
+	// 			category: 4,
+	// 			type: 1,
+	// 			name: o.name,
+	// 			detail: o.desc,
+	// 			// prerequisite: [869],
+	// 		})
+	// }
 	$.getJSON(kcurl, function (kcpre) {
 		app.data.forEach(function (e, i) {
 			e.guess = ifnull(app.getstat(e.wiki_id), 0)
@@ -285,10 +302,11 @@ $.getJSON(fileURL, function (latest) {
 			// e.pre = wkids(e.prerequisite)
 			e.pre = kcpre[e.game_id]?.pre
 			if (!e.pre) { e.pre = [] }
+			if (e.id == 192) z(e.pre, e.id, app.wkid[e.id])
 			e.pre.forEach(function (wkid) {
 				link.push({
 					source: String(app.wktoi[wkid]),
-					target: String(e.game_id),
+					target: String(e.id),
 					// lineStyle:{
 					// 	color:'#333'
 					// }
@@ -338,12 +356,10 @@ $.getJSON(fileURL, function (latest) {
 					e.period = 'annual'
 					break;
 			}
-			try { delete latest[e.id] } catch { console.log(e) }
 		})
-		console.log(latest)
 		pushlink('A3')
-		let me = ['A62', 'A68', 'A70', 'A73', 'A78', 'A79', 'A80', 'A83', 'A87', 'B136', 'B138', 'B44', 'B137', 'B128', 'C22', 'C48', 'B58', 'B60']
 		update()
+		let me = ['A62', 'A68', 'A70', 'A73', 'A78', 'A79', 'A80', 'A83', 'A87', 'B136', 'B138', 'B44', 'B137', 'B128', 'C22', 'C48', 'B58', 'B60']
 		// for(let i=0;i<me.length;i++){
 		// 	let m=me[i]
 		// 	try {
@@ -866,10 +882,10 @@ function setchart() {
 	}
 	edge = []
 	chain.forEach(function (e) {
-		e.prerequisite.forEach(function (p) {
+		e.pre.forEach(function (p) {
 			edge.push({
-				source: String(p),
-				target: String(e.game_id),
+				source: String(app.wktoi[p]),
+				target: String(app.wktoi[e.game_id]),
 				// lineStyle:{
 				// 	color:'#333'
 				// }
