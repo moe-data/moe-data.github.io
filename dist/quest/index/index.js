@@ -392,7 +392,7 @@ $.getJSON(fileURL, function (latest) {
 		e.postQuest = ifnull(app.postQuest[String(e.game_id)], [])
 		// gameid[String(e.wiki_id)] = e.game_id
 	};
-	loadbatl()
+	app.ready = true
 })
 // import * as echarts from '../../ec-canvas/echarts';
 
@@ -698,6 +698,13 @@ let option = {
 };
 
 function initChart(canvas, width, height, dpr) {
+	if (!app.ready) {
+		z('wait initChart')
+		setTimeout(() => {
+			loadbatl()
+		}, 1200);
+		return
+	}
 	// console.time('计时器5')
 	// chart = echarts.init(canvas, null, {
 	// 	width: width,
@@ -916,8 +923,10 @@ function setchart() {
 		option.title.text = ''
 	}
 	block.forEach(function (e) {
-		if (!e) return;
-		if (e.guess == null) { s0(e); x({ e, guess: e.guess }) }
+		if (e.guess == null) {
+			x({ e, guess: e.guess })
+			return
+		}
 		switch (Number(e.guess)) {
 			case 0:
 				s0(e)

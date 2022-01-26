@@ -37,6 +37,7 @@ function jsonover() {
     })
     initChart()
     loadlist()
+    loadbatl()
   }
 }
 
