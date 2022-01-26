@@ -237,7 +237,7 @@ $(document).ready(function () {
         langchange();
     });
     setTimeout(function () {
-        js("https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table-locale-all.js");
+        js("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/bootstrap-table-locale-all.js");
         js("https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js");
         progress(2);
         if (!havelang) {

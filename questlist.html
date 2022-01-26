@@ -15,8 +15,8 @@
     <meta name="author" content="">
     <link rel="icon" href="https://img.pddpic.com/mms-material-img/2021-01-16/e555cb1c-1339-48b5-9930-4101be911797.png">
     <title>萌萌数据库 - 付费物品</title>
-    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./dist/css/dashboard.css">
     <link rel="stylesheet" href="./dist/css/selection.css">
     <style id='csscontainer'></style>
@@ -150,7 +150,7 @@
         </div>
     </div>
     <i id="js"></i>
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://releases.jquery.com/git/jquery-3.x-git.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
     <script type="text/javascript" src="./dist/js/jgs.js"> </script>
     <script type="text/javascript" src="./dist/js/simplize.js"> </script>
@@ -159,13 +159,14 @@
     <script type="text/javascript" src="./dist/js/line.js"> </script>
     <script type="text/javascript" src="./dist/quest/wx.js"> </script>
     <script type="text/javascript" src="./dist/quest/app.js"> </script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.js"></script>
     <script
-        src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/extensions/filter-control/bootstrap-table-filter-control.js"></script>
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/locale/bootstrap-table-zh-CN.min.js"></script>
     <script
-        src="https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/extensions/sticky-header/bootstrap-table-sticky-header.min.js"></script>
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/extensions/filter-control/bootstrap-table-filter-control.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/extensions/sticky-header/bootstrap-table-sticky-header.min.js"></script>
     <script>
         $("#nav").load("nav.html");
         $("#foot").load("./foot.html");
@@ -189,7 +190,7 @@
                 langchange(); setlang();
             });
             setTimeout(function () {
-                js("https://cdn.bootcdn.net/ajax/libs/bootstrap-table/1.18.0/bootstrap-table-locale-all.js")
+                js("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/bootstrap-table-locale-all.js")
                 // js("https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js")
                 if (!havelang) {
                     document.getElementById("locale")[0].selected = true;

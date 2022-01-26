@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport"
@@ -8,24 +9,45 @@
     <meta name="description" content="本站支持多装备概率叠加显示，特定旗舰出货概率显示" />
     <link rel="icon" href="https://img.pddpic.com/mms-material-img/2021-01-16/e555cb1c-1339-48b5-9930-4101be911797.png">
     <title>萌萌数据库 - 舰娘开发建造统计</title>
-    <!-- <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> -->
     <style>
         body {
             margin: 10px;
         }
+
         .demo-carousel {
             height: 200px;
             line-height: 200px;
             text-align: center;
         }
+
         .opa {
             opacity: 1;
             transition: opacity 1s ease 0s;
         }
-        .main-header{padding: 10px 0;margin: 0;background: Aquamarine;}
-        .nomobile{width:10px;margin:0;background:Aquamarine;}
-        .fim{flex: 1;display: inline-block;min-width: 300px;}
-        .flap{display: flex;flex-wrap: wrap;}
+
+        .main-header {
+            padding: 10px 0;
+            margin: 0;
+            background: Aquamarine;
+        }
+
+        .nomobile {
+            width: 10px;
+            margin: 0;
+            background: Aquamarine;
+        }
+
+        .fim {
+            flex: 1;
+            display: inline-block;
+            min-width: 300px;
+        }
+
+        .flap {
+            display: flex;
+            flex-wrap: wrap;
+        }
     </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"></script>
@@ -37,6 +59,7 @@
         gtag('config', 'G-SQLQ5EBLTM');
     </script>
 </head>
+
 <body>
     <div id="nav"></div>
     <div id="bgpic">
@@ -45,18 +68,17 @@
             <div style="margin-right: 10px; margin-bottom: 30px;flex:7;">
                 <div style="text-align: center; background:#F5F5DC22; padding: 10px;">
                     <div class="container" style="text-align: center; background:#F5F5DC77;">
-                        <p class="main-header" >統計報告</p>
+                        <p class="main-header">統計報告</p>
                         <div class="flap">
                             <p style="flex: 1;"><a href="./index.html" title="开发"><img alt="IcoDevelop.png"
                                         src="https://uploads.kcwiki.cn/commons/thumb/4/45/IcoDevelop.png/160px-IcoDevelop.png"
                                         height="128" srcset="https://uploads.kcwiki.cn/commons/thumb/4/45/IcoDevelop.png/160px-IcoDevelop.png 0.5x,
-                                        https://uploads.kcwiki.cn/commons/4/45/IcoDevelop.png 1x"
-                                        class="opa"></a> <br><b><a href="./index.html" title="开发">开发统计</a></b></p>
+                                        https://uploads.kcwiki.cn/commons/4/45/IcoDevelop.png 1x" class="opa"></a>
+                                <br><b><a href="./index.html" title="开发">开发统计</a></b></p>
                             <!-- <p class="nomobile"></p> -->
                             <p style="flex: 1;"><a href="./construction.html" title="建造"><img alt="IcoConstruct.png"
                                         src="https://uploads.kcwiki.cn/commons/thumb/0/0c/IcoConstruct.png/160px-IcoConstruct.png"
-                                        height="128"
-                                        srcset="https://uploads.kcwiki.cn/commons/thumb/0/0c/IcoConstruct.png/160px-IcoConstruct.png 0.5x,
+                                        height="128" srcset="https://uploads.kcwiki.cn/commons/thumb/0/0c/IcoConstruct.png/160px-IcoConstruct.png 0.5x,
                                         https://uploads.kcwiki.cn/commons/0/0c/IcoConstruct.png 1x,
                                         https://pic4.zhimg.com/v2-4a2c7cd054e0d46c541981f28ef8cb0f_r.png 2x"
                                         class="opa"></a> <br><b><a href="./construction.html" title="建造">建造统计</a></b>
@@ -150,7 +172,8 @@
                                         class="opa"></a><br><b><a href="expedition.html" title="远征列表">远征</a></b></p>
                             <p style="flex: 1;"><a href="quest.html" title="任务"><img alt="任务"
                                         src="https://uploads.kcwiki.cn/commons/6/6a/IcoQuest.png" width="160"
-                                        height="182" class="opa"></a><br><b><a href="quest.html" title="任务">任务</a></b></p>
+                                        height="182" class="opa"></a><br><b><a href="quest.html" title="任务">任务</a></b>
+                            </p>
                             <p style="flex: 1;"><a href="payitem.html" title="商店"><img alt="商店"
                                         src="https://pic1.zhimg.com/v2-3a3a8f37ab356e1ad35d6f6b967dbd54_r.png"
                                         height="182" class="opa"></a><br><b><a href="payitem.html" title="商店">商店</a></b>
@@ -164,7 +187,8 @@
                 </div> -->
                     </div>
                 </div>
-                <h1 align="center"><img src="https://pic3.zhimg.com/50/v2-40254daa93c9919c91f710ddaf623aa0_qhd.jpg" width="200" class="opa"></h1>
+                <h1 align="center"><img src="https://pic3.zhimg.com/50/v2-40254daa93c9919c91f710ddaf623aa0_qhd.jpg"
+                        width="200" class="opa"></h1>
             </div>
             <div id="foot"></div>
         </div>
