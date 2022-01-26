@@ -917,7 +917,8 @@ function setchart() {
 	}
 	block.forEach(function (e) {
 		if (!e) return;
-		switch (Number(e?.guess)) {
+		if (e.guess == null) { s0(e); x({ e, guess: e.guess }) }
+		switch (Number(e.guess)) {
 			case 0:
 				s0(e)
 				break;
