@@ -35,7 +35,6 @@ function jsonover() {
       fntr.push(e.api_title)
       cated.push(e.api_title)
     })
-
     initChart()
     loadbatl()
     loadlist()

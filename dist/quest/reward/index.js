@@ -152,7 +152,7 @@ z(app.valido)
 
 function loadlist() {
   if (!app.reward) {
-    z('wait')
+    z('wait loadlist')
     setTimeout(() => {
       loadlist()
     }, 1200);
