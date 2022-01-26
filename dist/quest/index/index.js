@@ -885,13 +885,14 @@ function setchart() {
 		e.pre.forEach(function (p) {
 			edge.push({
 				source: String(app.wktoi[p]),
-				target: String(app.wktoi[e.game_id]),
+				target: String(e.id),
 				// lineStyle:{
 				// 	color:'#333'
 				// }
 			})
 		})
 	})
+	z(edge)
 	if (chain.length + edge.length > 920) {
 		option.title.text = '画布承载超限\n\n部分箭头未显示'
 		z("chain too lonng", chain.length, edge.length);
