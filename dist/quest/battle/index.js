@@ -120,7 +120,7 @@ z(app.valido)
 
 function loadbatl() {
   if (!app.battle) {
-    z('wait')
+    z('wait loadbatl')
     setTimeout(() => {
       loadbatl()
     }, 1200);

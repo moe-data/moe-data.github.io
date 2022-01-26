@@ -306,10 +306,10 @@ $.getJSON(fileURL, function (latest) {
 			e.id = String(e.game_id)
 			e.title = e.name
 			e.name = ifnull(e.wiki_id, e.id)
-			// e.pre = wkids(e.prerequisite)
 			e.pre = kcpre[e.game_id]?.pre
 			if (!e.pre) { e.pre = [] }
 			if (e.id == 192) z(e.pre, e.id, app.wkid[e.id])
+			// e.pre = wkids(e.prerequisite)
 			// e.pre.forEach(function (wkid) {
 			// 	link.push({
 			// 		source: String(app.wktoi[wkid]),
@@ -702,7 +702,7 @@ function initChart(canvas, width, height, dpr) {
 	if (!app.ready) {
 		z('wait initChart')
 		setTimeout(() => {
-			loadbatl()
+			initChart()
 		}, 1200);
 		return
 	}
@@ -1042,7 +1042,6 @@ function setchart() {
 		battle = []
 		for (let e of app.data) {
 			if (!e) continue;
-
 			if (e.requirements.category == "sortie") {
 				addbattle(e, e.requirements)
 				addbattle(e, e.requirements, 10)
