@@ -155,7 +155,7 @@ function loadlist() {
     z('wait loadlist')
     setTimeout(() => {
       loadlist()
-    }, 1200);
+    }, 2000);
     return
   }
   let guess

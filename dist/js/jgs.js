@@ -13,8 +13,8 @@ function replaceBy(selector, c, old, replace) {
 }
 
 const w = console.warn
-const x = console.trace
-const z = console.log
+const x = console.error
+const z = console.info
 
 
 function isvalid(e) {

@@ -198,6 +198,7 @@ Object.defineProperty(that, "setData", {
 					addreq(req)
 				} else if (req.list) {
 					req.list.forEach(addreq)
+				} else if (Object.keys(req).length === 0) {
 				} else {
 					x(req)
 				}
@@ -278,26 +279,28 @@ $.getJSON(fileURL, function (latest) {
 	for (let i in app.data) {
 		let e = app.data[i]
 		if (!e) continue;
-		try { delete latest[e.id] } catch (err) { x(e, err) }
+		try { delete latest[e.game_id] } catch (err) { w(e, err) }
 	}
-	// for (let i in latest) {
-	// 	let o = latest[i]
-	// 	app.data[i] = {
-	// 		game_id: Number(i),
-	// 		wiki_id: o.code,
-	// 		category: 4,
-	// 		type: 1,
-	// 		name: o.name,
-	// 		detail: o.desc,
-	// 		reward_fuel: 0,
-	// 		reward_ammo: 0,
-	// 		reward_steel: 0,
-	// 		reward_bauxite: 0,
-	// 		reward_other: [],
-	// 		prerequisite: [],
-	// 		requirements: {}
-	// 	}
-	// }
+	z({ latest })
+	app.data = []
+	for (let i in latest) {
+		let o = latest[i]
+		app.data[i] = {
+			game_id: Number(i),
+			wiki_id: o.code,
+			category: o.code.match(/[A-G]/).pop().charCodeAt(0) - 64,
+			type: 1,
+			name: o.name,
+			detail: o.desc,
+			reward_fuel: 0,
+			reward_ammo: 0,
+			reward_steel: 0,
+			reward_bauxite: 0,
+			reward_other: [],
+			prerequisite: [],
+			requirements: {}
+		}
+	}
 	$.getJSON(kcurl, function (kcpre) {
 		for (let e of app.data) {
 			if (!e) continue;
@@ -307,8 +310,12 @@ $.getJSON(fileURL, function (latest) {
 			e.title = e.name
 			e.name = ifnull(e.wiki_id, e.id)
 			e.pre = kcpre[e.game_id]?.pre
-			if (!e.pre) { e.pre = [] }
-			if (e.id == 192) z(e.pre, e.id, app.wkid[e.id])
+			if (e.pre) {
+				e.pre.forEach(ep => {
+
+				})
+			} else { e.pre = [] }
+			// if (e.id == 192) z(e.pre, e.id, app.wkid[e.id])
 			// e.pre = wkids(e.prerequisite)
 			// e.pre.forEach(function (wkid) {
 			// 	link.push({
@@ -382,7 +389,7 @@ $.getJSON(fileURL, function (latest) {
 		app.ready = true
 		pushlink('A3')
 		update()
-		let me = ['A62', 'A68', 'A70', 'A73', 'A78', 'A79', 'A80', 'A83', 'A87', 'B136', 'B138', 'B44', 'B137', 'B128', 'C22', 'C48', 'B58', 'B60']
+		let me = ['A62', 'A68', 'A70', 'A73', 'A78', 'A79', 'A80', 'A83', 'A87', 'B136', 'B138', 'B44', 'B137', 'B128', 'C22', 'B58', 'B60']
 		for (let m of me) {
 			try {
 				app.setstat(m, 1)
@@ -477,7 +484,7 @@ function setwk(wkid, key, value) {
 	if (app.wktoi[wkid] != null && app.data[app.wktoi[wkid]] != null) {
 		app.data[app.wktoi[wkid]][key] = value
 	} else {
-		x(wkid, ' is not in app.data!', app.wktoi[wkid], app.data)
+		x(wkid, ' is not in app.data!', app.wktoi[wkid], app.wktoi)
 		option.title.text = '未找到目标任务：' + wkid
 	}
 }
@@ -506,8 +513,10 @@ function pushpost(list) {
 
 function jump(wkid) {
 	current = datawk(wkid)
-	z([datawk(wkid).x, datawk(wkid).y])
-	pagecurrent()
+	if (current) {
+		z([current.x, current.y])
+		pagecurrent()
+	}
 }
 
 function pagecurrent() {
