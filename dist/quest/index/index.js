@@ -212,44 +212,6 @@ Object.defineProperty(that, "setData", {
 	}
 })
 
-function addreq(req) {
-	let reqcate = app.requiredic[req.category]
-	if (req.category == 'simple') { reqcate = categories[slideq.category].name }
-	let times = req.times || req.amount || 1
-	let map = req.map
-	if (map && typeof map != "string") {
-		map.forEach(function (m) {
-			slides += reqcate + ': ' + m +
-				slidehtml(times)
-		})
-	} else if (req[app.slideact[req.category]]) {
-		req[app.slideact[req.category]].forEach(function (m) {
-			if (app.slideact[req.category] == 'scraps') { reqcate = "废弃" }
-			slides += reqcate + ': ' + ifnull(m.id || m.name, '') +
-				slidehtml(m.times || m.amount || 1)
-		})
-	} else {
-		slides += reqcate + ': ' + ifnull(req.map, '') +
-			slidehtml(times)
-	}
-}
-function slidehtml(max) {
-	let actid = ++sliden + (slideq.wiki_id).toString()
-	let value = app.get(actid) || 0
-	return `<span class="right"><span class="` + actid + `">` + value + '</span>/' + max + `</span>` +
-		`<input type="range" id="` + actid +
-		`" value="` + value +
-		`" min="0" max="` + max +
-		`" step="1" onchange="onslide('` + actid + `')" oninput="inslide('` + actid + `')" list="tickmarks">`
-}
-function onslide(actid) {
-	let range = document.getElementById(actid);
-	app.set(actid, range.value);
-}
-function inslide(actid) {
-	let range = document.getElementById(actid);
-	$('.' + actid).html(range.value)
-}
 const tcache = "tcache"
 const birth = app.periodstart('once', new Date())
 
@@ -406,6 +368,45 @@ $.getJSON(fileURL, function (latest) {
 		}
 	})
 })
+
+function addreq(req) {
+	let reqcate = app.requiredic[req.category]
+	if (req.category == 'simple') { reqcate = categories[slideq.category].name }
+	let times = req.times || req.amount || 1
+	let map = req.map
+	if (map && typeof map != "string") {
+		map.forEach(function (m) {
+			slides += reqcate + ': ' + m +
+				slidehtml(times)
+		})
+	} else if (req[app.slideact[req.category]]) {
+		req[app.slideact[req.category]].forEach(function (m) {
+			if (app.slideact[req.category] == 'scraps') { reqcate = "废弃" }
+			slides += reqcate + ': ' + ifnull(m.id || m.name, '') +
+				slidehtml(m.times || m.amount || 1)
+		})
+	} else {
+		slides += reqcate + ': ' + ifnull(req.map, '') +
+			slidehtml(times)
+	}
+}
+function slidehtml(max) {
+	let actid = ++sliden + (slideq.wiki_id).toString()
+	let value = app.get(actid) || 0
+	return `<span class="right"><span class="` + actid + `">` + value + '</span>/' + max + `</span>` +
+		`<input type="range" id="` + actid +
+		`" value="` + value +
+		`" min="0" max="` + max +
+		`" step="1" onchange="onslide('` + actid + `')" oninput="inslide('` + actid + `')" list="tickmarks">`
+}
+function onslide(actid) {
+	let range = document.getElementById(actid);
+	app.set(actid, range.value);
+}
+function inslide(actid) {
+	let range = document.getElementById(actid);
+	$('.' + actid).html(range.value)
+}
 // import * as echarts from '../../ec-canvas/echarts';
 let current = app.data[0]
 let chartdata, reward, battle
@@ -529,7 +530,7 @@ function report() { }
 
 // function path(node, stat) {
 // 	app.setstat(node, stat)
-// 	affect(node, stat)
+// 	infect(node, stat)
 // }
 
 function manual(node, stat) {
@@ -537,26 +538,38 @@ function manual(node, stat) {
 	// setchart();
 }
 
-function affect(node, stat, n) {
+function infect(node, stat, n) {
 	if (stat === null) return;
 	n = ifnull(n, 0);
+	if (n === 0) {
+
+		x(22)
+		infected = {}
+	} else if (infected[node]) {
+		x("infect again ", n, node)
+		return;
+	} else {
+		infected[node] = true
+	}
 	n++
 	if (n > datalen) {
-		x("exeed limit ", n)
+		x("infect exeed limit ", n)
 		return;
 	}
 	let e = datawk(node)
 	if (e) {
 		e.guess = stat
+		x(node, e.pre, e.guess)
 		if (stat > 0) {
-			e.pre.forEach(function (pre) {
-				affect(pre, 2, n)
-			})
+			e.pre.forEach(extend)
 		}
 		if (stat < 2) {
-			e.post.forEach(function (post) {
-				affect(post, 0, n)
-			})
+			e.post.forEach(extend)
+		}
+		function extend(p) {
+			// setTimeout(() => {
+			infect(p, 2 - stat, n)
+			// }, 0);
 		}
 	}
 	// for (let i = 0; i < datalen; i++) {
@@ -778,26 +791,26 @@ function didperiod(type) {
 		}
 	}
 }
-function fistvisit() {
-	if (!app.get('fistvisit')) {
-		z('fistvisit')
+function firstvisit() {
+	if (!app.get('firstvisit')) {
+		z('firstvisit')
 		wx.clearStorage()
 		didperiod(2)
 	}
-	app.set('fistvisit', true)
+	app.set('firstvisit', true)
 }
-fistvisit()
+firstvisit()
 
 function update() {
-	try {
-		for (let e of app.data) {
-			if (!e) continue;
-			e.guess = 0
-		}
-	} catch (error) {
-		z(app.data);
-		return
-	}
+	// try {
+	// 	for (let e of app.data) {
+	// 		if (!e) continue;
+	// 		e.guess = 0
+	// 	}
+	// } catch (error) {
+	// 	z(app.data);
+	// 	return
+	// }
 	let valid = [];
 	// z(app.get('history'))
 	// z($.cookie('history'));
@@ -820,12 +833,13 @@ function update() {
 	function sortdate(a, b) {
 		return a[1] - b[1]
 	}
-	// z('v: ', app.valido, valid)
+	z('v: ', app.valido, valid)
 	valid.forEach(function (v) {
 		if (typeof (app.valido[v[0]][app.beginutc(v[0], new Date())]) != 'undefined') {
 			let stat = app.valido[v[0]][app.beginutc(v[0], new Date())][0]
 			if (stat != null)
-				affect(v[0], stat)
+				infect('Bd1', 2)
+			// infect(v[0], stat)
 		}
 	})
 	//guess s1
@@ -857,7 +871,7 @@ function setchart() {
 		app.branches[switches.fb][1].forEach(wkid => {
 			datawk(wkid).target = true
 		});
-		let custom = pushpost(app.branches[switches.fb][1])
+		let custom = pushpre(app.branches[switches.fb][1])
 		custom.forEach(function (wkid) {
 			block.push(datawk(wkid))
 		})

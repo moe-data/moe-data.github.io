@@ -46,7 +46,7 @@ function progress(p) {
   $('.progress-bar').css("width", bar + '%');
 };
 function graystyle() {
-  z(switches.fs)
+  // z(switches.fs)
   for (i = 0; i < 4; i++) {
     eval("$('.fs" + i + "')." + (switches.fs[i] ? "remove" : "add") + "Class('gray')")
   }

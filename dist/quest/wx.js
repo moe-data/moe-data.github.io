@@ -53,26 +53,26 @@ function homepos(x, y) {
 }
 
 
-$(function () {
-    //读取cookie
-    var res = app.get('guide');
-    z({ res })
-    //如果没有cookie,执行以下动作
-    if (res != "guide") {
-        $('#mask,#searchTip,#searchTip div:eq(0)').show();
-        $('#searchTip div a').click(function () {
-            var current = $(this).parent();
-            current.hide();
-            current.next().show();
-        })
+// $(function () {
+//     //读取cookie
+//     var res = app.get('guide');
+//     z({ res })
+//     //如果没有cookie,执行以下动作
+//     if (res != "guide") {
+//         $('#mask,#searchTip,#searchTip div:eq(0)').show();
+//         $('#searchTip div a').click(function () {
+//             var current = $(this).parent();
+//             current.hide();
+//             current.next().show();
+//         })
 
-        $('#searchTip div span,#searchTip div a:last').click(function () {
-            $('#mask,#searchTip').hide();
-        })
+//         $('#searchTip div span,#searchTip div a:last').click(function () {
+//             $('#mask,#searchTip').hide();
+//         })
 
-        //添加cookie
-        var oDate = new Date();
-        oDate.setDate(oDate.getDate() + 30);
-        app.set('guide', 'guide')
-    }
-})
+//         //添加cookie
+//         var oDate = new Date();
+//         oDate.setDate(oDate.getDate() + 30);
+//         app.set('guide', 'guide')
+//     }
+// })
