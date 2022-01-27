@@ -276,13 +276,12 @@ const fileURL = `${DATA_URL}/${filename}`
 // })
 $.getJSON(fileURL, function (latest) {
 	app.onLaunch()
-	for (let i in app.data) {
-		let e = app.data[i]
+	for (let e of app.data) {
 		if (!e) continue;
+		e.new = 0
 		try { delete latest[e.game_id] } catch (err) { w(e, err) }
 	}
 	z({ latest })
-	app.data = []
 	for (let i in latest) {
 		let o = latest[i]
 		app.data[i] = {
@@ -298,7 +297,8 @@ $.getJSON(fileURL, function (latest) {
 			reward_bauxite: 0,
 			reward_other: [],
 			prerequisite: [],
-			requirements: {}
+			requirements: {},
+			new: 1
 		}
 	}
 	$.getJSON(kcurl, function (kcpre) {
@@ -326,16 +326,16 @@ $.getJSON(fileURL, function (latest) {
 			// }
 			// 	})
 			// })
-			// e.post = wkids(postQuest[String(e.game_id)])
-			e.post = wkids(e.postQuest)
 			e.categories = e.category
 			e.itemStyle = {
-				borderWidth: size * 0
+				borderWidth: size * e.new
 			} //,borderColor:'transparent'}
 			// s0(e)
 			// e.symbol = "roundRect"
 			// e.x=Math.random()*100
 			// e.y=Math.random()*100
+			e.post = []
+			e.postQuest = []
 			switch (Number(e.type)) {
 				case 1:
 					e.value = ""
@@ -383,7 +383,10 @@ $.getJSON(fileURL, function (latest) {
 			app.wkid[String(e.game_id)] = e.wiki_id
 			app.wktoi[String(e.wiki_id)] = i
 			e.description = ifnull(app.zhCN[String(e.game_id)], e.detail)
-			e.postQuest = ifnull(app.postQuest[String(e.game_id)], [])
+			e.prerequisite.forEach(pre => {
+				app.data[pre].postQuest.push(i)
+				app.data[pre].post.push(e.wiki_id)
+			})
 			// gameid[String(e.wiki_id)] = e.game_id
 		};
 		app.ready = true
@@ -404,17 +407,6 @@ $.getJSON(fileURL, function (latest) {
 	})
 })
 // import * as echarts from '../../ec-canvas/echarts';
-
-// for(let key in postQuest){
-//   postQuest[key].forEach(function(e){
-//   link.push({
-//     source: String(key),
-// 		target: String(e),
-// 		lineStyle:{
-// 			color:'yellow'
-// 		}
-//   })})
-// }
 let current = app.data[0]
 let chartdata, reward, battle
 let toolname = '舰娘任务管理器'
