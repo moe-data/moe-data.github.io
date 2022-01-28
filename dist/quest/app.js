@@ -80,7 +80,6 @@ const app = ({
       ['独立任务'],
       ['非独立任务']
     ])
-    console.time('计时器0')
   },
   wkid: {},
   wktoi: {},

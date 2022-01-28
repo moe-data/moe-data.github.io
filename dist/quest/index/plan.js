@@ -211,10 +211,6 @@ function prop(obj){
 	// 		// 	})
 	// 		// 	z({params});
 	// 		// });
-	// 		console.timeEnd('计时器0')
-	// 		console.timeEnd('计时器1')
-	// 		console.timeEnd('计时器2')
-	// 		console.timeEnd('计时器4')
 	// 		return chart;
 	// 	});
 	// },

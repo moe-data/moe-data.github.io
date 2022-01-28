@@ -16,12 +16,6 @@ const that = ({
 		}, {
 			preferenceName: '2242',
 			preferenceExplain: 'ssds'
-		}, {
-			preferenceName: '2242',
-			preferenceExplain: 'ssds'
-		}, {
-			preferenceName: '2242',
-			preferenceExplain: 'ssds'
 		}],
 		isExpand: false,
 		toggleAnimationData: {}, // 优惠信息动画
@@ -30,7 +24,6 @@ const that = ({
 		}
 	},
 	onReady() {
-		console.time('计时器4')
 		// this.initChart()
 	},
 	expand() {
@@ -86,7 +79,6 @@ const that = ({
 	handset(o) {
 		let d = o.target.dataset.c
 		if (d == app.getstat(this.data.current.wiki_id)) return
-		// z({d})
 		// 		z(app.getstat(this.data.current.wiki_id))
 		// 		z((this.data.current.wiki_id))
 		// 		z((current.wiki_id))
@@ -125,7 +117,6 @@ const that = ({
 	},
 	onLoad() {
 		those = this.data
-		console.time('计时器1')
 		switches = those.switches
 		this.setData({
 			current: ifnull(app.get('current'), app.data[0])
@@ -138,7 +129,6 @@ const that = ({
 		// })})
 	},
 	onShow() {
-		console.time('计时器2')
 	},
 	onHide() {
 		app.set('current', this.data.current)
@@ -427,7 +417,6 @@ var ex = {}
 var ey = {}
 
 const those = that.data
-console.time('计时器1')
 const switches = those.switches
 // this.setData({
 // 	current: ifnull(app.get('current'), app.data[0])
@@ -478,7 +467,7 @@ function datawk(wkid) {
 		return app.data[app.wktoi[wkid]]
 	} else {
 		w(wkid + ' is not in app.data!', app.wktoi[wkid], app.wktoi)
-		option.title.text = '目标任务不存在：' + wkid
+		option.title.text = '目标任务不存在: ' + wkid
 	}
 }
 
@@ -487,7 +476,7 @@ function setwk(wkid, key, value) {
 		app.data[app.wktoi[wkid]][key] = value
 	} else {
 		x(wkid, ' is not in app.data!', app.wktoi[wkid], app.wktoi)
-		option.title.text = '未找到目标任务：' + wkid
+		option.title.text = '未找到目标任务: ' + wkid
 	}
 }
 
@@ -682,7 +671,6 @@ function initChart(canvas, width, height, dpr) {
 		}, 1200);
 		return
 	}
-	// console.time('计时器5')
 	// chart = echarts.init(canvas, null, {
 	// 	width: width,
 	// 	height: height,
@@ -730,11 +718,6 @@ function initChart(canvas, width, height, dpr) {
 		// })
 		z('highlight', params);
 	});
-	// console.timeEnd('计时器0')
-	// console.timeEnd('计时器1')
-	// console.timeEnd('计时器2')
-	// console.timeEnd('计时器4')
-	// console.timeEnd('计时器5')
 	return chart;
 }
 
