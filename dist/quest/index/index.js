@@ -279,14 +279,15 @@ $.getJSON(fileURL, function (latest) {
 			e.name = ifnull(e.wiki_id, e.id)
 			e.pre = kcpre[e.game_id]?.pre
 			if (e.pre) {
-				// e.pre.forEach(ep => {
-				// 	for (i in kcpre) {
-				// 		if (trim(kcpre[i].code) == ep) {
-				// 			e.prerequisite.push(i)
-				// 			break
-				// 		}
-				// 	}
-				// })
+				e.pre.forEach(ep => {
+					for (i in kcpre) {
+						if (trim(kcpre[i].code) == ep) {
+							let num = Number(i)
+							if (e.prerequisite.indexOf(num) == -1) { e.prerequisite.push(num) }
+							break
+						}
+					}
+				})
 			} else { e.pre = [] }
 			// if (e.id == 192) z(e.pre, e.id, app.wkid[e.id])
 			// e.pre = wkids(e.prerequisite)
@@ -441,11 +442,11 @@ const switches = those.switches
 
 
 function seplink(m) {
-	var link = ''
+	var str = ''
 	for (let i = 0; i < m.length; i++) {
-		link += `<a href='javascript:jump("` + m[i] + `")'>` + m[i] + "</a> "
+		str += `<a href='javascript:jump("` + m[i] + `")'>` + m[i] + "</a> "
 	}
-	return link
+	return str
 }
 function pushlink(node) {
 	for (let e of app.data) {
@@ -855,9 +856,8 @@ function update() {
 		if (e.guess == 0) {
 			let flag = true
 			e.pre.forEach(function (p) {
-				for (let i = 0; i < datalen; i++) {
-					let node = app.data[i]
-					if (node && node.wiki_id == p) {
+				for (let node of app.data) {
+					if (node?.wiki_id == p) {
 						if (node.guess != 2) flag = false
 						break
 					}
@@ -1009,10 +1009,9 @@ function setchart() {
 	if (block.length) {
 		// z(ex[block[0].wiki_id])
 		edge.forEach(function (link) {
-			for (let ii = 0; ii < block.length; ii++) {
-				let ch = block[ii]
+			for (let ch of block) {
 				if (!ifnull(ch.itemStyle.borderColor, false)) x(ch.itemStyle)
-				if (ex[ch.wiki_id] == null || true) break;
+				if (!ch || ex[ch.wiki_id] == null) break;
 				if (ch.game_id == link.source) {
 					try { //先得到id后渲染
 						link.lineStyle = {
@@ -1023,7 +1022,7 @@ function setchart() {
 								r: 300,
 								colorStops: [{
 									offset: 0,
-									color: ch.itemStyle.borderColor || 'black'
+									color: ch.itemStyle.borderColor || 'gray'
 								}, {
 									offset: 1,
 									color: '#777'
@@ -1047,7 +1046,7 @@ function setchart() {
 								offset: 1,
 								color: '#777'
 							}]
-							link.lineStyle.color.colorStops[1].color = ch.itemStyle.borderColor || 'black';
+							link.lineStyle.color.colorStops[1].color = ch.itemStyle.borderColor || 'gray';
 						} catch (e) {
 							w(link.lineStyle, e)
 						}
