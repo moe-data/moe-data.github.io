@@ -6,10 +6,12 @@ let bar = 0
 let ranget = ['slotitem', 'useitem', 'furniture', 'cstype', 'mapinfo']
 var mapinfo
 for (let i = 0; i < ranget.length; i++) {
-  $.getJSON("./parsed/" + (i == 3 ? "" : "api_mst_") + ranget[i] + ".json").done(function (result) {
-    eval(ranget[i] + " = result")
-    jsonover();
-  });
+  setTimeout(() => {
+    $.getJSON("./parsed/" + (i == 3 ? "" : "api_mst_") + ranget[i] + ".json").done(function (result) {
+      eval(ranget[i] + " = result")
+      jsonover();
+    });
+  }, 0);
 }
 function jsonover() {
   jsindex++;
@@ -35,7 +37,6 @@ function jsonover() {
       fntr.push(e.api_title)
       cated.push(e.api_title)
     })
-    initChart()
     loadbatl()
     loadlist()
   }
@@ -45,12 +46,6 @@ function progress(p) {
   bar += p;
   $('.progress-bar').css("width", bar + '%');
 };
-function graystyle() {
-  // z(switches.fs)
-  for (i = 0; i < 4; i++) {
-    eval("$('.fs" + i + "')." + (switches.fs[i] ? "remove" : "add") + "Class('gray')")
-  }
-}
 function showinput() {
   $('#input').css('display', 'flex')
 }

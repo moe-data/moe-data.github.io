@@ -1,4 +1,3 @@
-var infected = {}
 const TimezoneOffset = (new Date()).getTimezoneOffset() * 60000
 const araboffset = TimezoneOffset + 4 * 60 * 60000
 const categories = [{

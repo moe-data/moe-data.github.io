@@ -207,6 +207,12 @@ Object.defineProperty(that, "setData", {
 				app.set('current', this.data[key]);
 			} else if (key == 'switches') {
 				graystyle()
+				function graystyle() {
+					// z(switches.fs)
+					for (i = 0; i < 4; i++) {
+						eval("$('.fs" + i + "')." + (switches.fs[i] ? "remove" : "add") + "Class('gray')")
+					}
+				}
 			}
 		}
 	}
@@ -273,9 +279,14 @@ $.getJSON(fileURL, function (latest) {
 			e.name = ifnull(e.wiki_id, e.id)
 			e.pre = kcpre[e.game_id]?.pre
 			if (e.pre) {
-				e.pre.forEach(ep => {
-
-				})
+				// e.pre.forEach(ep => {
+				// 	for (i in kcpre) {
+				// 		if (trim(kcpre[i].code) == ep) {
+				// 			e.prerequisite.push(i)
+				// 			break
+				// 		}
+				// 	}
+				// })
 			} else { e.pre = [] }
 			// if (e.id == 192) z(e.pre, e.id, app.wkid[e.id])
 			// e.pre = wkids(e.prerequisite)
@@ -290,8 +301,9 @@ $.getJSON(fileURL, function (latest) {
 			// })
 			e.categories = e.category
 			e.itemStyle = {
-				borderWidth: size * e.new
-			} //,borderColor:'transparent'}
+				borderWidth: size * e.new,
+				borderColor: 'rgb(0,0,0)'
+			}
 			// s0(e)
 			// e.symbol = "roundRect"
 			// e.x=Math.random()*100
@@ -346,26 +358,22 @@ $.getJSON(fileURL, function (latest) {
 			app.wktoi[String(e.wiki_id)] = i
 			e.description = ifnull(app.zhCN[String(e.game_id)], e.detail)
 			e.prerequisite.forEach(pre => {
-				app.data[pre].postQuest.push(i)
+				app.data[pre].postQuest.push(Number(i))
 				app.data[pre].post.push(e.wiki_id)
 			})
 			// gameid[String(e.wiki_id)] = e.game_id
 		};
 		app.ready = true
-		pushlink('A3')
-		update()
-		let me = ['A62', 'A68', 'A70', 'A73', 'A78', 'A79', 'A80', 'A83', 'A87', 'B136', 'B138', 'B44', 'B137', 'B128', 'C22', 'B58', 'B60']
-		for (let m of me) {
-			try {
-				app.setstat(m, 1)
-			} catch (error) {
-				z({ m })
-			}
-		}
-		for (let e of app.data) {
-			if (!e) continue;
-			e.guess = ifnull(app.getstat(e.wiki_id), 0)
-		}
+		// pushlink('A3')
+		// let me = ['A62', 'A68', 'A70', 'A73', 'A78', 'A79', 'A80', 'A83', 'A87', 'B136', 'B138', 'B44', 'B137', 'B128', 'C22', 'B58', 'B60']
+		// for (let m of me) {
+		// 	try {
+		// 		app.setstat(m, 1)
+		// 	} catch (error) {
+		// 		z({ m })
+		// 	}
+		// }
+		initChart()
 	})
 })
 
@@ -536,53 +544,6 @@ function report() { }
 function manual(node, stat) {
 	app.setstat(node, stat)
 	// setchart();
-}
-
-function infect(node, stat, n) {
-	if (stat === null) return;
-	n = ifnull(n, 0);
-	if (n === 0) {
-
-		x(22)
-		infected = {}
-	} else if (infected[node]) {
-		x("infect again ", n, node)
-		return;
-	} else {
-		infected[node] = true
-	}
-	n++
-	if (n > datalen) {
-		x("infect exeed limit ", n)
-		return;
-	}
-	let e = datawk(node)
-	if (e) {
-		e.guess = stat
-		x(node, e.pre, e.guess)
-		if (stat > 0) {
-			e.pre.forEach(extend)
-		}
-		if (stat < 2) {
-			e.post.forEach(extend)
-		}
-		function extend(p) {
-			// setTimeout(() => {
-			infect(p, 2 - stat, n)
-			// }, 0);
-		}
-	}
-	// for (let i = 0; i < datalen; i++) {
-	// 	let d = app.data[i]
-	// 	if (node == d.wiki_id) {
-	// 		d.guess = ifnull(stat, 0)
-	// z(d.itemStyle)
-	// setTimeout(function(){
-	// if(Math.random()>0.94)setchart()
-	// return
-	// },300)
-	// 	}
-	// }
 }
 
 function trim(x) {
@@ -802,14 +763,18 @@ function firstvisit() {
 firstvisit()
 
 function update() {
-	// try {
-	// 	for (let e of app.data) {
-	// 		if (!e) continue;
-	// 		e.guess = 0
-	// 	}
-	// } catch (error) {
-	// 	z(app.data);
-	// 	return
+	try {
+		for (let e of app.data) {
+			if (!e) continue;
+			e.guess = 0
+		}
+	} catch (error) {
+		z(app.data);
+		return
+	}
+	// for (let e of app.data) {
+	// 	if (!e) continue;
+	// 	e.guess = ifnull(app.getstat(e.wiki_id), 0)
 	// }
 	let valid = [];
 	// z(app.get('history'))
@@ -837,15 +802,57 @@ function update() {
 	valid.forEach(function (v) {
 		if (typeof (app.valido[v[0]][app.beginutc(v[0], new Date())]) != 'undefined') {
 			let stat = app.valido[v[0]][app.beginutc(v[0], new Date())][0]
-			if (stat != null)
-				infect('Bd1', 2)
-			// infect(v[0], stat)
+			var infected = {}
+			if (stat != null) {
+				infect(v[0], stat)
+			}
+			function infect(node, stat, n) {
+				if (stat === null) return;
+				n = ifnull(n, 0);
+				if (n === 0) {
+					infected = {}
+				} else if (infected[node]) {
+					return;
+				} else {
+					infected[node] = true
+				}
+				n++
+				if (n > datalen) {
+					x("infect exeed limit ", n)
+					return;
+				}
+				let e = datawk(node)
+				if (e) {
+					e.guess = stat
+					if (stat > 0) {
+						e.pre.forEach(function (pre) {
+							infect(pre, 2, n)
+						})
+					}
+					if (stat < 2) {
+						e.post.forEach(function (post) {
+							infect(post, 0, n)
+						})
+					}
+				}
+				// for (let i = 0; i < datalen; i++) {
+				// 	let d = app.data[i]
+				// 	if (node == d.wiki_id) {
+				// 		d.guess = ifnull(stat, 0)
+				// z(d.itemStyle)
+				// setTimeout(function(){
+				// if(Math.random()>0.94)setchart()
+				// return
+				// },300)
+				// 	}
+				// }
+			}
 		}
 	})
 	//guess s1
 	for (let e of app.data) {
 		if (!e) continue;
-		if (e.guess != 2) {
+		if (e.guess == 0) {
 			let flag = true
 			e.pre.forEach(function (p) {
 				for (let i = 0; i < datalen; i++) {
@@ -864,6 +871,7 @@ function update() {
 }
 
 function setchart() {
+	update()
 	//Filter
 	// z(switches.fb) 
 	block = []
@@ -1002,8 +1010,9 @@ function setchart() {
 		// z(ex[block[0].wiki_id])
 		edge.forEach(function (link) {
 			for (let ii = 0; ii < block.length; ii++) {
-				var ch = block[ii]
-				if (ex[ch.wiki_id] == null) break;
+				let ch = block[ii]
+				if (!ifnull(ch.itemStyle.borderColor, false)) x(ch.itemStyle)
+				if (ex[ch.wiki_id] == null || true) break;
 				if (ch.game_id == link.source) {
 					try { //先得到id后渲染
 						link.lineStyle = {
@@ -1014,7 +1023,7 @@ function setchart() {
 								r: 300,
 								colorStops: [{
 									offset: 0,
-									color: ch.itemStyle.borderColor
+									color: ch.itemStyle.borderColor || 'black'
 								}, {
 									offset: 1,
 									color: '#777'
@@ -1038,7 +1047,7 @@ function setchart() {
 								offset: 1,
 								color: '#777'
 							}]
-							link.lineStyle.color.colorStops[1].color = ch.itemStyle.borderColor;
+							link.lineStyle.color.colorStops[1].color = ch.itemStyle.borderColor || 'black';
 						} catch (e) {
 							w(link.lineStyle, e)
 						}
