@@ -989,7 +989,7 @@ function setchart() {
 		}
 	}
 	// z('position', ex)
-	if (block.length) {
+	if (block.length && false) {
 		// z(ex[block[0].wiki_id])
 		edge.forEach(function (link) {
 			for (let ch of block) {
