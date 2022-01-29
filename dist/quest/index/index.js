@@ -554,7 +554,7 @@ function s1(d, real) {
 
 function s2(d, real) {
 	// d.symbolSize = size * 2,
-	d.name = blank + d.wiki_id + '☑️'
+	d.name = blank + d.wiki_id + (real ? '☑️' : '✔️')
 	if (d.value.length == 1) d.value += blank;
 	d.itemStyle.borderColor = real ? 'rgba(31, 131, 131,0.7)' : 'rgb(82, 182, 182,0.5)'
 }
@@ -833,7 +833,7 @@ function update() {
 			}
 		}
 	})
-	//guess s1
+	//guess1
 	for (let e of app.data) {
 		if (!e) continue;
 		if (e.guess == 0) {
