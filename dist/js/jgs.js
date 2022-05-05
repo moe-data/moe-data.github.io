@@ -1,42 +1,50 @@
 function replaceBy(selector, c, old, replace) {
-  var dropdown
-  if (selector == 'class') {
-    dropdown = document.getElementsByClassName(c)
+  var dropdown;
+  if (selector == "class") {
+    dropdown = document.getElementsByClassName(c);
   } else {
-    if (selector == 'tag') {
-      dropdown = document.getElementsByTagName(c)
+    if (selector == "tag") {
+      dropdown = document.getElementsByTagName(c);
     }
   }
   for (let i = 0, l = dropdown.length; i < l; i++) {
-    dropdown[i].innerHTML = dropdown[i].innerHTML.replace(old, replace)
+    dropdown[i].innerHTML = dropdown[i].innerHTML.replace(old, replace);
   }
 }
-
-const w = console.warn
-const x = console.error
-const z = console.info
-
-
+const w = console.warn;
+const x = console.error;
+const z = console.info;
+if (typeof jQuery == "undefined") {
+  w("JQuery load failed");
+  document.write(
+    unescape(
+      "%3Cscript src='./dist/js/cdn/jquery.min.js' type='text/javascript'%3E%3C/script%3E"
+    )
+  );
+}
 function isvalid(e) {
-  return e ? (isNaN(e) ? e.length : true) : false
+  return e ? (isNaN(e) ? e.length : true) : false;
 }
 function ifnull(notnul, ifnul) {
-  if (typeof (notnul) === 'undefined') {
-    return ifnul
+  if (typeof notnul === "undefined") {
+    return ifnul;
   } else {
-    return notnul
+    return notnul;
   }
 }
 function insert_spacing(str) {
   var p1 = /([A-Za-z_])([\u4e00-\u9fa5]+)/gi;
   var p2 = /([\u4e00-\u9fa5]+)([A-Za-z_])/gi;
-  return str.replace(p1, "$1 $2").replace(p2, "$1 $2")
+  return str.replace(p1, "$1 $2").replace(p2, "$1 $2");
 }
 function insertbr(str) {
   var p1 = new RegExp(/([\u4e00-\u9fa5])([\u4e00-\u9fa5])/gi);
   var p2 = /([\u4e00-\u9fa5]+)([A-Za-z_])/gi;
   var p3 = /([A-Za-z_]+) ([A-Za-z_])/gi;
-  return str.replace(p1, "$1<br>$2").replace(p2, "$1<br>$2").replace(p3, "$1<br>$2")
+  return str
+    .replace(p1, "$1<br>$2")
+    .replace(p2, "$1<br>$2")
+    .replace(p3, "$1<br>$2");
 }
 var selectAlli = 0;
 //全选
@@ -49,13 +57,13 @@ $("#selectAll").on("click", function () {
     $(".show span :checkbox").prop("checked", false);
     selectAlli = 0;
   }
-
 });
-$("#ReverseSelect").on("click", function () {//反选
+$("#ReverseSelect").on("click", function () {
+  //反选
   $("#show span :checkbox").each(function () {
     //遍历所有复选框，然后取值进行 !非操作
     $(this).prop("checked", !$(this).prop("checked"));
-  })
+  });
 });
 function js(url) {
   var script = document.createElement("script");
@@ -67,7 +75,7 @@ function js(url) {
 }
 
 function GetRequest(a, b) {
-  char = ''
+  char = "";
   var url = location.search; //获取url中"?"符后的字串
   var theRequest = new Object();
   if (url.indexOf("?") != -1) {
@@ -81,14 +89,18 @@ function GetRequest(a, b) {
     }
   }
   if (b == 1) {
-    char = char.split(",")
-    arrsplice(char, "")
-  } else { if (!isNaN(char)) { char = Number(char) } }
+    char = char.split(",");
+    arrsplice(char, "");
+  } else {
+    if (!isNaN(char)) {
+      char = Number(char);
+    }
+  }
   return char;
 }
 
 function if1eq() {
-  return "if *\(\w*\[?'?[0-9a-zA-Z_]*'?\]?=[^=]"
+  return "if *(w*[?'?[0-9a-zA-Z_]*'?]?=[^=]";
 }
 function arrsplice(arr, b) {
   var index = arr.indexOf(b);
@@ -98,17 +110,19 @@ function arrsplice(arr, b) {
   return arr;
 }
 function find(arr, key) {
-  const l = key.length
-  const idxMap = new Map()
+  const l = key.length;
+  const idxMap = new Map();
   // 具体小细节边界判断都忽略，实现功能为主
   for (let i = 0; i < arr.length; i++) {
-    v = arr.substr(i, l)
-    idxMap.set(v, i)
+    v = arr.substr(i, l);
+    idxMap.set(v, i);
   }
-  return idxMap.has(key) ? idxMap.get(key) : -1
+  return idxMap.has(key) ? idxMap.get(key) : -1;
 }
 
 function jsonstr(a) {
-  return JSON.stringify(a).replace("[", "").replace("]", "").replace(/"/g, '');
+  return JSON.stringify(a).replace("[", "").replace("]", "").replace(/"/g, "");
 }
-function sortNumber(a, b) { return a - b }
+function sortNumber(a, b) {
+  return a - b;
+}

@@ -1,90 +1,122 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+  <head>
+    <meta
+      name="keywords"
+      content="萌萌数据库,装备开发统计,舰队collection,舰船建造统计,舰娘数据库"
+    />
+    <meta
+      name="description"
+      content="本站支持多装备概率叠加显示，特定旗舰出货概率显示"
+    />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <!--iphone设备中的safari私有meta标签，它表示：允许全屏模式浏览-->
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <!--iphone的私有标签，它指定的iphone中safari顶端的状态条的样式-->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link
+      rel="icon"
+      href="https://img.pddpic.com/mms-material-img/2021-01-16/e555cb1c-1339-48b5-9930-4101be911797.png"
+    />
+    <title>萌萌数据库 - 捐赠</title>
+    <!-- Bootstrap core CSS -->
+    <!-- <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="dist/css/dashboard.css" />
+    <link rel="stylesheet" href="dist/css/selection.css" />
+    <style id="csscontainer"></style>
+    <style>
+      table tr th {
+        text-align: center;
+      }
+    </style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-SQLQ5EBLTM");
+    </script>
+  </head>
 
-<head>
-  <meta name="keywords" content="萌萌数据库,装备开发统计,舰队collection,舰船建造统计,舰娘数据库" />
-  <meta name="description" content="本站支持多装备概率叠加显示，特定旗舰出货概率显示" />
-  <meta content="yes" name="apple-mobile-web-app-capable" />
-  <!--iphone设备中的safari私有meta标签，它表示：允许全屏模式浏览-->
-  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
-  <!--iphone的私有标签，它指定的iphone中safari顶端的状态条的样式-->
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <link rel="icon" href="https://img.pddpic.com/mms-material-img/2021-01-16/e555cb1c-1339-48b5-9930-4101be911797.png">
-  <title>萌萌数据库 - 捐赠</title>
-  <!-- Bootstrap core CSS -->
-  <!-- <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="dist/css/dashboard.css">
-  <link rel="stylesheet" href="dist/css/selection.css">
-  <style id='csscontainer'></style>
-  <style>
-    table tr th {
-      text-align: center;
-    }
-  </style>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"></script>
-  <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-SQLQ5EBLTM');
-  </script>
-</head>
-
-<body>
-  <div id="nav"></div>
-  <div id="bgpic">
-    <div id="bgcolor">
-      <div style="text-align: center;" class="col-sm-6">
-        <h3>捐赠方式 </h3>
-        <br>
-        <img src="https://img-blog.csdnimg.cn/20210125224154299.jpg" alt=""><br>
-        <br>比特币钱包地址：1Hfz6egy5Xk1dJrY9v3b3Fjjcmnquktdiv&emsp;<br> <br> 比特币钱包二维码：<img
-          src="https://img-blog.csdnimg.cn/20210125224154292.jpg" alt="">
+  <body>
+    <div id="nav"></div>
+    <div id="bgpic">
+      <div id="bgcolor">
+        <div style="text-align: center" class="col-sm-6">
+          <h3>捐赠方式</h3>
+          <br />
+          <img
+            src="https://img-blog.csdnimg.cn/20210125224154299.jpg"
+            alt=""
+          /><br />
+          <br />比特币钱包地址：1Hfz6egy5Xk1dJrY9v3b3Fjjcmnquktdiv&emsp;<br />
+          <br />
+          比特币钱包二维码：<img
+            src="https://img-blog.csdnimg.cn/20210125224154292.jpg"
+            alt=""
+          />
+        </div>
+        <div class="col-sm-6 center" align="center">
+          <h3></h3>
+          <table border="1">
+            <caption align="top" class="center">
+              赞助名单
+            </caption>
+            <tr>
+              <th>大名</th>
+              <th>提供</th>
+              <th>留言</th>
+            </tr>
+            <tr>
+              <td>提督Conba</td>
+              <td>开发，服务器费用</td>
+              <td>希望大建多多宣传，帮助更多的提督</td>
+            </tr>
+            <tr>
+              <td>
+                <a
+                  href="https://tieba.baidu.com/home/main?un=%E8%AE%B813861852281&ie=utf-8&id=tb.1.8c99e350.kOFGKvn85GFpwpwkElUARQ?t=1505730538&fr=pb"
+                  target="_blank"
+                  >许氏王朝天子</a
+                >
+              </td>
+              <td>￥200.00</td>
+              <td>感谢群友的努力，希望能有更多精彩的作品。</td>
+            </tr>
+          </table>
+        </div>
+        <div id="foot"></div>
       </div>
-      <div class="col-sm-6 center" align="center">
-        <h3></h3>
-        <table border="1">
-          <caption align="top" class="center">赞助名单 </caption>
-          <tr>
-            <th>大名</th>
-            <th>提供</th>
-            <th>留言</th>
-          </tr>
-          <tr>
-            <td>提督Conba</td>
-            <td>开发，服务器费用</td>
-            <td>希望大建多多宣传，帮助更多的提督</td>
-          </tr>
-          <tr>
-            <td><a
-                href="https://tieba.baidu.com/home/main?un=%E8%AE%B813861852281&ie=utf-8&id=tb.1.8c99e350.kOFGKvn85GFpwpwkElUARQ?t=1505730538&fr=pb"
-                target="_blank">许氏王朝天子</a> </td>
-            <td>￥200.00</td>
-            <td>感谢群友的努力，希望能有更多精彩的作品。</td>
-          </tr>
-        </table>
-      </div>
-      <div id="foot"></div>
     </div>
-  </div>
-  <i id="js"></i>
-  <script src="https://releases.jquery.com/git/jquery-3.x-git.min.js"></script>
-  <!-- <script>window.jQuery || document.write('<script src="https://releases.jquery.com/git/jquery-3.x-git.min.js"><\/script>')</script> -->
-  <script type="text/javascript" src="dist/js/jgs.js"> </script>
-  <script type="text/javascript" src="dist/js/simplize.js"> </script>
-  <script type="text/javascript" src="dist/js/share.js"> </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <script>
-    $("#nav").load("nav.html");
-    $("#foot").load("foot.html");
-  </script>
-</body>
+    <i id="js"></i>
+    <script
+      crossorigin="anonymous"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"
+    ></script>
 
+    <script type="text/javascript" src="dist/js/jgs.js"></script>
+    <script type="text/javascript" src="dist/js/simplize.js"></script>
+    <script type="text/javascript" src="dist/js/share.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+      $("#nav").load("nav.html");
+      $("#foot").load("foot.html");
+    </script>
+  </body>
 </html>

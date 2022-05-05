@@ -1,3 +1,4 @@
 *.wxss
 *.wxml
 .DS_Store
+tool/
