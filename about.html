@@ -1,93 +1,73 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta
-      name="keywords"
-      content="萌萌数据库,装备开发统计,舰队collection,舰船建造统计,舰娘数据库"
-    />
-    <meta
-      name="description"
-      content="本站支持多装备概率叠加显示，特定旗舰出货概率显示"
-    />
-    <meta content="yes" name="apple-mobile-web-app-capable" />
-    <!--iphone设备中的safari私有meta标签，它表示：允许全屏模式浏览-->
-    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
-    <!--iphone的私有标签，它指定的iphone中safari顶端的状态条的样式-->
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <link
-      rel="icon"
-      href="https://img.pddpic.com/mms-material-img/2021-01-16/e555cb1c-1339-48b5-9930-4101be911797.png"
-    />
-    <title>萌萌数据库 - 关于</title>
-    <!-- Bootstrap core CSS -->
-    <!-- <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./dist/css/dashboard.css" />
-    <style id="csscontainer"></style>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-SQLQ5EBLTM");
-    </script>
-  </head>
 
-  <body>
-    <div id="nav"></div>
-    <div id="bgpic">
-      <div id="bgcolor">
-        <div class="center">
-          <h3>网站简介</h3>
-          <pre>本网站的主要功能是多装备开发查询
+<head>
+  <meta name="keywords" content="萌萌数据库,装备开发统计,舰队collection,舰船建造统计,舰娘数据库" />
+  <meta name="description" content="本站支持多装备概率叠加显示，特定旗舰出货概率显示" />
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <!--iphone设备中的safari私有meta标签，它表示：允许全屏模式浏览-->
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <!--iphone的私有标签，它指定的iphone中safari顶端的状态条的样式-->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="icon" href="https://img.pddpic.com/mms-material-img/2021-01-16/e555cb1c-1339-48b5-9930-4101be911797.png" />
+  <title>萌萌数据库 - 关于</title>
+  <!-- Bootstrap core CSS -->
+  <!-- <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./dist/css/dashboard.css" />
+  <style id="csscontainer"></style>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag("js", new Date());
+    gtag("config", "G-SQLQ5EBLTM");
+  </script>
+</head>
+
+<body>
+  <div id="nav"></div>
+  <div id="bgpic">
+    <div id="bgcolor">
+      <div class="center">
+        <h3>网站简介</h3>
+        <pre>本网站的主要功能是多装备开发查询
 附带拆包数据查看
 <a href="construction.html">建造统计</a>(beta)施工完成！<a href="quest.html">任务链功能</a>正在开发中</pre>
-          <h4>和POI-DB有什么区别？</h4>
-          <pre>
+        <h4>和POI-DB有什么区别？</h4>
+        <pre>
   1、多装备概率叠加统计。
   2、相同公式下，对秘书舰进行分类，不同旗舰出货率显示。
   3、时间段筛选（对新装备很有用）。
   4、可查看失败率（在下方设置里选择，部分提督希望开发公式失败率高以节省资材）
-</pre
-          >
-          <h4>秘书舰如何分类？</h4>
-          <pre>请见 <a href="分类.html">秘书舰分类表</a></pre>
-          <h4>数据来源？</h4>
-          <pre>poi 为本站提供数据支持。
+</pre>
+        <h4>秘书舰如何分类？</h4>
+        <pre>请见 <a href="分类.html">秘书舰分类表</a></pre>
+        <h4>数据来源？</h4>
+        <pre>poi 为本站提供数据支持。
   欢迎使用<a href="https://poi.moe/">poi浏览器</a>来为本站的数据添砖加瓦
   如果您使用的是<a href="https://poi.moe/">poi浏览器</a>
   您的数据将在次月1~5日<b>匿名</b>同步到本网站
 </pre>
-          <h4>查询结果一直在转圈？</h4>
-          <pre>在设置里减少选择的时间段或换个浏览器</pre>
-          <br /><span
-            ><br />
-            如果你在使用的过程中发现Bug 或是一些好的建议都欢迎在<a
-              href="https://github.com/moe-data/moe-data.github.io/issues/new?title=%E8%AF%B7%E5%A1%AB%E5%86%99%E9%97%AE%E9%A2%98%E6%88%96%E5%BB%BA%E8%AE%AE&body=%E8%AF%B7%E5%A1%AB%E5%86%99%E6%8F%8F%E8%BF%B0%0A%E7%82%B9%E5%87%BB%E7%BB%BF%E8%89%B2%E6%8C%89%E9%92%AE%E6%8F%90%E4%BA%A4"
-              >Github Issue</a
-            >
-            上提交。 </span
-          ><br />
-          <br />
-          广告：招一个日语校对(帮我检查下翻译就好)
-          <br />
-          <pre>Contact me: j6j7@qq.com</pre>
-          <br />
-          <pre style="background-color: aliceblue; color: gray">
+        <h4>查询结果一直在转圈？</h4>
+        <pre>在设置里减少选择的时间段或换个浏览器</pre>
+        <br /><span><br />
+          如果你在使用的过程中发现Bug 或是一些好的建议都欢迎在<a
+            href="https://github.com/moe-data/moe-data.github.io/issues/new?title=%E8%AF%B7%E5%A1%AB%E5%86%99%E9%97%AE%E9%A2%98%E6%88%96%E5%BB%BA%E8%AE%AE&body=%E8%AF%B7%E5%A1%AB%E5%86%99%E6%8F%8F%E8%BF%B0%0A%E7%82%B9%E5%87%BB%E7%BB%BF%E8%89%B2%E6%8C%89%E9%92%AE%E6%8F%90%E4%BA%A4">Github
+            Issue</a>
+          上提交。 </span><br />
+        <br />
+        广告：招一个日语校对(帮我检查下翻译就好)
+        <br />
+        <pre>Contact me: j6j7@qq.com</pre>
+        <br />
+        <pre style="background-color: aliceblue; color: gray">
 Copyright (c) 2020 Conbanwa
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -106,32 +86,30 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF 
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-</pre
-          >
-        </div>
-        <div id="foot"></div>
+</pre>
       </div>
+      <div id="foot"></div>
     </div>
-    <i id="js"></i>
-    <script
-      crossorigin="anonymous"
-      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-      src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"
-    ></script>
+  </div>
+  <i id="js"></i>
+  <script crossorigin="anonymous"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>
 
-    <script type="text/javascript" src="./dist/js/jgs.js"></script>
-    <script type="text/javascript" src="./dist/js/simplize.js"></script>
-    <script type="text/javascript" src="./dist/js/share.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script>
-      $.fn.emulateTransitionEnd ||
-        document.write(
-          '<script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"><\/script>">'
-        );
-    </script>
-    <script>
-      $("#nav").load("nav.html");
-      $("#foot").load("./foot.html");
-    </script>
-  </body>
+  <script type="text/javascript" src="./dist/js/jgs.js"></script>
+  <script type="text/javascript" src="./dist/js/simplize.js"></script>
+  <script type="text/javascript" src="./dist/js/share.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script>
+    $.fn.emulateTransitionEnd ||
+      document.write(
+        '<script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"><\/script>">'
+      );
+  </script>
+  <script>
+    $("#nav").load("nav.html");
+    $("#foot").load("./foot.html");
+  </script>
+</body>
+
 </html>
