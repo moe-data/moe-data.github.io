@@ -278,7 +278,6 @@
     <script>
       $("#nav").load("nav.html");
     </script>
-    <!-- <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
     <script type="text/javascript" src="dist/js/item.js"></script>
     <script type="text/javascript" src="dist/js/jgs.js"></script>
     <script type="text/javascript" src="dist/js/simplize.js"></script>
@@ -287,6 +286,12 @@
     <!-- <script type="text/javascript" src="dist/js/bootstrap-table.min.js"> </script> -->
     <script type="text/javascript" src="dist/js/scatter.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+      $.fn.emulateTransitionEnd ||
+        document.write(
+          '<script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"><\/script>">'
+        );
+    </script>
     <!-- <script src="https://cdn.bootcss.com/bootstrap-table/1.18.0/bootstrap-table.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.js"></script>
     <!-- <script src="dist/js/tableExport.min.js"></script> -->
