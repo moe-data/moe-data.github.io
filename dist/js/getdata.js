@@ -137,13 +137,13 @@ function getimg(zhimg, qn, n) {
     });
 }
 function getjson(err, qn) {
-  $.getJSON("parsed/" + qn + ".json")
+  $.getJSON("dump/" + qn + ".json")
     .done(function (result) {
       console.log(qn + " fail info: ", !err ? "link undefined" : err);
       download(result, "下载", qn);
     })
     .fail(function (t) {
-      let msg = "文件  " + "parsed/" + qn + ".json 读取失败";
+      let msg = "文件  " + "dump/" + qn + ".json 读取失败";
       alert(msg);
       $("h3.panel-title")[0].innerHTML = msg;
       console.log(msg);
@@ -173,7 +173,7 @@ function download(result, com, qn, zhimg, start) {
     z(objdata.length);
     z(bigdata.length);
     console.log(
-      qn + ": get " + (zhimg ? zhimg + start : "parsed/" + qn) + " success"
+      qn + ": get " + (zhimg ? zhimg + start : "dump/" + qn) + " success"
     );
     $("h3.panel-title")[0].innerHTML =
       " 正在" +
