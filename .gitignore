@@ -2,3 +2,4 @@
 *.wxml
 .DS_Store
 tool/
+dist/js/calc2.js

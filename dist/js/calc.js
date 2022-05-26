@@ -264,7 +264,7 @@ $(document).ready(function () {
     js(
       "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/bootstrap-table-locale-all.js"
     );
-    js("https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js");
+    js("https://lib.baomitu.com/echarts/3.8.5/echarts.min.js");
     progress(2);
     if (!havelang) {
       document.getElementById("locale")[0].selected = true;
