@@ -87,7 +87,7 @@ function loadchart() {
   rawlen = raw.length;
   isFirst = false;
   if (column.length < 1 || rawlen < 1) {
-    info.innerHTML = "服务器忙，请在数秒后重试";
+    info.innerHTML = "正在加载数据，请在数秒后再次点击";
     console.log(raw, rnd);
     return;
   }
