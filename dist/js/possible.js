@@ -1,260 +1,241 @@
-const qtar = tar == "装备" ? "d" : "c";
-var active = {};
+const qtar = tar == '装备' ? 'd' : 'c'
+var active = {}
 
 function clearall() {
-  $(".btn").each(function () {
-    $(this).addClass(btndef);
-    $.cookie("d" + $(this).val(), null, { expires: 365, path: "/" });
-    $(this).removeClass(btninfo);
-    $(this).removeClass(primary);
-  });
-  btnclick();
+  $('.btn').each(function () {
+    $(this).addClass(btndef)
+    $.cookie('d' + $(this).val(), null, { expires: 365, path: '/' })
+    $(this).removeClass(btninfo)
+    $(this).removeClass(primary)
+  })
+  btnclick()
 }
 function btnbind() {
-  $(".btn").click(function () {
-    $(this).addClass("clicked");
+  $('.btn').click(function () {
+    $(this).addClass('clicked')
     if ($(this).hasClass(primary)) {
-      $(this).removeClass(btndef);
-      $(this).addClass(btninfo);
-      $.cookie("d" + $(this).val(), btninfo, { expires: 365, path: "/" });
-      $(this).removeClass(primary);
+      $(this).removeClass(btndef)
+      $(this).addClass(btninfo)
+      $.cookie('d' + $(this).val(), btninfo, { expires: 365, path: '/' })
+      $(this).removeClass(primary)
     } else {
       if ($(this).hasClass(btninfo)) {
-        $(this).addClass(btndef);
-        $.cookie("d" + $(this).val(), null, { expires: 365, path: "/" });
-        $(this).removeClass(btninfo);
-        $(this).removeClass(primary);
+        $(this).addClass(btndef)
+        $.cookie('d' + $(this).val(), null, { expires: 365, path: '/' })
+        $(this).removeClass(btninfo)
+        $(this).removeClass(primary)
       } else {
-        $(this).addClass(primary);
-        $.cookie("d" + $(this).val(), primary, { expires: 365, path: "/" });
-        $(this).removeClass(btndef);
+        $(this).addClass(primary)
+        $.cookie('d' + $(this).val(), primary, { expires: 365, path: '/' })
+        $(this).removeClass(btndef)
       }
     }
-  });
-  btnclick();
+  })
+  btnclick()
 }
-var primary = "btn-primary";
-var btninfo = "btn-info";
-var btndef = "btn-default";
-if (tar == "装备") {
-  $.getJSON("parsed/api_mst_slotitem_equiptype.json", function (res) {
-    itype = res;
+var primary = 'btn-primary'
+var btninfo = 'btn-info'
+var btndef = 'btn-default'
+if (tar == '装备') {
+  $.getJSON('parsed/api_mst_slotitem_equiptype.json', function (res) {
+    itype = res
   })
     .done(function () {
-      $.getJSON("parsed/api_mst_slotitem.json", function (result) {
-        addcol(result, "itype", "api_type", 2);
-        slotitem = result;
+      $.getJSON('parsed/api_mst_slotitem.json', function (result) {
+        addcol(result, 'itype', 'api_type', 2)
+        slotitem = result
       })
         .done(function () {
-          genCheck(init);
-          $(".btn").click(btnclick);
+          genCheck(init)
+          $('.btn').click(btnclick)
         })
         .fail(function (d) {
-          alert("文件  " + "parsed/api_mst_slotitem.json" + " 读取失败" + d);
-        });
+          alert('文件  ' + 'parsed/api_mst_slotitem.json' + ' 读取失败' + d)
+        })
     })
     .fail(function (d) {
-      alert(
-        "文件  " + "parsed/api_mst_slotitem_equiptype.json" + " 读取失败" + d
-      );
-    });
+      alert('文件  ' + 'parsed/api_mst_slotitem_equiptype.json' + ' 读取失败' + d)
+    })
 }
 
 function genCheck(Obj) {
-  years = [];
+  years = []
   for (key in Obj) {
-    years.push(key);
+    years.push(key)
   }
-  var content = "content";
-  var checkText = "checkbox";
-  var link = "link";
-  var size;
-  $("#show").html("");
-  size = years.length;
+  var content = 'content'
+  var checkText = 'checkbox'
+  var link = 'link'
+  var size
+  $('#show').html('')
+  size = years.length
   for (var i = 0; i < years.length; i++) {
-    genShowContent("show", checkText + i, i, years[i] + "", content + i);
+    genShowContent('show', checkText + i, i, years[i] + '', content + i)
   }
   for (var i = 0; i < years.length; i++) {
-    var array = Obj["" + years[i] + ""];
+    var array = Obj['' + years[i] + '']
     for (var j = 0; j < array.length; j++) {
-      genCheckBox(content + i, link + i, array[j], array[j], i, false);
+      genCheckBox(content + i, link + i, array[j], array[j], i, false)
     }
-    var box = document.getElementById(checkText + i);
+    var box = document.getElementById(checkText + i)
   }
-  btnbind();
+  btnbind()
 }
 function genCheckBox(id, name, value, showText, parentIndex, isCheck) {
   var checkbox =
     "<span class='la'><button class='btn " +
-    ($.cookie("d" + value) == btninfo
-      ? btninfo
-      : $.cookie("d" + value) == primary
-      ? primary
-      : btndef) +
+    ($.cookie('d' + value) == btninfo ? btninfo : $.cookie('d' + value) == primary ? primary : btndef) +
     "' parentIndex=" +
     parentIndex +
-    (isCheck ? " checked='checked'" : "") +
-    " value=" +
+    (isCheck ? " checked='checked'" : '') +
+    ' value=' +
     value +
-    " >" +
+    ' >' +
     StranText(formatItemId(showText)) +
-    "</button></span>";
-  $("#" + id).append(checkbox);
+    '</button></span>'
+  $('#' + id).append(checkbox)
 }
 function genShowContent(id, checkboxId, index, showText, idName) {
   var showContent = "<dd class='msg'><dt class='bigfont'>"
     .concat(StranText(showText))
     .concat("：</dt> <dd class='content' id='")
     .concat(idName)
-    .concat("' ></dd></dd><br>");
-  $("#" + id).append(showContent);
+    .concat("' ></dd></dd><br>")
+  $('#' + id).append(showContent)
 }
 function isAllCheck(name) {
-  var box = document.getElementsByName(name);
+  var box = document.getElementsByName(name)
   for (var j = 0; j < box.length; j++) {
     if (!box[j].checked) {
-      return false;
+      return false
     }
   }
-  return true;
+  return true
 }
 function arrange(value) {
-  release = {};
+  release = {}
   if (isNaN(value)) {
     developable.forEach(function (d) {
       for (let i = 0, l = slotitem.length; i < l; i++) {
-        e = slotitem[i];
+        e = slotitem[i]
         // slotitem.forEach(function(e){
-        if (e["api_id"] == d) {
-          var jstr = e[value];
+        if (e['api_id'] == d) {
+          var jstr = e[value]
         } else {
-          continue;
+          continue
         }
         if (release[jstr]) {
-          release[jstr].push(e["api_id"]);
+          release[jstr].push(e['api_id'])
         } else {
-          release[jstr] = [];
-          release[jstr].push(e["api_id"]);
+          release[jstr] = []
+          release[jstr].push(e['api_id'])
         }
-        break;
+        break
       }
-    });
+    })
   } else {
     if (value == -1) {
-      release = releasetime;
-      release["2013/04/23"] = [
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-        21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38,
-        39, 40, 41, -1,
-      ];
+      release = releasetime
+      release['2013/04/23'] = [
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+        31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, -1,
+      ]
     } else {
       if (value == -2) {
-        release = init;
+        release = init
       } else {
         developable.forEach(function (d) {
           // for(e of slotitem){
           for (let j = 0; j < slotitem.length; j++) {
-            e = slotitem[j];
-            if (e["api_id"] == d) {
-              var jstr;
-              var tn = e["api_type"][value];
+            e = slotitem[j]
+            if (e['api_id'] == d) {
+              var jstr
+              var tn = e['api_type'][value]
               switch (value) {
-                case "2":
-                  jstr = formatItype(tn);
-                  break;
-                case "3":
-                  jstr = itag(tn);
-                  break;
+                case '2':
+                  jstr = formatItype(tn)
+                  break
+                case '3':
+                  jstr = itag(tn)
+                  break
                 default:
-                  var jstr = tn;
+                  var jstr = tn
               }
             } else {
-              continue;
+              continue
             }
             if (release[jstr]) {
-              release[jstr].push(e["api_id"]);
+              release[jstr].push(e['api_id'])
             } else {
-              release[jstr] = [];
-              release[jstr].push(e["api_id"]);
+              release[jstr] = []
+              release[jstr].push(e['api_id'])
             }
-            break;
+            break
           }
-        });
+        })
       }
     }
   }
-  genCheck(release);
+  genCheck(release)
 }
-$(".go").click(function () {
-  var output = [];
-  var extra = [];
-  var duration = [];
-  $("button.btn-primary").each(function () {
-    output.push($(this).val());
-  });
-  $("button.btn-info").each(function () {
-    extra.push($(this).val());
-  });
-  $("input.time").each(function () {
-    if ($(this).prop("checked")) {
-      duration.push($(this).val());
+$('.go').click(function () {
+  var output = []
+  var extra = []
+  var duration = []
+  $('button.btn-primary').each(function () {
+    output.push($(this).val())
+  })
+  $('button.btn-info').each(function () {
+    extra.push($(this).val())
+  })
+  $('input.time').each(function () {
+    if ($(this).prop('checked')) {
+      duration.push($(this).val())
     }
-  });
+  })
   if (output.length + extra.length > 0) {
     if (duration.length > 0) {
-      console.log(extra, output);
+      console.log(extra, output)
       window.location.href =
-        "result.html?t=" +
+        'result.html?t=' +
         duration.reverse() +
-        "&q=" +
+        '&q=' +
         qtar +
-        "&o=" +
+        '&o=' +
         output +
-        "&e=" +
+        '&e=' +
         extra +
-        "&s=" +
-        $("#sorto").val() +
-        "&a=" +
-        $("#a").val() +
-        "&l=" +
-        $("#lv")[0].checked;
+        '&s=' +
+        $('#sorto').val() +
+        '&a=' +
+        $('#a').val() +
+        '&l=' +
+        $('#lv')[0].checked
     } else {
-      alert("您未选择时间范围！");
+      alert('您未选择时间范围！')
     }
   } else {
-    if (
-      confirm(
-        "您未选择" +
-          tar +
-          "，\n是要查询所有" +
-          tar +
-          "吗？\n(可点击" +
-          tar +
-          "名称选择" +
-          tar +
-          ")"
-      ) == true
-    ) {
+    if (confirm('您未选择' + tar + '，\n是要查询所有' + tar + '吗？\n(可点击' + tar + '名称选择' + tar + ')') == true) {
       window.location.href =
-        "result.html?t=" +
+        'result.html?t=' +
         duration.reverse() +
-        "&q=" +
+        '&q=' +
         qtar +
-        "&o=" +
+        '&o=' +
         output +
-        "&e=" +
+        '&e=' +
         extra +
-        "&s=" +
-        $("#sorto").val() +
-        "&a=" +
-        $("#a").val() +
-        "&l=" +
-        $("#lv")[0].checked;
+        '&s=' +
+        $('#sorto').val() +
+        '&a=' +
+        $('#a').val() +
+        '&l=' +
+        $('#lv')[0].checked
     }
   }
-});
-btnbind();
-$(".hint").html(
+})
+btnbind()
+$('.hint').html(
   `
 <div class="panel-heading">
     <h3 class="panel-title ">提示</h3>
@@ -275,38 +256,38 @@ $(".hint").html(
     <li>不兼容IE浏览器</li><br>
 </ul>  
 </div>`
-);
+)
 
-$(".btn").click(btnclick);
+$('.btn').click(btnclick)
 function btnclick() {
-  var output = [];
-  active = {};
-  $("button.btn-primary").each(function () {
-    output.push(Number($(this).val()));
-  });
+  var output = []
+  active = {}
+  $('button.btn-primary').each(function () {
+    output.push(Number($(this).val()))
+  })
   if (output.length) {
     possibles.forEach((e) => {
       if (isContain(e, output)) {
         e.forEach(function (ee) {
-          active[ee] = true;
-        });
+          active[ee] = true
+        })
       }
-    });
-    $("button.btn").each(function () {
+    })
+    $('button.btn').each(function () {
       if (!active[$(this).val()]) {
-        $(this).addClass("active").addClass("disabled");
+        $(this).addClass('active').addClass('disabled')
       } else {
-        $(this).removeClass("active").removeClass("disabled");
+        $(this).removeClass('active').removeClass('disabled')
       }
-    });
+    })
   } else {
-    $("button.btn").each(function () {
-      $(this).removeClass("active").removeClass("disabled");
-    });
+    $('button.btn').each(function () {
+      $(this).removeClass('active').removeClass('disabled')
+    })
   }
 }
-$.getJSON("parsed/cstype.json").fail(function (d) {
-  w("文件  " + "parsed/cstype.json" + " 读取失败" + d);
-});
-$("#nav").load("nav.html");
-$("#foot").load("foot.html");
+$.getJSON('parsed/cstype.json').fail(function (d) {
+  w('文件  ' + 'parsed/cstype.json' + ' 读取失败' + d)
+})
+$('#nav').load('nav.html')
+$('#foot').load('foot.html')

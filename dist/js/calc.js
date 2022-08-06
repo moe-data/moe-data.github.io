@@ -1,94 +1,94 @@
-stype[174] = "Z1 Z3";
-stype[439] = "Warspite";
-stype[441] = "Littorio级";
-stype[443] = "Libeccio级";
-stype[448] = "Zara级";
-stype[491] = "Commandant Teste";
-stype[515] = "Ark Royal";
-stype[530] = "伊504";
-stype[535] = "Luigi Torelli";
-stype[539] = "UIT-25";
-stype[82] = "伊勢改";
-stype[88] = "日向改";
-stype[553] = "伊勢改二";
-stype[554] = "日向改二";
+stype[174] = 'Z1 Z3'
+stype[439] = 'Warspite'
+stype[441] = 'Littorio级'
+stype[443] = 'Libeccio级'
+stype[448] = 'Zara级'
+stype[491] = 'Commandant Teste'
+stype[515] = 'Ark Royal'
+stype[530] = '伊504'
+stype[535] = 'Luigi Torelli'
+stype[539] = 'UIT-25'
+stype[82] = '伊勢改'
+stype[88] = '日向改'
+stype[553] = '伊勢改二'
+stype[554] = '日向改二'
 // stype[553] = "伊勢改(二)";
 // stype[554] = "日向改(二)";
-stype[571] = "Nelson";
-stype[589] = "L.d.S.D.d.Abruzzi级";
-const output = GetRequest("o", 1);
-var extra = GetRequest("e", 1);
-extra = extra.indexOf("") ? extra : [];
-const q = GetRequest("q", 1);
-const ranget = GetRequest("t", 1);
-let jsindex = 0;
-var bigdata = [];
-var isonl = [];
-var sorted = [];
-var slotitem;
-const api_ = q == "d" ? "api_" : "";
-const jsonfile = q == "d" ? "api_mst_slotitem" : "cstype";
+stype[571] = 'Nelson'
+stype[589] = 'L.d.S.D.d.Abruzzi级'
+const output = GetRequest('o', 1)
+var extra = GetRequest('e', 1)
+extra = extra.indexOf('') ? extra : []
+const q = GetRequest('q', 1)
+const ranget = GetRequest('t', 1)
+let jsindex = 0
+var bigdata = []
+var isonl = []
+var sorted = []
+var slotitem
+const api_ = q == 'd' ? 'api_' : ''
+const jsonfile = q == 'd' ? 'api_mst_slotitem' : 'cstype'
 var lseg = {
-  i: "",
-  fuel: "",
-  ammo: "",
-  steel: "",
-  bauxite: "",
-  資材: "",
-  secretary: "",
-  denominator: "",
-  times: "",
-  ratio: "",
-};
-var kj = false;
-var ship;
-var csjson = [];
-var bar = 1;
-$(".loading").css("width", Width());
-$.getJSON("parsed/cstype.json").done(function (result) {
-  csjson = result;
-  jsonover();
-});
-$.getJSON("parsed/" + jsonfile + ".json").done(function (result) {
-  slotitem = result;
-  jsonover();
-  var oname = [];
-  for (let j = 0; j < output.length; j++) {
-    oname.push(addemoji(formatOnlyname(output[j])));
-  }
-  document.title = oname.length ? oname : "全部" + (q == "d" ? "装备" : "舰娘");
-});
-$("#denominator").val(Number(GetRequest("a", 1)));
-var minlv = GetRequest("l") == "true" ? true : false;
-function progress(p) {
-  bar += p;
-  $(".progress-bar").css("width", bar + "%");
+  i: '',
+  fuel: '',
+  ammo: '',
+  steel: '',
+  bauxite: '',
+  資材: '',
+  secretary: '',
+  denominator: '',
+  times: '',
+  ratio: '',
 }
-var detect = navigator.browserLanguage || navigator.language;
+var kj = false
+var ship
+var csjson = []
+var bar = 1
+$('.loading').css('width', Width())
+$.getJSON('parsed/cstype.json').done(function (result) {
+  csjson = result
+  jsonover()
+})
+$.getJSON('parsed/' + jsonfile + '.json').done(function (result) {
+  slotitem = result
+  jsonover()
+  var oname = []
+  for (let j = 0; j < output.length; j++) {
+    oname.push(addemoji(formatOnlyname(output[j])))
+  }
+  document.title = oname.length ? oname : '全部' + (q == 'd' ? '装备' : '舰娘')
+})
+$('#denominator').val(Number(GetRequest('a', 1)))
+var minlv = GetRequest('l') == 'true' ? true : false
+function progress(p) {
+  bar += p
+  $('.progress-bar').css('width', bar + '%')
+}
+var detect = navigator.browserLanguage || navigator.language
 if (!havelang) {
   if (detect.length > 0) {
-    console.log(detect);
+    console.log(detect)
   } else {
-    detect = "zh-CN";
+    detect = 'zh-CN'
   }
-  if (detect.slice(0, 2) == "zh" || detect.slice(0, 2) == "ja") {
-    kj = true;
+  if (detect.slice(0, 2) == 'zh' || detect.slice(0, 2) == 'ja') {
+    kj = true
   }
-  selectlang = document.getElementById("locale");
+  selectlang = document.getElementById('locale')
   for (let i = 0; i < selectlang.length; i++) {
     if (selectlang[i].value == detect) {
-      selectlang[i].selected = true;
+      selectlang[i].selected = true
     }
   }
 }
 function jsonover() {
-  jsindex++;
-  console.log(jsindex, ranget.length + 2, bigdata.length);
-  progress((1 / (ranget.length + 2)) * 80);
+  jsindex++
+  console.log(jsindex, ranget.length + 2, bigdata.length)
+  progress((1 / (ranget.length + 2)) * 80)
   // if (jsindex == ranget.length + 1)$('h3.panel-title')[0].innerHTML = ("数据计算中。。。");
   if (jsindex >= ranget.length + 2) {
-    progress(20);
-    var filted = filt(group2By(bigdata, "i", "s"), output);
+    progress(20)
+    var filted = filt(group2By(bigdata, 'i', 's'), output)
 
     // -  - -
     // var norate = {}
@@ -123,79 +123,75 @@ function jsonover() {
 
     // -  - -
     if (!filted.length) {
-      $("h3.panel-title")[0].innerHTML =
-        "无匹配的结果，请减少主查询个数，或将主查询改为副查询";
+      $('h3.panel-title')[0].innerHTML = '无匹配的结果，请减少主查询个数，或将主查询改为副查询'
     } else {
       // console.log(filted.length);
-      const oute = output.concat(extra);
-      isonl = isonladd(filted, oute);
+      const oute = output.concat(extra)
+      isonl = isonladd(filted, oute)
       function isonladd(array, o) {
         for (k = 0; k < o.length; k++) {
-          egnrl(o[k]);
+          egnrl(o[k])
         }
-        if (q == "d") {
-          egnrl("-1");
+        if (q == 'd') {
+          egnrl('-1')
         }
-        let groups = [];
+        let groups = []
         // o.push(-1)
         for (let i = 0, l = array.length; i < l; i++) {
-          let is = array[i][0]["i"];
-          if (q == "d") {
-            if (typeof is == "string") is = JSON.parse(is);
-            is.push(1);
-            is.push(formatStype(array[i][0]["s"]));
+          let is = array[i][0]['i']
+          if (q == 'd') {
+            if (typeof is == 'string') is = JSON.parse(is)
+            is.push(1)
+            is.push(formatStype(array[i][0]['s']))
           } else {
-            is.push(formatshipId(array[i][0]["s"]));
+            is.push(formatshipId(array[i][0]['s']))
           }
-          var onal = { i: is };
+          var onal = { i: is }
           for (let j = 0; j < array[i].length; j++) {
-            var item = jsonstr(array[i][j]["o"]);
-            egnrl(item);
-            if (onal["n" + item]) {
-              onal["n" + item] += Number(array[i][j]["n"]);
+            var item = jsonstr(array[i][j]['o'])
+            egnrl(item)
+            if (onal['n' + item]) {
+              onal['n' + item] += Number(array[i][j]['n'])
             } else {
-              onal["n" + item] = 0 + Number(array[i][j]["n"]);
+              onal['n' + item] = 0 + Number(array[i][j]['n'])
             }
             if (minlv) {
-              if (onal["l" + item]) {
-                onal["l" + item] = Math.min(
-                  onal["l" + item],
-                  Number(array[i][j]["l"])
-                );
+              if (onal['l' + item]) {
+                onal['l' + item] = Math.min(onal['l' + item], Number(array[i][j]['l']))
               } else {
-                onal["l" + item] = Math.min(121, Number(array[i][j]["l"]));
+                onal['l' + item] = Math.min(121, Number(array[i][j]['l']))
               }
             }
           }
-          groups.push(onal);
+          groups.push(onal)
         }
-        return groups;
+        return groups
       }
-      z(filted, isonl);
+      z(filted, isonl)
       isonl.forEach(function (e) {
-        denominator = 0;
+        denominator = 0
         for (keys in e) {
-          if (keys[0] == "n") {
-            denominator += e[keys];
+          if (keys[0] == 'n') {
+            denominator += e[keys]
           }
         }
-        e["denominator"] = denominator;
-        e["ratio"] = 0;
-        e["times"] = 0;
+        e['denominator'] = denominator
+        e['ratio'] = 0
+        e['times'] = 0
         for (key in e) {
-          if (key[0] == "n") {
-            k = key.slice(1, key.length);
-            e[formatOnlyname(k)] = e[key] / e["denominator"];
+          if (key[0] == 'n') {
+            k = key.slice(1, key.length)
+            e[formatOnlyname(k)] = e[key] / e['denominator']
             if (oute.indexOf(k) > -1) {
-              e["ratio"] += e[formatOnlyname(k)];
-              e["times"] += e["n" + k];
+              e['ratio'] += e[formatOnlyname(k)]
+              e['times'] += e['n' + k]
             }
           }
         }
-      });
-      setdeno(1);
+      })
+      setdeno(1)
     }
-    $(".loading").hide();
+    $('.loading').hide()
   } else if (jsindex == 3) {
     // var filted = filt(group2By(bigdata, "i", "s"));
     //     if (filted.length){
@@ -227,105 +223,102 @@ function jsonover() {
   }
 }
 function setdeno(a) {
-  $(".deno").css("background", "");
-  sorted = [];
+  $('.deno').css('background', '')
+  sorted = []
   isonl.forEach(function (e) {
-    if (e["denominator"] > $("#denominator").val()) {
-      sorted.push(e);
+    if (e['denominator'] > $('#denominator').val()) {
+      sorted.push(e)
     }
-  });
+  })
   if (sorted.length) {
-    sortkey = GetRequest("s");
+    sortkey = GetRequest('s')
     if (!sortkey == 0) {
-      sorted.sort(sortby);
-      sorted.reverse();
+      sorted.sort(sortby)
+      sorted.reverse()
     }
-    langchange();
+    langchange()
     if (a) {
-      progress(97);
-      $("div.panel").hide();
-      $("#foot").load("foot.html");
+      progress(97)
+      $('div.panel').hide()
+      $('#foot').load('foot.html')
     }
   } else {
-    $("div.panel").show();
-    $("h3.panel-title")[0].innerHTML =
-      "存在查询结果，但公式次数设置过大，请在左上方重新设置";
-    $(".deno").css("background", "gold");
+    $('div.panel').show()
+    $('h3.panel-title')[0].innerHTML = '存在查询结果，但公式次数设置过大，请在左上方重新设置'
+    $('.deno').css('background', 'gold')
   }
 }
-var colorFlag = 0;
+var colorFlag = 0
 $(document).ready(function () {
-  $("#locale").change(function () {
-    progress(5);
-    setlang();
-    langchange();
-  });
+  $('#locale').change(function () {
+    progress(5)
+    setlang()
+    langchange()
+  })
   setTimeout(function () {
-    js(
-      "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/bootstrap-table-locale-all.js"
-    );
-    js("https://lib.baomitu.com/echarts/3.8.5/echarts.min.js");
-    progress(2);
+    js('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/bootstrap-table-locale-all.js')
+    js('https://lib.baomitu.com/echarts/3.8.5/echarts.min.js')
+    progress(2)
     if (!havelang) {
-      document.getElementById("locale")[0].selected = true;
+      document.getElementById('locale')[0].selected = true
     }
-  }, 2400);
+  }, 2400)
   setTimeout(function () {
-    progress(3);
+    progress(3)
     // $("#foot").load("foot.html");
-    $(".search-input").bind("input onchange", function () {
+    $('.search-input').bind('input onchange', function () {
       setTimeout(function () {
         for (let i = 0; i < 7; i++) {
-          document.getElementsByClassName("search-input")[i].value = Japanized(
-            document.getElementsByClassName("search-input")[i].value
-          );
+          document.getElementsByClassName('search-input')[i].value = Japanized(
+            document.getElementsByClassName('search-input')[i].value
+          )
         }
-      }, 50);
-    });
+      }, 50)
+    })
     // loadchart();
-  }, 2400);
-});
+  }, 2400)
+})
 function langchange() {
-  initTable(locallang());
-  thclr();
+  initTable(locallang())
+  thclr()
 }
 function thead(eg) {
-  var co = [];
-  var col = [];
+  var co = []
+  var col = []
   for (e in eg) {
-    var visible = true;
-    var temp = getname(e, kj);
-    var formatter = undefined;
-    var colspan = minlv ? 3 : 2;
-    var rowspan = 1;
-    var strict = false;
-    if (e == "i") {
-      colspan = 1;
-      rowspan = 2;
-      formatter = formatLink;
+    var visible = true
+    var temp = getname(e, kj)
+    var formatter = undefined
+    var colspan = minlv ? 3 : 2
+    var rowspan = 1
+    var strict = false
+    if (e == 'i') {
+      colspan = 1
+      rowspan = 2
+      formatter = formatLink
     } else if (thls(e)) {
-      colspan = 1;
-      rowspan = 2;
-      if (e == "資材") {
-        temp = devpic;
-        if (q == "d") visible = false;
+      colspan = 1
+      rowspan = 2
+      if (e == '資材') {
+        temp = devpic
+        if (q == 'd') visible = false
       }
     }
-    if (e == "ratio") {
-      colspan = 2;
-      temp = "主查询合计";
-      formatter = formatR;
+    if (e == 'ratio') {
+      colspan = 2
+      temp = '主查询合计'
+      formatter = formatR
     }
-    if (e == "ratio" || thls(e) || e[0] == "n") {
+    if (e == 'ratio' || thls(e) || e[0] == 'n') {
       if (!isNaN(e[e.length - 1])) {
-        showid = e.slice(1, e.length);
-        temp = q == "d" ? formatItemId(showid) : formatshipId(showid);
+        showid = e.slice(1, e.length)
+        temp = q == 'd' ? formatItemId(showid) : formatshipId(showid)
       }
       co.push({
         title: getname(temp, kj),
         field: e,
         sortable: true,
-        filterControl: "input",
+        filterControl: 'input',
         filterStrictSearch: strict,
         formatter: formatter,
         colspan: colspan,
@@ -333,159 +326,139 @@ function thead(eg) {
         visible: visible,
         // cellStyle:cellStyle,
         // escape:escapes,
-      });
+      })
     }
   }
   for (e in eg) {
-    var formatter = undefined;
-    var f = "出货";
-    if (e[0] == "n") {
-      f = e.slice(1);
+    var formatter = undefined
+    var f = '出货'
+    if (e[0] == 'n') {
+      f = e.slice(1)
     }
     // if (e == 'ratio'||( e!='i'&& e!='fuel'&& e!='denominator'&& e!='times'&& e!='ammo'&& e[0]!='n'&& e[0]!='l')) {
-    if (
-      e == "ratio" ||
-      (!thls(e) && e != "times" && e[0] != "n" && e[0] != "l")
-    ) {
-      f = "%";
-      if (e == "ratio") {
-        f = "确率";
+    if (e == 'ratio' || (!thls(e) && e != 'times' && e[0] != 'n' && e[0] != 'l')) {
+      f = '%'
+      if (e == 'ratio') {
+        f = '确率'
       }
-      formatter = formatR;
+      formatter = formatR
     }
-    if (e[0] == "l") {
-      f = "Lv";
+    if (e[0] == 'l') {
+      f = 'Lv'
     }
-    if (e == "times" || e[0] == "n" || !thls(e)) {
+    if (e == 'times' || e[0] == 'n' || !thls(e)) {
       col.push({
         title: f,
         field: e,
         sortable: true,
         formatter: formatter,
-      });
+      })
     }
   }
-  return [co, col];
+  return [co, col]
 }
 function thls(e) {
-  return (
-    [
-      "i",
-      "fuel",
-      "ammo",
-      "steel",
-      "bauxite",
-      "資材",
-      "secretary",
-      "denominator",
-    ].indexOf(e) > -1
-  );
+  return ['i', 'fuel', 'ammo', 'steel', 'bauxite', '資材', 'secretary', 'denominator'].indexOf(e) > -1
 }
 function formatR(value) {
-  return value ? (value * 100).toFixed(2) + "%" : null;
+  return value ? (value * 100).toFixed(2) + '%' : null
 }
 function formatLink(value, row, index) {
-  arrsplice(value, 1);
-  var piedata = [];
+  arrsplice(value, 1)
+  var piedata = []
   for (key in row) {
-    if (key[0] == "n") {
-      var itemID = key.slice(1, key.length);
-      var name = addemoji(formatOnlyname(itemID));
-      piedata.push({ value: row[key], name: name });
+    if (key[0] == 'n') {
+      var itemID = key.slice(1, key.length)
+      var name = addemoji(formatOnlyname(itemID))
+      piedata.push({ value: row[key], name: name })
     }
   }
-  piedata.push(value);
-  return (
-    "<a href='javascript:pie(" +
-    JSON.stringify(piedata) +
-    ")'>" +
-    value +
-    "</a>"
-  );
+  piedata.push(value)
+  return "<a href='javascript:pie(" + JSON.stringify(piedata) + ")'>" + value + '</a>'
 }
 function pie(e) {
   // alert(JSON.stringify(e));
-  $.cookie("pie", JSON.stringify(e), { expires: 365, path: "/" });
-  window.location.href = "pie.html";
+  $.cookie('pie', JSON.stringify(e), { expires: 365, path: '/' })
+  window.location.href = 'pie.html'
 }
 function group2By(array, i, s) {
-  let groups = {};
+  let groups = {}
   array.forEach(function (o) {
-    let group = JSON.stringify(o[i] + o[s]);
-    groups[group] = groups[group] || [];
-    groups[group].push(o);
-  });
-  let arr = [];
+    let group = JSON.stringify(o[i] + o[s])
+    groups[group] = groups[group] || []
+    groups[group].push(o)
+  })
+  let arr = []
   for (key in groups) {
-    arr.push(groups[key]);
+    arr.push(groups[key])
   }
-  return arr;
+  return arr
 }
 function filt(r) {
-  var array = [];
+  var array = []
   r.forEach(function (element) {
-    var f = true;
+    var f = true
     output.forEach(function (oe) {
-      var ff = false;
+      var ff = false
       element.forEach(function (el) {
         // f = f && el['o'] == output[k]
-        if (el["o"] == oe) {
-          ff = true;
+        if (el['o'] == oe) {
+          ff = true
         }
-      });
+      })
       if (!ff) {
-        f = false;
+        f = false
       }
-    });
-    if (f && element[0]["s"] != 0) {
-      array.push(element);
+    })
+    if (f && element[0]['s'] != 0) {
+      array.push(element)
     }
-  });
-  return array;
+  })
+  return array
 }
 function egnrl(item) {
   if (item == 0) {
-    x("dev res 0");
-    return;
+    x('dev res 0')
+    return
   }
-  lseg["n" + item] = 0;
-  lseg[formatOnlyname(item)] = 0;
+  lseg['n' + item] = 0
+  lseg[formatOnlyname(item)] = 0
   if (minlv) {
-    lseg["l" + item] = 0;
+    lseg['l' + item] = 0
   }
 }
 function initTable(lval) {
   if (lval) {
-    kj = lval.slice(0, 2) == "zh" || lval.slice(0, 2) == "ja";
+    kj = lval.slice(0, 2) == 'zh' || lval.slice(0, 2) == 'ja'
   } else {
-    console.log(lval);
+    console.log(lval)
   }
-  lsegname = { ratio: "" };
+  lsegname = { ratio: '' }
   for (key in lseg) {
-    if (key[0] == "r" && key != "ratio") {
-      key = key.slice(1, key.length);
-      var k = formatOnlyname(key);
-      lsegname[k] = 0;
+    if (key[0] == 'r' && key != 'ratio') {
+      key = key.slice(1, key.length)
+      var k = formatOnlyname(key)
+      lsegname[k] = 0
     }
   }
-  loadprot(lseg);
+  loadprot(lseg)
   // console.log("load table", sorted)
-  addcol(sorted, "fuel", "i", 0);
-  addcol(sorted, "ammo", "i", 1);
-  addcol(sorted, "steel", "i", 2);
-  addcol(sorted, "bauxite", "i", 3);
-  addcol(sorted, "資材", "i", 4);
-  addcol(sorted, "secretary", "i", 5);
-  $("#mytab")
-    .bootstrapTable("destroy")
+  addcol(sorted, 'fuel', 'i', 0)
+  addcol(sorted, 'ammo', 'i', 1)
+  addcol(sorted, 'steel', 'i', 2)
+  addcol(sorted, 'bauxite', 'i', 3)
+  addcol(sorted, '資材', 'i', 4)
+  addcol(sorted, 'secretary', 'i', 5)
+  $('#mytab')
+    .bootstrapTable('destroy')
     .bootstrapTable({
-      method: "get",
+      method: 'get',
       data: sorted,
       sortReset: true,
       striped: true, // 是否显示行间隔色
       pageNumber: 1, // 初始化加载第一页
       pagination: true, // 是否分页
-      sidePagination: "client", // server:服务器端分页|client：前端分页
+      sidePagination: 'client', // server:服务器端分页|client：前端分页
       pageSize: 20, // 单页记录数
       pageList: [10, 50, 100, 500],
       stickyHeader: true,
@@ -493,50 +466,42 @@ function initTable(lval) {
       stickyHeaderOffsetRight: em,
       locale: lval,
       columns: thead(lseg),
-    });
+    })
   // if (Width() < 900 && kj) { $('.table .th-inner').css('writing-mode', 'vertical-lr'); }
-  var padding = "6";
+  var padding = '6'
   // if (Width() < 1200) {
   //     padding = kj ? '' : '4';
   //     $('.table .th-inner').css('white-space', 'normal')}
-  document.getElementById("csscontainer").innerHTML =
-    ".fix-sticky {padding-top:" +
-    padding +
-    "0px;position: fixed !important;overflow: hidden;  z-index: 100;}";
+  document.getElementById('csscontainer').innerHTML =
+    '.fix-sticky {padding-top:' + padding + '0px;position: fixed !important;overflow: hidden;  z-index: 100;}'
 }
 function formatOnlyname(value) {
-  var str = value;
+  var str = value
   if (value == -1) {
-    return fail;
+    return fail
   }
   for (nitem = 0; nitem < slotitem.length; nitem++) {
-    if (slotitem[nitem][api_ + "id"] == value) {
-      str = slotitem[nitem][api_ + "name"];
-      return bra(str, 1);
+    if (slotitem[nitem][api_ + 'id'] == value) {
+      str = slotitem[nitem][api_ + 'name']
+      return bra(str, 1)
     }
   }
-  return bra(str, 1);
+  return bra(str, 1)
 }
 function addicon(name, c) {
-  var str = bra(name, 0);
-  var color = c ? '<span style="color:' + c + ';">▐</span>' : ""; //▮∎■
+  var str = bra(name, 0)
+  var color = c ? '<span style="color:' + c + ';">▐</span>' : '' //▮∎■
   for (let a = 0; a < slotitem.length; a++) {
-    if (slotitem[a]["api_name"] == str) {
-      return (
-        '<span class="flex">' +
-        color +
-        itag(slotitem[a]["api_type"][3]) +
-        str +
-        "</sapn>"
-      );
+    if (slotitem[a]['api_name'] == str) {
+      return '<span class="flex">' + color + itag(slotitem[a]['api_type'][3]) + str + '</sapn>'
     }
   }
-  return '<span class="flex">' + color + str + "</sapn>";
+  return '<span class="flex">' + color + str + '</sapn>'
 }
 
-if (q == "c") {
+if (q == 'c') {
   // $('span.msg').css("width","76px");
-  document.getElementById("css").innerHTML += "span.msg{width:76px}";
+  document.getElementById('css').innerHTML += 'span.msg{width:76px}'
 } else {
-  document.getElementById("css").innerHTML += "span.msg{width:162px}";
+  document.getElementById('css').innerHTML += 'span.msg{width:162px}'
 }

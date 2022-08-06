@@ -1,8 +1,8 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 
-.gray{
-  -webkit-filter: grayscale(1); 
- filter: gray;  /* IE6-9 */  
+.gray {
+  -webkit-filter: grayscale(1);
+  filter: gray; /* IE6-9 */
   /*filter: grayscale(1);  W3C */
 }
 /*
@@ -22,12 +22,9 @@
   border: 0;
 }
 
-
-
 /*
  * Main content
  */
-
 
 .main {
   padding: 5px;
@@ -41,7 +38,6 @@
 .main .page-header {
   margin-top: 0;
 }
-
 
 /*
  * Placeholder dashboard ideas
@@ -64,24 +60,24 @@
 
 /* #bgcolor
 {  */
-  /* filter:alpha(opacity=50);   */
-  /* opacity:0.5;  */
-  /* width:100px;
+/* filter:alpha(opacity=50);   */
+/* opacity:0.5;  */
+/* width:100px;
   height:100px; */
-  /* background-color:#fff0;
+/* background-color:#fff0;
 }  */
 body {
   padding-top: 50px;
   /*background: rgb(185, 246, 246);*/
-  background: var(--pic) no-repeat center;/*设置背景图片*/
+  background: var(--pic) no-repeat center; /*设置背景图片*/
   /* background-repeat:no-repeat;图片适应窗口大小，这里设置的是不进行平铺 */
-  background-attachment: fixed;/*图片相对于浏览器固定,这里设置背景图片固定，不随内容滚动*/
-  background-origin: border-box;/*从边框区域显示*/
-  background-size:cover;/*指定图片大小，此时会保持图像的纵横比并将图像缩放成将完全覆盖背景定位区域的最小大小*/
+  background-attachment: fixed; /*图片相对于浏览器固定,这里设置背景图片固定，不随内容滚动*/
+  background-origin: border-box; /*从边框区域显示*/
+  background-size: cover; /*指定图片大小，此时会保持图像的纵横比并将图像缩放成将完全覆盖背景定位区域的最小大小*/
   /* align-items: center; */
   /* text-shadow:1px 1px 2px #ddd,0px 0px 3px #ddd,0px 0px 3px #ddd,0px 0px 3px #ddd,0px 0px 5px #ddd,0px 0px 4px #ddd,0px 0px 4px #ddd,0px 0px 4px #ddd; */
-  }
-i.item{
+}
+i.item {
   display: inline-block;
   width: 20px;
   height: 20px;
@@ -89,16 +85,21 @@ i.item{
   background-position: center center;
   background-repeat: no-repeat;
 }
-.flex{
-      display: flex;}
-.table-responsive, #container, .footer-list{
-  background-color:#fffa;
+.flex {
+  display: flex;
 }
-table.table-hover > tbody > tr:nth-child(2n+1) > td, tbody > tr:nth-child(2n+1) > th {
- background-color: rgba(240, 240, 240, 0.8);
+.table-responsive,
+#container,
+.footer-list {
+  background-color: #fffa;
 }
-table.table-hover > tbody > tr:nth-child(2n) > td, tbody > tr:nth-child(2n) > th {
- background-color: #fff7;
+table.table-hover > tbody > tr:nth-child(2n + 1) > td,
+tbody > tr:nth-child(2n + 1) > th {
+  background-color: rgba(240, 240, 240, 0.8);
+}
+table.table-hover > tbody > tr:nth-child(2n) > td,
+tbody > tr:nth-child(2n) > th {
+  background-color: #fff7;
 }
 circle {
   animation: 1.4s ease-in-out infinite both circle-animation;
@@ -117,32 +118,62 @@ circle {
     stroke-dashoffset: 280;
     transform: rotate(0);
   }
-  
+
   50%,
   75% {
     stroke-dashoffset: 75;
     transform: rotate(45deg);
   }
-  
+
   100% {
     stroke-dashoffset: 280;
     transform: rotate(360deg);
   }
 }
 
-.center{text-align: center;}
-.mid{margin: 0px auto;}
-div.panel-info {line-height:19%}
-.bigfont{font-size: 18px;}
+.center {
+  text-align: center;
+}
+.mid {
+  margin: 0px auto;
+}
+div.panel-info {
+  line-height: 19%;
+}
+.bigfont {
+  font-size: 18px;
+}
 
-.off{    background-color: #eee;color: #000;}
-.btnlg{width: 300px;height: 50px;font-size: large;font-weight: bold}
-button.clicked.btn-default{color:darkblue;}
-.cssfuel{background-color: #f0fff0ee; text-align: center;}
-.cssammo{background-color: #fdf5e6ee; text-align: center;}
-.csssteel{background: #f9f9f9ee; text-align: center;}
-.cssbauxite{background-color: #ffe4b5ee; text-align: center;}
+.off {
+  background-color: #eee;
+  color: #000;
+}
+.btnlg {
+  width: 300px;
+  height: 50px;
+  font-size: large;
+  font-weight: bold;
+}
+button.clicked.btn-default {
+  color: darkblue;
+}
+.cssfuel {
+  background-color: #f0fff0ee;
+  text-align: center;
+}
+.cssammo {
+  background-color: #fdf5e6ee;
+  text-align: center;
+}
+.csssteel {
+  background: #f9f9f9ee;
+  text-align: center;
+}
+.cssbauxite {
+  background-color: #ffe4b5ee;
+  text-align: center;
+}
 
-.block{
+.block {
   display: inline-block;
 }

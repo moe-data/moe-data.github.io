@@ -1,5 +1,5 @@
 that.setData({
-  current: app.get('current')
+  current: app.get('current'),
 })
 let jsindex = 0
 let bar = 0
@@ -7,15 +7,15 @@ let ranget = ['slotitem', 'useitem', 'furniture', 'cstype', 'mapinfo']
 var mapinfo
 for (let i = 0; i < ranget.length; i++) {
   setTimeout(() => {
-    $.getJSON("./parsed/" + (i == 3 ? "" : "api_mst_") + ranget[i] + ".json").done(function (result) {
-      eval(ranget[i] + " = result")
-      jsonover();
-    });
-  }, 0);
+    $.getJSON('./parsed/' + (i == 3 ? '' : 'api_mst_') + ranget[i] + '.json').done(function (result) {
+      eval(ranget[i] + ' = result')
+      jsonover()
+    })
+  }, 0)
 }
 function jsonover() {
-  jsindex++;
-  progress(1 / (ranget.length) * 100);
+  jsindex++
+  progress((1 / ranget.length) * 100)
   if (jsindex >= ranget.length) {
     slotitem.forEach(function (e) {
       if (developable.indexOf(e.api_id) > -1) {
@@ -43,15 +43,15 @@ function jsonover() {
 }
 
 function progress(p) {
-  bar += p;
-  $('.progress-bar').css("width", bar + '%');
-};
+  bar += p
+  $('.progress-bar').css('width', bar + '%')
+}
 function showinput() {
   $('#input').css('display', 'flex')
 }
 function loadquest() {
-  result = ($('#input').val())
-  var start = find(result, 'svdata=') + 7;
+  result = $('#input').val()
+  var start = find(result, 'svdata=') + 7
   let api_list = JSON.parse(result.substring(start)).api_data.api_list
   z(api_list.length)
   let newload = app.newload
@@ -63,24 +63,26 @@ function loadquest() {
         if (e.api_detail.indexOf(sh) > -1) {
           groups.push(sh)
         }
-      });
+      })
       let maps = []
       mapinfo.forEach(function (map) {
         if (e.api_detail.indexOf(map.api_name) > -1 || e.api_detail.indexOf(map.api_opetext) > -1) {
           maps.push(map.api_maparea_id + '-' + map.api_no)
         }
-      });
+      })
       let requirements = {
-        category: "simple",
+        category: 'simple',
       }
       if (maps.length) {
         requirements = {
-          category: "sortie",
+          category: 'sortie',
           times: 1,
           map: maps,
-          groups: [{
-            ship: groups
-          }]
+          groups: [
+            {
+              ship: groups,
+            },
+          ],
         }
       }
       z(e.api_detail, groups, maps)
@@ -98,20 +100,19 @@ function loadquest() {
         reward_bauxite: e.api_get_material[3],
         reward_other: e.api_bonus_flag,
         prerequisite: [],
-        requirements: requirements
+        requirements: requirements,
       }
-    } else { }
+    } else {
+    }
     app.setstat(app.wkid[id] || id, e.api_state)
-
-  });
+  })
   app.set('newload', newload)
 }
 
-
 $('#rewaguess').change(function () {
   rewa.tapguess($('#rewaguess').val())
-});
+})
 
 $('#battguess').change(function () {
   batt.tapguess($('#battguess').val())
-});
+})
