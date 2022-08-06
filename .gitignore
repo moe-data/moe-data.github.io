@@ -4,3 +4,5 @@
 tool/
 dist/js/calc2.js
 *.gzip
+parsed/_api_mst_ship.txt
+parsed/_api_mst_slotitem.txt
