@@ -1,4 +1,4 @@
 # Auto detect text files and perform LF normalization
-# * text=auto
+* text=auto
 # Set the default behavior, in case people don't have core.autocrlf set.
-* text eol=lf
+# * text eol=lf
