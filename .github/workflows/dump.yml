@@ -1,0 +1,51 @@
+name: dump
+
+on:
+  push:
+    paths:
+      - '**.yml'
+  schedule:
+    - cron: '0 2 * * *'  # 每天 UTC 2点（北京时间10点）执行
+  workflow_dispatch:     # 手动触发  push:
+
+jobs:
+  check-and-download:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.check.outputs.changed }}
+      month: ${{ steps.set-month.outputs.month }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set current month
+        id: set-month
+        run: echo "month=$(date +%Y-%m)" >> $GITHUB_OUTPUT
+
+      - name: Download latest .gz and ETag
+        run: |
+          curl -s -o latest.gz https://api.poi.moe/dump/createitemrecords.gz
+          curl -s -I https://api.poi.moe/dump/createitemrecords.gz | grep -i etag > latest_etag.txt || true
+
+      - name: Check if changed
+        id: check
+        run: |
+          if [ -f dump/last_etag.txt ] && cmp -s dump/last_etag.txt latest_etag.txt; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "No update today."
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "Data updated! Saving new .gz"
+            mkdir -p dump
+            mv latest.gz dump/c-${{ steps.set-month.outputs.month }}.gz
+            mv latest_etag.txt dump/last_etag.txt
+          fi
+
+      - name: Commit and push .gz if changed
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add dump/
+          git commit -m "Update createitemrecords ${{ steps.set-month.outputs.month }}.gz"
+          git push
