@@ -1,0 +1,70 @@
+name: gz
+
+on:
+  workflow_run:
+    workflows: ["dump"]
+    types:
+      - completed
+  workflow_dispatch:     # 手动触发  push:
+
+jobs:
+  convert-to-json:
+    runs-on: ubuntu-latest
+    # 只有当上游 workflow 成功时才运行
+    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # 确保能 push
+
+      - name: Install MongoDB Server and Tools
+        run: |
+          wget -qO - https://www.mongodb.org/static/pgp/server-7.0.asc | sudo apt-key add -
+          echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+          sudo apt-get update
+          sudo apt-get install -y mongodb-org-server mongodb-database-tools
+
+      - name: Start temporary MongoDB instance
+        run: |
+          mkdir -p /tmp/mongodata
+          mongod --dbpath /tmp/mongodata --logpath /tmp/mongod.log --fork --quiet
+
+      - name: Determine current month
+        id: month
+        run: echo "month=$(date +%Y-%m)" >> $GITHUB_OUTPUT
+
+      - name: Restore archive directly from .gz
+        run: |
+          mongorestore --gzip --archive=dump/c-${{ steps.month.outputs.month }}.gz \
+                       --nsInclude="poi-production.createitemrecords" \
+                       --drop   # 确保覆盖旧数据
+
+      - name: Export to pure JSON array (no compression)
+        run: |
+          mkdir -p dump
+          mongoexport --db=poi-production \
+                      --collection=createitemrecords \
+                      --out=dump/c-${{ steps.month.outputs.month }}.json \
+                      --jsonArray \
+                      --pretty
+
+      - name: Show result size
+        run: |
+          echo "Pure JSON file generated:"
+          ls -lh dump/c-${{ steps.month.outputs.month }}.json
+          echo "Line count (approx records): $(wc -l < dump/c-${{ steps.month.outputs.month }}.json)"
+
+      - name: Commit and push pure JSON (overwrite monthly file)
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+          git add dump/c-${{ steps.month.outputs.month }}.json
+          git commit -m "Update monthly pure JSON: c-${{ steps.month.outputs.month }}.json" || echo "No changes to commit"
+          git push
+
+      - name: Cleanup temporary MongoDB
+        if: always()
+        run: |
+          mongo admin --eval "db.shutdownServer({force:true})" || true
+          rm -rf /tmp/mongodata /tmp/mongod.log
