@@ -1,12 +1,12 @@
 name: json
 
 on:
-  workflow_run:
-    workflows: ["gz"]
-    types:
-      - completed
-  schedule:
-    - cron: '0 8 * * *'  
+  # workflow_run:
+  #   workflows: ["gz"]
+  #   types:
+  #     - completed
+  # schedule:
+  #   - cron: '0 8 * * *'  
   workflow_dispatch:     # 手动触发 
 
 jobs:
