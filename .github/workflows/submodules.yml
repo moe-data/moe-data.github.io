@@ -1,0 +1,33 @@
+name: submodules
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天 UTC 午夜
+  workflow_dispatch:  # 允许手动触发
+  push:
+    branches: [ main ]
+
+jobs:
+  update-submodules:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          submodules: 'recursive'
+          
+      - name: Update submodules to latest
+        run: |
+          git submodule update --remote --merge
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          
+      - name: Commit and push if changed
+        run: |
+          git add .
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update submodules to latest"
+            git push
+          else
+            echo "No changes to commit"
+          fi
