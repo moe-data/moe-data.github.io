@@ -25,6 +25,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y mongodb-org-server mongodb-database-tools
 
+      - name: Install Python and pymongo
+        run: |
+          sudo apt-get install -y python3-pip
+          pip3 install pymongo
+
       - name: Start temporary MongoDB instance
         run: |
           mkdir -p /tmp/mongodata
@@ -40,20 +45,46 @@ jobs:
                        --nsInclude="poi-production.createitemrecords" \
                        --drop   # 确保覆盖旧数据
 
-      - name: Export to pure JSON array (no compression)
+      - name: Export simplified JSON using Python
         run: |
           mkdir -p dump
-          mongoexport --db=poi-production \
-                      --collection=createitemrecords \
-                      --out=dump/c-${{ steps.month.outputs.month }}.json \
-                      --jsonArray \
-                      --pretty
+          python3 - << 'EOF'
+          from pymongo import MongoClient
+          import json
+
+          client = MongoClient('mongodb://localhost:27017/')
+          db = client['poi-production']
+          collection = db['createitemrecords']
+
+          output_file = f"dump/c-${{ steps.month.outputs.month }}.json"
+
+          cursor = collection.find({}, {'_id': 0, 'items': 1, 'itemId': 1, 'teitokuLv': 1, 'successful': 1, 'secretary': 1})
+          first = True
+
+          with open(output_file, 'w', encoding='utf-8') as f:
+              f.write('{"RECORDS": [')
+              for doc in cursor:
+                  simplified = [
+                      doc.get('items', []),
+                      doc.get('itemId'),
+                      doc.get('teitokuLv'),
+                      1 if doc.get('successful') else 0,
+                      doc.get('secretary')
+                  ]
+                  if not first:
+                      f.write(',')
+                  f.write(json.dumps(simplified, ensure_ascii=False))
+                  first = False
+              f.write(']}')
+
+          print(f"Simplified JSON exported to {output_file}")
+          EOF
 
       - name: Show result size
         run: |
-          echo "Pure JSON file generated:"
+          echo "Simplified JSON file generated:"
           ls -lh dump/c-${{ steps.month.outputs.month }}.json
-          echo "Line count (approx records): $(wc -l < dump/c-${{ steps.month.outputs.month }}.json)"
+          echo "Line count (approx records + 2): $(wc -l < dump/c-${{ steps.month.outputs.month }}.json)"
 
       - name: Commit and push pure JSON (overwrite monthly file)
         run: |
