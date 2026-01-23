@@ -29,16 +29,100 @@ jobs:
 
       - name: Check if changed
         id: check
+        shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
         run: |
-          if [ -f dump/last_etag.txt ] && cmp -s dump/last_etag.txt latest_etag.txt; then
-            echo "changed=false" >> $GITHUB_OUTPUT
-            echo "No update today."
+          # 定义月份变量（避免嵌套引用问题）
+          MONTH="${{ steps.set-month.outputs.month }}"
+          # 定义历史文件路径（用于MD5对比）
+          HISTORY_GZ_FILE="dump/c-${MONTH}.gz"
+          HISTORY_ETAG_FILE="dump/last_etag.txt"
+          
+          echo "======= 打印ETag内容 ======="
+          if [ -f "latest_etag.txt" ]; then
+            LATEST_ETAG=$(cat latest_etag.txt | tr -d ' \n\r')  # 清理空格/换行
+            echo "latest_etag.txt (清理后): $LATEST_ETAG"
           else
-            echo "changed=true" >> $GITHUB_OUTPUT
-            echo "Data updated! Saving new .gz"
-            mkdir -p dump
-            mv latest.gz dump/c-${{ steps.set-month.outputs.month }}.gz
-            mv latest_etag.txt dump/last_etag.txt
+            LATEST_ETAG=""
+            echo "latest_etag.txt 文件不存在"
+          fi
+          
+          if [ -f "$HISTORY_ETAG_FILE" ]; then
+            LAST_ETAG=$(cat "$HISTORY_ETAG_FILE" | tr -d ' \n\r')  # 清理空格/换行
+            echo "dump/last_etag.txt (清理后): $LAST_ETAG"
+          else
+            LAST_ETAG=""
+            echo "dump/last_etag.txt 文件不存在"
+          fi
+
+          echo "======= 打印文件MD5值 ======="
+          # 打印最新文件 MD5
+          if [ -f "latest.gz" ]; then
+            MD5_LATEST_GZ=$(md5sum latest.gz | awk '{print $1}')
+            echo "✅ latest.gz (最新文件) MD5: $MD5_LATEST_GZ"
+          else
+            echo "latest.gz 文件不存在，跳过MD5计算"
+            MD5_LATEST="N/A"
+          fi
+
+          # 打印历史.gz文件 MD5（另一个关键文件）
+          if [ -f "$HISTORY_GZ_FILE" ]; then
+            MD5_HISTORY_GZ=$(md5sum "$HISTORY_GZ_FILE" | awk '{print $1}')
+            echo "✅ $HISTORY_GZ_FILE (历史文件) MD5: $MD5_HISTORY_GZ"
+          else
+            MD5_HISTORY_GZ="N/A"
+            echo "❌ $HISTORY_GZ_FILE: 不存在"
+          fi
+
+          if [ -f "latest_etag.txt" ]; then
+            MD5_LATEST_ETAG=$(md5sum latest_etag.txt | awk '{print $1}')
+            echo "✅ latest_etag.txt MD5: $MD5_LATEST_ETAG"
+          else
+            echo "latest_etag.txt 文件不存在，跳过MD5计算"
+            MD5_LATEST_ETAG="N/A"
+          fi
+
+          if [ -f "$HISTORY_ETAG_FILE" ]; then
+            MD5_HISTORY_ETAG=$(md5sum "$HISTORY_ETAG_FILE" | awk '{print $1}')
+            echo "✅ $HISTORY_ETAG_FILE MD5: $MD5_HISTORY_ETAG"
+          else
+            MD5_HISTORY_ETAG="N/A"
+            echo "❌ $HISTORY_ETAG_FILE: 不存在"
+          fi
+
+          # ====================== 3. 修复ETag判断逻辑（双重校验：文件存在+字符串完全相等） ======================
+          echo -e "\n======= 【核心】ETag 对比判断 ======="
+          # 初始化变更标记
+          CHANGED="false"
+          
+          # 双重校验：1.历史ETag文件存在 2.ETag字符串完全相等
+          if [ -n "$LAST_ETAG" ] && [ -n "$LATEST_ETAG" ] && [ "$LAST_ETAG" = "$LATEST_ETAG" ]; then
+            echo "✅ ETag 完全一致（$LAST_ETAG），无更新"
+            CHANGED="false"
+          else
+            echo "❌ ETag 不一致/文件缺失 → 判定为有更新"
+            echo "   历史ETag: $LAST_ETAG"
+            echo "   最新ETag: $LATEST_ETAG"
+            CHANGED="true"
+          fi
+
+          # 输出到GitHub变量
+          echo "changed=$CHANGED" >> $GITHUB_OUTPUT
+
+          # ====================== 4. 执行文件更新/跳过逻辑 ======================
+          if [ "$CHANGED" = "false" ]; then
+            echo -e "\n📌 最终结论：No update today. (ETag无变化)"
+          else
+            echo -e "\n📌 最终结论：Data updated! Saving new .gz (ETag已变化)"
+            mkdir -p dump 
+            # 移动最新.gz文件
+            mv latest.gz "$HISTORY_GZ_FILE"
+            # 移动后打印新文件的MD5
+            if [ -f "$HISTORY_GZ_FILE" ]; then
+              MD5_NEW_GZ=$(md5sum "$HISTORY_GZ_FILE" | awk '{print $1}')
+              echo "✅ 移动后 $HISTORY_GZ_FILE MD5: $MD5_NEW_GZ"
+            fi
+            # 移动ETag文件
+            mv latest_etag.txt "$HISTORY_ETAG_FILE"
           fi
 
       - name: Commit and push .gz if changed
