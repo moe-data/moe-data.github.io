@@ -1,33 +1,76 @@
 name: submodules
 on:
   schedule:
-    - cron: '0 0 * * *'  # 每天 UTC 午夜
-  workflow_dispatch:  # 允许手动触发
+    - cron: '6 6 28 * *'  # 每月28日6点6分执行
+  workflow_dispatch:      # 允许手动触发
   push:
-    branches: [ main ]
 
 jobs:
   update-submodules:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 赋予写入代码库的权限（关键）
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          submodules: 'recursive'
+          submodules: false
           
+      # 新增步骤1：克隆目标公有仓库 api_start2 到临时目录
+      - name: 克隆 api_start2 仓库
+        run: |
+          # 克隆目标仓库到临时目录（公有仓库无需token）
+          git clone https://github.com/Tibowl/api_start2.git /tmp/api_start2
+          # 验证克隆结果
+          ls -la /tmp/api_start2/
+          # 检查目标文件是否存在
+          if [ ! -f "/tmp/api_start2/parsed/api_mst_ship.json" ]; then
+            echo "Error: 目标文件不存在 /tmp/api_start2/parsed/api_mst_ship.json"
+            exit 1
+          fi
+          
+      # 新增步骤2：复制 parsed 文件夹到当前仓库（覆盖旧文件）
+      - name: 复制 parsed 文件夹到当前仓库
+        run: |
+          # 创建 parsed 目录（如果不存在）
+          mkdir -p ./parsed
+          # 复制文件（覆盖原有文件）
+          cp -rf /tmp/api_start2/parsed/* ./parsed/
+          # 验证复制结果
+          echo "验证复制后的文件列表："
+          ls -la ./parsed/
+          echo "验证目标文件："
+          ls -la ./parsed/api_mst_ship.json
+          
+      # 原有更新子模块步骤（保留，但子模块未生效，可注释或保留）
       - name: Update submodules to latest
         run: |
-          git submodule update --remote --merge
+          git submodule update --remote --merge || echo "子模块未检出，跳过更新"
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
           
+      # 调用自定义的可复用Action
+      - name: Check JSON array length in submodule
+        uses: ./.github/actions/check-json-length
+        with:
+          json-file-path: "parsed/api_mst_ship.json"  # 改为本地parsed目录
+          output-var-name: "SHIP_ARRAY_LENGTH"
+                   
+      - name: Check JSON length in dump path
+        uses: ./.github/actions/check-json-length
+        with:
+          json-file-path: "dump/c-2026-01.json"  # 普通路径也适用 
+      # 提交并推送复制后的文件到当前仓库
       - name: Commit and push if changed
         run: |
-          git add .
+          # 检查子模块是否有更新
+          git add ./parsed/
           if ! git diff --cached --quiet; then
-            git commit -m "chore: update submodules to latest"
+            git commit -m "chore: update parsed files from api_start2"
+            # 推送提交到主仓库
             git push
+            echo "已推送parsed文件夹更新"
           else
             echo "No changes to commit"
           fi

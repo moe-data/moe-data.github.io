@@ -1,0 +1,60 @@
+name: 'Check JSON Length'
+description: '检查JSON文件的数组长度（支持数组/对象类型，支持子模块/普通路径）'
+inputs:
+  json-file-path:
+    description: 'JSON文件的完整路径（支持子模块路径，如 api_start2/parsed/api_mst_ship.json）'
+    required: true
+    type: string
+  output-var-name:
+    description: '输出数组长度的环境变量名（可选，默认 ARRAY_LENGTH）'
+    required: false
+    default: 'ARRAY_LENGTH'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install jq
+      shell: bash
+      run: |
+        sudo apt-get update && sudo apt-get install -y jq
+
+    - name: Check JSON file and calculate length
+      shell: bash
+      id: json-length
+      run: |
+        # 获取输入的文件路径
+        JSON_FILE="${{ inputs.json-file-path }}"
+        
+        # 检查文件是否存在
+        if [ ! -f "$JSON_FILE" ]; then
+          echo "Error: JSON file not found at $JSON_FILE"
+          ls -a -lh
+          exit 1
+        fi
+        
+        # 第一步：尝试直接获取长度（数组类型）
+        ARRAY_LENGTH=$(jq length "$JSON_FILE")
+        
+        # 第二步：如果是对象（length返回0但不是空数组），找第一个数组的长度
+        if [ "$ARRAY_LENGTH" -eq 0 ] && [ "$(jq type "$JSON_FILE")" = '"object"' ]; then
+          echo "JSON is an object, finding first array..."
+          # 遍历对象的所有值，找到第一个数组并获取长度
+          FIRST_ARRAY_LENGTH=$(jq 'to_entries[] | .value | select(type == "array") | length | first' "$JSON_FILE")
+          ARRAY_LENGTH=$FIRST_ARRAY_LENGTH
+        fi
+        
+        # 处理空值情况
+        if [ -z "$ARRAY_LENGTH" ] || [ "$ARRAY_LENGTH" = "null" ]; then
+          ARRAY_LENGTH=0
+          echo "Warning: No array found in JSON file"
+        fi
+        
+        # 输出结果
+        echo "======================================"
+        echo "JSON file: $JSON_FILE"
+        echo "Array length: $ARRAY_LENGTH"
+        echo "======================================"
+        
+        # 设置输出变量（供调用方使用）
+        echo "${{ inputs.output-var-name }}=$ARRAY_LENGTH" >> $GITHUB_ENV
+        echo "length=$ARRAY_LENGTH" >> $GITHUB_OUTPUT
