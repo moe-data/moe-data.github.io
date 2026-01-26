@@ -84,7 +84,14 @@ jobs:
         run: |
           echo "Simplified JSON file generated:"
           ls -lh dump/c-${{ steps.month.outputs.month }}.json
-          echo "Line count (approx records + 2): $(wc -l < dump/c-${{ steps.month.outputs.month }}.json)"
+          echo "Line count (approx records + 2): $(wc < dump/c-${{ steps.month.outputs.month }}.json)"
+
+      # 调用自定义的可复用Action
+      - name: Check JSON array length in submodule
+        uses: ./.github/actions/check-json-length
+        with:
+          json-file-path: "dump/c-${{ steps.month.outputs.month }}.json"  # 改为本地parsed目录
+          output-var-name: "DUMP_LENGTH"
 
       - name: Commit and push pure JSON (overwrite monthly file)
         run: |
