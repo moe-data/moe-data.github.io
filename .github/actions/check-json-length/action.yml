@@ -24,6 +24,7 @@ runs:
       run: |
         # 获取输入的文件路径
         JSON_FILE="${{ inputs.json-file-path }}"
+        FILE_TYPE="$(jq type "$JSON_FILE")"
         
         # 检查文件是否存在
         if [ ! -f "$JSON_FILE" ]; then
@@ -34,12 +35,19 @@ runs:
         
         # 第一步：尝试直接获取长度（数组类型）
         ARRAY_LENGTH=$(jq length "$JSON_FILE")
+        echo "$FILE_TYPE length: $ARRAY_LENGTH"
         
-        # 第二步：如果是对象（length返回0但不是空数组），找第一个数组的长度
-        if [ "$ARRAY_LENGTH" -eq 0 ] && [ "$(jq type "$JSON_FILE")" = '"object"' ]; then
+        # 第二步：如果是对象（length返回0但不是空数组[ "$ARRAY_LENGTH" -eq 0 ] &&），找第一个数组的长度
+        if [ "$FILE_TYPE" = '"object"' ]; then
           echo "JSON is an object, finding first array..."
-          # 遍历对象的所有值，找到第一个数组并获取长度
-          FIRST_ARRAY_LENGTH=$(jq 'to_entries[] | .value | select(type == "array") | length | first' "$JSON_FILE")
+          # 遍历对象的所有值，仅遍历对象顶层值 → 筛选数组 → 取第一个 → 算长度
+          FIRST_ARRAY_LENGTH=$(jq '
+            .[]                    # 遍历对象的所有顶层值（不递归，避免穿透到数字/字符串）
+            | select(type == "array")  # 仅保留数组类型的值
+            | .[0:]                # 安全取数组本身（避免索引错误）
+            | length               # 计算数组长度
+            | limit(1; .)          # 仅取第一个结果（替代错误的first）
+          ' "$JSON_FILE")
           ARRAY_LENGTH=$FIRST_ARRAY_LENGTH
         fi
         
@@ -57,4 +65,8 @@ runs:
         
         # 设置输出变量（供调用方使用）
         echo "${{ inputs.output-var-name }}=$ARRAY_LENGTH" >> $GITHUB_ENV
+
         echo "length=$ARRAY_LENGTH" >> $GITHUB_OUTPUT
+
+
+

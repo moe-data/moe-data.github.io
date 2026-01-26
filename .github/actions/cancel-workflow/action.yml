@@ -1,0 +1,32 @@
+# .github/actions/cancel-workflow/action.yml
+name: 'Cancel Workflow'
+description: '调用GitHub API取消当前工作流（显示为Canceled状态）'
+inputs:
+  cancel-reason:
+    description: '取消工作流的原因（会打印到日志）'
+    required: false
+    default: '无具体原因，手动/自动取消工作流'
+  github-token:
+    description: 'GitHub Token（需有actions: write权限）'
+    required: false
+    default: ${{ github.token }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: 调用API取消当前工作流
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ inputs.github-token }}
+        script: |
+          const cancelReason = "${{ inputs.cancel-reason }}";
+          console.log(`准备取消工作流，原因：${cancelReason}`);
+          
+          // 核心API调用：取消当前工作流
+          await github.rest.actions.cancelWorkflowRun({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            run_id: context.runId
+          });
+          
+          console.log(`工作流已取消（Run ID: ${context.runId}），原因：${cancelReason}`);

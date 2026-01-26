@@ -67,7 +67,12 @@ jobs:
           # 打印历史.gz文件 MD5（另一个关键文件）
           if [ -f "$HISTORY_GZ_FILE" ]; then
             MD5_HISTORY_GZ=$(md5sum "$HISTORY_GZ_FILE" | awk '{print $1}')
+            # 获取历史文件大小（KB），保留整数
+            FILE_SIZE_KB=$(du -k "$HISTORY_GZ_FILE" | awk '{print $1}')
+            echo "✅ $HISTORY_GZ_FILE (历史文件) 大小: ${FILE_SIZE_KB} KB"
             echo "✅ $HISTORY_GZ_FILE (历史文件) MD5: $MD5_HISTORY_GZ"
+            echo "MD5_HISTORY_GZ: $MD5_HISTORY_GZ" >> latest_etag.txt
+            echo "FILE_SIZE_KB: $FILE_SIZE_KB" >> latest_etag.txt
           else
             MD5_HISTORY_GZ="N/A"
             echo "❌ $HISTORY_GZ_FILE: 不存在"
@@ -124,6 +129,12 @@ jobs:
             # 移动ETag文件
             mv latest_etag.txt "$HISTORY_ETAG_FILE"
           fi
+
+      - name: 取消工作流（无代码变更）
+        if: steps.check.outputs.changed == 'false'
+        uses: conbanwa/cancel-workflow/.github/actions/cancel-workflow@v1.0.0 # Replace with your repo/version
+        with:
+          cancel-reason: '无代码变更，自动取消工作流'
 
       - name: Commit and push .gz if changed
         if: steps.check.outputs.changed == 'true'

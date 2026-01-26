@@ -5,11 +5,13 @@ on:
   workflow_dispatch:      # 允许手动触发
   push:
 
+permissions:
+  actions: write  # 允许取消工作流的权限
+  contents: write
+
 jobs:
   update-submodules:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write  # 赋予写入代码库的权限（关键）
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -56,13 +58,15 @@ jobs:
         with:
           json-file-path: "parsed/api_mst_ship.json"  # 改为本地parsed目录
           output-var-name: "SHIP_ARRAY_LENGTH"
-                   
+          
       - name: Check JSON length in dump path
         uses: ./.github/actions/check-json-length
         with:
           json-file-path: "dump/c-2026-01.json"  # 普通路径也适用 
       # 提交并推送复制后的文件到当前仓库
       - name: Commit and push if changed
+        id: check
+        shell: bash
         run: |
           # 检查子模块是否有更新
           git add ./parsed/
@@ -71,6 +75,17 @@ jobs:
             # 推送提交到主仓库
             git push
             echo "已推送parsed文件夹更新"
+            echo "changed=true" >> $GITHUB_OUTPUT
           else
             echo "No changes to commit"
+            echo "无代码变更（准备中断工作流）" 
+            # 将失败状态写入输出，供后续步骤使用
+            echo "changed=false" >> $GITHUB_OUTPUT
           fi
+          exit 0
+      # 若无代码变更，取消工作流（显示为Canceled）
+      - name: 取消工作流（无代码变更）
+        if: steps.check.outputs.changed == 'false'
+        uses: conbanwa/cancel-workflow/.github/actions/cancel-workflow@v1.0.0  # 调用自定义Action
+        with:
+          cancel-reason: '无代码变更，自动取消工作流'  # 自定义取消原因
