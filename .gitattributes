@@ -2,4 +2,4 @@
 * text=auto
 # Set the default behavior, in case people don't have core.autocrlf set.
 # * text eol=lf
-d*.gz filter=lfs diff=lfs merge=lfs -text
+c*.gz filter=lfs diff=lfs merge=lfs -text
