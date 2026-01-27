@@ -22,10 +22,12 @@ jobs:
         id: set-month
         run: echo "month=$(date +%Y-%m)" >> $GITHUB_OUTPUT
 
-      - name: Download latest .gz and ETag
+      - name: Download creates .gz and ETag
         run: |
-          curl -s -o latest.gz https://api.poi.moe/dump/createitemrecords.gz
-          curl -s -I https://api.poi.moe/dump/createitemrecords.gz | grep -i etag > latest_etag.txt || true
+          curl -s -o creates.gz https://api.poi.moe/dump/createitemrecords.gz
+          curl -s -I https://api.poi.moe/dump/createitemrecords.gz | grep -i etag > glance.txt || true
+          curl -s -o drops.gz https://api.poi.moe/dump/dropshiprecords.gz
+          curl -s -I https://api.poi.moe/dump/dropshiprecords.gz | grep -i etag >> glance.txt || true
 
       - name: Check if changed
         id: check
@@ -38,12 +40,12 @@ jobs:
           HISTORY_ETAG_FILE="dump/last_etag.txt"
           
           echo "======= 打印ETag内容 ======="
-          if [ -f "latest_etag.txt" ]; then
-            LATEST_ETAG=$(cat latest_etag.txt | tr -d ' \n\r')  # 清理空格/换行
-            echo "latest_etag.txt (清理后): $LATEST_ETAG"
+          if [ -f "glance.txt" ]; then
+            CREATES_ETAG=$(cat glance.txt | tr -d ' \n\r')  # 清理空格/换行
+            echo "glance.txt (清理后): $CREATES_ETAG"
           else
-            LATEST_ETAG=""
-            echo "latest_etag.txt 文件不存在"
+            CREATES_ETAG=""
+            echo "glance.txt 文件不存在"
           fi
           
           if [ -f "$HISTORY_ETAG_FILE" ]; then
@@ -56,12 +58,12 @@ jobs:
 
           echo "======= 打印文件MD5值 ======="
           # 打印最新文件 MD5
-          if [ -f "latest.gz" ]; then
-            MD5_LATEST_GZ=$(md5sum latest.gz | awk '{print $1}')
-            echo "✅ latest.gz (最新文件) MD5: $MD5_LATEST_GZ"
+          if [ -f "creates.gz" ]; then
+            MD5_CREATES_GZ=$(md5sum creates.gz | awk '{print $1}')
+            echo "✅ creates.gz (最新文件) MD5: $MD5_CREATES_GZ"
           else
-            echo "latest.gz 文件不存在，跳过MD5计算"
-            MD5_LATEST="N/A"
+            echo "creates.gz 文件不存在，跳过MD5计算"
+            MD5_CREATES="N/A"
           fi
 
           # 打印历史.gz文件 MD5（另一个关键文件）
@@ -71,19 +73,11 @@ jobs:
             FILE_SIZE_KB=$(du -k "$HISTORY_GZ_FILE" | awk '{print $1}')
             echo "✅ $HISTORY_GZ_FILE (历史文件) 大小: ${FILE_SIZE_KB} KB"
             echo "✅ $HISTORY_GZ_FILE (历史文件) MD5: $MD5_HISTORY_GZ"
-            echo "MD5_HISTORY_GZ: $MD5_HISTORY_GZ" >> latest_etag.txt
-            echo "FILE_SIZE_KB: $FILE_SIZE_KB" >> latest_etag.txt
+            echo "MD5_HISTORY_GZ: $MD5_HISTORY_GZ" >> glance.txt
+            echo "FILE_SIZE_KB: $FILE_SIZE_KB" >> glance.txt
           else
             MD5_HISTORY_GZ="N/A"
             echo "❌ $HISTORY_GZ_FILE: 不存在"
-          fi
-
-          if [ -f "latest_etag.txt" ]; then
-            MD5_LATEST_ETAG=$(md5sum latest_etag.txt | awk '{print $1}')
-            echo "✅ latest_etag.txt MD5: $MD5_LATEST_ETAG"
-          else
-            echo "latest_etag.txt 文件不存在，跳过MD5计算"
-            MD5_LATEST_ETAG="N/A"
           fi
 
           if [ -f "$HISTORY_ETAG_FILE" ]; then
@@ -100,13 +94,13 @@ jobs:
           CHANGED="false"
           
           # 双重校验：1.历史ETag文件存在 2.ETag字符串完全相等
-          if [ -n "$LAST_ETAG" ] && [ -n "$LATEST_ETAG" ] && [ "$LAST_ETAG" = "$LATEST_ETAG" ]; then
+          if [ -n "$LAST_ETAG" ] && [ -n "$CREATES_ETAG" ] && [ "$LAST_ETAG" = "$CREATES_ETAG" ]; then
             echo "✅ ETag 完全一致（$LAST_ETAG），无更新"
             CHANGED="false"
           else
             echo "❌ ETag 不一致/文件缺失 → 判定为有更新"
             echo "   历史ETag: $LAST_ETAG"
-            echo "   最新ETag: $LATEST_ETAG"
+            echo "   最新ETag: $CREATES_ETAG"
             CHANGED="true"
           fi
 
@@ -120,14 +114,14 @@ jobs:
             echo -e "\n📌 最终结论：Data updated! Saving new .gz (ETag已变化)"
             mkdir -p dump 
             # 移动最新.gz文件
-            mv latest.gz "$HISTORY_GZ_FILE"
+            mv creates.gz "$HISTORY_GZ_FILE"
             # 移动后打印新文件的MD5
             if [ -f "$HISTORY_GZ_FILE" ]; then
               MD5_NEW_GZ=$(md5sum "$HISTORY_GZ_FILE" | awk '{print $1}')
               echo "✅ 移动后 $HISTORY_GZ_FILE MD5: $MD5_NEW_GZ"
             fi
             # 移动ETag文件
-            mv latest_etag.txt "$HISTORY_ETAG_FILE"
+            mv glance.txt "$HISTORY_ETAG_FILE"
           fi
 
       - name: 取消工作流（无代码变更）
