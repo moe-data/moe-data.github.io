@@ -283,7 +283,7 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git lfs track "*.gz"
+          git lfs track "d*.gz"
           git add dump/
           # 提交信息包含 c/d 变更状态
           COMMIT_MSG="Update "
