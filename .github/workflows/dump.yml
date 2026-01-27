@@ -28,16 +28,33 @@ jobs:
         id: get-etag
         run: |
           MONTH="${{ steps.set-month.outputs.month }}"
-          # 获取creates的ETag
+          echo "======= 【前置】仅获取ETag（带自检） ======="
+          
+          # ===== 自检1：获取creates的ETag + 检查curl执行状态 =====
+          echo "开始获取createitemrecords.gz的ETag..."
           CREATES_ETAG=$(curl -s -I https://api.poi.moe/dump/createitemrecords.gz | grep -i etag | tr -d ' \n\r' | awk -F': ' '{print $2}')
+          CREATES_CURL_CODE=$?
+          # 自检：curl失败/ETag为空时标记异常
+          if [ $CREATES_CURL_CODE -ne 0 ] || [ -z "$CREATES_ETAG" ]; then
+            echo "❌ creates ETag读取失败（curl返回码：$CREATES_CURL_CODE，ETag值：$CREATES_ETAG）"
+            CREATES_ETAG="READ_FAILED_$(date +%s)" # 赋予唯一值，避免误判一致
+          else
+            echo "✅ creates最新ETag: $CREATES_ETAG"
+          fi
           echo "CREATES_ETAG=$CREATES_ETAG" >> $GITHUB_OUTPUT
+
+          # ===== 自检2：获取drops的ETag + 检查curl执行状态 =====
           # 获取drops的ETag
           DROPS_ETAG=$(curl -s -I https://api.poi.moe/dump/dropshiprecords.gz | grep -i etag | tr -d ' \n\r' | awk -F': ' '{print $2}')
+          DROPS_CURL_CODE=$?
+          # 自检：curl失败/ETag为空时标记异常
+          if [ $DROPS_CURL_CODE -ne 0 ] || [ -z "$DROPS_ETAG" ]; then
+            echo "❌ drops ETag读取失败（curl返回码：$DROPS_CURL_CODE，ETag值：$DROPS_ETAG）"
+            DROPS_ETAG="READ_FAILED_$(date +%s)" # 赋予唯一值，避免误判一致
+          else
+            echo "✅ drops最新ETag: $DROPS_ETAG"
+          fi
           echo "DROPS_ETAG=$DROPS_ETAG" >> $GITHUB_OUTPUT
-          # 打印ETag供调试
-          echo "======= 【前置】仅获取ETag ======="
-          echo "creates最新ETag: $CREATES_ETAG"
-          echo "drops最新ETag: $DROPS_ETAG"
 
       # 核心改3：先读取历史ETag，对比后决定是否下载/取消工作流
       - name: Check ETag change before download
@@ -61,14 +78,32 @@ jobs:
             HIST_CREATES_ETAG=$(grep -E "^c${MONTH}_ETAG=" "$MONTHLY_SIZE_FILE" | awk -F'=' '{print $2}' | tr -d '"')
             # 提取d{年月}_ETAG的值
             HIST_DROPS_ETAG=$(grep -E "^d${MONTH}_ETAG=" "$MONTHLY_SIZE_FILE" | awk -F'=' '{print $2}' | tr -d '"')
-            echo "历史c${MONTH} ETag: $HIST_CREATES_ETAG"
-            echo "历史d${MONTH} ETag: $HIST_DROPS_ETAG"
+            
+            # 自检：历史ETag读取后去空
+            HIST_CREATES_ETAG=${HIST_CREATES_ETAG:-""}
+            HIST_DROPS_ETAG=${HIST_DROPS_ETAG:-""}
+            
+            echo "历史c${MONTH} ETag: [$HIST_CREATES_ETAG]"
+            echo "历史d${MONTH} ETag: [$HIST_DROPS_ETAG]"
           else
             echo "======= monthly_size.txt不存在，首次执行 ======="
+            CHANGED="true" # 首次执行直接判定有变化
           fi
 
-          # 对比ETag（只要有一个变化就判定为有更新）
-          if [ "${{ steps.get-etag.outputs.CREATES_ETAG }}" != "$HIST_CREATES_ETAG" ] || [ "${{ steps.get-etag.outputs.DROPS_ETAG }}" != "$HIST_DROPS_ETAG" ]; then
+          # ===== 修复核心：ETag对比逻辑（处理空值/读取失败场景） =====
+          echo -e "\n======= 【核心自检】ETag对比逻辑 ======="
+          # 判定规则：
+          # 1. 历史ETag不存在 → 有变化
+          # 2. 最新ETag读取失败（含空值）→ 有变化
+          # 3. 任意ETag不一致 → 有变化
+          # 4. 仅所有ETag都存在且一致 → 无变化
+          if [ -z "$HIST_CREATES_ETAG" ] || [ -z "$HIST_DROPS_ETAG" ]; then
+            echo "🔍 历史ETag为空（首次执行/文件损坏）→ 判定有变化"
+            CHANGED="true"
+          elif [[ "${{ steps.get-etag.outputs.CREATES_ETAG }}" == "READ_FAILED_"* ]] || [[ "${{ steps.get-etag.outputs.DROPS_ETAG }}" == "READ_FAILED_"* ]]; then
+            echo "🔍 ETag读取失败 → 判定有变化（避免误判一致）"
+            CHANGED="true"
+          elif [ "${{ steps.get-etag.outputs.CREATES_ETAG }}" != "$HIST_CREATES_ETAG" ] || [ "${{ steps.get-etag.outputs.DROPS_ETAG }}" != "$HIST_DROPS_ETAG" ]; then
             CHANGED="true"
             echo "======= ETag有变化，准备下载文件 ======="
             echo "creates: 历史[$HIST_CREATES_ETAG] ≠ 最新[${{ steps.get-etag.outputs.CREATES_ETAG }}]"
@@ -80,6 +115,9 @@ jobs:
 
           # 输出变更标记到GitHub变量
           echo "changed=$CHANGED" >> $GITHUB_OUTPUT
+          # 自检日志：打印最终判定结果
+          echo -e "\n======= 【自检结果】ETag检查最终判定 ======="
+          echo "changed: $CHANGED"
 
       # 核心改4：ETag无变化时直接取消工作流，避免下载开销
       - name: 取消工作流（ETag无变化）
@@ -95,8 +133,18 @@ jobs:
           echo "======= 开始下载文件 ======="
           # 下载creates.gz
           curl -s -o creates.gz https://api.poi.moe/dump/createitemrecords.gz
+          # 自检：检查下载文件是否存在
+          if [ ! -f "creates.gz" ]; then
+            echo "❌ creates.gz下载失败"
+            exit 1
+          fi
           # 下载drops.gz
           curl -s -o drops.gz https://api.poi.moe/dump/dropshiprecords.gz
+          # 自检：检查下载文件是否存在
+          if [ ! -f "drops.gz" ]; then
+            echo "❌ drops.gz下载失败"
+            exit 1
+          fi
           echo "✅ 文件下载完成"
 
       - name: Check if changed
@@ -130,6 +178,11 @@ jobs:
             echo "✅ creates.gz (最新文件) MD5: $MD5_CREATES_GZ"
             # 移动creates.gz到目标路径
             mv creates.gz "$C_HISTORY_GZ_FILE"
+            # 自检：检查移动后文件是否存在
+            if [ ! -f "$C_HISTORY_GZ_FILE" ]; then
+              echo "❌ $C_HISTORY_GZ_FILE移动失败"
+              exit 1
+            fi
             # 计算creates文件大小
             C_FILE_SIZE_KB=$(du -k "$C_HISTORY_GZ_FILE" | awk '{print $1}')
             echo "✅ $C_HISTORY_GZ_FILE 大小: ${C_FILE_SIZE_KB} KB"
@@ -145,6 +198,11 @@ jobs:
             echo "✅ drops.gz (最新文件) MD5: $MD5_DROPS_GZ"
             # 移动drops.gz到目标路径
             mv drops.gz "$D_HISTORY_GZ_FILE"
+            # 自检：检查移动后文件是否存在
+            if [ ! -f "$D_HISTORY_GZ_FILE" ]; then
+              echo "❌ $D_HISTORY_GZ_FILE移动失败"
+              exit 1
+            fi
             # 计算drops文件大小
             D_FILE_SIZE_KB=$(du -k "$D_HISTORY_GZ_FILE" | awk '{print $1}')
             echo "✅ $D_HISTORY_GZ_FILE 大小: ${D_FILE_SIZE_KB} KB"
@@ -174,6 +232,11 @@ jobs:
           # 替换原文件
           mv "$MONTHLY_SIZE_FILE.tmp" "$MONTHLY_SIZE_FILE"
           
+          # 自检：检查文件写入是否成功
+          if [ ! -f "$MONTHLY_SIZE_FILE" ]; then
+            echo "❌ monthly_size.txt写入失败"
+            exit 1
+          fi
           # 打印写入结果
           echo "✅ monthly_size.txt 写入完成，内容如下："
           cat "$MONTHLY_SIZE_FILE"
@@ -187,6 +250,18 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
+          # 自检：检查dump目录是否有文件
+          if [ -z "$(ls -A dump/ 2>/dev/null)" ]; then
+            echo "❌ dump目录为空，无需提交"
+            exit 0
+          fi
           git add dump/
           git commit -m "Update createitemrecords/dropshiprecords ${{ steps.set-month.outputs.month }}.gz"
           git push
+          # 自检：检查推送是否成功
+          if [ $? -eq 0 ]; then
+            echo "✅ 代码推送成功"
+          else
+            echo "❌ 代码推送失败"
+            exit 1
+          fi
