@@ -42,6 +42,9 @@ jobs:
       - name: Restore archive directly from .gz
         run: |
           mongorestore --gzip --archive=dump/c${{ steps.month.outputs.month }}.gz \
+                       --nsInclude="poi-production.createshiprecords" \
+                       --drop   # 确保覆盖旧数据
+          mongorestore --gzip --archive=dump/d${{ steps.month.outputs.month }}.gz \
                        --nsInclude="poi-production.createitemrecords" \
                        --drop   # 确保覆盖旧数据
 
@@ -56,7 +59,7 @@ jobs:
           db = client['poi-production']
           collection = db['createitemrecords']
 
-          output_file = f"dump/c${{ steps.month.outputs.month }}.json"
+          output_file = f"dump/d${{ steps.month.outputs.month }}.json"
 
           cursor = collection.find({}, {'_id': 0, 'items': 1, 'itemId': 1, 'teitokuLv': 1, 'successful': 1, 'secretary': 1})
           first = True
@@ -83,21 +86,21 @@ jobs:
       - name: Show result size
         run: |
           echo "Simplified JSON file generated:"
-          ls -lh dump/c${{ steps.month.outputs.month }}.json
-          echo "Line count (approx records + 2): $(wc < dump/c${{ steps.month.outputs.month }}.json)"
+          ls -lh dump/d${{ steps.month.outputs.month }}.json
+          echo "Line count (approx records + 2): $(wc < dump/d${{ steps.month.outputs.month }}.json)"
 
       # 调用自定义的可复用Action
       - name: Check JSON array length in submodule
         uses: ./.github/actions/check-json-length
         with:
-          json-file-path: "dump/c${{ steps.month.outputs.month }}.json"  # 改为本地parsed目录
+          json-file-path: "dump/d${{ steps.month.outputs.month }}.json"  # 改为本地parsed目录
           output-var-name: "DUMP_LENGTH"
 
       - name: Commit and push pure JSON (overwrite monthly file)
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
-          git add dump/c${{ steps.month.outputs.month }}.json
+          git add dump/d${{ steps.month.outputs.month }}.json
           git commit -m "Update monthly pure JSON: c${{ steps.month.outputs.month }}.json" || echo "No changes to commit"
           git push
 
