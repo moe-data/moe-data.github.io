@@ -14,6 +14,8 @@ jobs:
     outputs:
       changed: ${{ steps.check.outputs.changed }}
       month: ${{ steps.set-month.outputs.month }}
+      c_changed: ${{ steps.pre-check.outputs.c_changed }}
+      d_changed: ${{ steps.pre-check.outputs.d_changed }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -29,8 +31,9 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y git-lfs
           git lfs install
-          # 跟踪所有.gz文件（配置Git LFS）
-          git lfs track "*.gz"
+          # 跟踪 d*.gz 文件（仅 d 系列用 LFS）
+          git lfs track "dump/d*.gz"
+
 
       # 核心改2：先仅获取ETag（不下载文件），减少网络开销
       - name: Get ETag only (no file download)
@@ -40,40 +43,35 @@ jobs:
           echo "======= 【前置】仅获取ETag + 自检 ======="
           
           # 初始化ETag变量+自检标记
+          echo "--- 处理 createitemrecords ---"
           CREATES_ETAG=""
-          DROPS_ETAG=""
-          ETAG_GET_SUCCESS="true"
-
-          # 获取creates的ETag
-          CREATES_RESP=$(curl -s -I -w "%{http_code}" https://api.poi.moe/dump/createitemrecords.gz)
-          CREATES_HTTP_CODE=$(echo "$CREATES_RESP" | tail -n1)
-          CREATES_ETAG=$(echo "$CREATES_RESP" | grep -i etag | tr -d ' \n\r' | awk -F': ' '{print $2}')
-          
-          # 自检：HTTP码非200 或 ETag为空 → 读取失败
-          if [ "$CREATES_HTTP_CODE" != "200" ] || [ -z "$CREATES_ETAG" ]; then
-            echo "❌ creates ETag读取失败！HTTP码: $CREATES_HTTP_CODE, ETag值: '$CREATES_ETAG'"
-            ETAG_GET_SUCCESS="false"
-          else
-            echo "✅ creates最新ETag: $CREATES_ETAG"
+          CREATES_ETAG_STATUS="failed"
+          # curl 加 -w %{http_code} 检查响应状态，避免无 ETag 时读取失败
+          RESPONSE=$(curl -s -I -w "%{http_code}" https://api.poi.moe/dump/createitemrecords.gz)
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          if [ "$HTTP_CODE" -eq 200 ]; then
+            CREATES_ETAG=$(echo "$RESPONSE" | grep -i etag | tr -d ' \n\r' | awk -F': ' '{print $2}' | tr -d '"')
+            CREATES_ETAG_STATUS="success"
           fi
-
-          # 获取drops的ETag + 检查curl返回码
-          DROPS_RESP=$(curl -s -I -w "%{http_code}" https://api.poi.moe/dump/dropshiprecords.gz)
-          DROPS_HTTP_CODE=$(echo "$DROPS_RESP" | tail -n1)
-          DROPS_ETAG=$(echo "$DROPS_RESP" | grep -i etag | tr -d ' \n\r' | awk -F': ' '{print $2}')
-          
-          # 自检：HTTP码非200 或 ETag为空 → 读取失败
-          if [ "$DROPS_HTTP_CODE" != "200" ] || [ -z "$DROPS_ETAG" ]; then
-            echo "❌ drops ETag读取失败！HTTP码: $DROPS_HTTP_CODE, ETag值: '$DROPS_ETAG'"
-            ETAG_GET_SUCCESS="false"
-          else
-            echo "✅ drops最新ETag: $DROPS_ETAG"
-          fi
-
-          # 输出变量（含自检结果）
+          echo "creates ETag 读取状态: $CREATES_ETAG_STATUS"
+          echo "creates 最新 ETag: $CREATES_ETAG"
           echo "CREATES_ETAG=$CREATES_ETAG" >> $GITHUB_OUTPUT
+          echo "CREATES_ETAG_STATUS=$CREATES_ETAG_STATUS" >> $GITHUB_OUTPUT
+          
+          # 获取 drops 的 ETag（同样增加错误处理）
+          echo "--- 处理 dropshiprecords ---"
+          DROPS_ETAG=""
+          DROPS_ETAG_STATUS="failed"
+          RESPONSE=$(curl -s -I -w "%{http_code}" https://api.poi.moe/dump/dropshiprecords.gz)
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          if [ "$HTTP_CODE" -eq 200 ]; then
+            DROPS_ETAG=$(echo "$RESPONSE" | grep -i etag | tr -d ' \n\r' | awk -F': ' '{print $2}' | tr -d '"')
+            DROPS_ETAG_STATUS="success"
+          fi
+          echo "drops ETag 读取状态: $DROPS_ETAG_STATUS"
+          echo "drops 最新 ETag: $DROPS_ETAG"
           echo "DROPS_ETAG=$DROPS_ETAG" >> $GITHUB_OUTPUT
-          echo "ETAG_GET_SUCCESS=$ETAG_GET_SUCCESS" >> $GITHUB_OUTPUT
+          echo "DROPS_ETAG_STATUS=$DROPS_ETAG_STATUS" >> $GITHUB_OUTPUT
 
       # 核心改3：先读取历史ETag，对比后决定是否下载/取消工作流
       - name: Check ETag change before download
@@ -85,138 +83,114 @@ jobs:
           mkdir -p dump # 确保dump目录存在
 
           # 初始化变更标记
-          CHANGED="false"
+          C_CHANGED="true"
+          D_CHANGED="true"
           # 初始化历史ETag变量
           HIST_CREATES_ETAG=""
           HIST_DROPS_ETAG=""
 
+          echo "======= 读取历史 monthly_size.txt（c/d 分开）======="
           # 读取monthly_size.txt中的历史ETag（键值格式）
           if [ -f "$MONTHLY_SIZE_FILE" ]; then
-            echo "======= 读取历史monthly_size.txt ======="
-            # 提取c{年月}_ETag的值
+            # 提取 c{年月}_ETAG 的值
             HIST_CREATES_ETAG=$(grep -E "^c${MONTH}_ETAG=" "$MONTHLY_SIZE_FILE" | awk -F'=' '{print $2}' | tr -d '"')
-            # 提取d{年月}_ETAG的值
+            # 提取 d{年月}_ETAG 的值
             HIST_DROPS_ETAG=$(grep -E "^d${MONTH}_ETAG=" "$MONTHLY_SIZE_FILE" | awk -F'=' '{print $2}' | tr -d '"')
-            echo "历史c${MONTH} ETag: $HIST_CREATES_ETAG"
-            echo "历史d${MONTH} ETag: $HIST_DROPS_ETAG"
+            echo "历史 c${MONTH} ETag: $HIST_CREATES_ETAG"
+            echo "历史 d${MONTH} ETag: $HIST_DROPS_ETAG"
           else
             echo "======= monthly_size.txt不存在，首次执行 ======="
+            echo "c_changed=$C_CHANGED" >> $GITHUB_OUTPUT
+            echo "d_changed=$D_CHANGED" >> $GITHUB_OUTPUT
+            exit 0
           fi
 
-          # 核心修复：ETag读取失败 → 判定为有变化；否则对比ETag
-          if [ "${{ steps.get-etag.outputs.ETAG_GET_SUCCESS }}" = "false" ]; then
-            echo "======= ETag读取失败，判定为有变化 ======="
-            CHANGED="true"
-          else
-            # 对比ETag（任一变化则判定为有更新）
-            if [ "${{ steps.get-etag.outputs.CREATES_ETAG }}" != "$HIST_CREATES_ETAG" ] || [ "${{ steps.get-etag.outputs.DROPS_ETAG }}" != "$HIST_DROPS_ETAG" ]; then
-              echo "======= ETag有变化，准备下载文件 ======="
-              echo "creates: 历史['$HIST_CREATES_ETAG'] ≠ 最新['${{ steps.get-etag.outputs.CREATES_ETAG }}']"
-              echo "drops: 历史['$HIST_DROPS_ETAG'] ≠ 最新['${{ steps.get-etag.outputs.DROPS_ETAG }}']"
-              CHANGED="true"
+          # ===== 分开判断 c 的 ETag（仅读取成功时才对比）=====
+          echo "--- 对比 creates ETag ---"
+          if [ "${{ steps.get-etag.outputs.CREATES_ETAG_STATUS }}" = "success" ] && [ -n "$HIST_CREATES_ETAG" ] && [ -n "${{ steps.get-etag.outputs.CREATES_ETAG }}" ]; then
+            if [ "${{ steps.get-etag.outputs.CREATES_ETAG }}" = "$HIST_CREATES_ETAG" ]; then
+              C_CHANGED="false"
+              echo "creates ETag 完全一致，无更新"
             else
-              echo "======= ETag无变化，无需下载 ======="
-              CHANGED="false"
+              C_CHANGED="true"
+              echo "creates ETag 不一致（历史：$HIST_CREATES_ETAG | 最新：${{ steps.get-etag.outputs.CREATES_ETAG }}）"
             fi
+          else
+            C_CHANGED="true"
+            echo "creates ETag 读取失败/历史不存在，判定为有更新"
+          fi
+
+          # ===== 分开判断 d 的 ETag（仅读取成功时才对比）=====
+          echo "--- 对比 drops ETag ---"
+          if [ "${{ steps.get-etag.outputs.DROPS_ETAG_STATUS }}" = "success" ] && [ -n "$HIST_DROPS_ETAG" ] && [ -n "${{ steps.get-etag.outputs.DROPS_ETAG }}" ]; then
+            if [ "${{ steps.get-etag.outputs.DROPS_ETAG }}" = "$HIST_DROPS_ETAG" ]; then
+              D_CHANGED="false"
+              echo "drops ETag 完全一致，无更新"
+            else
+              D_CHANGED="true"
+              echo "drops ETag 不一致（历史：$HIST_DROPS_ETAG | 最新：${{ steps.get-etag.outputs.DROPS_ETAG }}）"
+            fi
+          else
+            D_CHANGED="true"
+            echo "drops ETag 读取失败/历史不存在，判定为有更新"
           fi
 
           # 输出变更标记到GitHub变量
-          echo "changed=$CHANGED" >> $GITHUB_OUTPUT
+          echo "c_changed=$C_CHANGED" >> $GITHUB_OUTPUT
+          echo "d_changed=$D_CHANGED" >> $GITHUB_OUTPUT
+          # 输出整体变更标记（用于后续步骤）
+          if [ "$C_CHANGED" = "false" ] && [ "$D_CHANGED" = "false" ]; then
+            echo "整体无变更（c/d ETag 均一致）"
+          else
+            echo "整体有变更（c/d 至少一个有变化）"
+          fi
 
-      # 核心改4：ETag无变化时直接取消工作流，避免下载开销
+      # 修复3：第一次取消工作流（仅 c/d ETag 均无变化时执行）
       - name: 取消工作流（ETag无变化）
-        if: steps.pre-check.outputs.changed == 'false'
+        if: steps.pre-check.outputs.c_changed == 'false' && steps.pre-check.outputs.d_changed == 'false'
         uses: conbanwa/cancel-workflow/.github/actions/cancel-workflow@v1.0.0
         with:
           cancel-reason: 'ETag无变化，无需下载文件，自动取消工作流'
 
       # 核心改5：仅ETag变化时才下载文件
       - name: Download .gz files (only if ETag changed)
-        if: steps.pre-check.outputs.changed == 'true'
+        if: steps.pre-check.outputs.c_changed == 'true'
         run: |
-          echo "======= 开始下载文件 ======="
-          # 下载creates.gz
-          curl -s -o creates.gz https://api.poi.moe/dump/createitemrecords.gz || { echo "❌ creates.gz下载失败"; exit 1; }
-          curl -s -o drops.gz https://api.poi.moe/dump/dropshiprecords.gz || { echo "❌ drops.gz下载失败"; exit 1; }
-          # 自检：文件大小是否为0
-          if [ ! -s creates.gz ] || [ ! -s drops.gz ]; then
-            echo "❌ 下载的.gz文件为空，退出"
-            exit 1
-          fi
-          echo "✅ 文件下载完成"
-
-      # 核心改5：MD5检查 + 第二次取消工作流
-      - name: Check MD5 change (Self-Check)
-        id: md5-check
-        if: steps.pre-check.outputs.changed == 'true'
-        shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
-        run: |
-          MONTH="${{ steps.set-month.outputs.month }}"
-          MONTHLY_SIZE_FILE="dump/monthly_size.txt"
-          C_HISTORY_GZ_FILE="dump/c${MONTH}.gz"
-          D_HISTORY_GZ_FILE="dump/d${MONTH}.gz"
-
-          # 初始化MD5检查标记
-          MD5_CHANGED="false"
-          HIST_CREATES_MD5=""
-          HIST_DROPS_MD5=""
-
-          echo "======= 【MD5检查】读取历史MD5 ======="
-          # 读取历史MD5
-          if [ -f "$MONTHLY_SIZE_FILE" ]; then
-            HIST_CREATES_MD5=$(grep -E "^c${MONTH}_MD5=" "$MONTHLY_SIZE_FILE" | awk -F'=' '{print $2}' | tr -d '"')
-            HIST_DROPS_MD5=$(grep -E "^d${MONTH}_MD5=" "$MONTHLY_SIZE_FILE" | awk -F'=' '{print $2}' | tr -d '"')
-            echo "历史c${MONTH} MD5: '$HIST_CREATES_MD5'"
-            echo "历史d${MONTH} MD5: '$HIST_DROPS_MD5'"
-          fi
-
-          echo "======= 【MD5检查】计算最新MD5 ======="
-          # 计算最新MD5 + 自检
+          echo "======= 开始下载 createitemrecords.gz ======="
+          curl -s -o creates.gz https://api.poi.moe/dump/createitemrecords.gz
           if [ -f "creates.gz" ]; then
-            MD5_CREATES_GZ=$(md5sum creates.gz | awk '{print $1}')
             echo "✅ creates.gz 最新MD5: '$MD5_CREATES_GZ'"
           else
             echo "❌ creates.gz不存在，MD5检查失败"
             exit 1
           fi
+
+      - name: Download d*.gz (only if d ETag changed)
+        if: steps.pre-check.outputs.d_changed == 'true'
+        run: |
+          echo "======= 开始下载 dropshiprecords.gz ======="
+          curl -s -o drops.gz https://api.poi.moe/dump/createitemrecords.gz
           if [ -f "drops.gz" ]; then
-            MD5_DROPS_GZ=$(md5sum drops.gz | awk '{print $1}')
             echo "✅ drops.gz 最新MD5: '$MD5_DROPS_GZ'"
           else
             echo "❌ drops.gz不存在，MD5检查失败"
             exit 1
           fi
 
-          # 对比MD5（任一变化则判定为有更新）
-          if [ "$MD5_CREATES_GZ" != "$HIST_CREATES_MD5" ] || [ "$MD5_DROPS_GZ" != "$HIST_DROPS_MD5" ]; then
-            echo "======= MD5有变化，准备更新文件 ======="
-            echo "creates: 历史['$HIST_CREATES_MD5'] ≠ 最新['$MD5_CREATES_GZ']"
-            echo "drops: 历史['$HIST_DROPS_MD5'] ≠ 最新['$MD5_DROPS_GZ']"
-            MD5_CHANGED="true"
-          else
-            echo "======= MD5无变化，无需更新 ======="
-            MD5_CHANGED="false"
-          fi
-
-          # 输出变量
-          echo "md5_changed=$MD5_CHANGED" >> $GITHUB_OUTPUT
-          # 传递最新MD5供后续使用
-          echo "md5_creates=$MD5_CREATES_GZ" >> $GITHUB_OUTPUT
-          echo "md5_drops=$MD5_DROPS_GZ" >> $GITHUB_OUTPUT
-
-      # 第二次取消：MD5无变化 → 取消工作流
-      - name: 取消工作流（MD5无变化）
-        if: steps.md5-check.outputs.md5_changed == 'false'
-        uses: conbanwa/cancel-workflow/.github/actions/cancel-workflow@v1.0.0
-        with:
-          cancel-reason: 'MD5无变化，自动取消工作流'
-
       - name: Check if changed
         id: check
-        if: steps.md5-check.outputs.md5_changed == 'true'
         shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
         run: |
-          echo "changed=true" >> $GITHUB_OUTPUT
+          # 复用 pre-check 的结果，初始化整体变更标记
+          C_CHANGED="${{ steps.pre-check.outputs.c_changed }}"
+          D_CHANGED="${{ steps.pre-check.outputs.d_changed }}"
+          echo "changed=$([ "$C_CHANGED" = "true" ] || [ "$D_CHANGED" = "true" ] && echo "true" || echo "false")" >> $GITHUB_OUTPUT
+          
+          if [ "$C_CHANGED" = "false" ] && [ "$D_CHANGED" = "false" ]; then
+            exit 0 # 无变化时直接退出，不执行后续逻辑
+          fi
+
+          # 定义月份变量（避免嵌套引用问题）
           MONTH="${{ steps.set-month.outputs.month }}"
           C_HISTORY_GZ_FILE="dump/c${MONTH}.gz"
           D_HISTORY_GZ_FILE="dump/d${MONTH}.gz"
@@ -230,36 +204,61 @@ jobs:
           echo "drops ETag (清理后): $DROPS_ETAG"
           
           echo "======= 打印文件MD5值 ======="
-          # 移动文件 + 计算大小
-          mv creates.gz "$C_HISTORY_GZ_FILE"
-          mv drops.gz "$D_HISTORY_GZ_FILE"
-          # 自检：文件移动后是否存在
-          if [ ! -f "$C_HISTORY_GZ_FILE" ] || [ ! -f "$D_HISTORY_GZ_FILE" ]; then
-            echo "❌ 文件移动失败，退出"
-            exit 1
+          # ===== 分开处理 c*.gz（MD5 检查，第二次取消的基础）=====
+          MD5_CREATES_GZ="N/A"
+          C_FILE_SIZE_KB="N/A"
+          if [ "$C_CHANGED" = "true" ] && [ -f "creates.gz" ]; then
+            MD5_CREATES_GZ=$(md5sum creates.gz | awk '{print $1}')
+            echo "✅ creates.gz (最新文件) MD5: $MD5_CREATES_GZ"
+            # 移动文件 + 计算大小
+            mv creates.gz "$C_HISTORY_GZ_FILE"
+            # 计算 creates 文件大小
+            C_FILE_SIZE_KB=$(du -k "$C_HISTORY_GZ_FILE" | awk '{print $1}')
+            echo "✅ $C_HISTORY_GZ_FILE 大小: ${C_FILE_SIZE_KB} KB"
+          elif [ "$C_CHANGED" = "false" ]; then
+            echo "✅ creates.gz 无变化，跳过 MD5 计算"
+          else
+            echo "❌ creates.gz 文件不存在"
           fi
-          C_FILE_SIZE_KB=$(du -k "$C_HISTORY_GZ_FILE" | awk '{print $1}')
-          D_FILE_SIZE_KB=$(du -k "$D_HISTORY_GZ_FILE" | awk '{print $1}')
-          echo "✅ $C_HISTORY_GZ_FILE 大小: ${C_FILE_SIZE_KB} KB"
-          echo "✅ $D_HISTORY_GZ_FILE 大小: ${D_FILE_SIZE_KB} KB"
 
-          # ====================== 核心改7：写入monthly_size.txt（键值格式） ======================
-          echo "======= 写入monthly_size.txt（键值格式） ======="
-          # 获取当前检查时间（ISO格式，方便解析）
+          # ===== 分开处理 d*.gz（MD5 检查，第二次取消的基础）=====
+          MD5_DROPS_GZ="N/A"
+          D_FILE_SIZE_KB="N/A"
+          if [ "$D_CHANGED" = "true" ] && [ -f "drops.gz" ]; then
+            MD5_DROPS_GZ=$(md5sum drops.gz | awk '{print $1}')
+            echo "✅ drops.gz (最新文件) MD5: $MD5_DROPS_GZ"
+            # 移动 drops.gz 到目标路径
+            mv drops.gz "$D_HISTORY_GZ_FILE"
+            # 计算 drops 文件大小
+            D_FILE_SIZE_KB=$(du -k "$D_HISTORY_GZ_FILE" | awk '{print $1}')
+            echo "✅ $D_HISTORY_GZ_FILE 大小: ${D_FILE_SIZE_KB} KB"
+          elif [ "$D_CHANGED" = "false" ]; then
+            echo "✅ drops.gz 无变化，跳过 MD5 计算"
+          else
+            echo "❌ drops.gz 文件不存在"
+          fi
+
+          # ===== 保留：写入 monthly_size.txt（键值格式）======
+          echo "======= 写入 monthly_size.txt（键值格式）======="
+          # 获取当前检查时间（ISO 格式，方便解析）
           CHECK_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           
           # 先删除当前月份的旧记录（避免重复）
           grep -v -E "^[cd]${MONTH}_" "$MONTHLY_SIZE_FILE" > "$MONTHLY_SIZE_FILE.tmp" 2>/dev/null || true
           # 写入creates的键值
-          echo "c${MONTH}_ETAG=\"${{ steps.get-etag.outputs.CREATES_ETAG }}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-          echo "c${MONTH}_MD5=\"${{ steps.md5-check.outputs.md5_creates }}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-          echo "c${MONTH}_SizeKB=\"${C_FILE_SIZE_KB}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-          echo "c${MONTH}_CheckTime=\"${CHECK_TIME}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-          # 写入drops的键值
-          echo "d${MONTH}_ETAG=\"${{ steps.get-etag.outputs.DROPS_ETAG }}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-          echo "d${MONTH}_MD5=\"${{ steps.md5-check.outputs.md5_drops }}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-          echo "d${MONTH}_SizeKB=\"${D_FILE_SIZE_KB}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-          echo "d${MONTH}_CheckTime=\"${CHECK_TIME}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+          if [ "$C_CHANGED" = "true" ]; then
+            echo "c${MONTH}_ETAG=\"${{ steps.get-etag.outputs.CREATES_ETAG }}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+            echo "c${MONTH}_MD5=\"${MD5_CREATES_GZ}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+            echo "c${MONTH}_SizeKB=\"${C_FILE_SIZE_KB}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+            echo "c${MONTH}_CheckTime=\"${CHECK_TIME}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+          fi
+          # 写入 drops 的键值（仅当有变化时）
+          if [ "$D_CHANGED" = "true" ]; then
+            echo "d${MONTH}_ETAG=\"${{ steps.get-etag.outputs.DROPS_ETAG }}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+            echo "d${MONTH}_MD5=\"${MD5_DROPS_GZ}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+            echo "d${MONTH}_SizeKB=\"${D_FILE_SIZE_KB}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+            echo "d${MONTH}_CheckTime=\"${CHECK_TIME}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+          fi
           # 替换原文件
           mv "$MONTHLY_SIZE_FILE.tmp" "$MONTHLY_SIZE_FILE"
           
@@ -271,6 +270,14 @@ jobs:
           echo -e "\n======= 【核心】最终判定 ======="
           echo "📌 最终结论：Data updated! Saving new .gz (ETag/MD5均变化)"
 
+      # 修复5：第二次取消工作流（MD5 检查，c/d 均无变化时执行）
+      - name: 取消工作流（MD5 无变化，c/d 均无更新）
+        if: steps.check.outputs.changed == 'false'
+        uses: conbanwa/cancel-workflow/.github/actions/cancel-workflow@v1.0.0
+        with:
+          cancel-reason: 'MD5 无变化（c/d 均一致），无需提交，自动取消工作流'
+
+      # 修复6：使用 Git LFS 推送 d*.gz 文件，分开提交 c/d
       - name: Commit and push .gz if changed
         if: steps.check.outputs.changed == 'true'
         run: |
@@ -278,5 +285,14 @@ jobs:
           git config user.email "actions@github.com"
           git lfs track "*.gz"
           git add dump/
-          git commit -m "Update createitemrecords/dropshiprecords ${{ steps.set-month.outputs.month }}.gz"
+          # 提交信息包含 c/d 变更状态
+          COMMIT_MSG="Update "
+          if [ "${{ steps.pre-check.outputs.c_changed }}" = "true" ]; then
+            COMMIT_MSG+="createitemrecords "
+          fi
+          if [ "${{ steps.pre-check.outputs.d_changed }}" = "true" ]; then
+            COMMIT_MSG+="dropshiprecords "
+          fi
+          COMMIT_MSG+="${{ steps.set-month.outputs.month }}.gz"
+          git commit -m "$COMMIT_MSG"
           git push --force-with-lease
