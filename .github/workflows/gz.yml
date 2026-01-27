@@ -101,7 +101,7 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
           git add dump/d${{ steps.month.outputs.month }}.json
-          git commit -m "Update monthly pure JSON: c${{ steps.month.outputs.month }}.json" || echo "No changes to commit"
+          git commit -m "Update monthly pure JSON: d${{ steps.month.outputs.month }}.json" || echo "No changes to commit"
           git push
 
       - name: Cleanup temporary MongoDB
