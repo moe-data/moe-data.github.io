@@ -92,10 +92,13 @@ jobs:
           echo "======= 读取历史 monthly_size.txt（c/d 分开）======="
           # 读取monthly_size.txt中的历史ETag（键值格式）
           if [ -f "$MONTHLY_SIZE_FILE" ]; then
-            # 提取 c{年月}_ETAG 的值
-            HIST_CREATES_ETAG=$(grep -E "^c${MONTH}_ETAG=" "$MONTHLY_SIZE_FILE" | awk -F'=' '{print $2}' | tr -d '"')
-            # 提取 d{年月}_ETAG 的值
-            HIST_DROPS_ETAG=$(grep -E "^d${MONTH}_ETAG=" "$MONTHLY_SIZE_FILE" | awk -F'=' '{print $2}' | tr -d '"')
+            # 修复核心：优化提取命令，步骤如下
+            # 1. sed 's/^[ \t]*//; s/[ \t]*$//' 去除行首行尾空白/制表符
+            # 2. grep -E 精准匹配，增加 -a 处理隐藏二进制字符
+            # 3. awk 拆分后先清理空白，再提取值
+            # 4. tr -d '"' 去除引号，同时处理空值场景
+            HIST_CREATES_ETAG=$(sed 's/^[ \t]*//; s/[ \t]*$//' "$MONTHLY_SIZE_FILE" | grep -a -E "^c${MONTH}_ETAG=" | awk -F'=' '{gsub(/^[ \t"]+|[ \t"]+$/,"",$2); print $2}')
+            HIST_DROPS_ETAG=$(sed 's/^[ \t]*//; s/[ \t]*$//' "$MONTHLY_SIZE_FILE" | grep -a -E "^d${MONTH}_ETAG=" | awk -F'=' '{gsub(/^[ \t"]+|[ \t"]+$/,"",$2); print $2}')
             echo "历史 c${MONTH} ETag: $HIST_CREATES_ETAG"
             echo "历史 d${MONTH} ETag: $HIST_DROPS_ETAG"
           else
