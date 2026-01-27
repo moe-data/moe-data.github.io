@@ -195,8 +195,8 @@ jobs:
 
           # 定义月份变量（避免嵌套引用问题）
           MONTH="${{ steps.set-month.outputs.month }}"
-          C_HISTORY_GZ_FILE="dump/c${MONTH}.gz"
-          D_HISTORY_GZ_FILE="dump/d${MONTH}.gz"
+          C_HISTORY_GZ_FILE="dump/d${MONTH}.gz"
+          D_HISTORY_GZ_FILE="dump/c${MONTH}.gz"
           MONTHLY_SIZE_FILE="dump/monthly_size.txt"
           
           echo "======= 打印ETag内容 ======="
