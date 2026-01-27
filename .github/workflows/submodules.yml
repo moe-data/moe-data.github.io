@@ -62,7 +62,7 @@ jobs:
       - name: Check JSON length in dump path
         uses: ./.github/actions/check-json-length
         with:
-          json-file-path: "dump/c-2026-01.json"  # 普通路径也适用 
+          json-file-path: "dump/c202601.json"  # 普通路径也适用 
       # 提交并推送复制后的文件到当前仓库
       - name: Commit and push if changed
         id: check

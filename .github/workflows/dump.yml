@@ -31,8 +31,6 @@ jobs:
           git lfs install
           # 跟踪所有.gz文件（配置Git LFS）
           git lfs track "*.gz"
-          echo "*.gz filter=lfs diff=lfs merge=lfs -text" >> .gitattributes
-          git add .gitattributes || true
 
       # 核心改2：先仅获取ETag（不下载文件），减少网络开销
       - name: Get ETag only (no file download)
@@ -279,6 +277,6 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git lfs track "*.gz"
-          git add .gitattributes dump/
+          git add dump/
           git commit -m "Update createitemrecords/dropshiprecords ${{ steps.set-month.outputs.month }}.gz"
           git push --force-with-lease
