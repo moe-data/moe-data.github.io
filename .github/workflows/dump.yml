@@ -31,8 +31,8 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y git-lfs
           git lfs install
-          # 跟踪 d*.gz 文件（仅 d 系列用 LFS）
-          git lfs track "dump/d*.gz"
+          # 跟踪 drop*.gz 文件
+          git lfs track "dump/drop*.gz"
 
 
       # 核心改2：先仅获取ETag（不下载文件），减少网络开销
@@ -59,10 +59,10 @@ jobs:
           echo "CREATES_ETAG_STATUS=$CREATES_ETAG_STATUS" >> $GITHUB_OUTPUT
           
           # 获取 drops 的 ETag（同样增加错误处理）
-          echo "--- 处理 dropshiprecords ---"
+          echo "--- 处理 createshiprecords ---"
           DROPS_ETAG=""
           DROPS_ETAG_STATUS="failed"
-          RESPONSE=$(curl -s -I -w "%{http_code}" https://api.poi.moe/dump/dropshiprecords.gz)
+          RESPONSE=$(curl -s -I -w "%{http_code}" https://api.poi.moe/dump/createshiprecords.gz)
           HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
           if [ "$HTTP_CODE" -eq 200 ]; then
             DROPS_ETAG=$(echo "$RESPONSE" | grep -i etag | tr -d ' \n\r' | awk -F': ' '{print $2}' | tr -d '"')
@@ -168,8 +168,8 @@ jobs:
       - name: Download d*.gz (only if d ETag changed)
         if: steps.pre-check.outputs.d_changed == 'true'
         run: |
-          echo "======= 开始下载 dropshiprecords.gz ======="
-          curl -s -o drops.gz https://api.poi.moe/dump/createitemrecords.gz
+          echo "======= 开始下载 createshiprecords.gz ======="
+          curl -s -o drops.gz https://api.poi.moe/dump/createshiprecords.gz
           if [ -f "drops.gz" ]; then
             echo "✅ drops.gz 最新MD5: '$MD5_DROPS_GZ'"
           else
@@ -277,13 +277,12 @@ jobs:
         with:
           cancel-reason: 'MD5 无变化（c/d 均一致），无需提交，自动取消工作流'
 
-      # 修复6：使用 Git LFS 推送 d*.gz 文件，分开提交 c/d
       - name: Commit and push .gz if changed
         if: steps.check.outputs.changed == 'true'
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git lfs track "d*.gz"
+          git lfs track "drop*.gz"
           git add dump/
           # 提交信息包含 c/d 变更状态
           COMMIT_MSG="Update "
@@ -291,7 +290,7 @@ jobs:
             COMMIT_MSG+="createitemrecords "
           fi
           if [ "${{ steps.pre-check.outputs.d_changed }}" = "true" ]; then
-            COMMIT_MSG+="dropshiprecords "
+            COMMIT_MSG+="createshiprecords "
           fi
           COMMIT_MSG+="${{ steps.set-month.outputs.month }}.gz"
           git commit -m "$COMMIT_MSG"
