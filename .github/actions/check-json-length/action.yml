@@ -9,6 +9,10 @@ inputs:
     description: '输出数组长度的环境变量名（可选，默认 ARRAY_LENGTH）'
     required: false
     default: 'ARRAY_LENGTH'
+outputs:
+  length:
+    description: 'JSON文件中数组的长度值'
+    value: ${{ steps.json-length.outputs.length }}
 
 runs:
   using: "composite"
@@ -64,9 +68,5 @@ runs:
         echo "======================================"
         
         # 设置输出变量（供调用方使用）
-        echo "${{ inputs.output-var-name }}=$ARRAY_LENGTH" >> $GITHUB_ENV
-
+        echo "ARRAY_LENGTH=$ARRAY_LENGTH" >> $GITHUB_ENV
         echo "length=$ARRAY_LENGTH" >> $GITHUB_OUTPUT
-
-
-

@@ -11,6 +11,9 @@ jobs:
   convert-to-json:
     runs-on: ubuntu-latest
     # 只有当上游 workflow 成功时才运行
+    outputs:
+      d-length: ${{ steps.d-length.outputs.length }}
+      c-length: ${{ steps.c-length.outputs.length }}
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout repository
@@ -118,6 +121,7 @@ jobs:
 
       # 调用自定义的可复用Action
       - name: Check JSON array length in develop
+        id: d-length
         uses: ./.github/actions/check-json-length
         with:
           json-file-path: "dump/d${{ steps.month.outputs.month }}.json"  # 改为本地parsed目录
@@ -125,10 +129,17 @@ jobs:
 
       # 调用自定义的可复用Action
       - name: Check JSON array length in construction
+        id: c-length
         uses: ./.github/actions/check-json-length
         with:
           json-file-path: "dump/c${{ steps.month.outputs.month }}.json"  # 改为本地parsed目录
           output-var-name: "C_LENGTH"
+          
+      - name: 取消工作流（LENGTH=0）
+        if: steps.d-length.outputs.length == 0
+        uses: conbanwa/cancel-workflow/.github/actions/cancel-workflow@v1.0.0
+        with:
+          cancel-reason: 'MD5 无变化（c/d 均一致），无需提交，自动取消工作流'
 
       - name: Commit and push pure JSON (overwrite monthly file)
         run: |
