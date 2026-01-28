@@ -104,11 +104,9 @@ jobs:
 
               print(f"处理后的JSON已导出到 {output_file}")
           collection = db['createitemrecords']
-          output_file = f"dump/d${{ steps.month.outputs.month }}.json"
-          export_processed_mongodb_data(collection, 'output.json')
+          export_processed_mongodb_data(collection, f"dump/d${{ steps.month.outputs.month }}.json")
           collection = db['createshiprecords']
-          output_file = f"dump/c${{ steps.month.outputs.month }}.json"
-          export_processed_mongodb_data(collection, 'output.json')
+          export_processed_mongodb_data(collection, f"dump/c${{ steps.month.outputs.month }}.json")
           EOF
 
       - name: Show result size
