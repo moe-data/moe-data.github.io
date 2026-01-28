@@ -104,7 +104,7 @@ URL: http://[SERVER_NAME]/api/report/v2/create_item
 | `itemId`     | `Number`   | `api_slot_item.api_slotitem_id` on success. If development failed, `api_fdata` will be a comma separated list, get the second element from it (e.g. if `api_fdata = "2,33"`, you should fill this field with `33`) |
 | `teitokuLv`  | `Number`   | (Same as construction)                                                                                                                                                                                             |
 | `successful` | `Boolean`  | (Successful or unsuccessful.)                                                                                                                                                                                      |
-| `origin`     | `String`   | (Same as construction)                                                                                                                                                                                             |
+| `origin`     | `String`   | (Optional) It's the name of your report plugin, requests' `User-Agent` will be used if not present                                                                                                                                                                                   |
 
 ### 2. convert gz to SQL.(tool: mongodb)<br>
 
