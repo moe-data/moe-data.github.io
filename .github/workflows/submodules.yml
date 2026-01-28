@@ -12,6 +12,8 @@ permissions:
 jobs:
   update-submodules:
     runs-on: ubuntu-latest
+    outputs:
+      ship-length: ${{ steps.ship-length.outputs.length }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -54,6 +56,7 @@ jobs:
           
       # 调用自定义的可复用Action
       - name: Check JSON array length in submodule
+        id: ship-length
         uses: ./.github/actions/check-json-length
         with:
           json-file-path: "parsed/api_mst_ship.json"  # 改为本地parsed目录
@@ -63,6 +66,13 @@ jobs:
         uses: ./.github/actions/check-json-length
         with:
           json-file-path: "dump/c202601.json"  # 普通路径也适用 
+          
+      - name: 取消工作流（ship=0）
+        if: steps.ship-length.outputs.length == 0
+        run: |
+          echo "Error: 目标文件长度为0 /tmp/api_start2/parsed/api_mst_ship.json"
+          exit 1
+
       # 提交并推送复制后的文件到当前仓库
       - name: Commit and push if changed
         id: check
