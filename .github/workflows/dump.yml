@@ -3,7 +3,7 @@ name: dump
 on:
   push:
     paths:
-      - '**.yml'
+      - '*dump.yml'
   schedule:
     - cron: '0 2 * * *'  # 每天 UTC 2点（北京时间10点）执行
   workflow_dispatch:     # 手动触发  push:
