@@ -24,6 +24,12 @@ jobs:
         with:
           fetch-depth: 0   # 确保能 push
 
+      - name: Check cstypes array length
+        id: cstypes
+        uses: ./.github/actions/check-json-length
+        with:
+          json-file-path: "parsed/cstype.json"
+
       - name: Install MongoDB Server and Tools
         run: |
           wget -qO - https://www.mongodb.org/static/pgp/server-7.0.asc | sudo apt-key add -
@@ -116,7 +122,7 @@ jobs:
                       continue  # 跳过secretary=0的记录，不写入文件
                   
                   # ========== 处理secretary->dtype（对应SQL LEFT JOIN cstype） ==========
-                  secretary_dtype = cstype_dict.get(str(secretary_val), -2)
+                  secretary_dtype = secretary_val #cstype_dict.get(str(secretary_val), -2)
                   
                   # === 对应SQL: UPDATE d2 set itemId=-1 的两个条件 ===
                   field_val = doc.get(output_type)
