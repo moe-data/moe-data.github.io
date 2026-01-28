@@ -208,8 +208,8 @@ jobs:
 
           # 定义月份变量（避免嵌套引用问题）
           MONTH="${{ steps.set-month.outputs.month }}"
-          C_HISTORY_GZ_FILE="dump/d${MONTH}.gz"
           D_HISTORY_GZ_FILE="dump/c${MONTH}.gz"
+          C_HISTORY_GZ_FILE="dump/d${MONTH}.gz"
           MONTHLY_SIZE_FILE="dump/monthly_size.txt"
           
           echo "======= 打印ETag内容 ======="
@@ -220,9 +220,9 @@ jobs:
           echo "construct ETag (清理后): $CONSTRU_ETAG"
           
           echo "======= 打印文件MD5值 ======="
-          # ===== 分开处理 c*.gz（MD5 检查，第二次取消的基础）=====
+          # ===== 分开处理 d*.gz（MD5 检查，第二次取消的基础）=====
           MD5_DEVELOP_GZ="N/A"
-          C_FILE_SIZE_KB="N/A"
+          DEVELOP_SIZE_KB="N/A"
           if [ "$d_changed" = "true" ] && [ -f "develop.gz" ]; then
             MD5_DEVELOP_GZ=$(md5sum develop.gz | awk '{print $1}')
             # 二次自检：MD5为空exit 2
@@ -232,10 +232,10 @@ jobs:
             fi
             echo "✅ develop.gz (最新文件) MD5: $MD5_DEVELOP_GZ"
             # 移动文件 + 计算大小
-            mv develop.gz "$C_HISTORY_GZ_FILE"
+            mv develop.gz "$D_HISTORY_GZ_FILE"
             # 计算 develop 文件大小
-            C_FILE_SIZE_KB=$(du -k "$C_HISTORY_GZ_FILE" | awk '{print $1}')
-            echo "✅ $C_HISTORY_GZ_FILE 大小: ${C_FILE_SIZE_KB} KB"
+            DEVELOP_SIZE_KB=$(du -k "$D_HISTORY_GZ_FILE" | awk '{print $1}')
+            echo "✅ $D_HISTORY_GZ_FILE 大小: ${DEVELOP_SIZE_KB} KB"
           elif [ "$d_changed" = "false" ]; then
             echo "✅ develop.gz 无变化，跳过 MD5 计算"
           else
@@ -243,9 +243,9 @@ jobs:
             exit 2
           fi
 
-          # ===== 分开处理 d*.gz（MD5 检查，第二次取消的基础）=====
+          # ===== 分开处理 c*.gz（MD5 检查，第二次取消的基础）=====
           MD5_CONSTRU_GZ="N/A"
-          D_FILE_SIZE_KB="N/A"
+          CONSTRU_SIZE_KB="N/A"
           if [ "$c_changed" = "true" ] && [ -f "construct.gz" ]; then
             MD5_CONSTRU_GZ=$(md5sum construct.gz | awk '{print $1}')
             # 二次自检：MD5为空exit 2
@@ -255,10 +255,10 @@ jobs:
             fi
             echo "✅ construct.gz (最新文件) MD5: $MD5_CONSTRU_GZ"
             # 移动 construct.gz 到目标路径
-            mv construct.gz "$D_HISTORY_GZ_FILE"
+            mv construct.gz "$C_HISTORY_GZ_FILE"
             # 计算 construct 文件大小
-            D_FILE_SIZE_KB=$(du -k "$D_HISTORY_GZ_FILE" | awk '{print $1}')
-            echo "✅ $D_HISTORY_GZ_FILE 大小: ${D_FILE_SIZE_KB} KB"
+            CONSTRU_SIZE_KB=$(du -k "$C_HISTORY_GZ_FILE" | awk '{print $1}')
+            echo "✅ $C_HISTORY_GZ_FILE 大小: ${CONSTRU_SIZE_KB} KB"
           elif [ "$c_changed" = "false" ]; then
             echo "✅ construct.gz 无变化，跳过 MD5 计算"
           else
@@ -273,19 +273,19 @@ jobs:
           
           # 先删除当前月份的旧记录（避免重复）
           grep -v -E "^[cd]${MONTH}_" "$MONTHLY_SIZE_FILE" > "$MONTHLY_SIZE_FILE.tmp" 2>/dev/null || true
-          # 写入creates的键值
+          # 写入develop的键值
           if [ "$d_changed" = "true" ]; then
-            echo "c${MONTH}_ETAG=\"${{ steps.get-etag.outputs.DEVELOP_ETAG }}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-            echo "c${MONTH}_MD5=\"${MD5_DEVELOP_GZ}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-            echo "c${MONTH}_SizeKB=\"${C_FILE_SIZE_KB}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-            echo "c${MONTH}_CheckTime=\"${CHECK_TIME}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+            echo "d${MONTH}_ETAG=\"${{ steps.get-etag.outputs.DEVELOP_ETAG }}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+            echo "d${MONTH}_MD5=\"${MD5_DEVELOP_GZ}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+            echo "d${MONTH}_SizeKB=\"${DEVELOP_SIZE_KB}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+            echo "d${MONTH}_CheckTime=\"${CHECK_TIME}\"" >> "$MONTHLY_SIZE_FILE.tmp"
           fi
           # 写入 construct 的键值（仅当有变化时）
           if [ "$c_changed" = "true" ]; then
-            echo "d${MONTH}_ETAG=\"${{ steps.get-etag.outputs.CONSTRU_ETAG }}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-            echo "d${MONTH}_MD5=\"${MD5_CONSTRU_GZ}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-            echo "d${MONTH}_SizeKB=\"${D_FILE_SIZE_KB}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-            echo "d${MONTH}_CheckTime=\"${CHECK_TIME}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+            echo "c${MONTH}_ETAG=\"${{ steps.get-etag.outputs.CONSTRU_ETAG }}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+            echo "c${MONTH}_MD5=\"${MD5_CONSTRU_GZ}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+            echo "c${MONTH}_SizeKB=\"${CONSTRU_SIZE_KB}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+            echo "c${MONTH}_CheckTime=\"${CHECK_TIME}\"" >> "$MONTHLY_SIZE_FILE.tmp"
           fi
           # 替换原文件
           mv "$MONTHLY_SIZE_FILE.tmp" "$MONTHLY_SIZE_FILE"

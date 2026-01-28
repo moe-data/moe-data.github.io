@@ -115,7 +115,7 @@ jobs:
         run: |
           echo "Simplified JSON file generated:"
           ls -lh dump/d${{ steps.month.outputs.month }}.json
-          echo "Line count (approx records + 2): $(wc < dump/d${{ steps.month.outputs.month }}.json)
+          echo "Line count (approx records + 2): $(wc < dump/d${{ steps.month.outputs.month }}.json)"
           ls -lh dump/c${{ steps.month.outputs.month }}.json
           echo "Line count (approx records + 2): $(wc < dump/c${{ steps.month.outputs.month }}.json)"
 
