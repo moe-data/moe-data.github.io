@@ -3,7 +3,7 @@ name: gz
 on:
   push:
     paths:
-      - '*/gz.yml'
+      - '**/gz.yml'
   workflow_run:
     workflows: ["dump"]
     types:
@@ -65,9 +65,9 @@ jobs:
 
           # ========== 读取cstype.json ==========
           def load_cstype():
-              """加载/parsed/cstype.json数据，返回id到dtype的映射字典"""
+              """加载parsed/cstype.json数据，返回id到dtype的映射字典"""
               try:
-                  with open('/parsed/cstype.json', 'r', encoding='utf-8') as f:
+                  with open('parsed/cstype.json', 'r', encoding='utf-8') as f:
                       cstype_data = json.load(f)
                   # 构建id->dtype映射（兼容id为整数/字符串）
                   cstype_dict = {}
@@ -75,7 +75,7 @@ jobs:
                       cstype_dict[str(item['id'])] = item.get('dtype', -2)
                   return cstype_dict
               except FileNotFoundError:
-                  raise FileNotFoundError("cstype.json not found at /parsed/cstype.json")
+                  raise FileNotFoundError("cstype.json not found at parsed/cstype.json")
 
           cstype_dict = load_cstype()
 
