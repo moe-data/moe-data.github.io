@@ -72,12 +72,12 @@ jobs:
           # 新增：读取cstype.json用于LEFT JOIN逻辑（匹配SQL）
           def load_cstype_map():
               try:
-                  with open('/parsed/cstype.json', 'r', encoding='utf-8') as f:
+                  with open('parsed/cstype.json', 'r', encoding='utf-8') as f:
                       cstype_data = json.load(f)
                       # 构建id到dtype的映射（匹配SQL: LEFT JOIN cstype b on secretary=b.id）
                       return {str(item.get('id')): item.get('dtype', -2) for item in cstype_data}
               except FileNotFoundError:
-                  raise FileNotFoundError("cstype.json not found at /parsed/cstype.json")
+                  raise FileNotFoundError("cstype.json not found at parsed/cstype.json")
           
           cstype_map = load_cstype_map()
           
