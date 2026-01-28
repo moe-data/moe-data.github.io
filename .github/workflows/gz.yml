@@ -45,8 +45,7 @@ jobs:
                        --nsInclude="poi-production.createshiprecords" \
                        --drop   # 确保覆盖旧数据
           mongorestore --gzip --archive=dump/d${{ steps.month.outputs.month }}.gz \
-                       --nsInclude="poi-production.createitemrecords" \
-                       --drop   # 确保覆盖旧数据
+                       --nsInclude="poi-production.createitemrecords" 
 
       - name: Export simplified JSON using Python
         run: |
