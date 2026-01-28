@@ -1,11 +1,14 @@
 name: gz
 
 on:
+  push:
+    paths:
+      - '*/gz.yml'
   workflow_run:
     workflows: ["dump"]
     types:
       - completed
-  workflow_dispatch:     # 手动触发  push:
+  workflow_dispatch:     # 手动触发  
 
 jobs:
   convert-to-json:
