@@ -38,40 +38,41 @@ jobs:
       # 核心改2：先仅获取ETag（不下载文件），减少网络开销
       - name: Get ETag only (no file download)
         id: get-etag
+        # 切换为PowerShell shell执行ETag获取
+        shell: pwsh
         run: |
-          MONTH="${{ steps.set-month.outputs.month }}"
+          $MONTH="${{ steps.set-month.outputs.month }}"
           echo "======= 【前置】仅获取ETag + 自检 ======="
           
           # 初始化ETag变量+自检标记
           echo "--- 处理 createitemrecords ---"
-          CREATES_ETAG=""
-          CREATES_ETAG_STATUS="failed"
-          # curl 加 -w %{http_code} 检查响应状态，避免无 ETag 时读取失败
-          RESPONSE=$(curl -s -I -w "%{http_code}" https://api.poi.moe/dump/createitemrecords.gz)
-          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
-          if [ "$HTTP_CODE" -eq 200 ]; then
-            CREATES_ETAG=$(echo "$RESPONSE" | grep -i etag | tr -d ' \n\r' | awk -F': ' '{print $2}' | tr -d '"')
-            CREATES_ETAG_STATUS="success"
-          fi
-          echo "creates ETag 读取状态: $CREATES_ETAG_STATUS"
-          echo "creates 最新 ETag: $CREATES_ETAG"
-          echo "CREATES_ETAG=$CREATES_ETAG" >> $GITHUB_OUTPUT
-          echo "CREATES_ETAG_STATUS=$CREATES_ETAG_STATUS" >> $GITHUB_OUTPUT
+          $createsEtag = $null
+          # 极简PowerShell获取ETag，去除引号/空格
+          $createsEtag = (Invoke-WebRequest -Uri "https://api.poi.moe/dump/createitemrecords.gz" -Method Head).Headers['ETag'] -replace '["\s]', ''
+          echo "creates ETag 读取状态: success"
+          echo "creates 最新 ETag: $createsEtag"
+          # 自检：ETag为空直接exit 2
+          if ([string]::IsNullOrEmpty($createsEtag)) {
+            echo "❌ creates ETag 为空，终止流程"
+            exit 2
+          }
+          # 输出到GitHub变量
+          echo "CREATES_ETAG=$createsEtag" >> $env:GITHUB_OUTPUT
+          echo "CREATES_ETAG_STATUS=success" >> $env:GITHUB_OUTPUT
           
-          # 获取 drops 的 ETag（同样增加错误处理）
+          # ===== 处理 createshiprecords ETag =====
           echo "--- 处理 createshiprecords ---"
-          DROPS_ETAG=""
-          DROPS_ETAG_STATUS="failed"
-          RESPONSE=$(curl -s -I -w "%{http_code}" https://api.poi.moe/dump/createshiprecords.gz)
-          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
-          if [ "$HTTP_CODE" -eq 200 ]; then
-            DROPS_ETAG=$(echo "$RESPONSE" | grep -i etag | tr -d ' \n\r' | awk -F': ' '{print $2}' | tr -d '"')
-            DROPS_ETAG_STATUS="success"
-          fi
-          echo "drops ETag 读取状态: $DROPS_ETAG_STATUS"
-          echo "drops 最新 ETag: $DROPS_ETAG"
-          echo "DROPS_ETAG=$DROPS_ETAG" >> $GITHUB_OUTPUT
-          echo "DROPS_ETAG_STATUS=$DROPS_ETAG_STATUS" >> $GITHUB_OUTPUT
+          $dropsEtag = (Invoke-WebRequest -Uri "https://api.poi.moe/dump/createshiprecords.gz" -Method Head).Headers['ETag'] -replace '["\s]', ''
+          echo "drops ETag 读取状态: success"
+          echo "drops 最新 ETag: $dropsEtag"
+          # 自检：ETag为空直接exit 2
+          if ([string]::IsNullOrEmpty($dropsEtag)) {
+            echo "❌ drops ETag 为空，终止流程"
+            exit 2
+          }
+          # 输出到GitHub变量
+          echo "DROPS_ETAG=$dropsEtag" >> $env:GITHUB_OUTPUT
+          echo "DROPS_ETAG_STATUS=success" >> $env:GITHUB_OUTPUT
 
       # 核心改3：先读取历史ETag，对比后决定是否下载/取消工作流
       - name: Check ETag change before download
@@ -155,30 +156,42 @@ jobs:
         with:
           cancel-reason: 'ETag无变化，无需下载文件，自动取消工作流'
 
-      # 核心改5：仅ETag变化时才下载文件
-      - name: Download .gz files (only if ETag changed)
+      # 核心改5：仅ETag变化时才下载文件 + 自检文件存在性
+      - name: Download c*.gz (only if c ETag changed)
         if: steps.pre-check.outputs.c_changed == 'true'
         run: |
           echo "======= 开始下载 createitemrecords.gz ======="
           curl -s -o creates.gz https://api.poi.moe/dump/createitemrecords.gz
-          if [ -f "creates.gz" ]; then
-            echo "✅ creates.gz 最新MD5: '$MD5_CREATES_GZ'"
-          else
-            echo "❌ creates.gz不存在，MD5检查失败"
-            exit 1
+          # 自检：文件不存在直接exit 2
+          if [ ! -f "creates.gz" ]; then
+            echo "❌ creates.gz不存在，终止流程"
+            exit 2
           fi
+          # 计算MD5 + 自检空值
+          MD5_CREATES_GZ=$(md5sum creates.gz | awk '{print $1}')
+          if [ -z "$MD5_CREATES_GZ" ] || [ "$MD5_CREATES_GZ" = "N/A" ]; then
+            echo "❌ creates.gz MD5 为空，终止流程"
+            exit 2
+          fi
+          echo "✅ creates.gz 最新MD5: '$MD5_CREATES_GZ'"
 
       - name: Download d*.gz (only if d ETag changed)
         if: steps.pre-check.outputs.d_changed == 'true'
         run: |
           echo "======= 开始下载 createshiprecords.gz ======="
           curl -s -o drops.gz https://api.poi.moe/dump/createshiprecords.gz
-          if [ -f "drops.gz" ]; then
-            echo "✅ drops.gz 最新MD5: '$MD5_DROPS_GZ'"
-          else
-            echo "❌ drops.gz不存在，MD5检查失败"
-            exit 1
+          # 自检：文件不存在直接exit 2
+          if [ ! -f "drops.gz" ]; then
+            echo "❌ drops.gz不存在，终止流程"
+            exit 2
           fi
+          # 计算MD5 + 自检空值
+          MD5_DROPS_GZ=$(md5sum drops.gz | awk '{print $1}')
+          if [ -z "$MD5_DROPS_GZ" ] || [ "$MD5_DROPS_GZ" = "N/A" ]; then
+            echo "❌ drops.gz MD5 为空，终止流程"
+            exit 2
+          fi
+          echo "✅ drops.gz 最新MD5: '$MD5_DROPS_GZ'"
 
       - name: Check if changed
         id: check
@@ -212,6 +225,11 @@ jobs:
           C_FILE_SIZE_KB="N/A"
           if [ "$C_CHANGED" = "true" ] && [ -f "creates.gz" ]; then
             MD5_CREATES_GZ=$(md5sum creates.gz | awk '{print $1}')
+            # 二次自检：MD5为空exit 2
+            if [ -z "$MD5_CREATES_GZ" ]; then
+              echo "❌ creates.gz MD5 为空，终止流程"
+              exit 2
+            fi
             echo "✅ creates.gz (最新文件) MD5: $MD5_CREATES_GZ"
             # 移动文件 + 计算大小
             mv creates.gz "$C_HISTORY_GZ_FILE"
@@ -222,6 +240,7 @@ jobs:
             echo "✅ creates.gz 无变化，跳过 MD5 计算"
           else
             echo "❌ creates.gz 文件不存在"
+            exit 2
           fi
 
           # ===== 分开处理 d*.gz（MD5 检查，第二次取消的基础）=====
@@ -229,6 +248,11 @@ jobs:
           D_FILE_SIZE_KB="N/A"
           if [ "$D_CHANGED" = "true" ] && [ -f "drops.gz" ]; then
             MD5_DROPS_GZ=$(md5sum drops.gz | awk '{print $1}')
+            # 二次自检：MD5为空exit 2
+            if [ -z "$MD5_DROPS_GZ" ]; then
+              echo "❌ drops.gz MD5 为空，终止流程"
+              exit 2
+            fi
             echo "✅ drops.gz (最新文件) MD5: $MD5_DROPS_GZ"
             # 移动 drops.gz 到目标路径
             mv drops.gz "$D_HISTORY_GZ_FILE"
@@ -239,6 +263,7 @@ jobs:
             echo "✅ drops.gz 无变化，跳过 MD5 计算"
           else
             echo "❌ drops.gz 文件不存在"
+            exit 2
           fi
 
           # ===== 保留：写入 monthly_size.txt（键值格式）======
