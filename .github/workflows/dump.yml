@@ -14,8 +14,8 @@ jobs:
     outputs:
       changed: ${{ steps.check.outputs.changed }}
       month: ${{ steps.set-month.outputs.month }}
-      c_changed: ${{ steps.pre-check.outputs.c_changed }}
       d_changed: ${{ steps.pre-check.outputs.d_changed }}
+      c_changed: ${{ steps.pre-check.outputs.c_changed }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -84,8 +84,8 @@ jobs:
           mkdir -p dump # 确保dump目录存在
 
           # 初始化变更标记
-          C_CHANGED="true"
-          D_CHANGED="true"
+          d_changed="true"
+          c_changed="true"
           # 初始化历史ETag变量
           HIST_DEVELOP_ETAG=""
           HIST_CONSTRU_ETAG=""
@@ -104,8 +104,8 @@ jobs:
             echo "历史 c${MONTH} ETag: $HIST_CONSTRU_ETAG"
           else
             echo "======= monthly_size.txt不存在，首次执行 ======="
-            echo "c_changed=$C_CHANGED" >> $GITHUB_OUTPUT
-            echo "d_changed=$D_CHANGED" >> $GITHUB_OUTPUT
+            echo "d_changed=$d_changed" >> $GITHUB_OUTPUT
+            echo "c_changed=$c_changed" >> $GITHUB_OUTPUT
             exit 0
           fi
 
@@ -113,14 +113,14 @@ jobs:
           echo "--- 对比 develop ETag ---"
           if [ "${{ steps.get-etag.outputs.DEVELOP_ETAG_STATUS }}" = "success" ] && [ -n "$HIST_DEVELOP_ETAG" ] && [ -n "${{ steps.get-etag.outputs.DEVELOP_ETAG }}" ]; then
             if [ "${{ steps.get-etag.outputs.DEVELOP_ETAG }}" = "$HIST_DEVELOP_ETAG" ]; then
-              C_CHANGED="false"
+              d_changed="false"
               echo "develop ETag 完全一致，无更新"
             else
-              C_CHANGED="true"
+              d_changed="true"
               echo "develop ETag 不一致（历史：$HIST_DEVELOP_ETAG | 最新：${{ steps.get-etag.outputs.DEVELOP_ETAG }}）"
             fi
           else
-            C_CHANGED="true"
+            d_changed="true"
             echo "develop ETag 读取失败/历史不存在，判定为有更新"
           fi
 
@@ -128,22 +128,22 @@ jobs:
           echo "--- 对比 construct ETag ---"
           if [ "${{ steps.get-etag.outputs.CONSTRU_ETAG_STATUS }}" = "success" ] && [ -n "$HIST_CONSTRU_ETAG" ] && [ -n "${{ steps.get-etag.outputs.CONSTRU_ETAG }}" ]; then
             if [ "${{ steps.get-etag.outputs.CONSTRU_ETAG }}" = "$HIST_CONSTRU_ETAG" ]; then
-              D_CHANGED="false"
+              c_changed="false"
               echo "construct ETag 完全一致，无更新"
             else
-              D_CHANGED="true"
+              c_changed="true"
               echo "construct ETag 不一致（历史：$HIST_CONSTRU_ETAG | 最新：${{ steps.get-etag.outputs.CONSTRU_ETAG }}）"
             fi
           else
-            D_CHANGED="true"
+            c_changed="true"
             echo "construct ETag 读取失败/历史不存在，判定为有更新"
           fi
 
           # 输出变更标记到GitHub变量
-          echo "c_changed=$C_CHANGED" >> $GITHUB_OUTPUT
-          echo "d_changed=$D_CHANGED" >> $GITHUB_OUTPUT
+          echo "d_changed=$d_changed" >> $GITHUB_OUTPUT
+          echo "c_changed=$c_changed" >> $GITHUB_OUTPUT
           # 输出整体变更标记（用于后续步骤）
-          if [ "$C_CHANGED" = "false" ] && [ "$D_CHANGED" = "false" ]; then
+          if [ "$d_changed" = "false" ] && [ "$c_changed" = "false" ]; then
             echo "整体无变更（c/d ETag 均一致）"
           else
             echo "整体有变更（c/d 至少一个有变化）"
@@ -151,14 +151,14 @@ jobs:
 
       # 修复3：第一次取消工作流（仅 c/d ETag 均无变化时执行）
       - name: 取消工作流（ETag无变化）
-        if: steps.pre-check.outputs.c_changed == 'false' && steps.pre-check.outputs.d_changed == 'false'
+        if: steps.pre-check.outputs.d_changed == 'false' && steps.pre-check.outputs.c_changed == 'false'
         uses: conbanwa/cancel-workflow/.github/actions/cancel-workflow@v1.0.0
         with:
           cancel-reason: 'ETag无变化，无需下载文件，自动取消工作流'
 
       # 核心改5：仅ETag变化时才下载文件 + 自检文件存在性
       - name: Download c*.gz (only if c ETag changed)
-        if: steps.pre-check.outputs.c_changed == 'true'
+        if: steps.pre-check.outputs.d_changed == 'true'
         run: |
           echo "======= 开始下载 createitemrecords.gz ======="
           curl -s -o develop.gz https://api.poi.moe/dump/createitemrecords.gz
@@ -176,7 +176,7 @@ jobs:
           echo "✅ develop.gz 最新MD5: '$MD5_DEVELOP_GZ'"
 
       - name: Download d*.gz (only if d ETag changed)
-        if: steps.pre-check.outputs.d_changed == 'true'
+        if: steps.pre-check.outputs.c_changed == 'true'
         run: |
           echo "======= 开始下载 createshiprecords.gz ======="
           curl -s -o construct.gz https://api.poi.moe/dump/createshiprecords.gz
@@ -198,11 +198,11 @@ jobs:
         shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
         run: |
           # 复用 pre-check 的结果，初始化整体变更标记
-          C_CHANGED="${{ steps.pre-check.outputs.c_changed }}"
-          D_CHANGED="${{ steps.pre-check.outputs.d_changed }}"
-          echo "changed=$([ "$C_CHANGED" = "true" ] || [ "$D_CHANGED" = "true" ] && echo "true" || echo "false")" >> $GITHUB_OUTPUT
+          d_changed="${{ steps.pre-check.outputs.d_changed }}"
+          c_changed="${{ steps.pre-check.outputs.c_changed }}"
+          echo "changed=$([ "$d_changed" = "true" ] || [ "$c_changed" = "true" ] && echo "true" || echo "false")" >> $GITHUB_OUTPUT
           
-          if [ "$C_CHANGED" = "false" ] && [ "$D_CHANGED" = "false" ]; then
+          if [ "$d_changed" = "false" ] && [ "$c_changed" = "false" ]; then
             exit 0 # 无变化时直接退出，不执行后续逻辑
           fi
 
@@ -223,7 +223,7 @@ jobs:
           # ===== 分开处理 c*.gz（MD5 检查，第二次取消的基础）=====
           MD5_DEVELOP_GZ="N/A"
           C_FILE_SIZE_KB="N/A"
-          if [ "$C_CHANGED" = "true" ] && [ -f "develop.gz" ]; then
+          if [ "$d_changed" = "true" ] && [ -f "develop.gz" ]; then
             MD5_DEVELOP_GZ=$(md5sum develop.gz | awk '{print $1}')
             # 二次自检：MD5为空exit 2
             if [ -z "$MD5_DEVELOP_GZ" ]; then
@@ -236,7 +236,7 @@ jobs:
             # 计算 develop 文件大小
             C_FILE_SIZE_KB=$(du -k "$C_HISTORY_GZ_FILE" | awk '{print $1}')
             echo "✅ $C_HISTORY_GZ_FILE 大小: ${C_FILE_SIZE_KB} KB"
-          elif [ "$C_CHANGED" = "false" ]; then
+          elif [ "$d_changed" = "false" ]; then
             echo "✅ develop.gz 无变化，跳过 MD5 计算"
           else
             echo "❌ develop.gz 文件不存在"
@@ -246,7 +246,7 @@ jobs:
           # ===== 分开处理 d*.gz（MD5 检查，第二次取消的基础）=====
           MD5_CONSTRU_GZ="N/A"
           D_FILE_SIZE_KB="N/A"
-          if [ "$D_CHANGED" = "true" ] && [ -f "construct.gz" ]; then
+          if [ "$c_changed" = "true" ] && [ -f "construct.gz" ]; then
             MD5_CONSTRU_GZ=$(md5sum construct.gz | awk '{print $1}')
             # 二次自检：MD5为空exit 2
             if [ -z "$MD5_CONSTRU_GZ" ]; then
@@ -259,7 +259,7 @@ jobs:
             # 计算 construct 文件大小
             D_FILE_SIZE_KB=$(du -k "$D_HISTORY_GZ_FILE" | awk '{print $1}')
             echo "✅ $D_HISTORY_GZ_FILE 大小: ${D_FILE_SIZE_KB} KB"
-          elif [ "$D_CHANGED" = "false" ]; then
+          elif [ "$c_changed" = "false" ]; then
             echo "✅ construct.gz 无变化，跳过 MD5 计算"
           else
             echo "❌ construct.gz 文件不存在"
@@ -274,14 +274,14 @@ jobs:
           # 先删除当前月份的旧记录（避免重复）
           grep -v -E "^[cd]${MONTH}_" "$MONTHLY_SIZE_FILE" > "$MONTHLY_SIZE_FILE.tmp" 2>/dev/null || true
           # 写入creates的键值
-          if [ "$C_CHANGED" = "true" ]; then
+          if [ "$d_changed" = "true" ]; then
             echo "c${MONTH}_ETAG=\"${{ steps.get-etag.outputs.DEVELOP_ETAG }}\"" >> "$MONTHLY_SIZE_FILE.tmp"
             echo "c${MONTH}_MD5=\"${MD5_DEVELOP_GZ}\"" >> "$MONTHLY_SIZE_FILE.tmp"
             echo "c${MONTH}_SizeKB=\"${C_FILE_SIZE_KB}\"" >> "$MONTHLY_SIZE_FILE.tmp"
             echo "c${MONTH}_CheckTime=\"${CHECK_TIME}\"" >> "$MONTHLY_SIZE_FILE.tmp"
           fi
           # 写入 construct 的键值（仅当有变化时）
-          if [ "$D_CHANGED" = "true" ]; then
+          if [ "$c_changed" = "true" ]; then
             echo "d${MONTH}_ETAG=\"${{ steps.get-etag.outputs.CONSTRU_ETAG }}\"" >> "$MONTHLY_SIZE_FILE.tmp"
             echo "d${MONTH}_MD5=\"${MD5_CONSTRU_GZ}\"" >> "$MONTHLY_SIZE_FILE.tmp"
             echo "d${MONTH}_SizeKB=\"${D_FILE_SIZE_KB}\"" >> "$MONTHLY_SIZE_FILE.tmp"
@@ -314,10 +314,10 @@ jobs:
           git add dump/
           # 提交信息包含 c/d 变更状态
           COMMIT_MSG="Update "
-          if [ "${{ steps.pre-check.outputs.c_changed }}" = "true" ]; then
+          if [ "${{ steps.pre-check.outputs.d_changed }}" = "true" ]; then
             COMMIT_MSG+="construct "
           fi
-          if [ "${{ steps.pre-check.outputs.d_changed }}" = "true" ]; then
+          if [ "${{ steps.pre-check.outputs.c_changed }}" = "true" ]; then
             COMMIT_MSG+="develop "
           fi
           COMMIT_MSG+="${{ steps.set-month.outputs.month }}.gz"
