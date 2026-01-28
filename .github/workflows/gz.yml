@@ -92,10 +92,10 @@ jobs:
                       # 构造简化后的记录
                       simplified = [
                           doc.get('items', []),
-                          secretary_val
+                          secretary_val,
                           processed_item_id,  # 使用处理后的itemId
                           doc.get('teitokuLv'),
-                          1 if doc.get('successful') else 0, 
+                          1 if doc.get('successful') else 0
                       ]
                       if not first:
                           f.write(',')
