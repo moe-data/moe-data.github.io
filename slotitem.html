@@ -385,7 +385,7 @@
       $.getJSON("./parsed/api_mst_slotitem.json", function (result) {
         slotitem = [];
         result.forEach((el) => {
-          if (el["api_id"] < 501) {
+          if (el["api_id"] < 1501) {
             var i = {};
             for (key in el) {
               i[api(key)] = el[key];

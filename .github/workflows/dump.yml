@@ -3,7 +3,7 @@ name: dump
 on:
   push:
     paths:
-      - '*.yml'
+      - '**/dump.yml'
   schedule:
     - cron: '0 2 * * *'  # 每天 UTC 2点（北京时间10点）执行
   workflow_dispatch:     # 手动触发  push:
@@ -33,7 +33,6 @@ jobs:
           git lfs install
           # 跟踪 drop*.gz 文件
           git lfs track "dump/drop*.gz"
-
 
       # 核心改2：先仅获取ETag（不下载文件），减少网络开销
       - name: Get ETag only (no file download)
@@ -74,40 +73,42 @@ jobs:
           echo "CONSTRU_ETAG=$constructEtag" >> $env:GITHUB_OUTPUT
           echo "CONSTRU_ETAG_STATUS=success" >> $env:GITHUB_OUTPUT
 
+      # 新增：Read historical ETag from JSON (replace TXT)
+      - name: Read historical d${{ steps.set-month.outputs.month }} ETag from JSON
+        id: read-size-d
+        uses: shaneapowell/github-tweak-the-json@v1
+        with:
+          action: read
+          filename: dump/size-d.json
+          field: ${{ steps.set-month.outputs.month }}.ETAG
+
+      # ===== NEW: Read historical ETag from size-c.json (no jq, preserve past months) =====
+      - name: Read historical c (construct) data from size-c.json
+        id: read-size-c
+        uses: shaneapowell/github-tweak-the-json@v1
+        with:
+          action: read
+          filename: dump/size-c.json
+          field: ${{ steps.set-month.outputs.month }}.ETAG
+
       # 核心改3：先读取历史ETag，对比后决定是否下载/取消工作流
       - name: Check ETag change before download
         id: pre-check
         shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
         run: |
           MONTH="${{ steps.set-month.outputs.month }}"
-          MONTHLY_SIZE_FILE="dump/monthly_size.txt"
           mkdir -p dump # 确保dump目录存在
 
           # 初始化变更标记
           d_changed="true"
           c_changed="true"
-          # 初始化历史ETag变量
-          HIST_DEVELOP_ETAG=""
-          HIST_CONSTRU_ETAG=""
+          # 初始化历史ETag变量 (from JSON instead of TXT)
+          HIST_DEVELOP_ETAG="${{ steps.read-size-d.outputs.value }}"
+          HIST_CONSTRU_ETAG="${{ steps.read-size-c.outputs.value }}"
 
-          echo "======= 读取历史 monthly_size.txt（c/d 分开）======="
-          # 读取monthly_size.txt中的历史ETag（键值格式）
-          if [ -f "$MONTHLY_SIZE_FILE" ]; then
-            # 修复核心：优化提取命令，步骤如下
-            # 1. sed 's/^[ \t]*//; s/[ \t]*$//' 去除行首行尾空白/制表符
-            # 2. grep -E 精准匹配，增加 -a 处理隐藏二进制字符
-            # 3. awk 拆分后先清理空白，再提取值
-            # 4. tr -d '"' 去除引号，同时处理空值场景
-            HIST_DEVELOP_ETAG=$(sed 's/^[ \t]*//; s/[ \t]*$//' "$MONTHLY_SIZE_FILE" | grep -a -E "^d${MONTH}_ETAG=" | awk -F'=' '{gsub(/^[ \t"]+|[ \t"]+$/,"",$2); print $2}')
-            HIST_CONSTRU_ETAG=$(sed 's/^[ \t]*//; s/[ \t]*$//' "$MONTHLY_SIZE_FILE" | grep -a -E "^c${MONTH}_ETAG=" | awk -F'=' '{gsub(/^[ \t"]+|[ \t"]+$/,"",$2); print $2}')
-            echo "历史 d${MONTH} ETag: $HIST_DEVELOP_ETAG"
-            echo "历史 c${MONTH} ETag: $HIST_CONSTRU_ETAG"
-          else
-            echo "======= monthly_size.txt不存在，首次执行 ======="
-            echo "d_changed=$d_changed" >> $GITHUB_OUTPUT
-            echo "c_changed=$c_changed" >> $GITHUB_OUTPUT
-            exit 0
-          fi
+          echo "======= 读取历史 size-d.json/size-c.json（c/d 分开）======="
+          echo "历史 d${MONTH} ETag: $HIST_DEVELOP_ETAG"
+          echo "历史 c${MONTH} ETag: $HIST_CONSTRU_ETAG"
 
           # ===== 分开判断 d 的 ETag（仅读取成功时才对比）=====
           echo "--- 对比 develop ETag ---"
@@ -210,7 +211,6 @@ jobs:
           MONTH="${{ steps.set-month.outputs.month }}"
           D_HISTORY_GZ_FILE="dump/c${MONTH}.gz"
           C_HISTORY_GZ_FILE="dump/d${MONTH}.gz"
-          MONTHLY_SIZE_FILE="dump/monthly_size.txt"
           
           echo "======= 打印ETag内容 ======="
           # 拼接最新ETag（保留原有变量名，最小化改动）
@@ -259,46 +259,58 @@ jobs:
             # 计算 construct 文件大小
             CONSTRU_SIZE=$(du -k "$C_HISTORY_GZ_FILE" | awk '{print $1}')
             echo "✅ $C_HISTORY_GZ_FILE 大小: ${CONSTRU_SIZE} KB"
-          elif [ "$c_changed" = "false" ]; then
+            # 导出变量供JSON写入使用
+            echo "MD5_DEVELOP_GZ=$MD5_DEVELOP_GZ" >> $GITHUB_ENV
+            echo "DEVELOP_SIZE=$DEVELOP_SIZE" >> $GITHUB_ENV
+            echo "MD5_CONSTRU_GZ=$MD5_CONSTRU_GZ" >> $GITHUB_ENV
+            echo "CONSTRU_SIZE=$CONSTRU_SIZE" >> $GITHUB_ENV
+            echo "CHECK_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_ENV
+            elif [ "$c_changed" = "false" ]; then
             echo "✅ construct.gz 无变化，跳过 MD5 计算"
           else
             echo "❌ construct.gz 文件不存在"
             exit 2
           fi
 
-          # ===== 保留：写入 monthly_size.txt（键值格式）======
-          echo "======= 写入 monthly_size.txt（键值格式）======="
-          # 获取当前检查时间（ISO 格式，方便解析）
-          CHECK_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          
-          # 先删除当前月份的旧记录（避免重复）
-          grep -v -E "^[cd]${MONTH}_" "$MONTHLY_SIZE_FILE" > "$MONTHLY_SIZE_FILE.tmp" 2>/dev/null || true
-          # 写入develop的键值
-          if [ "$d_changed" = "true" ]; then
-            echo "d${MONTH}_ETAG=\"${{ steps.get-etag.outputs.DEVELOP_ETAG }}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-            echo "d${MONTH}_MD5=\"${MD5_DEVELOP_GZ}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-            echo "d${MONTH}_SizeKB=\"${DEVELOP_SIZE}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-            echo "d${MONTH}_CheckTime=\"${CHECK_TIME}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-          fi
-          # 写入 construct 的键值（仅当有变化时）
-          if [ "$c_changed" = "true" ]; then
-            echo "c${MONTH}_ETAG=\"${{ steps.get-etag.outputs.CONSTRU_ETAG }}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-            echo "c${MONTH}_MD5=\"${MD5_CONSTRU_GZ}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-            echo "c${MONTH}_SizeKB=\"${CONSTRU_SIZE}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-            echo "c${MONTH}_CheckTime=\"${CHECK_TIME}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-          fi
-          # 替换原文件
-          mv "$MONTHLY_SIZE_FILE.tmp" "$MONTHLY_SIZE_FILE"
-          
-          # 打印写入结果
-          echo "✅ monthly_size.txt 写入完成，内容如下："
-          cat "$MONTHLY_SIZE_FILE"
-
           # ====================== 原有逻辑：输出最终结论 ======================
           echo -e "\n======= 【核心】最终判定 ======="
           echo "📌 最终结论：Data updated! Saving new .gz (ETag/MD5均变化)"
 
-      # 修复5：第二次取消工作流（MD5 检查，c/d 均无变化时执行）
+      # 新增：Write current month data to JSON (replace TXT, preserve historical data)
+      - name: Write d${{ steps.set-month.outputs.month }} data to JSON
+        if: steps.pre-check.outputs.d_changed == 'true'
+        uses: shaneapowell/github-tweak-the-json@v1
+        with:
+          action: write
+          filename: dump/size-d.json
+          field: ${{ steps.set-month.outputs.month }}
+          # Modified: Change to array [ETAG, MD5, SizeKB, Timestamp (Unix epoch)]
+          value: |
+            [
+              "${{ steps.get-etag.outputs.DEVELOP_ETAG }}",
+              "${{ env.MD5_DEVELOP_GZ }}",
+              ${{ env.DEVELOP_SIZE }},
+              ${{ env.CHECK_TIMESTAMP }}
+            ]
+
+      # ===== NEW: Write c (construct) data to size-c.json (preserve past months) =====
+      - name: Write c${{ steps.set-month.outputs.month }} data to size-c.json
+        if: steps.pre-check.outputs.c_changed == 'true'
+        uses: shaneapowell/github-tweak-the-json@v1
+        with:
+          action: write
+          filename: dump/size-c.json
+          field: ${{ steps.set-month.outputs.month }}
+          # Modified: Change to array [ETAG, MD5, SizeKB, Timestamp (Unix epoch)]
+          value: |          
+            [
+              "${{ steps.get-etag.outputs.DEVELOP_ETAG }}",
+              "${{ env.MD5_DEVELOP_GZ }}",
+              ${{ env.DEVELOP_SIZE }},
+              ${{ env.CHECK_TIMESTAMP }}
+            ]
+
+      # 修复5：第二次取消工作流（MD5 无变化，c/d 均无更新时执行）
       - name: 取消工作流（MD5 无变化，c/d 均无更新）
         if: steps.check.outputs.changed == 'false'
         uses: conbanwa/cancel-workflow/.github/actions/cancel-workflow@v1.0.0
