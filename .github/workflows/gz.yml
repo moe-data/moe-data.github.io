@@ -23,8 +23,8 @@ jobs:
 
       - name: Install MongoDB Server and Tools
         run: |
-          wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
-          echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
+          wget -qO - https://www.mongodb.org/static/pgp/server-7.0.asc | sudo apt-key add -
+          echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
           sudo apt-get update
           sudo apt-get install -y mongodb-org-server mongodb-database-tools
 
@@ -44,10 +44,9 @@ jobs:
 
       - name: Restore archive directly from .gz
         run: |
-          mongorestore --gzip --archive=dump/c${{ steps.month.outputs.month }}.gz \
-                       --nsInclude="poi-production.createshiprecords" \
-                       --drop   # 确保覆盖旧数据
           mongorestore --gzip --archive=dump/d${{ steps.month.outputs.month }}.gz \
+                       --nsInclude="poi-production.createshiprecords" \
+          mongorestore --gzip --archive=dump/c${{ steps.month.outputs.month }}.gz \
                        --nsInclude="poi-production.createitemrecords" 
 
       - name: Export simplified JSON using Python
