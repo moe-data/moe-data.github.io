@@ -67,12 +67,29 @@ jobs:
           with open(output_file, 'w', encoding='utf-8') as f:
               f.write('{"RECORDS": [')
               for doc in cursor:
+                  # secretary为整数0或字符串"0"的情况
+                  secretary_val = doc.get('secretary')
+                  if secretary_val in (0, "0"):
+                      continue  # 跳过secretary=0的记录，不写入文件
+                  
+                  # === 对应SQL: UPDATE d2 set itemId=-1 的两个条件 ===
+                  item_id = doc.get('itemId')
+                  successful_val = doc.get('successful')
+                  
+                  # 条件1: successful为false（兼容布尔False或字符串"false"）
+                  # 条件2: itemId本身为0（兼容整数0或字符串"0"）
+                  if successful_val in (False, "false") or item_id in (0, "0"):
+                      processed_item_id = -1
+                  else:
+                      processed_item_id = item_id  # 保持原数值
+                  
+                  # 构造简化后的记录
                   simplified = [
                       doc.get('items', []),
-                      doc.get('itemId'),
+                      processed_item_id,  # 使用处理后的itemId
                       doc.get('teitokuLv'),
-                      1 if doc.get('successful') else 0,
-                      doc.get('secretary')
+                      1 if doc.get('successful') else 0, 
+                      secretary_val
                   ]
                   if not first:
                       f.write(',')
