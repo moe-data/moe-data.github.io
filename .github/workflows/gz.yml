@@ -57,68 +57,88 @@ jobs:
 
           client = MongoClient('mongodb://localhost:27017/')
           db = client['poi-production']
+          def export_processed_mongodb_data(collection, output_file):
+              """
+              从MongoDB集合读取数据，按指定逻辑处理后导出为JSON文件
+              
+              参数:
+                  collection: MongoDB集合对象
+                  output_file: 输出JSON文件的路径
+              """
+              # 查询指定字段，排除_id
+              cursor = collection.find({}, {'_id': 0, 'items': 1, 'itemId': 1, 'teitokuLv': 1, 'successful': 1, 'secretary': 1})
+              first = True
+
+              with open(output_file, 'w', encoding='utf-8') as f:
+                  f.write('{"RECORDS": [')
+                  for doc in cursor:
+                      # secretary为整数0或字符串"0"的情况
+                      secretary_val = doc.get('secretary')
+                      if secretary_val in (0, "0"):
+                          continue  # 跳过secretary=0的记录，不写入文件
+                      
+                      # === 对应SQL: UPDATE d2 set itemId=-1 的两个条件 ===
+                      item_id = doc.get('itemId')
+                      successful_val = doc.get('successful')
+                      
+                      # 条件1: successful为false（兼容布尔False或字符串"false"）
+                      # 条件2: itemId本身为0（兼容整数0或字符串"0"）
+                      if successful_val in (False, "false") or item_id in (0, "0"):
+                          processed_item_id = -1
+                      else:
+                          processed_item_id = item_id  # 保持原数值
+                      
+                      # 构造简化后的记录
+                      simplified = [
+                          doc.get('items', []),
+                          processed_item_id,  # 使用处理后的itemId
+                          doc.get('teitokuLv'),
+                          1 if doc.get('successful') else 0, 
+                          secretary_val
+                      ]
+                      if not first:
+                          f.write(',')
+                      f.write(json.dumps(simplified, ensure_ascii=False))
+                      first = False
+                  f.write(']}')
+
+              print(f"处理后的JSON已导出到 {output_file}")
           collection = db['createitemrecords']
-
           output_file = f"dump/d${{ steps.month.outputs.month }}.json"
-
-          cursor = collection.find({}, {'_id': 0, 'items': 1, 'itemId': 1, 'teitokuLv': 1, 'successful': 1, 'secretary': 1})
-          first = True
-
-          with open(output_file, 'w', encoding='utf-8') as f:
-              f.write('{"RECORDS": [')
-              for doc in cursor:
-                  # secretary为整数0或字符串"0"的情况
-                  secretary_val = doc.get('secretary')
-                  if secretary_val in (0, "0"):
-                      continue  # 跳过secretary=0的记录，不写入文件
-                  
-                  # === 对应SQL: UPDATE d2 set itemId=-1 的两个条件 ===
-                  item_id = doc.get('itemId')
-                  successful_val = doc.get('successful')
-                  
-                  # 条件1: successful为false（兼容布尔False或字符串"false"）
-                  # 条件2: itemId本身为0（兼容整数0或字符串"0"）
-                  if successful_val in (False, "false") or item_id in (0, "0"):
-                      processed_item_id = -1
-                  else:
-                      processed_item_id = item_id  # 保持原数值
-                  
-                  # 构造简化后的记录
-                  simplified = [
-                      doc.get('items', []),
-                      processed_item_id,  # 使用处理后的itemId
-                      doc.get('teitokuLv'),
-                      1 if doc.get('successful') else 0, 
-                      secretary_val
-                  ]
-                  if not first:
-                      f.write(',')
-                  f.write(json.dumps(simplified, ensure_ascii=False))
-                  first = False
-              f.write(']}')
-
-          print(f"Simplified JSON exported to {output_file}")
+          export_processed_mongodb_data(collection, 'output.json')
+          collection = db['createshiprecords']
+          output_file = f"dump/c${{ steps.month.outputs.month }}.json"
+          export_processed_mongodb_data(collection, 'output.json')
           EOF
 
       - name: Show result size
         run: |
           echo "Simplified JSON file generated:"
           ls -lh dump/d${{ steps.month.outputs.month }}.json
-          echo "Line count (approx records + 2): $(wc < dump/d${{ steps.month.outputs.month }}.json)"
+          echo "Line count (approx records + 2): $(wc < dump/d${{ steps.month.outputs.month }}.json)
+          ls -lh dump/c${{ steps.month.outputs.month }}.json
+          echo "Line count (approx records + 2): $(wc < dump/c${{ steps.month.outputs.month }}.json)"
 
       # 调用自定义的可复用Action
-      - name: Check JSON array length in submodule
+      - name: Check JSON array length in develop
         uses: ./.github/actions/check-json-length
         with:
           json-file-path: "dump/d${{ steps.month.outputs.month }}.json"  # 改为本地parsed目录
-          output-var-name: "DUMP_LENGTH"
+          output-var-name: "D_LENGTH"
+
+      # 调用自定义的可复用Action
+      - name: Check JSON array length in construction
+        uses: ./.github/actions/check-json-length
+        with:
+          json-file-path: "dump/c${{ steps.month.outputs.month }}.json"  # 改为本地parsed目录
+          output-var-name: "C_LENGTH"
 
       - name: Commit and push pure JSON (overwrite monthly file)
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
-          git add dump/d${{ steps.month.outputs.month }}.json
-          git commit -m "Update monthly pure JSON: d${{ steps.month.outputs.month }}.json" || echo "No changes to commit"
+          git add dump/
+          git commit -m "Update monthly pure JSON: ${{ steps.month.outputs.month }}.json" || echo "No changes to commit"
           git push
 
       - name: Cleanup temporary MongoDB

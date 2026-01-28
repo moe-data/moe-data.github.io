@@ -46,33 +46,33 @@ jobs:
           
           # 初始化ETag变量+自检标记
           echo "--- 处理 createitemrecords ---"
-          $createsEtag = $null
+          $developEtag = $null
           # 极简PowerShell获取ETag，去除引号/空格
-          $createsEtag = (Invoke-WebRequest -Uri "https://api.poi.moe/dump/createitemrecords.gz" -Method Head).Headers['ETag'] -replace '["\s]', ''
-          echo "creates ETag 读取状态: success"
-          echo "creates 最新 ETag: $createsEtag"
+          $developEtag = (Invoke-WebRequest -Uri "https://api.poi.moe/dump/createitemrecords.gz" -Method Head).Headers['ETag'] -replace '["\s]', ''
+          echo "develop ETag 读取状态: success"
+          echo "develop 最新 ETag: $developEtag"
           # 自检：ETag为空直接exit 2
-          if ([string]::IsNullOrEmpty($createsEtag)) {
-            echo "❌ creates ETag 为空，终止流程"
+          if ([string]::IsNullOrEmpty($developEtag)) {
+            echo "❌ develop ETag 为空，终止流程"
             exit 2
           }
           # 输出到GitHub变量
-          echo "CREATES_ETAG=$createsEtag" >> $env:GITHUB_OUTPUT
-          echo "CREATES_ETAG_STATUS=success" >> $env:GITHUB_OUTPUT
+          echo "DEVELOP_ETAG=$developEtag" >> $env:GITHUB_OUTPUT
+          echo "DEVELOP_ETAG_STATUS=success" >> $env:GITHUB_OUTPUT
           
           # ===== 处理 createshiprecords ETag =====
           echo "--- 处理 createshiprecords ---"
-          $dropsEtag = (Invoke-WebRequest -Uri "https://api.poi.moe/dump/createshiprecords.gz" -Method Head).Headers['ETag'] -replace '["\s]', ''
-          echo "drops ETag 读取状态: success"
-          echo "drops 最新 ETag: $dropsEtag"
+          $constructEtag = (Invoke-WebRequest -Uri "https://api.poi.moe/dump/createshiprecords.gz" -Method Head).Headers['ETag'] -replace '["\s]', ''
+          echo "construct ETag 读取状态: success"
+          echo "construct 最新 ETag: $constructEtag"
           # 自检：ETag为空直接exit 2
-          if ([string]::IsNullOrEmpty($dropsEtag)) {
-            echo "❌ drops ETag 为空，终止流程"
+          if ([string]::IsNullOrEmpty($constructEtag)) {
+            echo "❌ construct ETag 为空，终止流程"
             exit 2
           }
           # 输出到GitHub变量
-          echo "DROPS_ETAG=$dropsEtag" >> $env:GITHUB_OUTPUT
-          echo "DROPS_ETAG_STATUS=success" >> $env:GITHUB_OUTPUT
+          echo "CONSTRU_ETAG=$constructEtag" >> $env:GITHUB_OUTPUT
+          echo "CONSTRU_ETAG_STATUS=success" >> $env:GITHUB_OUTPUT
 
       # 核心改3：先读取历史ETag，对比后决定是否下载/取消工作流
       - name: Check ETag change before download
@@ -87,8 +87,8 @@ jobs:
           C_CHANGED="true"
           D_CHANGED="true"
           # 初始化历史ETag变量
-          HIST_CREATES_ETAG=""
-          HIST_DROPS_ETAG=""
+          HIST_DEVELOP_ETAG=""
+          HIST_CONSTRU_ETAG=""
 
           echo "======= 读取历史 monthly_size.txt（c/d 分开）======="
           # 读取monthly_size.txt中的历史ETag（键值格式）
@@ -98,10 +98,10 @@ jobs:
             # 2. grep -E 精准匹配，增加 -a 处理隐藏二进制字符
             # 3. awk 拆分后先清理空白，再提取值
             # 4. tr -d '"' 去除引号，同时处理空值场景
-            HIST_CREATES_ETAG=$(sed 's/^[ \t]*//; s/[ \t]*$//' "$MONTHLY_SIZE_FILE" | grep -a -E "^c${MONTH}_ETAG=" | awk -F'=' '{gsub(/^[ \t"]+|[ \t"]+$/,"",$2); print $2}')
-            HIST_DROPS_ETAG=$(sed 's/^[ \t]*//; s/[ \t]*$//' "$MONTHLY_SIZE_FILE" | grep -a -E "^d${MONTH}_ETAG=" | awk -F'=' '{gsub(/^[ \t"]+|[ \t"]+$/,"",$2); print $2}')
-            echo "历史 c${MONTH} ETag: $HIST_CREATES_ETAG"
-            echo "历史 d${MONTH} ETag: $HIST_DROPS_ETAG"
+            HIST_DEVELOP_ETAG=$(sed 's/^[ \t]*//; s/[ \t]*$//' "$MONTHLY_SIZE_FILE" | grep -a -E "^d${MONTH}_ETAG=" | awk -F'=' '{gsub(/^[ \t"]+|[ \t"]+$/,"",$2); print $2}')
+            HIST_CONSTRU_ETAG=$(sed 's/^[ \t]*//; s/[ \t]*$//' "$MONTHLY_SIZE_FILE" | grep -a -E "^c${MONTH}_ETAG=" | awk -F'=' '{gsub(/^[ \t"]+|[ \t"]+$/,"",$2); print $2}')
+            echo "历史 d${MONTH} ETag: $HIST_DEVELOP_ETAG"
+            echo "历史 c${MONTH} ETag: $HIST_CONSTRU_ETAG"
           else
             echo "======= monthly_size.txt不存在，首次执行 ======="
             echo "c_changed=$C_CHANGED" >> $GITHUB_OUTPUT
@@ -109,34 +109,34 @@ jobs:
             exit 0
           fi
 
-          # ===== 分开判断 c 的 ETag（仅读取成功时才对比）=====
-          echo "--- 对比 creates ETag ---"
-          if [ "${{ steps.get-etag.outputs.CREATES_ETAG_STATUS }}" = "success" ] && [ -n "$HIST_CREATES_ETAG" ] && [ -n "${{ steps.get-etag.outputs.CREATES_ETAG }}" ]; then
-            if [ "${{ steps.get-etag.outputs.CREATES_ETAG }}" = "$HIST_CREATES_ETAG" ]; then
+          # ===== 分开判断 d 的 ETag（仅读取成功时才对比）=====
+          echo "--- 对比 develop ETag ---"
+          if [ "${{ steps.get-etag.outputs.DEVELOP_ETAG_STATUS }}" = "success" ] && [ -n "$HIST_DEVELOP_ETAG" ] && [ -n "${{ steps.get-etag.outputs.DEVELOP_ETAG }}" ]; then
+            if [ "${{ steps.get-etag.outputs.DEVELOP_ETAG }}" = "$HIST_DEVELOP_ETAG" ]; then
               C_CHANGED="false"
-              echo "creates ETag 完全一致，无更新"
+              echo "develop ETag 完全一致，无更新"
             else
               C_CHANGED="true"
-              echo "creates ETag 不一致（历史：$HIST_CREATES_ETAG | 最新：${{ steps.get-etag.outputs.CREATES_ETAG }}）"
+              echo "develop ETag 不一致（历史：$HIST_DEVELOP_ETAG | 最新：${{ steps.get-etag.outputs.DEVELOP_ETAG }}）"
             fi
           else
             C_CHANGED="true"
-            echo "creates ETag 读取失败/历史不存在，判定为有更新"
+            echo "develop ETag 读取失败/历史不存在，判定为有更新"
           fi
 
-          # ===== 分开判断 d 的 ETag（仅读取成功时才对比）=====
-          echo "--- 对比 drops ETag ---"
-          if [ "${{ steps.get-etag.outputs.DROPS_ETAG_STATUS }}" = "success" ] && [ -n "$HIST_DROPS_ETAG" ] && [ -n "${{ steps.get-etag.outputs.DROPS_ETAG }}" ]; then
-            if [ "${{ steps.get-etag.outputs.DROPS_ETAG }}" = "$HIST_DROPS_ETAG" ]; then
+          # ===== 分开判断 c 的 ETag（仅读取成功时才对比）=====
+          echo "--- 对比 construct ETag ---"
+          if [ "${{ steps.get-etag.outputs.CONSTRU_ETAG_STATUS }}" = "success" ] && [ -n "$HIST_CONSTRU_ETAG" ] && [ -n "${{ steps.get-etag.outputs.CONSTRU_ETAG }}" ]; then
+            if [ "${{ steps.get-etag.outputs.CONSTRU_ETAG }}" = "$HIST_CONSTRU_ETAG" ]; then
               D_CHANGED="false"
-              echo "drops ETag 完全一致，无更新"
+              echo "construct ETag 完全一致，无更新"
             else
               D_CHANGED="true"
-              echo "drops ETag 不一致（历史：$HIST_DROPS_ETAG | 最新：${{ steps.get-etag.outputs.DROPS_ETAG }}）"
+              echo "construct ETag 不一致（历史：$HIST_CONSTRU_ETAG | 最新：${{ steps.get-etag.outputs.CONSTRU_ETAG }}）"
             fi
           else
             D_CHANGED="true"
-            echo "drops ETag 读取失败/历史不存在，判定为有更新"
+            echo "construct ETag 读取失败/历史不存在，判定为有更新"
           fi
 
           # 输出变更标记到GitHub变量
@@ -161,37 +161,37 @@ jobs:
         if: steps.pre-check.outputs.c_changed == 'true'
         run: |
           echo "======= 开始下载 createitemrecords.gz ======="
-          curl -s -o creates.gz https://api.poi.moe/dump/createitemrecords.gz
+          curl -s -o develop.gz https://api.poi.moe/dump/createitemrecords.gz
           # 自检：文件不存在直接exit 2
-          if [ ! -f "creates.gz" ]; then
-            echo "❌ creates.gz不存在，终止流程"
+          if [ ! -f "develop.gz" ]; then
+            echo "❌ develop.gz不存在，终止流程"
             exit 2
           fi
           # 计算MD5 + 自检空值
-          MD5_CREATES_GZ=$(md5sum creates.gz | awk '{print $1}')
-          if [ -z "$MD5_CREATES_GZ" ] || [ "$MD5_CREATES_GZ" = "N/A" ]; then
-            echo "❌ creates.gz MD5 为空，终止流程"
+          MD5_DEVELOP_GZ=$(md5sum develop.gz | awk '{print $1}')
+          if [ -z "$MD5_DEVELOP_GZ" ] || [ "$MD5_DEVELOP_GZ" = "N/A" ]; then
+            echo "❌ develop.gz MD5 为空，终止流程"
             exit 2
           fi
-          echo "✅ creates.gz 最新MD5: '$MD5_CREATES_GZ'"
+          echo "✅ develop.gz 最新MD5: '$MD5_DEVELOP_GZ'"
 
       - name: Download d*.gz (only if d ETag changed)
         if: steps.pre-check.outputs.d_changed == 'true'
         run: |
           echo "======= 开始下载 createshiprecords.gz ======="
-          curl -s -o drops.gz https://api.poi.moe/dump/createshiprecords.gz
+          curl -s -o construct.gz https://api.poi.moe/dump/createshiprecords.gz
           # 自检：文件不存在直接exit 2
-          if [ ! -f "drops.gz" ]; then
-            echo "❌ drops.gz不存在，终止流程"
+          if [ ! -f "construct.gz" ]; then
+            echo "❌ construct.gz不存在，终止流程"
             exit 2
           fi
           # 计算MD5 + 自检空值
-          MD5_DROPS_GZ=$(md5sum drops.gz | awk '{print $1}')
-          if [ -z "$MD5_DROPS_GZ" ] || [ "$MD5_DROPS_GZ" = "N/A" ]; then
-            echo "❌ drops.gz MD5 为空，终止流程"
+          MD5_CONSTRU_GZ=$(md5sum construct.gz | awk '{print $1}')
+          if [ -z "$MD5_CONSTRU_GZ" ] || [ "$MD5_CONSTRU_GZ" = "N/A" ]; then
+            echo "❌ construct.gz MD5 为空，终止流程"
             exit 2
           fi
-          echo "✅ drops.gz 最新MD5: '$MD5_DROPS_GZ'"
+          echo "✅ construct.gz 最新MD5: '$MD5_CONSTRU_GZ'"
 
       - name: Check if changed
         id: check
@@ -214,55 +214,55 @@ jobs:
           
           echo "======= 打印ETag内容 ======="
           # 拼接最新ETag（保留原有变量名，最小化改动）
-          CREATES_ETAG="ETag: ${{ steps.get-etag.outputs.CREATES_ETAG }}"
-          DROPS_ETAG="ETag: ${{ steps.get-etag.outputs.DROPS_ETAG }}"
-          echo "creates ETag (清理后): $CREATES_ETAG"
-          echo "drops ETag (清理后): $DROPS_ETAG"
+          DEVELOP_ETAG="ETag: ${{ steps.get-etag.outputs.DEVELOP_ETAG }}"
+          CONSTRU_ETAG="ETag: ${{ steps.get-etag.outputs.CONSTRU_ETAG }}"
+          echo "develop ETag (清理后): $DEVELOP_ETAG"
+          echo "construct ETag (清理后): $CONSTRU_ETAG"
           
           echo "======= 打印文件MD5值 ======="
           # ===== 分开处理 c*.gz（MD5 检查，第二次取消的基础）=====
-          MD5_CREATES_GZ="N/A"
+          MD5_DEVELOP_GZ="N/A"
           C_FILE_SIZE_KB="N/A"
-          if [ "$C_CHANGED" = "true" ] && [ -f "creates.gz" ]; then
-            MD5_CREATES_GZ=$(md5sum creates.gz | awk '{print $1}')
+          if [ "$C_CHANGED" = "true" ] && [ -f "develop.gz" ]; then
+            MD5_DEVELOP_GZ=$(md5sum develop.gz | awk '{print $1}')
             # 二次自检：MD5为空exit 2
-            if [ -z "$MD5_CREATES_GZ" ]; then
-              echo "❌ creates.gz MD5 为空，终止流程"
+            if [ -z "$MD5_DEVELOP_GZ" ]; then
+              echo "❌ develop.gz MD5 为空，终止流程"
               exit 2
             fi
-            echo "✅ creates.gz (最新文件) MD5: $MD5_CREATES_GZ"
+            echo "✅ develop.gz (最新文件) MD5: $MD5_DEVELOP_GZ"
             # 移动文件 + 计算大小
-            mv creates.gz "$C_HISTORY_GZ_FILE"
-            # 计算 creates 文件大小
+            mv develop.gz "$C_HISTORY_GZ_FILE"
+            # 计算 develop 文件大小
             C_FILE_SIZE_KB=$(du -k "$C_HISTORY_GZ_FILE" | awk '{print $1}')
             echo "✅ $C_HISTORY_GZ_FILE 大小: ${C_FILE_SIZE_KB} KB"
           elif [ "$C_CHANGED" = "false" ]; then
-            echo "✅ creates.gz 无变化，跳过 MD5 计算"
+            echo "✅ develop.gz 无变化，跳过 MD5 计算"
           else
-            echo "❌ creates.gz 文件不存在"
+            echo "❌ develop.gz 文件不存在"
             exit 2
           fi
 
           # ===== 分开处理 d*.gz（MD5 检查，第二次取消的基础）=====
-          MD5_DROPS_GZ="N/A"
+          MD5_CONSTRU_GZ="N/A"
           D_FILE_SIZE_KB="N/A"
-          if [ "$D_CHANGED" = "true" ] && [ -f "drops.gz" ]; then
-            MD5_DROPS_GZ=$(md5sum drops.gz | awk '{print $1}')
+          if [ "$D_CHANGED" = "true" ] && [ -f "construct.gz" ]; then
+            MD5_CONSTRU_GZ=$(md5sum construct.gz | awk '{print $1}')
             # 二次自检：MD5为空exit 2
-            if [ -z "$MD5_DROPS_GZ" ]; then
-              echo "❌ drops.gz MD5 为空，终止流程"
+            if [ -z "$MD5_CONSTRU_GZ" ]; then
+              echo "❌ construct.gz MD5 为空，终止流程"
               exit 2
             fi
-            echo "✅ drops.gz (最新文件) MD5: $MD5_DROPS_GZ"
-            # 移动 drops.gz 到目标路径
-            mv drops.gz "$D_HISTORY_GZ_FILE"
-            # 计算 drops 文件大小
+            echo "✅ construct.gz (最新文件) MD5: $MD5_CONSTRU_GZ"
+            # 移动 construct.gz 到目标路径
+            mv construct.gz "$D_HISTORY_GZ_FILE"
+            # 计算 construct 文件大小
             D_FILE_SIZE_KB=$(du -k "$D_HISTORY_GZ_FILE" | awk '{print $1}')
             echo "✅ $D_HISTORY_GZ_FILE 大小: ${D_FILE_SIZE_KB} KB"
           elif [ "$D_CHANGED" = "false" ]; then
-            echo "✅ drops.gz 无变化，跳过 MD5 计算"
+            echo "✅ construct.gz 无变化，跳过 MD5 计算"
           else
-            echo "❌ drops.gz 文件不存在"
+            echo "❌ construct.gz 文件不存在"
             exit 2
           fi
 
@@ -275,15 +275,15 @@ jobs:
           grep -v -E "^[cd]${MONTH}_" "$MONTHLY_SIZE_FILE" > "$MONTHLY_SIZE_FILE.tmp" 2>/dev/null || true
           # 写入creates的键值
           if [ "$C_CHANGED" = "true" ]; then
-            echo "c${MONTH}_ETAG=\"${{ steps.get-etag.outputs.CREATES_ETAG }}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-            echo "c${MONTH}_MD5=\"${MD5_CREATES_GZ}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+            echo "c${MONTH}_ETAG=\"${{ steps.get-etag.outputs.DEVELOP_ETAG }}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+            echo "c${MONTH}_MD5=\"${MD5_DEVELOP_GZ}\"" >> "$MONTHLY_SIZE_FILE.tmp"
             echo "c${MONTH}_SizeKB=\"${C_FILE_SIZE_KB}\"" >> "$MONTHLY_SIZE_FILE.tmp"
             echo "c${MONTH}_CheckTime=\"${CHECK_TIME}\"" >> "$MONTHLY_SIZE_FILE.tmp"
           fi
-          # 写入 drops 的键值（仅当有变化时）
+          # 写入 construct 的键值（仅当有变化时）
           if [ "$D_CHANGED" = "true" ]; then
-            echo "d${MONTH}_ETAG=\"${{ steps.get-etag.outputs.DROPS_ETAG }}\"" >> "$MONTHLY_SIZE_FILE.tmp"
-            echo "d${MONTH}_MD5=\"${MD5_DROPS_GZ}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+            echo "d${MONTH}_ETAG=\"${{ steps.get-etag.outputs.CONSTRU_ETAG }}\"" >> "$MONTHLY_SIZE_FILE.tmp"
+            echo "d${MONTH}_MD5=\"${MD5_CONSTRU_GZ}\"" >> "$MONTHLY_SIZE_FILE.tmp"
             echo "d${MONTH}_SizeKB=\"${D_FILE_SIZE_KB}\"" >> "$MONTHLY_SIZE_FILE.tmp"
             echo "d${MONTH}_CheckTime=\"${CHECK_TIME}\"" >> "$MONTHLY_SIZE_FILE.tmp"
           fi
@@ -315,10 +315,10 @@ jobs:
           # 提交信息包含 c/d 变更状态
           COMMIT_MSG="Update "
           if [ "${{ steps.pre-check.outputs.c_changed }}" = "true" ]; then
-            COMMIT_MSG+="createitemrecords "
+            COMMIT_MSG+="construct "
           fi
           if [ "${{ steps.pre-check.outputs.d_changed }}" = "true" ]; then
-            COMMIT_MSG+="createshiprecords "
+            COMMIT_MSG+="develop "
           fi
           COMMIT_MSG+="${{ steps.set-month.outputs.month }}.gz"
           git commit -m "$COMMIT_MSG"
