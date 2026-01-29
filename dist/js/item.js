@@ -16,6 +16,7 @@ var init = {
   其の他: [75, 120, 168, 250, -1],
 }
 const releasetime = {
+  '2025/11/13': [478, 447],
   '2020/11/13': [78, 147],
   '2020/10/16': [194, 242, 249, 250],
   '2020/03/27': [120],
@@ -34,6 +35,14 @@ const releasetime = {
   '2013/05/15': [54, 55],
   '2013/05/08': [44, 45, 46, 52],
 }
+$.getJSON("dist/items/developable/sortby/init.json", function (result) {
+  init = result;
+}).done(function (d) {
+});
+$.getJSON("dist/items/developable/sortby/releasetime.json", function (result) {
+  releasetime = result;
+}).done(function (d) {
+});
 developable = []
 var release = init
 for (key in release) {
