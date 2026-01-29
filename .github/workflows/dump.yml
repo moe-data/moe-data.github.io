@@ -302,11 +302,11 @@ jobs:
           filename: dump/size-c.json
           field: ${{ steps.set-month.outputs.month }}
           # Modified: Change to array [ETAG, MD5, SizeKB, Timestamp (Unix epoch)]
-          value: |
+          value: |          
             [
-              "${{ steps.get-etag.outputs.CONSTRU_ETAG }}",
-              "${{ env.MD5_CONSTRU_GZ }}",
-              ${{ env.CONSTRU_SIZE }},
+              "${{ steps.get-etag.outputs.DEVELOP_ETAG }}",
+              "${{ env.MD5_DEVELOP_GZ }}",
+              ${{ env.DEVELOP_SIZE }},
               ${{ env.CHECK_TIMESTAMP }}
             ]
 

@@ -3,7 +3,8 @@ name: gz
 on:
   push:
     paths:
-      - '**/gz.yml'
+      # - '**/gz.yml'
+      - '**/size*.json'
   workflow_run:
     workflows: ["dump"]
     types:
@@ -263,13 +264,8 @@ jobs:
           field: ${{ steps.month.outputs.month }}
           # Append new data to array (keep existing + new, array structure)
           value: |
-            [
-              ${{ fromJSON(steps.read-size-d-gz.outputs.value)[0] }},
-              ${{ fromJSON(steps.read-size-d-gz.outputs.value)[1] }},
-              ${{ fromJSON(steps.read-size-d-gz.outputs.value)[2] }},
-              ${{ fromJSON(steps.read-size-d-gz.outputs.value)[3] }},
+              ${{ fromJSON(steps.read-size-d-gz.outputs.value) }},
               ${{ steps.d-length.outputs.length }}
-            ]
 
       # ===== NEW: Append data to size-c.json (array structure, preserve past) =====
       - name: Update summary JSON with c length info
@@ -280,13 +276,8 @@ jobs:
           field: ${{ steps.month.outputs.month }}
           # Append new data to array (keep existing + new, array structure)
           value: |
-            [
-              ${{ fromJSON(steps.read-size-c-gz.outputs.value)[0] }},
-              ${{ fromJSON(steps.read-size-c-gz.outputs.value)[1] }},
-              ${{ fromJSON(steps.read-size-c-gz.outputs.value)[2] }},
-              ${{ fromJSON(steps.read-size-d-gz.outputs.value)[3] }},
+              ${{ (steps.read-size-c-gz.outputs.value)[0] }},
               ${{ steps.d-length.outputs.length }}
-            ]
 
       - name: 取消工作流（LENGTH=0）
         if: steps.d-length.outputs.length == 0
