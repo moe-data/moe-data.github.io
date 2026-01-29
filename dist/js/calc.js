@@ -83,7 +83,7 @@ if (!havelang) {
 }
 function jsonover() {
   jsindex++
-  console.log(jsindex, ranget.length + 2, bigdata.length)
+  console.log({jsindex, ranget: ranget.length + 2, bigdata: bigdata.length})
   progress((1 / (ranget.length + 2)) * 80)
   // if (jsindex == ranget.length + 1)$('h3.panel-title')[0].innerHTML = ("数据计算中。。。");
   if (jsindex >= ranget.length + 2) {

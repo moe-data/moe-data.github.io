@@ -1,6 +1,6 @@
 const qtar = tar == '装备' ? 'd' : 'c'
 var active = {}
-
+var possibles= []
 function clearall() {
   $('.btn').each(function () {
     $(this).addClass(btndef)
@@ -257,34 +257,45 @@ $('.hint').html(
 </ul>  
 </div>`
 )
-
 $('.btn').click(btnclick)
 function btnclick() {
   var output = []
   active = {}
-  $('button.btn-primary').each(function () {
-    output.push(Number($(this).val()))
-  })
-  if (output.length) {
-    possibles.forEach((e) => {
-      if (isContain(e, output)) {
-        e.forEach(function (ee) {
-          active[ee] = true
-        })
-      }
+  $.getJSON("dist/items/developable/possibles.json", function (result) {
+    possibles = result
+  }).done(function (result) {
+    possibles.forEach(possible => {
+      possible.forEach(e => {
+        if (developable.indexOf(e) == -1) {
+          (e == -1) || w(e, " is not developable")
+        }
+      })
     })
-    $('button.btn').each(function () {
-      if (!active[$(this).val()]) {
-        $(this).addClass('active').addClass('disabled')
-      } else {
+    z({possibles, loaded: true, output})
+    if (output.length) {
+      possibles.forEach((e) => {
+        if (isContain(e, output)) {
+          e.forEach(function (ee) {
+            active[ee] = true
+          })
+        }
+      })
+      $('button.btn').each(function () {
+        if (!active[$(this).val()]) {
+          $(this).addClass('active').addClass('disabled')
+        } else {
+          $(this).removeClass('active').removeClass('disabled')
+        }
+      })
+    } else {
+      $('button.btn').each(function () {
         $(this).removeClass('active').removeClass('disabled')
-      }
+      })
+    }
+    $('button.btn-primary').each(function () {
+      output.push(Number($(this).val()))
     })
-  } else {
-    $('button.btn').each(function () {
-      $(this).removeClass('active').removeClass('disabled')
-    })
-  }
+  });
 }
 $.getJSON('parsed/cstype.json').fail(function (d) {
   w('文件  ' + 'parsed/cstype.json' + ' 读取失败' + d)

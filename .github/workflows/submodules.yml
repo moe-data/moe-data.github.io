@@ -1,9 +1,8 @@
 name: submodules
 on:
   schedule:
-    - cron: '6 6 28 * *'  # 每月28日6点6分执行
+    - cron: '4 20 * * *'
   workflow_dispatch:      # 允许手动触发
-  push:
 
 permissions:
   actions: write  # 允许取消工作流的权限

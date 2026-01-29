@@ -94,7 +94,7 @@ function loadchart() {
   isFirst = false
   if (column.length < 1 || rawlen < 1) {
     info.innerHTML = '请选择属性'
-    console.log(raw, rnd)
+    console.log({raw, rnd})
     return
   }
   sortkey = $('#sort').val()
