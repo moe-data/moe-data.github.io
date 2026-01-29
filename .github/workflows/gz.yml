@@ -75,7 +75,7 @@ jobs:
                   with open('parsed/cstype.json', 'r', encoding='utf-8') as f:
                       cstype_data = json.load(f)
                       # 构建id到dtype的映射（匹配SQL: LEFT JOIN cstype b on secretary=b.id）
-                      return {str(item.get('id')): item.get('dtype', -2) for item in cstype_data}
+                      return {item.get('id'): item.get('dtype', -2) for item in cstype_data}
               except FileNotFoundError:
                   raise FileNotFoundError("cstype.json not found at parsed/cstype.json")
           
@@ -136,7 +136,7 @@ jobs:
                       items_final = items_val
                   
                   # 处理secretary（匹配SQL: LEFT JOIN cstype b on secretary=b.id）
-                  secretary_str = str(secretary_val) if secretary_val is not None else "-2"
+                  secretary_str = secretary_val if secretary_val is not None else -2
                   secretary_final = secretary_str #cstype_map.get(secretary_str, -2)
                   
                   # 处理teitokuLv（记录最小值，匹配SQL: min(teitokuLv)）
@@ -149,8 +149,8 @@ jobs:
                   # 构造简化后的记录（用于去重）
                   simplified_key = (
                       json.dumps(items_final, ensure_ascii=False),
-                      str(secretary_final),
-                      str(o_final)
+                      secretary_final,
+                      o_final
                   )
                   
                   # 统计重复次数&更新最小teitokuLv
@@ -223,37 +223,35 @@ jobs:
           ls -lh dump/c${{ steps.month.outputs.month }}.json
           echo "Line count (approx records + 2): $(wc < dump/c${{ steps.month.outputs.month }}.json)"
 
-      # 调用自定义的可复用Action
+      # 新增：Get d file length (MongoDB export)
       - name: Check d${{ steps.month.outputs.month }}.json length
         id: d-length
         uses: ./.github/actions/check-json-length
-        with:          
+        with:
           json-file-path: "dump/d${{ steps.month.outputs.month }}.json"
-          output-var-name: "D_LENGTH"
 
       # 新增：Get c file length (MongoDB export)
       - name: Check c${{ steps.month.outputs.month }}.json length
         id: c-length
         uses: ./.github/actions/check-json-length
         with:
-          json-file-path: "dump/c${{ steps.month.outputs.month }}.json"  # 改为本地parsed目录
-          output-var-name: "C_LENGTH"
+          json-file-path: "dump/c${{ steps.month.outputs.month }}.json"
 
       # 新增：Update summary JSON with length data
       - name: Update summary JSON with length info
         uses: shaneapowell/github-tweak-the-json@v1
         with:
           action: write
-          filename: "dump/summary_table.json"
-          field: "${{ steps.month.outputs.month }}.d_length"
+          filename: "dump/size-d.json"
+          field: "${{ steps.month.outputs.month }}.SizeKB"
           value: "${{ steps.d-length.outputs.length }}"
 
       - name: Update summary JSON with c length info
         uses: shaneapowell/github-tweak-the-json@v1
         with:
           action: write
-          filename: "dump/summary_table.json"
-          field: "${{ steps.month.outputs.month }}.c_length"
+          filename: "dump/size-c.json"
+          field: "${{ steps.month.outputs.month }}.SizeKB"
           value: "${{ steps.c-length.outputs.length }}"      
 
       - name: 取消工作流（LENGTH=0）

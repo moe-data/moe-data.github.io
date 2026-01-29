@@ -34,7 +34,6 @@ jobs:
           # 跟踪 drop*.gz 文件
           git lfs track "dump/drop*.gz"
 
-
       # 核心改2：先仅获取ETag（不下载文件），减少网络开销
       - name: Get ETag only (no file download)
         id: get-etag
@@ -76,22 +75,21 @@ jobs:
 
       # 新增：Read historical ETag from JSON (replace TXT)
       - name: Read historical d${{ steps.set-month.outputs.month }} ETag from JSON
-        id: read-d-hist-etag
+        id: read-size-d
         uses: shaneapowell/github-tweak-the-json@v1
         with:
           action: read
-          filename: "dump/monthly_data.json"
-          field: "d${{ steps.set-month.outputs.month }}.ETAG"
-          value: "" # Empty for read action
+          filename: dump/size-d.json
+          field: ${{ steps.set-month.outputs.month }}.ETAG
 
-      - name: Read historical c${{ steps.set-month.outputs.month }} ETag from JSON
-        id: read-c-hist-etag
+      # ===== NEW: Read historical ETag from size-c.json (no jq, preserve past months) =====
+      - name: Read historical c (construct) data from size-c.json
+        id: read-size-c
         uses: shaneapowell/github-tweak-the-json@v1
         with:
           action: read
-          filename: "dump/monthly_data.json"
-          field: "c${{ steps.set-month.outputs.month }}.ETAG"
-          value: "" # Empty for read action
+          filename: dump/size-c.json
+          field: ${{ steps.set-month.outputs.month }}.ETAG
 
       # 核心改3：先读取历史ETag，对比后决定是否下载/取消工作流
       - name: Check ETag change before download
@@ -104,21 +102,13 @@ jobs:
           # 初始化变更标记
           d_changed="true"
           c_changed="true"
-          # 初始化历史ETag变量 (from JSON, replace TXT)
-          HIST_DEVELOP_ETAG="${{ steps.read-d-hist-etag.outputs.value }}"
-          HIST_CONSTRU_ETAG="${{ steps.read-c-hist-etag.outputs.value }}"
+          # 初始化历史ETag变量 (from JSON instead of TXT)
+          HIST_DEVELOP_ETAG="${{ steps.read-size-d.outputs.value }}"
+          HIST_CONSTRU_ETAG="${{ steps.read-size-c.outputs.value }}"
 
-          echo "======= 读取历史 monthly_data.json（c/d 分开）======="
-          # 验证JSON读取结果
-          if [ -n "$HIST_DEVELOP_ETAG" ] || [ -n "$HIST_CONSTRU_ETAG" ]; then
-            echo "历史 d${MONTH} ETag: $HIST_DEVELOP_ETAG"
-            echo "历史 c${MONTH} ETag: $HIST_CONSTRU_ETAG"
-          else
-            echo "======= monthly_data.json不存在/无当前月份数据，首次执行 ======="
-            echo "d_changed=$d_changed" >> $GITHUB_OUTPUT
-            echo "c_changed=$c_changed" >> $GITHUB_OUTPUT
-            exit 0
-          fi
+          echo "======= 读取历史 size-d.json/size-c.json（c/d 分开）======="
+          echo "历史 d${MONTH} ETag: $HIST_DEVELOP_ETAG"
+          echo "历史 c${MONTH} ETag: $HIST_CONSTRU_ETAG"
 
           # ===== 分开判断 d 的 ETag（仅读取成功时才对比）=====
           echo "--- 对比 develop ETag ---"
@@ -246,9 +236,6 @@ jobs:
             # 计算 develop 文件大小
             DEVELOP_SIZE=$(du -k "$D_HISTORY_GZ_FILE" | awk '{print $1}')
             echo "✅ $D_HISTORY_GZ_FILE 大小: ${DEVELOP_SIZE} KB"
-            # 导出变量供JSON写入使用
-            echo "MD5_DEVELOP_GZ=$MD5_DEVELOP_GZ" >> $GITHUB_ENV
-            echo "DEVELOP_SIZE=$DEVELOP_SIZE" >> $GITHUB_ENV
           elif [ "$d_changed" = "false" ]; then
             echo "✅ develop.gz 无变化，跳过 MD5 计算"
           else
@@ -273,9 +260,12 @@ jobs:
             CONSTRU_SIZE=$(du -k "$C_HISTORY_GZ_FILE" | awk '{print $1}')
             echo "✅ $C_HISTORY_GZ_FILE 大小: ${CONSTRU_SIZE} KB"
             # 导出变量供JSON写入使用
+            echo "MD5_DEVELOP_GZ=$MD5_DEVELOP_GZ" >> $GITHUB_ENV
+            echo "DEVELOP_SIZE=$DEVELOP_SIZE" >> $GITHUB_ENV
             echo "MD5_CONSTRU_GZ=$MD5_CONSTRU_GZ" >> $GITHUB_ENV
             echo "CONSTRU_SIZE=$CONSTRU_SIZE" >> $GITHUB_ENV
-          elif [ "$c_changed" = "false" ]; then
+            echo "CHECK_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_ENV
+            elif [ "$c_changed" = "false" ]; then
             echo "✅ construct.gz 无变化，跳过 MD5 计算"
           else
             echo "❌ construct.gz 文件不存在"
@@ -292,27 +282,31 @@ jobs:
         uses: shaneapowell/github-tweak-the-json@v1
         with:
           action: write
-          filename: "dump/monthly_data.json"
-          field: "d${{ steps.set-month.outputs.month }}"
-          value: '{"ETAG": "${{ steps.get-etag.outputs.DEVELOP_ETAG }}", "MD5": "${{ env.MD5_DEVELOP_GZ }}", "SizeKB": "${{ env.DEVELOP_SIZE }}", "CheckTime": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"}'
+          filename: dump/size-d.json
+          field: ${{ steps.set-month.outputs.month }}
+          value: |
+            {
+              "ETAG": "${{ steps.get-etag.outputs.DEVELOP_ETAG }}",
+              "MD5": "${{ env.MD5_DEVELOP_GZ }}",
+              "SizeKB": "${{ env.DEVELOP_SIZE }}",
+              "CheckTime": "${{ env.CHECK_TIME }}"
+            }
 
-      - name: Write c${{ steps.set-month.outputs.month }} data to JSON
+      # ===== NEW: Write c (construct) data to size-c.json (preserve past months) =====
+      - name: Write c (construct) data to size-c.json
         if: steps.pre-check.outputs.c_changed == 'true'
         uses: shaneapowell/github-tweak-the-json@v1
         with:
           action: write
-          filename: "dump/monthly_data.json"
-          field: "c${{ steps.set-month.outputs.month }}"
-          value: '{"ETAG": "${{ steps.get-etag.outputs.CONSTRU_ETAG }}", "MD5": "${{ env.MD5_CONSTRU_GZ }}", "SizeKB": "${{ env.CONSTRU_SIZE }}", "CheckTime": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"}'
-
-      # 新增：Create brief summary JSON for table display
-      - name: Create summary JSON for table display
-        uses: shaneapowell/github-tweak-the-json@v1
-        with:
-          action: write
-          filename: "dump/summary_table.json"
-          field: "${{ steps.set-month.outputs.month }}"
-          value: '{"d_etag": "${{ steps.get-etag.outputs.DEVELOP_ETAG }}", "c_etag": "${{ steps.get-etag.outputs.CONSTRU_ETAG }}", "d_md5": "${{ env.MD5_DEVELOP_GZ }}", "c_md5": "${{ env.MD5_CONSTRU_GZ }}"}'
+          filename: dump/size-c.json
+          field: ${{ steps.set-month.outputs.month }}
+          value: |
+            {
+              "ETAG": "${{ steps.get-etag.outputs.CONSTRU_ETAG }}",
+              "MD5": "${{ env.MD5_CONSTRU_GZ }}",
+              "SizeKB": "${{ env.CONSTRU_SIZE }}",
+              "CheckTime": "${{ env.CHECK_TIME }}"
+            }
 
       # 修复5：第二次取消工作流（MD5 无变化，c/d 均无更新时执行）
       - name: 取消工作流（MD5 无变化，c/d 均无更新）
