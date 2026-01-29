@@ -1,1 +1,4 @@
-{}
+{
+  "d202601": "{\"ETAG\": \"697a34f0-8847fc\", \"MD5\": \"3544ab3aa47702341566b76a1b758836\", \"SizeKB\": \"8724\", \"CheckTime\": \"$(date -u +\"%Y-%m-%dT%H:%M:%SZ\")\"}",
+  "c202601": "{\"ETAG\": \"697a34e9-4afc4c\", \"MD5\": \"eceb5ab527365f5ce44c2a9a28cf4bb0\", \"SizeKB\": \"4800\", \"CheckTime\": \"$(date -u +\"%Y-%m-%dT%H:%M:%SZ\")\"}"
+}
