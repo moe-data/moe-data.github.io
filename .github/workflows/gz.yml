@@ -237,22 +237,56 @@ jobs:
         with:
           json-file-path: "dump/c${{ steps.month.outputs.month }}.json"
 
-      # 新增：Update summary JSON with length data
-      - name: Update summary JSON with length info
+      # ===== NEW: Read existing size-d.json array (array structure) =====
+      - name: Read existing size-d.json data
+        id: read-size-d-gz
+        uses: shaneapowell/github-tweak-the-json@v1
+        with:
+          action: read
+          filename: dump/size-d.json
+          field: ${{ steps.month.outputs.month }}
+      # ===== NEW: Read existing size-c.json array (array structure) =====
+      - name: Read existing size-c.json data
+        id: read-size-c-gz
+        uses: shaneapowell/github-tweak-the-json@v1
+        with:
+          action: read
+          filename: dump/size-c.json
+          field: ${{ steps.month.outputs.month }}
+
+      # ===== NEW: Append data to size-d.json (array structure, preserve past) =====
+      - name: Update summary JSON with d length info
         uses: shaneapowell/github-tweak-the-json@v1
         with:
           action: write
-          filename: "dump/size-d.json"
-          field: "${{ steps.month.outputs.month }}.SizeKB"
-          value: "${{ steps.d-length.outputs.length }}"
+          filename: dump/size-d.json
+          field: ${{ steps.month.outputs.month }}
+          # Append new data to array (keep existing + new, array structure)
+          value: |
+            [
+              ${{ fromJSON(steps.read-size-d-gz.outputs.value)[0] }},
+              ${{ fromJSON(steps.read-size-d-gz.outputs.value)[1] }},
+              ${{ fromJSON(steps.read-size-d-gz.outputs.value)[2] }},
+              ${{ fromJSON(steps.read-size-d-gz.outputs.value)[3] }},
+              ${{ steps.d-length.outputs.length }}
+            ]
 
+      # ===== NEW: Append data to size-c.json (array structure, preserve past) =====
       - name: Update summary JSON with c length info
         uses: shaneapowell/github-tweak-the-json@v1
         with:
           action: write
-          filename: "dump/size-c.json"
-          field: "${{ steps.month.outputs.month }}.SizeKB"
-          value: "${{ steps.c-length.outputs.length }}"      
+          filename: dump/size-c.json
+          field: ${{ steps.month.outputs.month }}
+          # Append new data to array (keep existing + new, array structure)
+          value: |
+            [
+              ${{ fromJSON(steps.read-size-c-gz.outputs.value)[0] }},
+              ${{ fromJSON(steps.read-size-c-gz.outputs.value)[1] }},
+              ${{ fromJSON(steps.read-size-c-gz.outputs.value)[2] }},
+              ${{ fromJSON(steps.read-size-d-gz.outputs.value)[3] }},
+              ${{ steps.d-length.outputs.length }}
+            ]
 
       - name: 取消工作流（LENGTH=0）
         if: steps.d-length.outputs.length == 0

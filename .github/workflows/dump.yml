@@ -284,29 +284,31 @@ jobs:
           action: write
           filename: dump/size-d.json
           field: ${{ steps.set-month.outputs.month }}
+          # Modified: Change to array [ETAG, MD5, SizeKB, Timestamp (Unix epoch)]
           value: |
-            {
-              "ETAG": "${{ steps.get-etag.outputs.DEVELOP_ETAG }}",
-              "MD5": "${{ env.MD5_DEVELOP_GZ }}",
-              "SizeKB": "${{ env.DEVELOP_SIZE }}",
-              "CheckTime": "${{ env.CHECK_TIME }}"
-            }
+            [
+              "${{ steps.get-etag.outputs.DEVELOP_ETAG }}",
+              "${{ env.MD5_DEVELOP_GZ }}",
+              ${{ env.DEVELOP_SIZE }},
+              ${{ env.CHECK_TIMESTAMP }}
+            ]
 
       # ===== NEW: Write c (construct) data to size-c.json (preserve past months) =====
-      - name: Write c (construct) data to size-c.json
+      - name: Write c${{ steps.set-month.outputs.month }} data to size-c.json
         if: steps.pre-check.outputs.c_changed == 'true'
         uses: shaneapowell/github-tweak-the-json@v1
         with:
           action: write
           filename: dump/size-c.json
           field: ${{ steps.set-month.outputs.month }}
+          # Modified: Change to array [ETAG, MD5, SizeKB, Timestamp (Unix epoch)]
           value: |
-            {
-              "ETAG": "${{ steps.get-etag.outputs.CONSTRU_ETAG }}",
-              "MD5": "${{ env.MD5_CONSTRU_GZ }}",
-              "SizeKB": "${{ env.CONSTRU_SIZE }}",
-              "CheckTime": "${{ env.CHECK_TIME }}"
-            }
+            [
+              "${{ steps.get-etag.outputs.CONSTRU_ETAG }}",
+              "${{ env.MD5_CONSTRU_GZ }}",
+              ${{ env.CONSTRU_SIZE }},
+              ${{ env.CHECK_TIMESTAMP }}
+            ]
 
       # 修复5：第二次取消工作流（MD5 无变化，c/d 均无更新时执行）
       - name: 取消工作流（MD5 无变化，c/d 均无更新）
