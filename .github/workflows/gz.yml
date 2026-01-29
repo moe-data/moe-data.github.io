@@ -224,21 +224,38 @@ jobs:
           echo "Line count (approx records + 2): $(wc < dump/c${{ steps.month.outputs.month }}.json)"
 
       # 调用自定义的可复用Action
-      - name: Check JSON array length in develop
+      - name: Check d${{ steps.month.outputs.month }}.json length
         id: d-length
         uses: ./.github/actions/check-json-length
-        with:
-          json-file-path: "dump/d${{ steps.month.outputs.month }}.json"  # 改为本地parsed目录
+        with:          
+          json-file-path: "dump/d${{ steps.month.outputs.month }}.json"
           output-var-name: "D_LENGTH"
 
-      # 调用自定义的可复用Action
-      - name: Check JSON array length in construction
+      # 新增：Get c file length (MongoDB export)
+      - name: Check c${{ steps.month.outputs.month }}.json length
         id: c-length
         uses: ./.github/actions/check-json-length
         with:
           json-file-path: "dump/c${{ steps.month.outputs.month }}.json"  # 改为本地parsed目录
           output-var-name: "C_LENGTH"
-          
+
+      # 新增：Update summary JSON with length data
+      - name: Update summary JSON with length info
+        uses: shaneapowell/github-tweak-the-json@v1
+        with:
+          action: write
+          filename: "dump/summary_table.json"
+          field: "${{ steps.month.outputs.month }}.d_length"
+          value: "${{ steps.d-length.outputs.length }}"
+
+      - name: Update summary JSON with c length info
+        uses: shaneapowell/github-tweak-the-json@v1
+        with:
+          action: write
+          filename: "dump/summary_table.json"
+          field: "${{ steps.month.outputs.month }}.c_length"
+          value: "${{ steps.c-length.outputs.length }}"      
+
       - name: 取消工作流（LENGTH=0）
         if: steps.d-length.outputs.length == 0
         uses: conbanwa/cancel-workflow/.github/actions/cancel-workflow@v1.0.0
