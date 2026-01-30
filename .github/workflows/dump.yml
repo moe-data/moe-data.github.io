@@ -325,7 +325,7 @@ jobs:
           git lfs track "drop*.gz"
           git add dump/
           # 提交信息包含 c/d 变更状态
-          COMMIT_MSG="Update "
+          COMMIT_MSG="Dump "
           if [ "${{ steps.pre-check.outputs.d_changed }}" = "true" ]; then
             COMMIT_MSG+="construct "
           fi

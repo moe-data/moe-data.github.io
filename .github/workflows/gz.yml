@@ -261,10 +261,17 @@ jobs:
         with:
           action: write
           filename: dump/size-d.json
+          field: ${{ steps.month.outputs.month }}-length
+          value: ${{ steps.d-length.outputs.length }}
+      - name: Update summary JSON with d length info
+        uses: shaneapowell/github-tweak-the-json@v1
+        with:
+          action: write
+          filename: dump/size-d.json
           field: ${{ steps.month.outputs.month }}
           # Append new data to array (keep existing + new, array structure)
           value: |
-              ${{ fromJSON(steps.read-size-d-gz.outputs.value) }},
+              ${{ (steps.read-size-d-gz.outputs.value) }},
               ${{ steps.d-length.outputs.length }}
 
       # ===== NEW: Append data to size-c.json (array structure, preserve past) =====
@@ -276,8 +283,8 @@ jobs:
           field: ${{ steps.month.outputs.month }}
           # Append new data to array (keep existing + new, array structure)
           value: |
-              ${{ (steps.read-size-c-gz.outputs.value)[0] }},
-              ${{ steps.d-length.outputs.length }}
+              ${{ steps.read-size-c-gz.outputs.value }},
+              ${{ steps.c-length.outputs.length }}
 
       - name: 取消工作流（LENGTH=0）
         if: steps.d-length.outputs.length == 0
@@ -290,7 +297,7 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
           git add dump/
-          git commit -m "Update monthly pure JSON: ${{ steps.month.outputs.month }}.json" || echo "No changes to commit"
+          git commit -m "Update monthly JSON: ${{ steps.month.outputs.month }}.json" || echo "No changes to commit"
           git push
 
       - name: Cleanup temporary MongoDB

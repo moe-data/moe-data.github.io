@@ -228,7 +228,8 @@ function timetable(t) {
       e[0] +
       '"  id="' +
       e[0] +
-      '" checked="checked"><label for ="' +
+      e==t.length?'" checked="checked"':'"'+
+      '><label for ="' +
       e[0] +
       '">' +
       qndate(e[0]) +
