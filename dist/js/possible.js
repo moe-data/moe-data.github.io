@@ -256,46 +256,39 @@ $('.hint').html(
 </ul>  
 </div>`
 )
+$.getJSON("dist/items/developable/possibles.json", function (result) {
+  possibles = result
+})
 $('.btn').click(btnclick)
 function btnclick() {
+  var output = []
   active = {}
-  $.getJSON("dist/items/developable/possibles.json", function (result) {
-    possibles = result
-  }).done(function (result) {
-    possibles.forEach(possible => {
-      possible.forEach(e => {
-        if (developable.indexOf(e) == -1) {
-          (e == -1) || w(e, " is not developable")
-        }
-      })
-    })
+  $('button.btn-primary').each(function () {
+    output.push(Number($(this).val()))
+  })
     z({possibles, loaded: true, output})
-    if (output.length) {
-      possibles.forEach((e) => {
+  if (output.length) {
+    possibles.forEach((e) => {
         z({e, output, isContain: isContain(e, output)})
-        if (isContain(e, output)) {
-          e.forEach(function (ee) {
-            active[ee] = true
-          })
-        }
-      })
-      $('button.btn').each(function () {
-        if (!active[$(this).val()]) {
-          $(this).addClass('active').addClass('disabled')
-        } else {
-          $(this).removeClass('active').removeClass('disabled')
-        }
-      })
-    } else {
-      w("no output")
-      $('button.btn').each(function () {
-        $(this).removeClass('active').removeClass('disabled')
-      })
-    }
-    $('button.btn-primary').each(function () {
-      output.push(Number($(this).val()))
+      if (isContain(e, output)) {
+        e.forEach(function (ee) {
+          active[ee] = true
+        })
+      }
     })
-  });
+    $('button.btn').each(function () {
+      if (!active[$(this).val()]) {
+        $(this).addClass('active').addClass('disabled')
+      } else {
+        $(this).removeClass('active').removeClass('disabled')
+      }
+    })
+  } else {
+      w("no output")
+    $('button.btn').each(function () {
+      $(this).removeClass('active').removeClass('disabled')
+    })
+  }
 }
 $.getJSON('parsed/cstype.json').fail(function (d) {
   w('文件  ' + 'parsed/cstype.json' + ' 读取失败' + d)

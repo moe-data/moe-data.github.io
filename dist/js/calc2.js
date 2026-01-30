@@ -245,7 +245,7 @@ function thead(eg) {
       rowspan = 2;
       formatter = formatLink;
     } else {
-      if (thls(e)) {
+      if (isResource(e)) {
         colspan = 1;
         rowspan = 2;
         if (e == "資材") {
@@ -259,7 +259,7 @@ function thead(eg) {
       temp = "主查询合计";
       formatter = formatR;
     }
-    if (e == "ratio" || thls(e) || e[0] == "n") {
+    if (e == "ratio" || isResource(e) || e[0] == "n") {
       if (!isNaN(e[e.length - 1])) {
         showid = e.slice(1, e.length);
         temp = q == "d" ? formatItemId(showid) : formatStype(showid);
@@ -288,7 +288,7 @@ function thead(eg) {
     // if (e == 'ratio'||( e!='i'&& e!='fuel'&& e!='denominator'&& e!='times'&& e!='ammo'&& e[0]!='n'&& e[0]!='l')) {
     if (
       e == "ratio" ||
-      (!thls(e) && e != "times" && e[0] != "n" && e[0] != "l")
+      (!isResource(e) && e != "times" && e[0] != "n" && e[0] != "l")
     ) {
       f = "%";
       if (e == "ratio") {
@@ -299,7 +299,7 @@ function thead(eg) {
     if (e[0] == "l") {
       f = "Lv";
     }
-    if (e == "times" || e[0] == "n" || !thls(e)) {
+    if (e == "times" || e[0] == "n" || !isResource(e)) {
       col.push({
         title: f,
         field: e,
@@ -310,7 +310,7 @@ function thead(eg) {
   }
   return [co, col];
 }
-function thls(e) {
+function isResource(e) {
   return (
     [
       "i",
@@ -511,5 +511,27 @@ function addicon(name, c) {
       );
     }
   }
-  return '<span class="flex">' + color + str + "</sapn>";
+  return '<span class="flex">' + color + convertHalfToFullWidth(str) + "</sapn>";
+}
+/**
+ * 半角特殊字符替换为全角字符
+ * @param {string} str - 待处理的原始字符串
+ * @returns {string} 替换后的全角字符串
+ */
+function convertHalfToFullWidth(str) {
+  // 先判断传入的是否是字符串，避免非字符串参数报错
+  if (typeof str !== 'string') {
+    console.warn('传入参数不是字符串类型，请传入有效字符串');
+    return str || '';
+  }
+
+  // 方案1：分步替换（清晰易懂，适合新手，便于单独调整某个字符）
+  let result = str
+    .replace(/&/g, '＆') // 半角& 替换为 全角＆
+    .replace(/\?/g, '？') // 半角? 替换为 全角？
+    .replace(/!/g, '！') // 半角! 替换为 全角！
+    .replace(/#/g, '＃') // 半角# 替换为 全角＃
+    .replace(/\$/g, '＄') // 半角$ 替换为 全角＄
+    .replace(/%/g, '％'); // 半角% 替换为 全角％
+  return result;
 }

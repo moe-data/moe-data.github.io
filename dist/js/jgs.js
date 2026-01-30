@@ -119,3 +119,26 @@ function jsonstr(a) {
 function sortNumber(a, b) {
   return a - b
 }
+
+/**
+ * 半角特殊字符替换为全角字符
+ * @param {string} str - 待处理的原始字符串
+ * @returns {string} 替换后的全角字符串
+ */
+function convertHalfToFullWidth(str) {
+  // 先判断传入的是否是字符串，避免非字符串参数报错
+  if (typeof str !== 'string') {
+    console.warn('传入参数不是字符串类型，请传入有效字符串');
+    return str || '';
+  }
+
+  // 方案1：分步替换（清晰易懂，适合新手，便于单独调整某个字符）
+  let result = str
+    .replace(/&/g, '＆') // 半角& 替换为 全角＆
+    .replace(/\?/g, '？') // 半角? 替换为 全角？
+    .replace(/!/g, '！') // 半角! 替换为 全角！
+    .replace(/#/g, '＃') // 半角# 替换为 全角＃
+    .replace(/\$/g, '＄') // 半角$ 替换为 全角＄
+    .replace(/%/g, '％'); // 半角% 替换为 全角％
+  return result;
+}

@@ -91,6 +91,25 @@ var stype = [
   '練習巡洋艦',
   '補給艦',
 ]
+stype[174] = 'Z1 Z3'
+stype[439] = 'Warspite'
+stype[441] = 'Littorio级'
+stype[443] = 'Libeccio级'
+stype[448] = 'Zara级'
+stype[491] = 'Commandant Teste'
+stype[515] = 'Ark Royal'
+stype[530] = '伊504'
+stype[535] = 'Luigi Torelli'
+stype[539] = 'UIT-25'
+stype[82] = '伊勢改'
+stype[88] = '日向改'
+stype[553] = '伊勢改二'
+stype[554] = '日向改二'
+// stype[553] = "伊勢改(二)";
+// stype[554] = "日向改(二)";
+stype[571] = 'Nelson'
+stype[589] = 'L.d.S.D.d.Abruzzi级'
+
 function formatStype(value) {
   return stype[value] == null ? value : stype[value]
 }
@@ -228,7 +247,7 @@ function timetable(t) {
       e[0] +
       '"  id="' +
       e[0] +
-      e==t.length?'" checked="checked"':'"'+
+      (e==t.length ? '" checked="checked"' : '"') +
       '><label for ="' +
       e[0] +
       '">' +

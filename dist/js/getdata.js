@@ -157,7 +157,6 @@ function download(result, com, qn, zhimg, start) {
     z(objdata.length)
     z(bigdata.length)
     console.log(qn + ': get ' + (zhimg ? zhimg + start : 'dump/' + qn) + ' success')
-  try {
     $('h3.panel-title')[0].innerHTML =
       ' 正在' +
       com +
@@ -168,11 +167,12 @@ function download(result, com, qn, zhimg, start) {
       ' / ' +
       (ranget.length + 2) +
       ' 个文件，'
+  // try {
     jsonover()
-  } catch (err) {
-    console.error({qn, com, jsindex, dom:$('h3.panel-title'), err})
-    if (zhimg){ getjson(zhimg, qn) }
-  }
+  // } catch (err) {
+  //   console.error({qn, com, jsindex, dom:$('h3.panel-title'), err})
+  //   if (zhimg){ getjson(zhimg, qn) }
+  // }
 }
 function success(result, status, xhr) {
   // console.log(status,xhr);

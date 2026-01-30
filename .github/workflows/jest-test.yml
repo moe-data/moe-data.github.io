@@ -1,0 +1,32 @@
+name: Jest Unit Tests for jgs.js
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          npm init -y
+          npm install --save-dev jest jest-environment-jsdom
+
+      - name: Create Jest config for jsdom
+        run: |
+          echo "module.exports = { testEnvironment: 'jsdom' };" > jest.config.js
+
+      - name: Run Jest tests
+        run: npx jest --ci --coverage --config jest.config.js

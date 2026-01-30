@@ -228,7 +228,7 @@ function loadprot(prot) {
   var keys = []
   for (key in prot) {
     var e = key
-    if (e == 'ratio' || (!thls(e) && e != 'times' && e[0] != 'n' && e[0] != 'l')) {
+    if (e == 'ratio' || (!isResource(e) && e != 'times' && e[0] != 'n' && e[0] != 'l')) {
       keys.push(key)
     }
   }

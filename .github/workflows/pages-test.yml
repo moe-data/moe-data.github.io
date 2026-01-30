@@ -1,0 +1,159 @@
+name: Test GitHub Pages
+
+on:
+  workflow_run:
+    workflows: ["Deploy static content to Pages"]
+    types: [completed]
+
+jobs:
+  test:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Wait for Pages deployment to propagate
+        run: |
+          echo "Waiting 20 minutes for GitHub Pages CDN propagation..."
+          echo "Current time: $(date)"
+          sleep 1200
+          echo "Resuming tests at: $(date)"
+      
+      - name: Test site accessibility
+        id: site-test
+        run: |
+          # Configuration
+          SITE_URL="https://moe-data.github.io/index.html"
+          MAX_RETRIES=5
+          RETRY_DELAY=30
+          
+          echo "Testing site: $SITE_URL"
+          
+          for i in $(seq 1 $MAX_RETRIES); do
+            echo "Attempt $i of $MAX_RETRIES..."
+            
+            # Fetch page with timeout and follow redirects
+            HTTP_RESPONSE=$(curl -s -o /tmp/page.html -w "%{http_code}" \
+              --max-time 30 \
+              --connect-timeout 15 \
+              --retry 3 \
+              --retry-delay 5 \
+              --retry-max-time 60 \
+              "$SITE_URL")
+            
+            # Check HTTP status
+            if [[ "$HTTP_RESPONSE" == "200" ]]; then
+              echo "✓ HTTP Status: $HTTP_RESPONSE OK"
+              
+              # Check for basic HTML structure
+              if grep -qi "<html" /tmp/page.html && grep -qi "<head" /tmp/page.html; then
+                echo "✓ Valid HTML structure found"
+                
+                # Check for key content
+                echo "Validating page content..."
+                
+                # Check page title for "Todo List"
+                if grep -qi "<title.*Todo List" /tmp/page.html || \
+                   grep -qi "Todo List" /tmp/page.html; then
+                  echo "✓ Found 'Todo List' in page"
+                else
+                  echo "✗ 'Todo List' not found in page"
+                  exit 1
+                fi
+                
+                # Check for "Todo List Manager"
+                if grep -qi "Todo List Manager" /tmp/page.html; then
+                  echo "✓ Found 'Todo List Manager'"
+                else
+                  echo "✗ 'Todo List Manager' not found"
+                  exit 1
+                fi
+                
+                # Check for "Create New Todo"
+                if grep -qi "Create New Todo" /tmp/page.html; then
+                  echo "✓ Found 'Create New Todo'"
+                else
+                  echo "✗ 'Create New Todo' not found"
+                  exit 1
+                fi
+                
+                echo "✅ All content validation checks passed"
+                exit 0
+              else
+                echo "✗ Invalid HTML structure"
+                exit 1
+              fi
+              
+            elif [[ "$HTTP_RESPONSE" == "404" ]]; then
+              echo "✗ HTTP Status: $HTTP_RESPONSE - Page not found"
+              if [[ $i -lt $MAX_RETRIES ]]; then
+                echo "Retrying in $RETRY_DELAY seconds..."
+                sleep $RETRY_DELAY
+              else
+                exit 1
+              fi
+              
+            elif [[ "$HTTP_RESPONSE" =~ ^5[0-9]{2}$ ]]; then
+              echo "✗ HTTP Status: $HTTP_RESPONSE - Server error"
+              if [[ $i -lt $MAX_RETRIES ]]; then
+                echo "Retrying in $RETRY_DELAY seconds..."
+                sleep $RETRY_DELAY
+              else
+                exit 1
+              fi
+              
+            else
+              echo "✗ HTTP Status: $HTTP_RESPONSE - Unexpected response"
+              if [[ $i -lt $MAX_RETRIES ]]; then
+                echo "Retrying in $RETRY_DELAY seconds..."
+                sleep $RETRY_DELAY
+              else
+                exit 1
+              fi
+            fi
+          done
+          
+          echo "❌ Failed to validate site after $MAX_RETRIES attempts"
+          exit 1
+        
+        continue-on-error: false
+      
+      - name: Test site performance (optional)
+        if: success()
+        run: |
+          SITE_URL="https://moe-data.github.io/index.html"
+          echo "Testing response time for: $SITE_URL"
+          
+          RESPONSE_TIME=$(curl -s -o /dev/null -w "%{time_total}" \
+            --max-time 10 \
+            "$SITE_URL")
+          
+          echo "Response time: ${RESPONSE_TIME}s"
+          
+          # Warn if response time is too slow (optional check)
+          if (( $(echo "$RESPONSE_TIME > 3.0" | bc -l) )); then
+            echo "⚠️  Warning: Site response time is slow (>3 seconds)"
+          else
+            echo "✓ Site response time is acceptable"
+          fi
+      
+      - name: Summary
+        if: always()
+        run: |
+          echo "=========================================="
+          if [[ "${{ job.status }}" == "success" ]]; then
+            echo "✅ GitHub Pages site test completed successfully"
+            echo "Site URL: https://moe-data.github.io/index.html"
+            echo "All content validation checks passed"
+          else
+            echo "❌ GitHub Pages site test failed"
+            echo "Please check:"
+            echo "1. GitHub Pages deployment status"
+            echo "2. Site URL: https://moe-data.github.io/index.html"
+            echo "3. Repository Pages settings"
+            echo ""
+            echo "Common issues:"
+            echo "- Pages deployment may still be in progress"
+            echo "- CDN propagation may need more time"
+            echo "- Check for build errors in deployment workflow"
+          fi
+          echo "=========================================="

@@ -1,21 +1,3 @@
-stype[174] = 'Z1 Z3'
-stype[439] = 'Warspite'
-stype[441] = 'Littorio级'
-stype[443] = 'Libeccio级'
-stype[448] = 'Zara级'
-stype[491] = 'Commandant Teste'
-stype[515] = 'Ark Royal'
-stype[530] = '伊504'
-stype[535] = 'Luigi Torelli'
-stype[539] = 'UIT-25'
-stype[82] = '伊勢改'
-stype[88] = '日向改'
-stype[553] = '伊勢改二'
-stype[554] = '日向改二'
-// stype[553] = "伊勢改(二)";
-// stype[554] = "日向改(二)";
-stype[571] = 'Nelson'
-stype[589] = 'L.d.S.D.d.Abruzzi级'
 const output = GetRequest('o', 1)
 var extra = GetRequest('e', 1)
 extra = extra.indexOf('') ? extra : []
@@ -296,20 +278,21 @@ function thead(eg) {
       colspan = 1
       rowspan = 2
       formatter = formatLink
-    } else if (thls(e)) {
+    } else if (isResource(e)) {
       colspan = 1
       rowspan = 2
       if (e == '資材') {
         temp = devpic
         if (q == 'd') visible = false
       }
-    }
-    if (e == 'ratio') {
+    } else if (e == 'ratio') {
       colspan = 2
       temp = '主查询合计'
       formatter = formatR
+    } else {
+      e = convertHalfToFullWidth(e)
     }
-    if (e == 'ratio' || thls(e) || e[0] == 'n') {
+    if (e == 'ratio' || isResource(e) || e[0] == 'n') {
       if (!isNaN(e[e.length - 1])) {
         showid = e.slice(1, e.length)
         temp = q == 'd' ? formatItemId(showid) : formatshipId(showid)
@@ -336,7 +319,7 @@ function thead(eg) {
       f = e.slice(1)
     }
     // if (e == 'ratio'||( e!='i'&& e!='fuel'&& e!='denominator'&& e!='times'&& e!='ammo'&& e[0]!='n'&& e[0]!='l')) {
-    if (e == 'ratio' || (!thls(e) && e != 'times' && e[0] != 'n' && e[0] != 'l')) {
+    if (e == 'ratio' || (!isResource(e) && e != 'times' && e[0] != 'n' && e[0] != 'l')) {
       f = '%'
       if (e == 'ratio') {
         f = '确率'
@@ -346,10 +329,10 @@ function thead(eg) {
     if (e[0] == 'l') {
       f = 'Lv'
     }
-    if (e == 'times' || e[0] == 'n' || !thls(e)) {
+    if (e == 'times' || e[0] == 'n' || !isResource(e)) {
       col.push({
         title: f,
-        field: e,
+        field: convertHalfToFullWidth(e),
         sortable: true,
         formatter: formatter,
       })
@@ -357,7 +340,7 @@ function thead(eg) {
   }
   return [co, col]
 }
-function thls(e) {
+function isResource(e) {
   return ['i', 'fuel', 'ammo', 'steel', 'bauxite', '資材', 'secretary', 'denominator'].indexOf(e) > -1
 }
 function formatR(value) {
@@ -496,7 +479,7 @@ function addicon(name, c) {
       return '<span class="flex">' + color + itag(slotitem[a]['api_type'][3]) + str + '</sapn>'
     }
   }
-  return '<span class="flex">' + color + str + '</sapn>'
+  return '<span class="flex">' + color + convertHalfToFullWidth(str) + "</sapn>";
 }
 
 if (q == 'c') {
