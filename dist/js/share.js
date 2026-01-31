@@ -146,8 +146,8 @@ function sortby(x, y) {
     ? isNaN(x[sortkey][1])
       ? x[sortkey].localeCompare(y[sortkey])
       : sortkey == 'luck'
-      ? x[sortkey][0] - y[sortkey][0]
-      : x[sortkey][1] - y[sortkey][1]
+        ? x[sortkey][0] - y[sortkey][0]
+        : x[sortkey][1] - y[sortkey][1]
     : x[sortkey] - y[sortkey]
 }
 function bSort(arr) {
@@ -209,7 +209,7 @@ setTimeout(function () {
       'url(https://fleet.diablohu.com/!/assets/images/homebg/' +
         // "2"
         Math.round(25 * Math.random()) +
-        '.jpg)'
+        '.jpg)',
     )
     // console.log($('#logo').css("width"))
     $('#logo').attr('width', '500px')
@@ -247,7 +247,7 @@ function timetable(t) {
       e[0] +
       '"  id="' +
       e[0] +
-      (e==t.length ? '" checked="checked"' : '"') +
+      (e == t.length ? '" checked="checked"' : '"') +
       '><label for ="' +
       e[0] +
       '">' +

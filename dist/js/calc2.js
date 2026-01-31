@@ -12,8 +12,7 @@ stype[553] = "伊勢改(二)";
 stype[554] = "日向改(二)";
 stype[571] = "Nelson";
 stype[589] = "L.d.S.D.d.Abruzzi级";
-var devpic =
-  '<img src="https://uploads.kcwiki.cn/commons/a/a8/IcoMaterial.png" alt="资材" style="height:22px;">';
+var devpic = '<img src="https://uploads.kcwiki.cn/commons/a/a8/IcoMaterial.png" alt="资材" style="height:22px;">';
 q = GetRequest("q", 1);
 var slotitem;
 var api = q == "d" ? "api_" : "";
@@ -82,15 +81,13 @@ function jsonover() {
   document.title = oname;
   var e = GetRequest("e", 1);
   e = e.indexOf("") ? e : [];
-  if (jsindex == ranget.length + 1)
-    $("h3.panel-title")[0].innerHTML = "数据计算中。。。";
+  if (jsindex == ranget.length + 1) $("h3.panel-title")[0].innerHTML = "数据计算中。。。";
   console.log(jsindex, ranget.length + 2);
   if (jsindex == ranget.length + 2) {
     progress(20);
     var filted = filt(group2By(bigdata, "i", "s"), o);
     if (!filted.length) {
-      $("h3.panel-title")[0].innerHTML =
-        "无匹配的结果，请减少主查询个数，或将主查询改为副查询";
+      $("h3.panel-title")[0].innerHTML = "无匹配的结果，请减少主查询个数，或将主查询改为副查询";
     } else {
       // console.log(filted.length);
       o = o.concat(e);
@@ -171,8 +168,7 @@ function setdeno(a) {
     }
   } else {
     $("div.panel").show();
-    $("h3.panel-title")[0].innerHTML =
-      "存在查询结果，但公式次数设置过大，请在左上方重新设置";
+    $("h3.panel-title")[0].innerHTML = "存在查询结果，但公式次数设置过大，请在左上方重新设置";
     $(".deno").css("background", "gold");
   }
 }
@@ -185,9 +181,7 @@ $(document).ready(function () {
   });
   setTimeout(function () {
     console.log(22);
-    js(
-      "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/bootstrap-table-locale-all.js"
-    );
+    js("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/bootstrap-table-locale-all.js");
     js("https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js");
     progress(2);
     if (!havelang) {
@@ -201,7 +195,7 @@ $(document).ready(function () {
       setTimeout(function () {
         for (let i = 0; i < 2; i++) {
           document.getElementsByClassName("search-input")[i].value = Japanized(
-            document.getElementsByClassName("search-input")[i].value
+            document.getElementsByClassName("search-input")[i].value,
           );
         }
       }, 50);
@@ -216,11 +210,7 @@ function bgclr(a, b) {
 function langchange() {
   initTable(locallang());
   $("div.th-inner.sortable.both").each(function () {
-    if (
-      [devpic, "油", "弹", "钢", "铝"].indexOf(Simplized(this.innerHTML)) >
-        -1 ||
-      !isNaN(this.innerHTML)
-    ) {
+    if ([devpic, "油", "弹", "钢", "铝"].indexOf(Simplized(this.innerHTML)) > -1 || !isNaN(this.innerHTML)) {
       $(this).css("width", "0px");
       if (!isNaN(this.innerHTML)) $(this).css("color", "grey");
       bgclr("fuel", this);
@@ -286,10 +276,7 @@ function thead(eg) {
       f = e.slice(1, e.length);
     }
     // if (e == 'ratio'||( e!='i'&& e!='fuel'&& e!='denominator'&& e!='times'&& e!='ammo'&& e[0]!='n'&& e[0]!='l')) {
-    if (
-      e == "ratio" ||
-      (!isResource(e) && e != "times" && e[0] != "n" && e[0] != "l")
-    ) {
+    if (e == "ratio" || (!isResource(e) && e != "times" && e[0] != "n" && e[0] != "l")) {
       f = "%";
       if (e == "ratio") {
         f = "确率";
@@ -311,18 +298,7 @@ function thead(eg) {
   return [co, col];
 }
 function isResource(e) {
-  return (
-    [
-      "i",
-      "fuel",
-      "ammo",
-      "steel",
-      "bauxite",
-      "資材",
-      "secretary",
-      "denominator",
-    ].indexOf(e) > -1
-  );
+  return ["i", "fuel", "ammo", "steel", "bauxite", "資材", "secretary", "denominator"].indexOf(e) > -1;
 }
 function formatR(value) {
   return value ? (value * 100).toFixed(2) + "%" : null;
@@ -338,13 +314,7 @@ function formatLink(value, row, index) {
     }
   }
   piedata.push(value);
-  return (
-    "<a href='javascript:pie(" +
-    JSON.stringify(piedata) +
-    ")'>" +
-    value +
-    "</a>"
-  );
+  return "<a href='javascript:pie(" + JSON.stringify(piedata) + ")'>" + value + "</a>";
 }
 function pie(e) {
   // alert(JSON.stringify(e));
@@ -414,10 +384,7 @@ function isonladd(array, o) {
       }
       if (minlv) {
         if (onal["l" + item]) {
-          onal["l" + item] = Math.min(
-            onal["l" + item],
-            Number(array[i][j]["l"])
-          );
+          onal["l" + item] = Math.min(onal["l" + item], Number(array[i][j]["l"]));
         } else {
           onal["l" + item] = Math.min(121, Number(array[i][j]["l"]));
         }
@@ -480,9 +447,7 @@ function initTable(lval) {
   //     padding = kj ? '' : '4';
   //     $('.table .th-inner').css('white-space', 'normal')}
   document.getElementById("csscontainer").innerHTML =
-    ".fix-sticky {padding-top:" +
-    padding +
-    "0px;position: fixed !important;overflow: hidden;  z-index: 100;}";
+    ".fix-sticky {padding-top:" + padding + "0px;position: fixed !important;overflow: hidden;  z-index: 100;}";
 }
 function formatOnlyname(value) {
   var str = value;
@@ -502,13 +467,7 @@ function addicon(name, c) {
   var color = c ? '<span style="color:' + c + ';">▐</span>' : ""; //▮∎■
   for (let a = 0; a < slotitem.length; a++) {
     if (slotitem[a]["api_name"] == str) {
-      return (
-        '<span class="flex">' +
-        color +
-        itag(slotitem[a]["api_type"][3]) +
-        str +
-        "</sapn>"
-      );
+      return '<span class="flex">' + color + itag(slotitem[a]["api_type"][3]) + str + "</sapn>";
     }
   }
   return '<span class="flex">' + color + convertHalfToFullWidth(str) + "</sapn>";
@@ -520,18 +479,18 @@ function addicon(name, c) {
  */
 function convertHalfToFullWidth(str) {
   // 先判断传入的是否是字符串，避免非字符串参数报错
-  if (typeof str !== 'string') {
-    console.warn('传入参数不是字符串类型，请传入有效字符串');
-    return str || '';
+  if (typeof str !== "string") {
+    console.warn("传入参数不是字符串类型，请传入有效字符串");
+    return str || "";
   }
 
   // 方案1：分步替换（清晰易懂，适合新手，便于单独调整某个字符）
   let result = str
-    .replace(/&/g, '＆') // 半角& 替换为 全角＆
-    .replace(/\?/g, '？') // 半角? 替换为 全角？
-    .replace(/!/g, '！') // 半角! 替换为 全角！
-    .replace(/#/g, '＃') // 半角# 替换为 全角＃
-    .replace(/\$/g, '＄') // 半角$ 替换为 全角＄
-    .replace(/%/g, '％'); // 半角% 替换为 全角％
+    .replace(/&/g, "＆") // 半角& 替换为 全角＆
+    .replace(/\?/g, "？") // 半角? 替换为 全角？
+    .replace(/!/g, "！") // 半角! 替换为 全角！
+    .replace(/#/g, "＃") // 半角# 替换为 全角＃
+    .replace(/\$/g, "＄") // 半角$ 替换为 全角＄
+    .replace(/%/g, "％"); // 半角% 替换为 全角％
   return result;
 }

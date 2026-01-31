@@ -84,7 +84,7 @@ function loadchart() {
   isFirst = false
   if (column.length < 1 || rawlen < 1) {
     info.innerHTML = '正在加载数据，请在数秒后再次点击'
-    console.log({raw, rnd})
+    console.log({ raw, rnd })
     return
   }
   sortkey = $('#sort').val()
@@ -453,7 +453,7 @@ function genShowContent(id, checkboxId, index, showText, idName) {
       addicon(getname(showText, kj)),
       " </label><span class='content' id='",
       idName,
-      "' ></span></span>"
+      "' ></span></span>",
     )
   $('#' + id).append(showContent)
 }

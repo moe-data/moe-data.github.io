@@ -35,14 +35,12 @@ var releasetime = {
   '2013/05/15': [54, 55],
   '2013/05/08': [44, 45, 46, 52],
 }
-$.getJSON("dist/items/developable/sortby/init.json", function (result) {
-  init = result;
-}).done(function (d) {
-});
-$.getJSON("dist/items/developable/sortby/releasetime.json", function (result) {
-  releasetime = result;
-}).done(function (d) {
-});
+$.getJSON('dist/items/developable/sortby/init.json', function (result) {
+  init = result
+}).done(function (result) {})
+$.getJSON('dist/items/developable/sortby/releasetime.json', function (result) {
+  releasetime = result
+}).done(function (result) {})
 developable = []
 var release = init
 for (key in release) {

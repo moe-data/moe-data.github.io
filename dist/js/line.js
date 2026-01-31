@@ -94,7 +94,7 @@ function loadchart() {
   isFirst = false
   if (column.length < 1 || rawlen < 1) {
     info.innerHTML = '请选择属性'
-    console.log({raw, rnd})
+    console.log({ raw, rnd })
     return
   }
   sortkey = $('#sort').val()
@@ -295,29 +295,29 @@ function getseries(r, c, shape, stack, sortkey) {
                 }
               }
             : e == 'stype'
-            ? function (params) {
-                if (temp == formatStype(params.value)) {
-                  return ''
-                } else {
-                  temp = formatStype(params.value)
-                  return temp
-                }
-              }
-            : function (params) {
-                if (params.seriesType == 'line') {
-                  if (Math.random() < 0.8 || params.value == 0) {
+              ? function (params) {
+                  if (temp == formatStype(params.value)) {
                     return ''
                   } else {
-                    return params.value
-                  }
-                } else {
-                  if (params.value < limit) {
-                    return ''
-                  } else {
-                    return params.value
+                    temp = formatStype(params.value)
+                    return temp
                   }
                 }
-              },
+              : function (params) {
+                  if (params.seriesType == 'line') {
+                    if (Math.random() < 0.8 || params.value == 0) {
+                      return ''
+                    } else {
+                      return params.value
+                    }
+                  } else {
+                    if (params.value < limit) {
+                      return ''
+                    } else {
+                      return params.value
+                    }
+                  }
+                },
         position: eie ? 'right' : 'insideLeft',
       },
       lineStyle: {
@@ -464,7 +464,7 @@ function genCheckBox(id, name, value, showText, parentIndex, stat) {
       showText,
       " id='" + parentIndex + value + "' /><label for='" + parentIndex + value + "'>",
       txt,
-      '</label></span>'
+      '</label></span>',
     )
   $('#' + id).append(checkbox)
   // debug(id,checkbox)
@@ -506,7 +506,7 @@ function genShowContent(id, checkboxId, index, showText, idName, stat) {
       colon,
       " </label><span class='content' id='",
       idName,
-      "' ></span></span>"
+      "' ></span></span>",
     )
   $('#' + id).append(showContent)
 }
