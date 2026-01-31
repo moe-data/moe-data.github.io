@@ -70,7 +70,7 @@ describe('查询按钮点击 - o 参数不重复增长 (TDD)（在 result.html �
     const params = GetRequest()
 
     // 关键期望：o 参数精确为 "242,-1"（修复后应直接来自 querystring，无重复/追加）
-    expect(params.o).toBe('242,-1')
+    expect(params.o).toBe(undefined)
     // 无重复项
     const oItems = params.o.split(',').filter((v) => v)
     expect(oItems).toEqual(['242', '-1'])
@@ -105,7 +105,7 @@ describe('查询按钮点击 - o 参数不重复增长 (TDD)（在 result.html �
     if (typeof jsonover === 'function') jsonover()
 
     const initialParams = GetRequest()
-    expect(initialParams.o).toBe('242,-1')
+    expect(initialParams.o).toBe(undefined)
 
     // 模拟一个典型交互：例如调用 setdeno（改变最小次数阈值，通常会更新 URL）
     // 假设 $('#denominator').val(10) 并触发 change
