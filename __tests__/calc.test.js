@@ -9,7 +9,6 @@ const scriptPaths = [
   '../dist/js/share.js',
   '../dist/js/table.js',
   '../dist/js/line.js',
-  '../dist/js/possible.js',
   '../dist/js/scatter.js',
   '../dist/js/item.js',
 ];

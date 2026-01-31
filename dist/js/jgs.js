@@ -19,7 +19,7 @@ if (typeof jQuery == 'undefined') {
   document.write(unescape("%3Cscript src='./dist/js/cdn/jquery.min.js' type='text/javascript'%3E%3C/script%3E"))
 }
 function isvalid(e) {
-  return e ? (isNaN(e) ? e.length : true) : false
+  return e ? (isNaN(e) ? !!e.length : true) : false
 }
 function ifnull(notnul, ifnul) {
   if (typeof notnul === 'undefined') {

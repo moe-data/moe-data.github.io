@@ -46,9 +46,9 @@ describe('jgs.js 工具函数单元测试 (TDD)', () => {
   // 当前 isvalid 有 bug：字符串返回 length（数字），非布尔
   // 建议修复后通过（见下文）
   test('isvalid 应正确判断值有效性（返回布尔值）', () => {
-    // expect(isvalid('hello')).toBe(true);   // 当前返回 5，失败 → 驱动修复
+    expect(isvalid('hello')).toBe(true);
     expect(isvalid(123)).toBe(true);
-    // expect(isvalid(0)).toBe(false);        // 当前返回 false（0 为 falsy）
+    expect(isvalid(0)).toBe(true);
     expect(isvalid('')).toBe(false);
     expect(isvalid(undefined)).toBe(false);
     expect(isvalid(null)).toBe(false);
