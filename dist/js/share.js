@@ -271,3 +271,22 @@ function isContain(parent, son) {
   }
   return true
 }
+
+const exclude = [
+  'id',
+  'sortno',
+  'sort_id',
+  'afterfuel',
+  'afterbull',
+  'fuel_max',
+  'bull_max',
+  'aftershipid',
+  'ctype',
+  'backs',
+  'afterlv',
+  'slot_num',
+  'type',
+  'stype',
+  'itype',
+  'buildtime',
+]

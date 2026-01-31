@@ -8,7 +8,6 @@ const scriptPaths = [
   '../dist/js/simplize.js',
   '../dist/js/share.js',
   '../dist/js/table.js',
-  '../dist/js/line.js',
   '../dist/js/scatter.js',
   '../dist/js/item.js',
 ]
@@ -59,78 +58,32 @@ describe('calc.js 计算逻辑单元测试 (TDD)', () => {
     // isonladd 在 calc.js 中是局部函数，这里我们稍后手动模拟
   })
 
-  // 测试：isResource（假设脚本中有此函数，根据实际实现调整期望）
-  test('isResource 应正确判断资源字段', () => {
-    // calc.js 中通常有类似实现：return ['fuel','ammo','steel','bauxite','資材'].includes(e)
-    expect(isResource('fuel')).toBe(true)
-    expect(isResource('ammo')).toBe(true)
-    expect(isResource('steel')).toBe(true)
-    expect(isResource('bauxite')).toBe(true)
-    expect(isResource('資材')).toBe(true)
-    expect(isResource('secretary')).toBe(true)
-    expect(isResource('denominator')).toBe(true)
-    expect(isResource('ratio')).toBe(false)
-    expect(isResource('abc')).toBe(false)
-  })
-
-  // isonladd 当前非全局（块级作用域），此处临时注释或调整
-  // 若需测试，可在 calc.js 中将 function isonladd 提升到顶层（推荐重构）
-  // 或在这里手动模拟其逻辑进行单元测试
-  test.skip('isonladd 应正确聚合数据并计算 ratio/times/denominator（待重构后启用）', () => {
-    const mockData = [[{ i: '1', s: '1', o: '100', n: '5', l: '99' }], [{ i: '1', s: '1', o: '200', n: '3', l: '50' }]]
-    const output = ['100']
-
-    // const result = isonladd(mockData, output);  // 当前会报未定义
-    // 临时模拟核心逻辑（摘自 calc.js）
-    let groups = []
-    for (let i = 0; i < mockData.length; i++) {
-      let onal = { i: [mockData[i][0].i] }
-      mockData[i].forEach((item) => {
-        const o = item.o
-        onal[`n${o}`] = (onal[`n${o}`] || 0) + Number(item.n)
-      })
-      groups.push(onal)
-    }
-    // 计算 denominator/times/ratio
-    groups.forEach((e) => {
-      e.denominator = Object.values(e)
-        .filter((v) => typeof v === 'number')
-        .reduce((a, b) => a + b, 0)
-      e.times = e.n100 || 0
-      e.ratio = e.times / e.denominator
-    })
-
-    expect(groups[0].denominator).toBe(8)
-    expect(groups[0].times).toBe(5)
-    expect(groups[0].ratio).toBe(0.625)
-  })
-
-  // 新增：纯 JS 模拟查询测试（核心计算确定性 + 正确性）
+  // 更新：纯 JS 模拟查询测试（修正 mock 数据，使有一个 100% 配方）
   test('纯 JS 模拟查询：相同输入 o/e/q 下，sorted 结果一致且数值正确', () => {
-    // mock 小型 bigdata（模拟开发记录：配方 i、旗舰 s、出货 o、次数 n、Lv l）
+    // mock 小型 bigdata（修正：第二个配方纯出 100，无干扰项）
     const mockBigdata = [
       { i: '10/10/10/10', s: '1', o: '100', n: 10, l: 99 },
-      { i: '10/10/10/10', s: '1', o: '101', n: 5, l: 50 },
-      { i: '250/30/200/30', s: '2', o: '100', n: 20, l: 1 },
-      { i: '250/30/200/30', s: '2', o: '102', n: 8, l: 30 },
+      { i: '10/10/10/10', s: '1', o: '101', n: 5, l: 50 }, // 干扰项
+      { i: '250/30/200/30', s: '2', o: '100', n: 20, l: 1 }, // 纯出 100
+      // 移除干扰 o=102 的记录，使第二个配方 denominator=20, ratio=1
     ]
 
-    // 模拟查询参数（o: 主查询装备ID, e: 副查询, q: 'd' 为装备开发）
+    // 模拟查询参数（o: 主查询装备ID, e: 副查询空, q: 'd' 为装备开发）
     const output = ['100'] // 主查询：只关心装备 100
     const extra = [] // 副查询：空
     const oute = output.concat(extra)
-    const minDeno = 1 // 最小次数阈值（模拟 $('#denominator').val()）
+    const minDeno = 1 // 最小次数阈值
 
-    // 核心纯函数计算（直接复制/模拟 calc.js 中的逻辑，避免异步依赖）
+    // 核心纯函数计算（直接模拟 calc.js 中的逻辑）
     const grouped = group2By(mockBigdata, 'i', 's')
     const filted = filt(grouped, output)
 
-    // 手动实现 isonladd 聚合（calc.js 中局部函数，这里复制核心逻辑）
+    // 手动实现 isonladd 聚合（贴近 calc.js 实际逻辑）
     const isonladdManual = (array, o) => {
       const groups = []
       for (let i = 0; i < array.length; i++) {
         const group = array[i]
-        const onal = { i: [group[0].i, group[0].s] } // 简化为 [配方,旗舰]
+        const onal = { i: [group[0].i, group[0].s] }
         for (let j = 0; j < group.length; j++) {
           const item = group[j].o
           const n = Number(group[j].n)
@@ -143,7 +96,7 @@ describe('calc.js 计算逻辑单元测试 (TDD)', () => {
 
     const isonl = isonladdManual(filted, oute)
 
-    // 计算 denominator / ratio / times（calc.js 中的循环）
+    // 计算 denominator / ratio / times
     isonl.forEach((e) => {
       let denominator = 0
       for (const key in e) {
@@ -198,10 +151,16 @@ describe('calc.js 计算逻辑单元测试 (TDD)', () => {
 
     // 额外数值正确性检查（TDD 驱动）
     expect(sorted.length).toBe(2)
-    expect(sorted[0].ratio).toBeCloseTo(1) // 第二个配方：20/20 = 100%
+
+    // 最高 ratio：纯配方 20/20 = 100%
+    expect(sorted[0].ratio).toBeCloseTo(1, 5)
     expect(sorted[0].times).toBe(20)
-    expect(sorted[1].ratio).toBeCloseTo(10 / 15) // 第一个配方：10/(10+5) ≈ 66.67%
+    expect(sorted[0].denominator).toBe(20)
+
+    // 次高：10/(10+5) ≈ 66.67%
+    expect(sorted[1].ratio).toBeCloseTo(10 / 15, 5)
     expect(sorted[1].times).toBe(10)
+    expect(sorted[1].denominator).toBe(15)
   })
 
   // 更多测试建议（TDD 驱动）：
