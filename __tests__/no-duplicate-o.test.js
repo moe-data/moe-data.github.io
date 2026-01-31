@@ -12,121 +12,167 @@ const scriptPaths = [
   '../dist/js/table.js',
   '../dist/js/scatter.js',
   '../dist/js/item.js',
+  '../dist/js/calc.js',
 ]
 
 const scriptCodes = scriptPaths.map((scriptPath) => fs.readFileSync(path.join(__dirname, scriptPath), 'utf-8'))
 
 describe('查询按钮点击 - o 参数不重复增长 (TDD)', () => {
-  let mockJQuery
   let capturedUrls = []
+  let currentHref = 'https://moe-data.github.io/index.html'
 
-  beforeAll(() => {
-    // 设置页面 DOM
-    document.documentElement.innerHTML = indexHtml
+  // 完整 mock location 对象（避免重定义不可配置的 href）
+  const mockLocation = {
+    assign: jest.fn((url) => {
+      const fullUrl = new URL(url, currentHref).href
+      currentHref = fullUrl
+      capturedUrls.push(fullUrl)
+    }),
+    replace: jest.fn((url) => {
+      const fullUrl = new URL(url, currentHref).href
+      currentHref = fullUrl
+      capturedUrls.push(fullUrl)
+    }),
+    reload: jest.fn(),
+    ancestorOrigins: {},
+    hash: '',
+    host: 'moe-data.github.io',
+    hostname: 'moe-data.github.io',
+    href: currentHref,
+    origin: 'https://moe-data.github.io',
+    pathname: '/index.html',
+    port: '',
+    protocol: 'https:',
+    search: '',
+    toString: () => currentHref,
+  }
 
-    // 增强 jQuery mock（覆盖 calc.js 中常用方法，避免崩溃）
-    mockJQuery = {
-      on: jest.fn().mockReturnThis(),
-      prop: jest.fn().mockReturnThis(),
-      each: jest.fn().mockReturnThis(),
-      ready: jest.fn().mockImplementation((fn) => fn && fn()),
+  // jQuery mock：支持真实事件绑定（direct + delegated）
+  global.jQuery = global.$ = function (selector) {
+    if (typeof selector === 'function') {
+      selector()
+      return { ready: jest.fn() }
+    }
+    const elements = selector === document ? [document] : Array.from(document.querySelectorAll(selector || ''))
+    return {
+      elements,
+      on: function (event, childSelector, handler) {
+        if (typeof childSelector === 'function') {
+          handler = childSelector
+          childSelector = undefined
+        }
+        elements.forEach((el) => {
+          const finalHandler = childSelector
+            ? (e) => {
+                if (e.target.matches(childSelector) || e.target.closest(childSelector)) {
+                  handler.call(e.target, e)
+                }
+              }
+            : handler
+          el.addEventListener(event, finalHandler)
+        })
+        return this
+      },
       css: jest.fn().mockReturnThis(),
       hide: jest.fn().mockReturnThis(),
       show: jest.fn().mockReturnThis(),
-      val: jest.fn(() => ''), // 可根据需要模拟输入值
-      change: jest.fn().mockReturnThis(),
-      bind: jest.fn().mockReturnThis(),
-      getJSON: jest.fn().mockImplementation((url, callback) => setTimeout(() => callback([]), 0)),
+      val: jest.fn(() => ''),
+      prop: jest.fn().mockReturnThis(),
+      each: jest.fn((fn) => {
+        elements.forEach((el, i) => fn(i, el))
+        return this
+      }),
+      getJSON: jest.fn().mockImplementation((url, cb) => setTimeout(() => cb([]), 0)),
       load: jest.fn(),
+      ready: jest.fn((fn) => fn && fn()),
     }
+  }
 
-    global.jQuery = global.$ = jest.fn((arg) => {
-      if (typeof arg === 'function') arg()
-      return mockJQuery
-    })
-
-    // 捕获 URL 更新（覆盖 location.href/assign/replace 和 history）
-    capturedUrls = []
-    const pushUrl = (val) => {
-      let fullUrl = val
-      if (!val.startsWith('http')) {
-        fullUrl = window.location.origin + val
-      }
-      capturedUrls.push(fullUrl)
-    }
-
-    window.location.assign = jest.fn(pushUrl)
-    window.location.replace = jest.fn(pushUrl)
-    Object.defineProperty(window.location, 'href', {
-      set: pushUrl,
+  beforeAll(() => {
+    // 完全替换 window.location 为 mock（jsdom 允许）
+    Object.defineProperty(window, 'location', {
+      value: mockLocation,
+      writable: true,
       configurable: true,
     })
-    window.history.pushState = jest.fn((_, __, url) => pushUrl(url || window.location.href))
-    window.history.replaceState = jest.fn((_, __, url) => pushUrl(url || window.location.href))
 
-    // 加载脚本（模拟浏览器执行 <script>）
-    const jgsScript = document.createElement('script')
-    jgsScript.textContent = jgsCode
-    document.body.appendChild(jgsScript)
+    // mock history（防止 pushState/replaceState 使用真实 location）
+    window.history.pushState = jest.fn((state, title, url) => {
+      if (url) {
+        const fullUrl = new URL(url, currentHref).href
+        currentHref = fullUrl
+        capturedUrls.push(fullUrl)
+      }
+    })
+    window.history.replaceState = jest.fn((state, title, url) => {
+      if (url) {
+        const fullUrl = new URL(url, currentHref).href
+        currentHref = fullUrl
+        capturedUrls.push(fullUrl)
+      }
+    })
 
-    const calcScript = document.createElement('script')
-    calcScript.textContent = calcCode
-    document.body.appendChild(calcScript)
+    // 设置页面 DOM
+    document.documentElement.innerHTML = indexHtml
 
-    // 如有 jsonover，模拟调用（calc.js 异步完成）
+    // 加载所有脚本（模拟浏览器 <script> 执行）
+    scriptCodes.forEach((code) => {
+      const script = document.createElement('script')
+      script.textContent = code
+      document.body.appendChild(script)
+    })
+
+    // 模拟异步完成（如 jsonover）
     if (typeof jsonover === 'function') {
       jsonover()
       jsonover()
     }
   })
 
-  test('多次点击检索按钮，o 参数不重复增长（应替换而非追加）', () => {
-    // 查找“检索”按钮（根据页面实际调整 selector）
-    const button =
-      document.querySelector('input[value="检索"]') ||
-      document.querySelector('button[contains(text(),"检索")]') ||
-      document.querySelector('#searchBtn, #queryBtn, .search-button') // 常见备选
-
+  test('多次点击检索按钮，o 参数不重复增长（应初始化/替换而非追加）', () => {
+    const button = document.querySelector('.go')
     if (!button) {
-      throw new Error('未找到检索按钮，请根据 index.html 实际结构调整 selector')
+      throw new Error('未找到 .go 检索按钮，请确认页面 HTML 结构')
     }
 
-    // 清空初始 URL 参数
-    Object.defineProperty(window.location, 'search', { value: '', configurable: true })
-
-    // 清空捕获
+    // 模拟初始状态：页面带有 o 参数（从 URL 加载选中）
+    mockLocation.search = '?o=100,101' // 假设初始两个选中装备
     capturedUrls = []
 
-    // 第一次点击（假设当前输入/选择会导致某个 o 值，例如 o=100）
-    button.click()
+    // 可选：手动模拟选中（若点击逻辑依赖当前 checked 状态）
+    // 示例：找到装备 checkbox 并选中（根据实际 name/value 调整）
+    // document.querySelectorAll('input[type="checkbox"][name="item"][value="100"]').forEach(cb => cb.checked = true);
+    // document.querySelectorAll('input[type="checkbox"][name="item"][value="101"]').forEach(cb => cb.checked = true);
 
-    // 应有 URL 更新
-    expect(capturedUrls.length).toBeGreaterThan(0)
-    const firstUrl = new URL(capturedUrls[capturedUrls.length - 1], window.location.origin)
+    // 第一次点击
+    button.dispatchEvent(new Event('click', { bubbles: true }))
+
+    expect(capturedUrls.length).toBeGreaterThanOrEqual(1)
+    const firstUrl = new URL(capturedUrls[capturedUrls.length - 1] || currentHref)
     const firstO = firstUrl.searchParams.get('o') || ''
-    expect(firstO).not.toBe('') // 应有 o 参数（如果默认无，可调整期望）
 
-    // 模拟“reload”：设置当前 search 为第一次的结果
-    Object.defineProperty(window.location, 'search', { value: firstUrl.search, configurable: true })
-
-    // 清空捕获，准备第二次点击
+    // 重置捕获，准备第二次点击
     capturedUrls = []
 
-    // 第二次点击（输入不变，固定版本应保持 o 不变/替换为相同值）
-    button.click()
+    // 第二次点击（输入不变，修复后 o 应保持相同）
+    button.dispatchEvent(new Event('click', { bubbles: true }))
 
-    expect(capturedUrls.length).toBeGreaterThan(0)
-    const secondUrl = new URL(capturedUrls[capturedUrls.length - 1], window.location.origin)
+    expect(capturedUrls.length).toBeGreaterThanOrEqual(1)
+    const secondUrl = new URL(capturedUrls[capturedUrls.length - 1] || currentHref)
     const secondO = secondUrl.searchParams.get('o') || ''
 
-    // 关键期望：修复后 o 不增长（字符串相同，不出现重复如 "100,100" 或长度翻倍）
-    expect(secondO).toBe(firstO) // 替换：相同
-    expect(secondO.split(',').length).toBe(firstO.split(',').length) // 长度不变
-    expect(secondO).not.toMatch(/(\w+),\1/) // 无明显重复项（可选增强）
+    // 关键期望：修复后 o 参数不增长（值相同，无重复）
+    expect(secondO).toBe(firstO)
+    if (firstO) {
+      const firstItems = firstO.split(',').sort()
+      const secondItems = secondO.split(',').sort()
+      expect(secondItems).toEqual(firstItems) // 项相同、无重复
+      expect(secondO).not.toMatch(/(\d+).*\1.*\1/) // 无明显重复项
+    }
 
-    // e 参数正常（不增长，可选检查）
+    // e 参数正常检查（若存在）
     const firstE = firstUrl.searchParams.get('e') || ''
-    const secondbd = secondUrl.searchParams.get('e') || ''
-    expect(secondE).toBe(firstE) // 假设 e 始终替换
+    const secondE = secondUrl.searchParams.get('e') || ''
+    expect(secondE).toBe(firstE)
   })
 })

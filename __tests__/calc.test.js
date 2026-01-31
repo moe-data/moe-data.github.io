@@ -5,7 +5,6 @@ const path = require('path')
 const scriptPaths = [
   '../dist/js/cdn/jquery.min.js',
   '../dist/js/cdn/bootstrap.js',
-  'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.js',
   '../dist/js/jgs.js',
   '../dist/js/simplize.js',
   '../dist/js/share.js',
