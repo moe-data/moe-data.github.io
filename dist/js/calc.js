@@ -38,10 +38,10 @@ $.getJSON('parsed/' + jsonfile + '.json').done(function (result) {
   slotitem = result
   jsonover()
   var oname = []
-  for (let j = 0; j < output.length; j++) {
+  for (let j = 0; j < output?.length; j++) {
     oname.push(addemoji(formatOnlyname(output[j])))
   }
-  document.title = oname.length ? oname : '全部' + (q == 'd' ? '装备' : '舰娘')
+  document.title = oname?.length ? oname : '全部' + (q == 'd' ? '装备' : '舰娘')
 })
 $('#denominator').val(Number(GetRequest('a', 1)))
 var minlv = GetRequest('l') == 'true' ? true : false
@@ -51,7 +51,7 @@ function progress(p) {
 }
 var detect = navigator.browserLanguage || navigator.language
 if (!havelang) {
-  if (detect.length > 0) {
+  if (detect?.length > 0) {
     console.log(detect)
   } else {
     detect = 'zh-CN'
@@ -60,7 +60,7 @@ if (!havelang) {
     kj = true
   }
   selectlang = document.getElementById('locale')
-  for (let i = 0; i < selectlang.length; i++) {
+  for (let i = 0; i < selectlang?.length; i++) {
     if (selectlang[i].value == detect) {
       selectlang[i].selected = true
     }
@@ -68,10 +68,10 @@ if (!havelang) {
 }
 function jsonover() {
   jsindex++
-  console.log({ jsindex, ranget: ranget.length + 2, bigdata: bigdata.length })
-  progress((1 / (ranget.length + 2)) * 80)
-  // if (jsindex == ranget.length + 1)$('h3.panel-title')[0].innerHTML = ("数据计算中。。。");
-  if (jsindex >= ranget.length + 2) {
+  console.log({ jsindex, ranget: ranget?.length + 2, bigdata: bigdata?.length })
+  progress((1 / (ranget?.length + 2)) * 80)
+  // if (jsindex == ranget?.length + 1)$('h3.panel-title')[0].innerHTML = ("数据计算中。。。");
+  if (jsindex >= ranget?.length + 2) {
     progress(20)
     var filted = filt(group2By(bigdata, 'i', 's'), output)
 
@@ -93,10 +93,10 @@ function jsonover() {
     //     })
     //     nrlist.push(olist)
     // })
-    // z(nrlist.length)
-    // var j = nrlist.length
+    // z(nrlist?.length)
+    // var j = nrlist?.length
     // while (j--) {
-    //     for (let i = 0; i < nrlist.length; i++) {
+    //     for (let i = 0; i < nrlist?.length; i++) {
     //         if (i != j && isContain(nrlist[i], nrlist[j])) {
     //             nrlist.splice(j, 1)
     //             break
@@ -107,14 +107,14 @@ function jsonover() {
     // z(JSON.stringify(nrlist))
 
     // -  - -
-    if (!filted.length) {
+    if (!filted?.length) {
       $('h3.panel-title')[0].innerHTML = '无匹配的结果，请减少主查询个数，或将主查询改为副查询'
     } else {
-      // console.log(filted.length);
+      // console.log(filted?.length);
       const oute = output.concat(extra)
       isonl = isonladd(filted, oute)
       function isonladd(array, o) {
-        for (k = 0; k < o.length; k++) {
+        for (k = 0; k < o?.length; k++) {
           egnrl(o[k])
         }
         if (q == 'd') {
@@ -122,7 +122,7 @@ function jsonover() {
         }
         let groups = []
         // o.push(-1)
-        for (let i = 0, l = array.length; i < l; i++) {
+        for (let i = 0, l = array?.length; i < l; i++) {
           let is = array[i][0]['i']
           if (q == 'd') {
             if (typeof is == 'string') is = JSON.parse(is)
@@ -132,7 +132,7 @@ function jsonover() {
             is.push(formatshipId(array[i][0]['s']))
           }
           var onal = { i: is }
-          for (let j = 0; j < array[i].length; j++) {
+          for (let j = 0; j < array[i]?.length; j++) {
             var item = jsonstr(array[i][j]['o'])
             egnrl(item)
             if (onal['n' + item]) {
@@ -165,7 +165,7 @@ function jsonover() {
         e['times'] = 0
         for (key in e) {
           if (key[0] == 'n') {
-            k = key.slice(1, key.length)
+            k = key.slice(1, key?.length)
             e[formatOnlyname(k)] = e[key] / e['denominator']
             if (oute.indexOf(k) > -1) {
               e['ratio'] += e[formatOnlyname(k)]
@@ -179,7 +179,7 @@ function jsonover() {
     $('.loading').hide()
   } else if (jsindex == 3) {
     // var filted = filt(group2By(bigdata, "i", "s"));
-    //     if (filted.length){
+    //     if (filted?.length){
     //         o = o.concat(e);
     //         isonl = isonladd(filted, o);
     //         isonl.forEach(function(e) {
@@ -194,7 +194,7 @@ function jsonover() {
     //             e['times'] = 0;
     //             for (key in e) {
     //                 if (key[0] == 'n') {
-    //                     k = key.slice(1, key.length);
+    //                     k = key.slice(1, key?.length);
     //                     e[formatOnlyname(k)] = e[key] / e['denominator'];
     //                     if (o.indexOf(k) > -1) {
     //                         e['ratio'] += e[formatOnlyname(k)];
@@ -215,7 +215,7 @@ function setdeno(a) {
       sorted.push(e)
     }
   })
-  if (sorted.length) {
+  if (sorted?.length) {
     sortkey = GetRequest('s')
     if (!sortkey == 0) {
       sorted.sort(sortby)
@@ -296,8 +296,8 @@ function thead(eg) {
       e = convertHalfToFullWidth(e)
     }
     if (e == 'ratio' || isResource(e) || e[0] == 'n') {
-      if (!isNaN(e[e.length - 1])) {
-        showid = e.slice(1, e.length)
+      if (!isNaN(e[e?.length - 1])) {
+        showid = e.slice(1, e?.length)
         temp = q == 'd' ? formatItemId(showid) : formatshipId(showid)
       }
       co.push({
@@ -351,7 +351,7 @@ function formatLink(value, row, index) {
   var piedata = []
   for (key in row) {
     if (key[0] == 'n') {
-      var itemID = key.slice(1, key.length)
+      var itemID = key.slice(1, key?.length)
       var name = addemoji(formatOnlyname(itemID))
       piedata.push({ value: row[key], name: name })
     }
@@ -419,7 +419,7 @@ function initTable(lval) {
   titleName = { ratio: '' }
   for (key in resourceTitle) {
     if (key[0] == 'r' && key != 'ratio') {
-      key = key.slice(1, key.length)
+      key = key.slice(1, key?.length)
       var k = formatOnlyname(key)
       titleName[k] = 0
     }
@@ -463,7 +463,7 @@ function formatOnlyname(value) {
   if (value == -1) {
     return fail
   }
-  for (nitem = 0; nitem < slotitem.length; nitem++) {
+  for (nitem = 0; nitem < slotitem?.length; nitem++) {
     if (slotitem[nitem][api_ + 'id'] == value) {
       str = slotitem[nitem][api_ + 'name']
       return bra(str, 1)
@@ -474,7 +474,7 @@ function formatOnlyname(value) {
 function addicon(name, c) {
   var str = bra(name, 0)
   var color = c ? '<span style="color:' + c + ';">▐</span>' : '' //▮∎■
-  for (let a = 0; a < slotitem.length; a++) {
+  for (let a = 0; a < slotitem?.length; a++) {
     if (slotitem[a]['api_name'] == str) {
       return '<span class="flex">' + color + itag(slotitem[a]['api_type'][3]) + str + '</sapn>'
     }
