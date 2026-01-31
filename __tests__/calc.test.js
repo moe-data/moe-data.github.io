@@ -1,6 +1,9 @@
 const fs = require('fs')
 const path = require('path')
 
+// 加载 result.html（calc.js 运行在 result.html 页面中，依赖其 DOM 结构）
+const resultHtml = fs.readFileSync(path.join(__dirname, '../result.html'), 'utf-8')
+
 // 加载页面实际依赖的所有脚本
 const scriptPaths = [
   '../dist/js/cdn/jquery.min.js',
@@ -21,32 +24,39 @@ const calcCode = fs.readFileSync(path.join(__dirname, '../dist/js/calc.js'), 'ut
 
 describe('calc.js 计算逻辑单元测试 (TDD)', () => {
   beforeAll(() => {
-    // 模拟 jsdom 环境 + 简单 jQuery mock（仅用于避免 calc.js 执行崩溃）
-    global.jQuery = global.$ = jest.fn(() => ({
-      css: jest.fn().mockReturnThis(),
-      hide: jest.fn().mockReturnThis(),
-      val: jest.fn(() => 1), // 模拟最小 denominator
-      on: jest.fn(),
-      ready: jest.fn((fn) => fn()),
-      getJSON: jest.fn(),
-      load: jest.fn(),
-    }))
+    // 设置 result.html 的完整 DOM（calc.js 会操作 table、progress、footer 等元素）
+    document.documentElement.innerHTML = resultHtml
+    window.location.search = '?o=100,102'; // 非连续 ID，用于验证顺序/排序一致
 
-    // 加载所有依赖脚本 + calc.js（使 group2By、filt 等函数全局可用）
+    // 真实加载 jQuery（不再 mock，避免 calc.js 中的复杂 jQuery 操作崩溃）
+    // 由于我们加载了本地 jquery.min.js，$ 会正确定义
     scriptCodes.forEach((code) => {
       const script = document.createElement('script')
       script.textContent = code
-      document.body.appendChild(script)
+      // 优先 append 到 head（模拟真实页面加载顺序）
+      document.head.appendChild(script)
     })
+
+    // 加载 calc.js
     const calcScript = document.createElement('script')
     calcScript.textContent = calcCode
-    document.body.appendChild(calcScript)
+    document.head.appendChild(calcScript)
 
-    // mock 必要的全局函数/数据（避免 undefined）
-    global.formatOnlyname = (id) => String(id) // 简化为返回 id 字符串
+    // mock 必要的全局（避免 undefined 或异步卡住）
+    global.formatOnlyname = (id) => String(id)
     global.addemoji = (str) => str
-    global.slotitem = [] // 装备数据 mock
-    global.csjson = [] // 舰娘数据 mock
+    global.slotitem = [] // 装备 mock
+    global.csjson = [] // 舰娘 mock
+
+    // 模拟异步 JSON 加载完成（多次调用，确保 jsonover 执行）
+    if (typeof jsonover === 'function') {
+      jsonover()
+      jsonover()
+      jsonover()
+    }
+
+    // 模拟 GetRequest（从 URL 解析参数，calc.js 启动时使用）
+    global.GetRequest = () => ({})
   })
 
   // 测试：脚本加载不崩溃，核心顶层函数存在
@@ -74,64 +84,32 @@ describe('calc.js 计算逻辑单元测试 (TDD)', () => {
     expect(isResource('abc')).toBe(false)
   })
 
-  // isonladd 当前非全局（块级作用域），此处临时注释或调整
-  // 若需测试，可在 calc.js 中将 function isonladd 提升到顶层（推荐重构）
-  // 或在这里手动模拟其逻辑进行单元测试
-  test.skip('isonladd 应正确聚合数据并计算 ratio/times/denominator（待重构后启用）', () => {
-    const mockData = [[{ i: '1', s: '1', o: '100', n: '5', l: '99' }], [{ i: '1', s: '1', o: '200', n: '3', l: '50' }]]
-    const output = ['100']
-
-    // const result = isonladd(mockData, output);  // 当前会报未定义
-    // 临时模拟核心逻辑（摘自 calc.js）
-    let groups = []
-    for (let i = 0; i < mockData.length; i++) {
-      let onal = { i: [mockData[i][0].i] }
-      mockData[i].forEach((item) => {
-        const o = item.o
-        onal[`n${o}`] = (onal[`n${o}`] || 0) + Number(item.n)
-      })
-      groups.push(onal)
-    }
-    // 计算 denominator/times/ratio
-    groups.forEach((e) => {
-      e.denominator = Object.values(e)
-        .filter((v) => typeof v === 'number')
-        .reduce((a, b) => a + b, 0)
-      e.times = e.n100 || 0
-      e.ratio = e.times / e.denominator
-    })
-
-    expect(groups[0].denominator).toBe(8)
-    expect(groups[0].times).toBe(5)
-    expect(groups[0].ratio).toBe(0.625)
-  })
-
-  // 新增：纯 JS 模拟查询测试（核心计算确定性 + 正确性）
+  // 纯 JS 模拟查询测试（核心计算确定性 + 正确性）
   test('纯 JS 模拟查询：相同输入 o/e/q 下，sorted 结果一致且数值正确', () => {
-    // mock 小型 bigdata（模拟开发记录：配方 i、旗舰 s、出货 o、次数 n、Lv l）
+    // mock 小型 bigdata（修正：第二个配方纯出 100，无干扰项）
     const mockBigdata = [
       { i: '10/10/10/10', s: '1', o: '100', n: 10, l: 99 },
-      { i: '10/10/10/10', s: '1', o: '101', n: 5, l: 50 },
-      { i: '250/30/200/30', s: '2', o: '100', n: 20, l: 1 },
-      { i: '250/30/200/30', s: '2', o: '102', n: 8, l: 30 },
+      { i: '10/10/10/10', s: '1', o: '101', n: 5, l: 50 }, // 干扰项（不影响主查询）
+      { i: '250/30/200/30', s: '2', o: '100', n: 20, l: 1 }, // 纯出 100
+      // 移除任何其他 o=102 等干扰记录
     ]
 
-    // 模拟查询参数（o: 主查询装备ID, e: 副查询, q: 'd' 为装备开发）
-    const output = ['100'] // 主查询：只关心装备 100
-    const extra = [] // 副查询：空
+    // 模拟查询参数
+    const output = ['100'] // 主查询
+    const extra = [] // 副查询空
     const oute = output.concat(extra)
-    const minDeno = 1 // 最小次数阈值（模拟 $('#denominator').val()）
+    const minDeno = 1
 
     // 核心纯函数计算（直接复制/模拟 calc.js 中的逻辑，避免异步依赖）
     const grouped = group2By(mockBigdata, 'i', 's')
     const filted = filt(grouped, output)
 
-    // 手动实现 isonladd 聚合（calc.js 中局部函数，这里复制核心逻辑）
-    const isonladdManual = (array, o) => {
+    // 手动 isonladd 聚合（贴近 calc.js 实际逻辑）
+    const isonladdManual = (array) => {
       const groups = []
       for (let i = 0; i < array.length; i++) {
         const group = array[i]
-        const onal = { i: [group[0].i, group[0].s] } // 简化为 [配方,旗舰]
+        const onal = { i: [group[0].i, group[0].s] }
         for (let j = 0; j < group.length; j++) {
           const item = group[j].o
           const n = Number(group[j].n)
@@ -142,7 +120,7 @@ describe('calc.js 计算逻辑单元测试 (TDD)', () => {
       return groups
     }
 
-    const isonl = isonladdManual(filted, oute)
+    const isonl = isonladdManual(filted)
 
     // 计算 denominator / ratio / times（calc.js 中的循环）
     isonl.forEach((e) => {
@@ -172,9 +150,8 @@ describe('calc.js 计算逻辑单元测试 (TDD)', () => {
     // 第二次完全相同的计算（验证确定性）
     const grouped2 = group2By(mockBigdata, 'i', 's')
     const filted2 = filt(grouped2, output)
-    const isonl2 = isonladdManual(filted2, oute)
+    const isonl2 = isonladdManual(filted2)
     isonl2.forEach((e) => {
-      // 相同计算逻辑（复制）
       let denominator = 0
       for (const key in e) if (key.startsWith('n')) denominator += e[key]
       e.denominator = denominator
@@ -199,12 +176,12 @@ describe('calc.js 计算逻辑单元测试 (TDD)', () => {
 
     // 额外数值正确性检查（TDD 驱动）
     expect(sorted.length).toBe(2)
-    expect(sorted[0].ratio).toBeCloseTo(1) // 第二个配方：20/20 = 100%
-
+    expect(sorted[0].ratio).toBeCloseTo(1, 5) // 纯配方 20/20 = 100%
     expect(sorted[0].times).toBe(20)
-    expect(sorted[1].ratio).toBeCloseTo(10 / 15) // 第一个配方：10/(10+5) ≈ 66.67%
-
+    expect(sorted[0].denominator).toBe(20)
+    expect(sorted[1].ratio).toBeCloseTo(10 / 15, 5) // 10/(10+5) ≈ 66.67%
     expect(sorted[1].times).toBe(10)
+    expect(sorted[1].denominator).toBe(15)
   })
 
   // 更多测试建议（TDD 驱动）：

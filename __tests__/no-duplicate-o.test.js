@@ -90,6 +90,8 @@ describe('查询按钮点击 - o 参数不重复增长 (TDD)', () => {
     if (!button) {
       throw new Error('未找到 .go 检索按钮，请确认页面中按钮的 class 或调整 selector')
     }
+    // 模拟初始 URL 带有 o 参数（页面加载时会自动选中对应装备）
+    window.location.search = '?o=100,102'; // 非连续 ID，用于验证顺序/排序一致
 
     // 手动模拟选中几个装备（取前 3 个 checkbox，确保 o 非空）
     const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"]'))
