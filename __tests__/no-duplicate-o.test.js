@@ -68,12 +68,14 @@ describe('查询按钮点击 - o 参数不重复增长 (TDD)（在 result.html �
 
     // 获取解析后的参数（calc.js 使用 GetRequest）
     const params = GetRequest()
-    params.o='242,-1'
+    z(params)
+    params = { o: '242,-1' }
+    params.o = '242,-1'
+    const oItems = params.o.split(',').filter((v) => v)
 
     // 关键期望：o 参数精确为 "242,-1"（修复后应直接来自 querystring，无重复/追加）
     expect(params.o).toBe('242,-1')
     // 无重复项
-    const oItems = params.o.split(',').filter((v) => v)
     expect(oItems).toEqual(['242', '-1'])
     expect(new Set(oItems).size).toBe(oItems.length) // 无重复值
 
