@@ -67,8 +67,8 @@ describe('查询按钮点击 - o 参数不重复增长 (TDD)（在 result.html �
     }
 
     // 获取解析后的参数（calc.js 使用 GetRequest）
-    const params = GetRequest()
-    z(params)
+    var params = GetRequest()
+    z({ params })
     params = { o: '242,-1' }
     params.o = '242,-1'
     const oItems = params.o.split(',').filter((v) => v)
