@@ -5,11 +5,15 @@ const indexHtml = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf-8'
 
 // 加载页面实际依赖的所有脚本
 const scriptPaths = [
+  '../dist/js/cdn/jquery.min.js',
   '../dist/js/jgs.js',
   '../dist/js/simplize.js',
-  '../dist/js/item.js',
   '../dist/js/share.js',
+  '../dist/js/table.js',
+  '../dist/js/line.js',
   '../dist/js/possible.js',
+  '../dist/js/scatter.js',
+  '../dist/js/item.js',
 ];
 
 const scriptCodes = scriptPaths.map(scriptPath =>

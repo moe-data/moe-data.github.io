@@ -1,14 +1,19 @@
 const fs = require('fs');
 const path = require('path');
 
-// 加载页面实际依赖的所有脚本（calc.js 依赖这些工具函数）
+// 加载页面实际依赖的所有脚本
 const scriptPaths = [
+  '../dist/js/cdn/jquery.min.js',
   '../dist/js/jgs.js',
   '../dist/js/simplize.js',
-  '../dist/js/item.js',
-  '../dist/js/share.js',  // 如果仓库中有 share.js
+  '../dist/js/share.js',
+  '../dist/js/table.js',
+  '../dist/js/line.js',
   '../dist/js/possible.js',
+  '../dist/js/scatter.js',
+  '../dist/js/item.js',
 ];
+
 
 const scriptCodes = scriptPaths.map(scriptPath =>
   fs.readFileSync(path.join(__dirname, scriptPath), 'utf-8')
