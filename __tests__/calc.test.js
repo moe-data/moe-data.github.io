@@ -1,10 +1,12 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('fs')
+const path = require('path')
 
 // 加载页面实际依赖的所有脚本
 const scriptPaths = [
   '../dist/js/cdn/jquery.min.js',
-  '../dist/js/jgs.js',  '../dist/js/simplize.js',
+  '../dist/js/cdn/bootstrap.js',
+  '../dist/js/jgs.js',
+  '../dist/js/simplize.js',
   '../dist/js/share.js',
   '../dist/js/table.js',
   '../dist/js/line.js',
@@ -199,14 +201,10 @@ describe('calc.js 计算逻辑单元测试 (TDD)', () => {
     expect(sorted.length).toBe(2)
     expect(sorted[0].ratio).toBeCloseTo(1) // 第二个配方：20/20 = 100%
 
-
     expect(sorted[0].times).toBe(20)
     expect(sorted[1].ratio).toBeCloseTo(10 / 15) // 第一个配方：10/(10+5) ≈ 66.67%
 
-
-
     expect(sorted[1].times).toBe(10)
-
   })
 
   // 更多测试建议（TDD 驱动）：
