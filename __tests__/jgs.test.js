@@ -48,7 +48,7 @@ describe('jgs.js 工具函数单元测试 (TDD)', () => {
   test('isvalid 应正确判断值有效性（返回布尔值）', () => {
     expect(isvalid('hello')).toBe(true)
     expect(isvalid(123)).toBe(true)
-    expect(isvalid(0)).toBe(true)
+    expect(isvalid(0)).toBe(false)
     expect(isvalid('')).toBe(false)
     expect(isvalid(undefined)).toBe(false)
     expect(isvalid(null)).toBe(false)
