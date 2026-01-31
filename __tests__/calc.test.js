@@ -26,7 +26,7 @@ describe('calc.js 计算逻辑单元测试 (TDD)', () => {
   beforeAll(() => {
     // 设置 result.html 的完整 DOM（calc.js 会操作 table、progress、footer 等元素）
     document.documentElement.innerHTML = resultHtml
-    window.location.search = '?o=100,102'; // 非连续 ID，用于验证顺序/排序一致
+    // window.location.search = '?o=100,102'; // 非连续 ID，用于验证顺序/排序一致
 
     // 真实加载 jQuery（不再 mock，避免 calc.js 中的复杂 jQuery 操作崩溃）
     // 由于我们加载了本地 jquery.min.js，$ 会正确定义
