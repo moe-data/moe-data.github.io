@@ -133,7 +133,12 @@ describe('calc.js 计算逻辑单元测试 (TDD)', () => {
         for (let j = 0; j < group.length; j++) {
           const item = group[j].o
           const n = Number(group[j].n)
-@@ -143,69 +96,75 @@
+          onal['n' + item] = (onal['n' + item] || 0) + n
+        }
+        groups.push(onal)
+      }
+      return groups
+    }
 
     const isonl = isonladdManual(filted, oute)
 
