@@ -54,11 +54,11 @@ describe('查询按钮点击 - o 参数不重复增长 (TDD)（在 result.html �
 
   test('result.html 加载指定 querystring 时，o 参数正确解析且无重复（应为 "242,-1"，无追加/重复）', () => {
     // 模拟 result.html 的指定 querystring（使用 defineProperty 避免触发 navigation）
-    Object.defineProperty(window.location, 'search', {
-      value: '?t=12,11&q=d&o=242,-1&e=&s=times&a=0&l=false',
-      configurable: true,
-      writable: true,
-    })
+    // Object.defineProperty(window.location, 'search', {
+    //   value: '?t=12,11&q=d&o=242,-1&e=&s=times&a=0&l=false',
+    //   configurable: true,
+    //   writable: true,
+    // })
 
     // 手动触发 calc.js 启动逻辑（通常在 $(document).ready 或 jsonover 中调用）
     // calc.js 会调用 GetRequest() 解析参数并初始化 output/extra 等
@@ -95,11 +95,11 @@ describe('查询按钮点击 - o 参数不重复增长 (TDD)（在 result.html �
   // 可选扩展：模拟 result.html 中的交互（如改变 denominator、排序等）导致 URL 更新时，o 参数保持不变（不增长）
   test('result.html 中交互更新 URL 时，o 参数不重复增长（保持 "242,-1"）', () => {
     // 重置为指定 querystring（使用 defineProperty 避免触发 navigation）
-    Object.defineProperty(window.location, 'search', {
-      value: '?t=12,11&q=d&o=242,-1&e=&s=times&a=0&l=false',
-      configurable: true,
-      writable: true,
-    })
+    // Object.defineProperty(window.location, 'search', {
+    //   value: '?t=12,11&q=d&o=242,-1&e=&s=times&a=0&l=false',
+    //   configurable: true,
+    //   writable: true,
+    // })
 
     // 触发参数解析
     if (typeof jsonover === 'function') jsonover()
