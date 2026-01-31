@@ -2,9 +2,6 @@ name: Jest Unit Tests for jgs.js
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
   test:

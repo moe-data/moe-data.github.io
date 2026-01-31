@@ -73,8 +73,10 @@ describe('calc.js 计算逻辑单元测试 (TDD)', () => {
     expect(isResource('steel')).toBe(true);
     expect(isResource('bauxite')).toBe(true);
     expect(isResource('資材')).toBe(true);
-    expect(isResource('secretary')).toBe(false);
+    expect(isResource('secretary')).toBe(true);
+    expect(isResource('denominator')).toBe(true);
     expect(isResource('ratio')).toBe(false);
+    expect(isResource('abc')).toBe(false);
   });
 
   // isonladd 当前非全局（块级作用域），此处临时注释或调整

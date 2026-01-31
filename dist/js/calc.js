@@ -10,7 +10,7 @@ var sorted = []
 var slotitem
 const api_ = q == 'd' ? 'api_' : ''
 const jsonfile = q == 'd' ? 'api_mst_slotitem' : 'cstype'
-var lseg = {
+var resourceTitle = {
   i: '',
   fuel: '',
   ammo: '',
@@ -404,10 +404,10 @@ function egnrl(item) {
     x('dev res 0')
     return
   }
-  lseg['n' + item] = 0
-  lseg[formatOnlyname(item)] = 0
+  resourceTitle['n' + item] = 0
+  resourceTitle[formatOnlyname(item)] = 0
   if (minlv) {
-    lseg['l' + item] = 0
+    resourceTitle['l' + item] = 0
   }
 }
 function initTable(lval) {
@@ -416,15 +416,15 @@ function initTable(lval) {
   } else {
     console.log(lval)
   }
-  lsegname = { ratio: '' }
-  for (key in lseg) {
+  titleName = { ratio: '' }
+  for (key in resourceTitle) {
     if (key[0] == 'r' && key != 'ratio') {
       key = key.slice(1, key.length)
       var k = formatOnlyname(key)
-      lsegname[k] = 0
+      titleName[k] = 0
     }
   }
-  loadprot(lseg)
+  loadprot(resourceTitle)
   // console.log("load table", sorted)
   addcol(sorted, 'fuel', 'i', 0)
   addcol(sorted, 'ammo', 'i', 1)
@@ -448,7 +448,7 @@ function initTable(lval) {
       stickyHeaderOffsetLeft: em,
       stickyHeaderOffsetRight: em,
       locale: lval,
-      columns: thead(lseg),
+      columns: thead(resourceTitle),
     })
   // if (Width() < 900 && kj) { $('.table .th-inner').css('writing-mode', 'vertical-lr'); }
   var padding = '6'
