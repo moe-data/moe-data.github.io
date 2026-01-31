@@ -101,7 +101,7 @@ function getimg(zhimg, qn, n) {
           qn + ': handle failed:RECORDS not found',
           zhimg[n % zhimg.length],
           (result.length / 1024).toFixed(2) + 'KB',
-          result.slice(-200)
+          result.slice(-200),
         )
         if (n < 5) {
           getimg(zhimg, qn, n)
@@ -138,37 +138,37 @@ function getjson(err, qn) {
 }
 function download(result, com, qn, zhimg, start) {
   let objdata = []
-    if (result['RECORDS'][0][0]) {
-      result['RECORDS'].forEach(function (b) {
-        if (b[2] == 0) b[2] = -1
-        objdata.push({
-          i: b[0],
-          s: b[1],
-          o: b[2],
-          n: b[3],
-          l: b[4],
-        })
+  if (result['RECORDS'][0][0]) {
+    result['RECORDS'].forEach(function (b) {
+      if (b[2] == 0) b[2] = -1
+      objdata.push({
+        i: b[0],
+        s: b[1],
+        o: b[2],
+        n: b[3],
+        l: b[4],
       })
-    } else {
-      z(qn + ' qn is NOT compressed')
-      objdata = result['RECORDS']
-    }
-    bigdata = bigdata.concat(objdata)
-    z(objdata.length)
-    z(bigdata.length)
-    console.log(qn + ': get ' + (zhimg ? zhimg + start : 'dump/' + qn) + ' success')
-    $('h3.panel-title')[0].innerHTML =
-      ' 正在' +
-      com +
-      qndate(qn.slice(1)) +
-      '的数据' +
-      '。 请耐心等待。。共' +
-      jsindex +
-      ' / ' +
-      (ranget.length + 2) +
-      ' 个文件，'
+    })
+  } else {
+    z(qn + ' qn is NOT compressed')
+    objdata = result['RECORDS']
+  }
+  bigdata = bigdata.concat(objdata)
+  z(objdata.length)
+  z(bigdata.length)
+  console.log(qn + ': get ' + (zhimg ? zhimg + start : 'dump/' + qn) + ' success')
+  $('h3.panel-title')[0].innerHTML =
+    ' 正在' +
+    com +
+    qndate(qn.slice(1)) +
+    '的数据' +
+    '。 请耐心等待。。共' +
+    jsindex +
+    ' / ' +
+    (ranget.length + 2) +
+    ' 个文件，'
   // try {
-    jsonover()
+  jsonover()
   // } catch (err) {
   //   console.error({qn, com, jsindex, dom:$('h3.panel-title'), err})
   //   if (zhimg){ getjson(zhimg, qn) }

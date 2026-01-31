@@ -254,9 +254,9 @@ $('.hint').html(
     `选择数量无关</li><br>
     <li>不兼容IE浏览器</li><br>
 </ul>  
-</div>`
+</div>`,
 )
-$.getJSON("dist/items/developable/possibles.json", function (result) {
+$.getJSON('dist/items/developable/possibles.json', function (result) {
   possibles = result
 })
 $('.btn').click(btnclick)
@@ -266,10 +266,10 @@ function btnclick() {
   $('button.btn-primary').each(function () {
     output.push(Number($(this).val()))
   })
-    z({possibles, loaded: true, output})
+  z({ possibles, loaded: true, output })
   if (output.length) {
     possibles.forEach((e) => {
-        z({e, output, isContain: isContain(e, output)})
+      z({ e, output, isContain: isContain(e, output) })
       if (isContain(e, output)) {
         e.forEach(function (ee) {
           active[ee] = true
@@ -284,7 +284,7 @@ function btnclick() {
       }
     })
   } else {
-      w("no output")
+    w('no output')
     $('button.btn').each(function () {
       $(this).removeClass('active').removeClass('disabled')
     })

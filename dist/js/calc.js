@@ -22,6 +22,9 @@ var lseg = {
   times: '',
   ratio: '',
 }
+function isResource(e) {
+  return ['i', 'fuel', 'ammo', 'steel', 'bauxite', '資材', 'secretary', 'denominator'].indexOf(e) > -1
+}
 var kj = false
 var ship
 var csjson = []
@@ -65,7 +68,7 @@ if (!havelang) {
 }
 function jsonover() {
   jsindex++
-  console.log({jsindex, ranget: ranget.length + 2, bigdata: bigdata.length})
+  console.log({ jsindex, ranget: ranget.length + 2, bigdata: bigdata.length })
   progress((1 / (ranget.length + 2)) * 80)
   // if (jsindex == ranget.length + 1)$('h3.panel-title')[0].innerHTML = ("数据计算中。。。");
   if (jsindex >= ranget.length + 2) {
@@ -252,7 +255,7 @@ $(document).ready(function () {
       setTimeout(function () {
         for (let i = 0; i < 7; i++) {
           document.getElementsByClassName('search-input')[i].value = Japanized(
-            document.getElementsByClassName('search-input')[i].value
+            document.getElementsByClassName('search-input')[i].value,
           )
         }
       }, 50)
@@ -339,9 +342,6 @@ function thead(eg) {
     }
   }
   return [co, col]
-}
-function isResource(e) {
-  return ['i', 'fuel', 'ammo', 'steel', 'bauxite', '資材', 'secretary', 'denominator'].indexOf(e) > -1
 }
 function formatR(value) {
   return value ? (value * 100).toFixed(2) + '%' : null
@@ -479,7 +479,7 @@ function addicon(name, c) {
       return '<span class="flex">' + color + itag(slotitem[a]['api_type'][3]) + str + '</sapn>'
     }
   }
-  return '<span class="flex">' + color + convertHalfToFullWidth(str) + "</sapn>";
+  return '<span class="flex">' + color + convertHalfToFullWidth(str) + '</sapn>'
 }
 
 if (q == 'c') {
