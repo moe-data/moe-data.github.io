@@ -57,7 +57,6 @@ describe('calc.js 计算逻辑单元测试 (TDD)', () => {
     expect(typeof filt).toBe('function');
     // isonladd 在 calc.js 中是局部函数，这里我们稍后手动模拟
   });
-  });
 
   // 测试：isResource（假设脚本中有此函数，根据实际实现调整期望）
   test('isResource 应正确判断资源字段', () => {
