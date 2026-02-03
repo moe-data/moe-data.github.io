@@ -3,8 +3,9 @@ name: gz
 on:
   push:
     paths:
-      # - '**/gz.yml'
+      - '**/gz.yml'
       - '**/size*.json'
+      - '**/simplify_records.py'
   workflow_run:
     workflows: ["dump"]
     types:
