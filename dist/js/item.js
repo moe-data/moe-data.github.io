@@ -1,12 +1,12 @@
 var slotitem
 const fail = '🐧失敗'
 var years = []
-import config from 'dist/items/developable/sortby/init.json'
-z({ config })
 $.getJSON('dist/items/developable/sortby/init.json', function (result) {
   init = result
   z({ result })
 }).done(function (result) {})
+import config from 'dist/items/developable/sortby/init.json' assert { type: "json" }
+z({ config })
 developable = []
 var release = init
 for (key in release) {
