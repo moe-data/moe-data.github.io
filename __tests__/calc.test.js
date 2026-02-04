@@ -14,6 +14,9 @@ const scriptPaths = [
   '../dist/js/table.js',
   '../dist/js/line.js',
   '../dist/js/scatter.js',
+  '../dist/items/developable/sortby/all.js',
+  '../dist/items/developable/sortby/init.js',
+  '../dist/items/developable/sortby/releasetime.js',
   '../dist/js/item.js',
 ]
 

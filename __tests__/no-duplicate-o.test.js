@@ -13,6 +13,9 @@ const scriptPaths = [
   '../dist/js/share.js',
   '../dist/js/table.js',
   '../dist/js/scatter.js',
+  '../dist/items/developable/sortby/all.js',
+  '../dist/items/developable/sortby/init.js',
+  '../dist/items/developable/sortby/releasetime.js',
   '../dist/js/item.js',
 ]
 
@@ -108,7 +111,7 @@ describe('查询按钮点击 - o 参数不重复增长 (TDD)（在 result.html �
     if (typeof jsonover === 'function') jsonover()
 
     const initialParams = GetRequest()
-    z({initialParams})
+    z({ initialParams })
     // expect(initialParams.o).toBe('242,-1')
 
     // 模拟一个典型交互：例如调用 setdeno（改变最小次数阈值，通常会更新 URL）
@@ -125,7 +128,7 @@ describe('查询按钮点击 - o 参数不重复增长 (TDD)（在 result.html �
 
     // 获取更新后的参数（如果交互更新了 location.search 或 history）
     var updatedParams = GetRequest()
-    z({updatedParams})
+    z({ updatedParams })
     updatedParams = { o: '242,-1' }
 
     // 关键：o 参数保持不变（修复后不会追加或丢失）
