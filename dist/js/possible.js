@@ -1,7 +1,5 @@
 const qtar = tar == '装备' ? 'd' : 'c'
 var active = {}
-import config from '../items/developable/sortby/init.json'
-z({ config })
 function clearall() {
   $('.btn').each(function () {
     $(this).addClass(btndef)
