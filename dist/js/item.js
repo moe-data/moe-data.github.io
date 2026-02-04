@@ -1,10 +1,6 @@
 var slotitem
 const fail = '🐧失敗'
 var years = []
-$.getJSON('dist/items/developable/sortby/init.json', function (result) {
-  init = result
-  z({ result })
-}).done(function (result) {})
 developable = []
 var release = init
 for (key in release) {
