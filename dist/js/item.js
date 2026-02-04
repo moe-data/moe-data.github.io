@@ -5,7 +5,7 @@ $.getJSON('dist/items/developable/sortby/init.json', function (result) {
   init = result
   z({ result })
 }).done(function (result) {})
-import config from 'dist/items/developable/sortby/init.json' assert { type: "json" }
+import config from 'dist/items/developable/sortby/init.json'
 z({ config })
 developable = []
 var release = init
