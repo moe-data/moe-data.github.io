@@ -73,7 +73,7 @@ jobs:
         uses: conbanwa/write-js-array@v0.1
         with:
           js-name: dist/items/developable/sortby/all.js
-          array-name: developables
+          array-name: developable
           values: ${{ steps.python-export.outputs.developable }}
 
       - name: Show result size

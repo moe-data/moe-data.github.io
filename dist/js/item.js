@@ -1,14 +1,13 @@
 var slotitem
 const fail = '🐧失敗'
 var years = []
-developable = []
-var release = init
-for (key in release) {
-  release[key].forEach(function (e) {
-    developable.push(e)
-  })
+// var release = init
+// for (key in release) {
+//   release[key].forEach(function (e) {
+//     developable.push(e)
+//   })
   // developable.sort(sortNumber)
-}
+// }
 var itype
 function formatItype(value) {
   var typename = value

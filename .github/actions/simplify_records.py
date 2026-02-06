@@ -108,8 +108,18 @@ def export_processed_mongodb_data(collection, output_file, output_type):
             })
         
         # Collect unique positive itemId / shipId for developable
-        if isinstance(field_val, (int, str)) and str(field_val).isdigit() and int(field_val) > -2:
-            developable.append(int(field_val))
+        if isinstance(o_final, (int, str)) and str(o_final).isdigit() and int(o_final) > -2 and successful_val:
+            developable.append(int(o_final))
+            # if o in 42,43,79,81,83,86
+            if int(o_final) in [42,43,79,81,83,86]:
+                print({
+                    'i': items_final,
+                    's': secretary_final,
+                    'o': o_final,
+                    'n': record_stats[simplified_key]['count'],
+                    'l': teitoku_lv
+                })
+                sys.exit(2)
     
     # 新增：校验压缩后的条目数量（<5则exit2）
     compressed_count = len(record_stats)
