@@ -246,7 +246,9 @@ $('.hint').html(
 <div class="col-sm-12">
 <ul type="circle">
     <br>
-    <li>建造数据来自POI</li><br>
+    <li>` +
+    tar +
+    `开发数据来自POI</li><br>
     <li>第一次所需的查询时间可能较长，请耐心等待。</li><br>
     <li>时间范围勾选的越少，加载速度越快</li><br>
     <li>加载速度和` +
