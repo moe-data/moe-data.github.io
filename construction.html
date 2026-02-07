@@ -248,60 +248,7 @@
           </div>
           <div class="panel-body" align="center">
             <table cellpadding="50">
-              <tbody class="list">
-                <tr>
-                  <th>时间</th>
-                  <th>累计建造次数</th>
-                  <th>&ensp;&ensp;&ensp;公式条数</th>
-                  <th>&ensp;&ensp;&ensp;文件大小</th>
-                </tr>
-                <tr>
-                  <td>
-                    <input class="time" type="checkbox" value="0,1" id="1" />
-                    <label for="1">2019年5月或更早</label>
-                  </td>
-                  <td align="right">10,448,671</td>
-                  <td align="right">74751</td>
-                  <td align="right">10 MB</td>
-                </tr>
-                <!-- <tr><td><input class="time" type="checkbox" value="2" id="2" onclick="return false;"> -->
-                <tr>
-                  <td>
-                    <input class="time" type="checkbox" value="2" id="2" />
-                    <label for="2">2019年6月~2020年3月</label>
-                  </td>
-                  <td align="right">4,975,716</td>
-                  <td align="right">42040</td>
-                  <td align="right">6.8 MB</td>
-                </tr>
-                <tr>
-                  <td>
-                    <input class="time" type="checkbox" value="3" id="3" />
-                    <label for="3">2020年4月~8月</label>
-                  </td>
-                  <td align="right">2,383,653</td>
-                  <td align="right">19309</td>
-                  <td align="right">3.4 MB</td>
-                </tr>
-                <tr>
-                  <td>
-                    <input class="time" type="checkbox" value="8" id="8" />
-                    <label for="8">2020年9月~10月</label>
-                  </td>
-                  <td align="right">716,524</td>
-                  <td align="right">7094</td>
-                  <td align="right">1.8MB</td>
-                </tr>
-                <tr>
-                  <td>
-                    <input class="time" type="checkbox" value="9" id="9" />
-                    <label for="9">2020年11月</label>
-                  </td>
-                  <td align="right">993,501</td>
-                  <td align="right">9207</td>
-                  <td align="right">2.2 MB</td>
-                </tr>
-              </tbody>
+              <tbody class="list"></tbody>
             </table>
           </div>
         </div>
@@ -364,6 +311,11 @@
     <script type="text/javascript">
       const tar = "舰船"
       timetable([
+        [1, 10448671, 74751, 10.0], // value="0,1" (2019年5月或更早)
+        [2, 4975716, 42040, 6.8], // value="2" (2019年6月~2020年3月)
+        [3, 2383653, 19309, 3.4], // value="3" (2020年4月~8月)
+        [8, 716524, 7094, 1.8], // value="8" (2020年9月~10月)
+        [9, 993501, 9207, 2.2], // value="9" (2020年11月)
         [10, 156227, 2403, 0.9],
         [11, 299103, 3917, 1.2],
         [12, 813669, 6120, 0.7],
