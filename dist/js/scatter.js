@@ -4,7 +4,7 @@ isFirst = true
 // $('#container').attr( "style","width:"+(Width()-60)+"px;height:"+(400+Width()-60*2.22)+"px;")};
 function getcol() {
   var strIds = new Array() //声明一个存放id的数组
-  $('input[name=items]').each(function (i, d) {
+  $("input[name=items]").each(function (i, d) {
     if (d.checked) {
       strIds.push(d.value)
     }
@@ -12,10 +12,10 @@ function getcol() {
   return strIds
 }
 function loadchart() {
-  info = document.getElementById('inform')
-  if ('undefined' == typeof echarts) {
+  info = document.getElementById("inform")
+  if ("undefined" == typeof echarts) {
     if (isFirst) {
-      info.innerHTML = '默认加载全表数据，建议在表格中进行筛选'
+      info.innerHTML = "默认加载全表数据，建议在表格中进行筛选"
       isFirst = false
     } else {
       info.innerHTML = echarts
@@ -23,25 +23,25 @@ function loadchart() {
     return
   }
   var wi = Width()
-  var myChart = echarts.init(document.getElementById('container'))
+  var myChart = echarts.init(document.getElementById("container"))
   option = null
   var raw = []
-  raw = $table.bootstrapTable('getSelections')
+  raw = $table.bootstrapTable("getSelections")
   if (raw.length == 0) {
-    raw = $table.bootstrapTable('getData')
+    raw = $table.bootstrapTable("getData")
   }
   var rawlen = raw.length
   var rnd
   if (raw.length == 0) {
     console.log(raw)
-    info.innerHTML = '没有符合筛选的数据'
+    info.innerHTML = "没有符合筛选的数据"
     isFirst = false
     return
   }
-  if (!raw[0]['i'] && !raw[0]['api_id']) {
+  if (!raw[0]["i"] && !raw[0]["api_id"]) {
     console.log(raw[0])
     if (isFirst) {
-      info.innerHTML = '点击按钮试试看吧'
+      info.innerHTML = "点击按钮试试看吧"
       isFirst = false
     } else {
       info.innerHTML = raw[0]
@@ -53,36 +53,36 @@ function loadchart() {
       var temp = []
       rnd = Math.round(1 + 21 * Math.random())
       for (let i = 0; i < rawlen; i++) {
-        if (raw[i][rawlen > 600 ? 'stype' : 'itype'] == rnd && (rawlen > 600 ? raw[i]['final_form'] == 'yes' : true)) {
+        if (raw[i][rawlen > 600 ? "stype" : "itype"] == rnd && (rawlen > 600 ? raw[i]["final_form"] == "yes" : true)) {
           temp.push(raw[i])
         }
       }
       raw = temp
     }
   }
-  info.innerHTML = rawlen > 325 ? '（默认加载全表数据，建议在表格中进行筛选）' : ''
+  info.innerHTML = rawlen > 325 ? "（默认加载全表数据，建议在表格中进行筛选）" : ""
   column = getcol()
   rawlen = raw.length
   isFirst = false
   if (column.length < 1 || rawlen < 1) {
-    info.innerHTML = '正在加载数据，请在数秒后再次点击'
+    info.innerHTML = "正在加载数据，请在数秒后再次点击"
     console.log({ raw, rnd })
     return
   }
-  sortkey = $('#sort').val()
-  if (sortkey != 'unsort' && (raw[0][sortkey] || raw[0][sortkey] == false)) {
+  sortkey = $("#sort").val()
+  if (sortkey != "unsort" && (raw[0][sortkey] || raw[0][sortkey] == false)) {
     raw.sort(sortby)
   }
-  console.log('start chart ' + rawlen) //[0]["name"])
+  console.log("start chart " + rawlen) //[0]["name"])
   var h = 200 + rawlen * 15
   var extra = 100
   var lable = 0
   var sqrtrl = 81 / Math.sqrt(rawlen)
-  var shapeval = $('#shape').val()
+  var shapeval = $("#shape").val()
   if (!shapeval) {
-    shapeval = 'bar'
+    shapeval = "bar"
   }
-  var stackval = $('#stack').val()
+  var stackval = $("#stack").val()
   if (!stackval) {
     stackval = 0
   }
@@ -101,10 +101,10 @@ function loadchart() {
     h = 2178
     extra = 50
   }
-  document.getElementById('container').style.height = lable + extra + h + 'px'
-  document.getElementById('container').style.width = Width() - 60 + 'px'
+  document.getElementById("container").style.height = lable + extra + h + "px"
+  document.getElementById("container").style.width = Width() - 60 + "px"
   myChart.resize() //直接加这句即可
-  var interval = 'auto'
+  var interval = "auto"
   var fontSize = 10
   var rotate = 0
   if (rawlen <= 100) {
@@ -123,16 +123,16 @@ function loadchart() {
   }
   grid = lable + temp + temp2
   var inverse = true
-  if ($('#desc').length) {
-    inverse = !$('#desc')[0].checked
+  if ($("#desc").length) {
+    inverse = !$("#desc")[0].checked
   }
-  if (sortkey == 'unsort') {
+  if (sortkey == "unsort") {
     inverse = !inverse
   }
   var dmin = 0
   for (let i = 0; i < gseries[0].length; i++) {
-    for (let j = 0; j < gseries[0][i]['data'].length; j++) {
-      if (dmin > gseries[0][i]['data'][j]) dmin = gseries[0][i]['data'][j]
+    for (let j = 0; j < gseries[0][i]["data"].length; j++) {
+      if (dmin > gseries[0][i]["data"][j]) dmin = gseries[0][i]["data"][j]
     }
   }
   option = {
@@ -140,20 +140,20 @@ function loadchart() {
     //     text: ''
     // },
     tooltip: {
-      trigger: 'axis',
+      trigger: "axis",
       formatter: function (params) {
-        var res = params[0].name + '<br><table>'
-        var myseries = ''
+        var res = params[0].name + "<br><table>"
+        var myseries = ""
         for (let i = 0; i < params.length; i++) {
           num = params[i].value
           if (num) {
             // console.log(params[i],i)
             myseries +=
-              '<tr><td>' +
+              "<tr><td>" +
               addicon(params[i].seriesName, params[i].color) +
               '：</td><td  align="right">' +
               (num % 1 === 0 && temp ? num : num.toFixed(3)) +
-              '%</td></tr>'
+              "%</td></tr>"
             temp = num % 1 === 0
           }
         }
@@ -165,10 +165,10 @@ function loadchart() {
       formatter: addemoji,
     },
     grid: {
-      left: '0%',
-      right: '0%',
+      left: "0%",
+      right: "0%",
       top: grid,
-      bottom: '1%',
+      bottom: "1%",
       containLabel: true,
       height: h,
     },
@@ -176,7 +176,7 @@ function loadchart() {
       feature: { saveAsImage: {} },
     },
     yAxis: {
-      type: 'category',
+      type: "category",
       boundaryGap: false,
       data: gseries[2],
       axisLabel: {
@@ -188,20 +188,20 @@ function loadchart() {
     },
     xAxis: [
       {
-        type: 'value',
+        type: "value",
         offset: sqrtrl > 40 ? 40 : sqrtrl,
         min: dmin,
         // max: 'dataMax'
       },
       {
-        type: 'value',
+        type: "value",
         offset: sqrtrl > 40 ? 40 : sqrtrl,
         min: dmin,
       },
     ],
     series: gseries[0],
   }
-  if (option && typeof option === 'object') {
+  if (option && typeof option === "object") {
     myChart.setOption(option, true)
   }
 }
@@ -210,7 +210,7 @@ function loadprot(prot) {
   var keys = []
   for (key in prot) {
     var e = key
-    if (e == 'ratio' || (!isResource(e) && e != 'times' && e[0] != 'n' && e[0] != 'l')) {
+    if (e == "ratio" || (!isResource(e) && e != "times" && e[0] != "n" && e[0] != "l")) {
       keys.push(key)
     }
   }
@@ -236,73 +236,73 @@ function getseries(r, c, shape, stack, sortkey) {
       data.push(unit)
     }
     var eie = exclude.indexOf(prot) > -1
-    var emoji = ''
+    var emoji = ""
     switch (nametype(e)) {
-      case 'ratio':
-        emoji = '#d4f2e7'
+      case "ratio":
+        emoji = "#d4f2e7"
         break
       case fail:
-        emoji = '#ddd'
+        emoji = "#ddd"
         break
       case 1:
-        emoji = '#c222' + parseInt(10 + 35 * Math.random())
+        emoji = "#c222" + parseInt(10 + 35 * Math.random())
         break
       case 2:
-        emoji = '#c222' + parseInt(10 + 35 * Math.random())
+        emoji = "#c222" + parseInt(10 + 35 * Math.random())
         break
       case 3:
-        emoji = '#c222' + parseInt(10 + 35 * Math.random())
+        emoji = "#c222" + parseInt(10 + 35 * Math.random())
         break
       case 5:
-        emoji = '#5987ab'
+        emoji = "#5987ab"
         break
       case 16:
-        emoji = '#6c7'
+        emoji = "#6c7"
         break
       case 6:
-        emoji = '#405e' + parseInt(11 + 50 * Math.random())
+        emoji = "#405e" + parseInt(11 + 50 * Math.random())
         break
       case 7:
-        emoji = '#447cab'
+        emoji = "#447cab"
         break
       case 8:
-        emoji = '#d66461'
+        emoji = "#d66461"
         break
       case 10:
-        emoji = '#acd8b3'
+        emoji = "#acd8b3"
         break
       case 11:
-        emoji = '#eeb66f'
+        emoji = "#eeb66f"
         break
       case 19:
-        emoji = '#dcaa44'
+        emoji = "#dcaa44"
         break
       case 23:
-        emoji = '#9279a7'
+        emoji = "#9279a7"
         break
       case 13:
-        emoji = '#f00'
+        emoji = "#f00"
         break
       case 18:
-        emoji = '#64b1bc'
+        emoji = "#64b1bc"
         break
       case 17:
-        emoji = '#6ba6b0'
+        emoji = "#6ba6b0"
         break
       case 9:
-        emoji = '#f5b304'
+        emoji = "#f5b304"
         break
       case 25:
-        emoji = '#999'
+        emoji = "#999"
         break
       case 30:
-        emoji = '#899a4d'
+        emoji = "#899a4d"
         break
       case 37:
-        emoji = '#387027'
+        emoji = "#387027"
         break
       case 44:
-        emoji = '#94e7a5'
+        emoji = "#94e7a5"
         break
     }
     if (emoji) {
@@ -310,8 +310,8 @@ function getseries(r, c, shape, stack, sortkey) {
     }
     s.push({
       name: name,
-      type: eie ? (shape == 'line' ? 'bar' : 'line') : shape,
-      stack: eie ? shape == 'line' : stack == 0 ? (shape == 'line' ? false : true) : stack == 1 ? true : false,
+      type: eie ? (shape == "line" ? "bar" : "line") : shape,
+      stack: eie ? shape == "line" : stack == 0 ? (shape == "line" ? false : true) : stack == 1 ? true : false,
       data: data,
       xAxisIndex: eie ? 1 : 0,
       origin: prot,
@@ -332,16 +332,16 @@ function getseries(r, c, shape, stack, sortkey) {
             // }
             // }else{
             if (params.value < limit) {
-              return ''
+              return ""
             } else {
-              return params.value.toFixed(1).replace(/[.]?0+$/g, '') + '%'
+              return params.value.toFixed(1).replace(/[.]?0+$/g, "") + "%"
             }
           },
         // ),
-        position: eie ? 'right' : 'insideLeft',
+        position: eie ? "right" : "insideLeft",
       },
       lineStyle: {
-        type: prot == sortkey ? 'solid' : Math.random() > 0.7 ? 'dashed' : Math.random() > 0.5 ? 'solid' : 'dotted',
+        type: prot == sortkey ? "solid" : Math.random() > 0.7 ? "dashed" : Math.random() > 0.5 ? "solid" : "dotted",
         width: prot == sortkey ? 4 : 1,
       },
       itemStyle: clr,
@@ -349,47 +349,47 @@ function getseries(r, c, shape, stack, sortkey) {
     col.push(name)
   }
   var shipname = []
-  var nametitle = 'title'
+  var nametitle = "title"
   if (!r[0][nametitle]) {
-    nametitle = 'i'
+    nametitle = "i"
   }
   for (let i = 0; i < rawlen; i++) {
     shipname.push(r[i][nametitle])
   }
 
-  if (shape == 'bar' || sortkey == 'sum') {
-    var len = s[0]['data'].length
+  if (shape == "bar" || sortkey == "sum") {
+    var len = s[0]["data"].length
     var slen = col.length
     s[slen] = {
-      name: kj ? '合计' : 'total',
-      symbol: 'none',
-      type: 'line',
+      name: kj ? "合计" : "total",
+      symbol: "none",
+      type: "line",
       stack: false,
       data: [],
       xAxisIndex: 1,
       lineStyle: {
-        type: 'dashed',
+        type: "dashed",
         width: 0,
       },
     }
     for (var i = 0; i < len; i++) {
       var sum = 0
       for (var j = 0; j < slen; j++) {
-        if (exclude.indexOf(s[j]['origin']) > -1 || isNaN(s[j]['data'][i])) {
+        if (exclude.indexOf(s[j]["origin"]) > -1 || isNaN(s[j]["data"][i])) {
           continue
         }
-        sum += Number(s[j]['data'][i])
+        sum += Number(s[j]["data"][i])
       }
-      s[slen]['data'].push(sum)
+      s[slen]["data"].push(sum)
     }
-    if (sortkey == 'sum') {
+    if (sortkey == "sum") {
       for (var n = 0; n < len - 1; n++) {
         for (var m = 0; m < len - 1 - n; m++) {
-          if (s[slen]['data'][m] > s[slen]['data'][m + 1]) {
+          if (s[slen]["data"][m] > s[slen]["data"][m + 1]) {
             for (var j = 0; j <= slen; j++) {
-              var temp = s[j]['data'][m]
-              s[j]['data'][m] = s[j]['data'][m + 1]
-              s[j]['data'][m + 1] = temp
+              var temp = s[j]["data"][m]
+              s[j]["data"][m] = s[j]["data"][m + 1]
+              s[j]["data"][m + 1] = temp
             }
             var temp = shipname[m]
             shipname[m] = shipname[m + 1]
@@ -403,30 +403,30 @@ function getseries(r, c, shape, stack, sortkey) {
   return [s, col, shipname]
 }
 function genCheck(years) {
-  var content = 'content'
-  var checkText = 'checkbox'
+  var content = "content"
+  var checkText = "checkbox"
   // var link = "link";
   var size
-  $('#show').html('')
+  $("#show").html("")
   size = years.length
   for (var i = 0; i < size; i++) {
     // if(exclude.indexOf(years[i])>-1){}else{
-    genShowContent('show', checkText + years[i], i, years[i], content + years[i])
+    genShowContent("show", checkText + years[i], i, years[i], content + years[i])
   }
   // }
 }
 function genShowContent(id, checkboxId, index, showText, idName) {
-  if (showText == 'name' || showText == 'title') {
+  if (showText == "name" || showText == "title") {
     return
   }
   var chck = " checked='checked'"
   var isCheck = true
-  if (showText == 'ratio') {
+  if (showText == "ratio") {
     isCheck = false
   }
   var showContent =
     "<span class='msg'><input type='checkbox' name='items'" +
-    (isCheck ? chck : '') +
+    (isCheck ? chck : "") +
     " value='".concat(
       showText,
       "' id='",
@@ -435,9 +435,9 @@ function genShowContent(id, checkboxId, index, showText, idName) {
       addicon(getname(showText, kj)),
       " </label><span class='content' id='",
       idName,
-      "' ></span></span>",
+      "' ></span></span>"
     )
-  $('#' + id).append(showContent)
+  $("#" + id).append(showContent)
 }
 function isAllCheck(name) {
   var box = document.getElementsByName(name)
@@ -450,7 +450,7 @@ function isAllCheck(name) {
 }
 function addemoji(value) {
   var str = bra(value, 0)
-  var emoji = ''
+  var emoji = ""
   type = nametype(str)
   switch (type) {
     // case 1:
@@ -466,28 +466,28 @@ function addemoji(value) {
     //     emoji= "🍾"
     //   break;
     case 6:
-      emoji = '🛫'
+      emoji = "🛫"
       break
     case 7:
-      emoji = '🛫'
+      emoji = "🛫"
       break
     case 8:
-      emoji = '🛫'
+      emoji = "🛫"
       break
     case 10:
-      emoji = '✈️'
+      emoji = "✈️"
       break
     case 11:
-      emoji = '〽️'
+      emoji = "〽️"
       break
     case 19:
-      emoji = '⚙️'
+      emoji = "⚙️"
       break
     case 23:
-      emoji = '🟪'
+      emoji = "🟪"
       break
     case 13:
-      emoji = '🖍️'
+      emoji = "🖍️"
       break
     // case 18:
     //     emoji= "🧿"
@@ -496,13 +496,13 @@ function addemoji(value) {
     //     emoji= ""
     //   break;
     case 9:
-      emoji = '🛩️'
+      emoji = "🛩️"
       break
     case 25:
-      emoji = '🛢'
+      emoji = "🛢"
       break
     case 30:
-      emoji = '⛀'
+      emoji = "⛀"
     //   break;
     // case 37:
     //     emoji= ""
@@ -516,8 +516,8 @@ function addemoji(value) {
 function nametype(value) {
   str = bra(value, 0)
   for (aitem = 0; aitem < slotitem.length; aitem++) {
-    if (slotitem[aitem]['api_name'] == str) {
-      str = slotitem[aitem]['api_type'][3]
+    if (slotitem[aitem]["api_name"] == str) {
+      str = slotitem[aitem]["api_type"][3]
       break
     }
   }

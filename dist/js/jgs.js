@@ -1,9 +1,9 @@
 function replaceBy(selector, c, old, replace) {
   var dropdown
-  if (selector == 'class') {
+  if (selector == "class") {
     dropdown = document.getElementsByClassName(c)
   } else {
-    if (selector == 'tag') {
+    if (selector == "tag") {
       dropdown = document.getElementsByTagName(c)
     }
   }
@@ -14,15 +14,15 @@ function replaceBy(selector, c, old, replace) {
 const w = console.warn
 const x = console.error
 const z = console.info
-if (typeof jQuery == 'undefined') {
-  w('JQuery load failed')
+if (typeof jQuery == "undefined") {
+  w("JQuery load failed")
   document.write(unescape("%3Cscript src='./dist/js/cdn/jquery.min.js' type='text/javascript'%3E%3C/script%3E"))
 }
 function isvalid(e) {
   return e ? (isNaN(e) ? !!e.length : true) : false
 }
 function ifnull(notnul, ifnul) {
-  if (typeof notnul === 'undefined') {
+  if (typeof notnul === "undefined") {
     return ifnul
   } else {
     return notnul
@@ -31,59 +31,59 @@ function ifnull(notnul, ifnul) {
 function insert_spacing(str) {
   var p1 = /([A-Za-z_])([\u4e00-\u9fa5]+)/gi
   var p2 = /([\u4e00-\u9fa5]+)([A-Za-z_])/gi
-  return str.replace(p1, '$1 $2').replace(p2, '$1 $2')
+  return str.replace(p1, "$1 $2").replace(p2, "$1 $2")
 }
 function insertbr(str) {
   var p1 = new RegExp(/([\u4e00-\u9fa5])([\u4e00-\u9fa5])/gi)
   var p2 = /([\u4e00-\u9fa5]+)([A-Za-z_])/gi
   var p3 = /([A-Za-z_]+) ([A-Za-z_])/gi
-  return str.replace(p1, '$1<br>$2').replace(p2, '$1<br>$2').replace(p3, '$1<br>$2')
+  return str.replace(p1, "$1<br>$2").replace(p2, "$1<br>$2").replace(p3, "$1<br>$2")
 }
 var selectAlli = 0
 //全选
-$('#selectAll').on('click', function () {
+$("#selectAll").on("click", function () {
   if (selectAlli == 0) {
     //把所有复选框选中
-    $('.show span :checkbox').prop('checked', true)
+    $(".show span :checkbox").prop("checked", true)
     selectAlli = 1
   } else {
-    $('.show span :checkbox').prop('checked', false)
+    $(".show span :checkbox").prop("checked", false)
     selectAlli = 0
   }
 })
-$('#ReverseSelect').on('click', function () {
+$("#ReverseSelect").on("click", function () {
   //反选
-  $('#show span :checkbox').each(function () {
+  $("#show span :checkbox").each(function () {
     //遍历所有复选框，然后取值进行 !非操作
-    $(this).prop('checked', !$(this).prop('checked'))
+    $(this).prop("checked", !$(this).prop("checked"))
   })
 })
 function js(url) {
-  var script = document.createElement('script')
-  script.type = 'text/javascript'
+  var script = document.createElement("script")
+  script.type = "text/javascript"
   script.src = url
   // document.body.appendChild(script)
-  var jsbody = document.getElementById('js')
+  var jsbody = document.getElementById("js")
   jsbody.appendChild(script)
 }
 
 function GetRequest(a, b) {
-  char = ''
+  char = ""
   var url = location.search //获取url中"?"符后的字串
   var theRequest = new Object()
-  if (url.indexOf('?') != -1) {
+  if (url.indexOf("?") != -1) {
     var str = url.substr(1)
-    strs = str.split('&')
+    strs = str.split("&")
     for (var i = 0; i < strs.length; i++) {
       // theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
-      if (a == strs[i].split('=')[0]) {
-        char = unescape(strs[i].split('=')[1])
+      if (a == strs[i].split("=")[0]) {
+        char = unescape(strs[i].split("=")[1])
       }
     }
   }
   if (b == 1) {
-    char = char.split(',')
-    arrsplice(char, '')
+    char = char.split(",")
+    arrsplice(char, "")
   } else {
     if (!isNaN(char)) {
       char = Number(char)
@@ -114,7 +114,7 @@ function find(arr, key) {
 }
 
 function jsonstr(a) {
-  return JSON.stringify(a).replace('[', '').replace(']', '').replace(/"/g, '')
+  return JSON.stringify(a).replace("[", "").replace("]", "").replace(/"/g, "")
 }
 function sortNumber(a, b) {
   return a - b
@@ -127,18 +127,18 @@ function sortNumber(a, b) {
  */
 function convertHalfToFullWidth(str) {
   // 先判断传入的是否是字符串，避免非字符串参数报错
-  if (typeof str !== 'string') {
-    console.warn('传入参数不是字符串类型，请传入有效字符串')
-    return str || ''
+  if (typeof str !== "string") {
+    console.warn("传入参数不是字符串类型，请传入有效字符串")
+    return str || ""
   }
 
   // 方案1：分步替换（清晰易懂，适合新手，便于单独调整某个字符）
   let result = str
-    .replace(/&/g, '＆') // 半角& 替换为 全角＆
-    .replace(/\?/g, '？') // 半角? 替换为 全角？
-    .replace(/!/g, '！') // 半角! 替换为 全角！
-    .replace(/#/g, '＃') // 半角# 替换为 全角＃
-    .replace(/\$/g, '＄') // 半角$ 替换为 全角＄
-    .replace(/%/g, '％') // 半角% 替换为 全角％
+    .replace(/&/g, "＆") // 半角& 替换为 全角＆
+    .replace(/\?/g, "？") // 半角? 替换为 全角？
+    .replace(/!/g, "！") // 半角! 替换为 全角！
+    .replace(/#/g, "＃") // 半角# 替换为 全角＃
+    .replace(/\$/g, "＄") // 半角$ 替换为 全角＄
+    .replace(/%/g, "％") // 半角% 替换为 全角％
   return result
 }

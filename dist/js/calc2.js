@@ -1,22 +1,22 @@
-stype[174] = "Z1 Z3";
-stype[439] = "Warspite";
-stype[441] = "Littorio级";
-stype[443] = "Libeccio级";
-stype[448] = "Zara级";
-stype[491] = "Commandant Teste";
-stype[515] = "Ark Royal";
-stype[530] = "伊504";
-stype[535] = "Luigi Torelli";
-stype[539] = "UIT-25";
-stype[553] = "伊勢改(二)";
-stype[554] = "日向改(二)";
-stype[571] = "Nelson";
-stype[589] = "L.d.S.D.d.Abruzzi级";
-var devpic = '<img src="https://uploads.kcwiki.cn/commons/a/a8/IcoMaterial.png" alt="资材" style="height:22px;">';
-q = GetRequest("q", 1);
-var slotitem;
-var api = q == "d" ? "api_" : "";
-var jsonfile = q == "d" ? "api_mst_slotitem" : "ship";
+stype[174] = "Z1 Z3"
+stype[439] = "Warspite"
+stype[441] = "Littorio级"
+stype[443] = "Libeccio级"
+stype[448] = "Zara级"
+stype[491] = "Commandant Teste"
+stype[515] = "Ark Royal"
+stype[530] = "伊504"
+stype[535] = "Luigi Torelli"
+stype[539] = "UIT-25"
+stype[553] = "伊勢改(二)"
+stype[554] = "日向改(二)"
+stype[571] = "Nelson"
+stype[589] = "L.d.S.D.d.Abruzzi级"
+var devpic = '<img src="https://uploads.kcwiki.cn/commons/a/a8/IcoMaterial.png" alt="资材" style="height:22px;">'
+q = GetRequest("q", 1)
+var slotitem
+var api = q == "d" ? "api_" : ""
+var jsonfile = q == "d" ? "api_mst_slotitem" : "ship"
 var resourceTitle = {
   i: "",
   fuel: "",
@@ -28,231 +28,231 @@ var resourceTitle = {
   denominator: "",
   times: "",
   ratio: "",
-};
-var kj = false;
-var ship;
-var csjson = [];
-var bar = 1;
-$(".loading").css("width", Width());
-$.getJSON("parsed/cstype.json", function (result) {
-  csjson = result;
-  jsindex++;
-}).done(function (d) {
-  progress(5);
-});
-$.getJSON("parsed/" + jsonfile + ".json", function (result) {
-  slotitem = result;
-  jsindex++;
-}).done(function (d) {
-  progress(5);
-});
-$("#denominator").val(Number(GetRequest("a", 1)));
-var sorted = [];
-var jsindex = 0;
-var minlv = GetRequest("l") == "true" ? true : false;
-function progress(p) {
-  bar += p;
-  $(".progress-bar").css("width", bar + "%");
 }
-var detect = navigator.browserLanguage || navigator.language;
+var kj = false
+var ship
+var csjson = []
+var bar = 1
+$(".loading").css("width", Width())
+$.getJSON("parsed/cstype.json", function (result) {
+  csjson = result
+  jsindex++
+}).done(function (d) {
+  progress(5)
+})
+$.getJSON("parsed/" + jsonfile + ".json", function (result) {
+  slotitem = result
+  jsindex++
+}).done(function (d) {
+  progress(5)
+})
+$("#denominator").val(Number(GetRequest("a", 1)))
+var sorted = []
+var jsindex = 0
+var minlv = GetRequest("l") == "true" ? true : false
+function progress(p) {
+  bar += p
+  $(".progress-bar").css("width", bar + "%")
+}
+var detect = navigator.browserLanguage || navigator.language
 if (!havelang) {
   if (detect.length > 0) {
-    console.log(detect);
+    console.log(detect)
   } else {
-    detect = "zh-CN";
+    detect = "zh-CN"
   }
   if (detect.slice(0, 2) == "zh" || detect.slice(0, 2) == "ja") {
-    kj = true;
+    kj = true
   }
-  selectlang = document.getElementById("locale");
+  selectlang = document.getElementById("locale")
   for (let i = 0; i < selectlang.length; i++) {
     if (selectlang[i].value == detect) {
-      selectlang[i].selected = true;
+      selectlang[i].selected = true
     }
   }
 }
 function jsonover() {
-  var o = GetRequest("o", 1);
-  var oname = [];
-  var otwo = o;
+  var o = GetRequest("o", 1)
+  var oname = []
+  var otwo = o
   for (let j = 0; j < otwo.length; j++) {
-    oname.push(addemoji(formatOnlyname(otwo[j])));
+    oname.push(addemoji(formatOnlyname(otwo[j])))
   }
-  document.title = oname;
-  var e = GetRequest("e", 1);
-  e = e.indexOf("") ? e : [];
-  if (jsindex == ranget.length + 1) $("h3.panel-title")[0].innerHTML = "数据计算中。。。";
-  console.log(jsindex, ranget.length + 2);
+  document.title = oname
+  var e = GetRequest("e", 1)
+  e = e.indexOf("") ? e : []
+  if (jsindex == ranget.length + 1) $("h3.panel-title")[0].innerHTML = "数据计算中。。。"
+  console.log(jsindex, ranget.length + 2)
   if (jsindex == ranget.length + 2) {
-    progress(20);
-    var filted = filt(group2By(bigdata, "i", "s"), o);
+    progress(20)
+    var filted = filt(group2By(bigdata, "i", "s"), o)
     if (!filted.length) {
-      $("h3.panel-title")[0].innerHTML = "无匹配的结果，请减少主查询个数，或将主查询改为副查询";
+      $("h3.panel-title")[0].innerHTML = "无匹配的结果，请减少主查询个数，或将主查询改为副查询"
     } else {
       // console.log(filted.length);
-      o = o.concat(e);
-      isonl = isonladd(filted, o);
+      o = o.concat(e)
+      isonl = isonladd(filted, o)
       isonl.forEach(function (e) {
-        denominator = 0;
+        denominator = 0
         for (keys in e) {
           if (keys[0] == "n") {
-            denominator += e[keys];
+            denominator += e[keys]
           }
         }
-        e["denominator"] = denominator;
-        e["ratio"] = 0;
-        e["times"] = 0;
+        e["denominator"] = denominator
+        e["ratio"] = 0
+        e["times"] = 0
         for (key in e) {
           if (key[0] == "n") {
-            k = key.slice(1, key.length);
-            e[formatOnlyname(k)] = e[key] / e["denominator"];
+            k = key.slice(1, key.length)
+            e[formatOnlyname(k)] = e[key] / e["denominator"]
             if (o.indexOf(k) > -1) {
-              e["ratio"] += e[formatOnlyname(k)];
-              e["times"] += e["n" + k];
+              e["ratio"] += e[formatOnlyname(k)]
+              e["times"] += e["n" + k]
             }
           }
         }
-      });
-      setdeno(1);
+      })
+      setdeno(1)
     }
-    $(".loading").hide();
+    $(".loading").hide()
   } else if (jsindex == 3) {
-    var filted = filt(group2By(bigdata, "i", "s"), o);
+    var filted = filt(group2By(bigdata, "i", "s"), o)
     if (filted.length) {
-      o = o.concat(e);
-      isonl = isonladd(filted, o);
+      o = o.concat(e)
+      isonl = isonladd(filted, o)
       isonl.forEach(function (e) {
-        denominator = 0;
+        denominator = 0
         for (keys in e) {
           if (keys[0] == "n") {
-            denominator += e[keys];
+            denominator += e[keys]
           }
         }
-        e["denominator"] = denominator;
-        e["ratio"] = 0;
-        e["times"] = 0;
+        e["denominator"] = denominator
+        e["ratio"] = 0
+        e["times"] = 0
         for (key in e) {
           if (key[0] == "n") {
-            k = key.slice(1, key.length);
-            e[formatOnlyname(k)] = e[key] / e["denominator"];
+            k = key.slice(1, key.length)
+            e[formatOnlyname(k)] = e[key] / e["denominator"]
             if (o.indexOf(k) > -1) {
-              e["ratio"] += e[formatOnlyname(k)];
-              e["times"] += e["n" + k];
+              e["ratio"] += e[formatOnlyname(k)]
+              e["times"] += e["n" + k]
             }
           }
         }
-      });
-      setdeno();
+      })
+      setdeno()
     }
   }
 }
 function setdeno(a) {
-  $(".deno").css("background", "");
-  sorted = [];
+  $(".deno").css("background", "")
+  sorted = []
   isonl.forEach(function (e) {
     if (e["denominator"] > $("#denominator").val()) {
-      sorted.push(e);
+      sorted.push(e)
     }
-  });
+  })
   if (sorted.length) {
-    sortkey = GetRequest("s");
+    sortkey = GetRequest("s")
     if (!sortkey == 0) {
-      sorted.sort(sortby);
-      sorted.reverse();
+      sorted.sort(sortby)
+      sorted.reverse()
     }
-    langchange();
+    langchange()
     if (a) {
-      progress(97);
-      $("div.panel").hide();
-      $("#foot").load("foot.html");
+      progress(97)
+      $("div.panel").hide()
+      $("#foot").load("foot.html")
     }
   } else {
-    $("div.panel").show();
-    $("h3.panel-title")[0].innerHTML = "存在查询结果，但公式次数设置过大，请在左上方重新设置";
-    $(".deno").css("background", "gold");
+    $("div.panel").show()
+    $("h3.panel-title")[0].innerHTML = "存在查询结果，但公式次数设置过大，请在左上方重新设置"
+    $(".deno").css("background", "gold")
   }
 }
-var colorFlag = 0;
+var colorFlag = 0
 $(document).ready(function () {
   $("#locale").change(function () {
-    progress(5);
-    setlang();
-    langchange();
-  });
+    progress(5)
+    setlang()
+    langchange()
+  })
   setTimeout(function () {
-    console.log(22);
-    js("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/bootstrap-table-locale-all.js");
-    js("https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js");
-    progress(2);
+    console.log(22)
+    js("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/bootstrap-table-locale-all.js")
+    js("https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js")
+    progress(2)
     if (!havelang) {
-      document.getElementById("locale")[0].selected = true;
+      document.getElementById("locale")[0].selected = true
     }
-  }, 1200);
+  }, 1200)
   setTimeout(function () {
-    progress(3);
+    progress(3)
     // $("#foot").load("foot.html");
     $(".search-input").bind("input onchange", function () {
       setTimeout(function () {
         for (let i = 0; i < 2; i++) {
           document.getElementsByClassName("search-input")[i].value = Japanized(
-            document.getElementsByClassName("search-input")[i].value,
-          );
+            document.getElementsByClassName("search-input")[i].value
+          )
         }
-      }, 50);
-    });
+      }, 50)
+    })
     // loadchart();
-    $("span.msg").css("width", (q == "d" ? 162 : 76) + "px");
-  }, 2000);
-});
+    $("span.msg").css("width", (q == "d" ? 162 : 76) + "px")
+  }, 2000)
+})
 function bgclr(a, b) {
-  if (Simplized(b.innerHTML) == title[a]) $(b).addClass("css" + a);
+  if (Simplized(b.innerHTML) == title[a]) $(b).addClass("css" + a)
 }
 function langchange() {
-  initTable(locallang());
+  initTable(locallang())
   $("div.th-inner.sortable.both").each(function () {
     if ([devpic, "油", "弹", "钢", "铝"].indexOf(Simplized(this.innerHTML)) > -1 || !isNaN(this.innerHTML)) {
-      $(this).css("width", "0px");
-      if (!isNaN(this.innerHTML)) $(this).css("color", "grey");
-      bgclr("fuel", this);
-      bgclr("ammo", this);
-      bgclr("steel", this);
-      bgclr("bauxite", this);
+      $(this).css("width", "0px")
+      if (!isNaN(this.innerHTML)) $(this).css("color", "grey")
+      bgclr("fuel", this)
+      bgclr("ammo", this)
+      bgclr("steel", this)
+      bgclr("bauxite", this)
     }
-  });
+  })
 }
 function thead(eg) {
-  var co = [];
-  var col = [];
+  var co = []
+  var col = []
   for (e in eg) {
-    var visible = true;
-    var temp = getname(e, kj);
-    var formatter = undefined;
-    var colspan = minlv ? 3 : 2;
-    var rowspan = 1;
-    var strict = false;
+    var visible = true
+    var temp = getname(e, kj)
+    var formatter = undefined
+    var colspan = minlv ? 3 : 2
+    var rowspan = 1
+    var strict = false
     if (e == "i") {
-      colspan = 1;
-      rowspan = 2;
-      formatter = formatLink;
+      colspan = 1
+      rowspan = 2
+      formatter = formatLink
     } else {
       if (isResource(e)) {
-        colspan = 1;
-        rowspan = 2;
+        colspan = 1
+        rowspan = 2
         if (e == "資材") {
-          temp = devpic;
-          if (q == "d") visible = false;
+          temp = devpic
+          if (q == "d") visible = false
         }
       }
     }
     if (e == "ratio") {
-      colspan = 2;
-      temp = "主查询合计";
-      formatter = formatR;
+      colspan = 2
+      temp = "主查询合计"
+      formatter = formatR
     }
     if (e == "ratio" || isResource(e) || e[0] == "n") {
       if (!isNaN(e[e.length - 1])) {
-        showid = e.slice(1, e.length);
-        temp = q == "d" ? formatItemId(showid) : formatStype(showid);
+        showid = e.slice(1, e.length)
+        temp = q == "d" ? formatItemId(showid) : formatStype(showid)
       }
       co.push({
         title: getname(temp, kj),
@@ -266,25 +266,25 @@ function thead(eg) {
         visible: visible,
         // cellStyle:cellStyle,
         // escape:escapes,
-      });
+      })
     }
   }
   for (e in eg) {
-    var formatter = undefined;
-    var f = "出货";
+    var formatter = undefined
+    var f = "出货"
     if (e[0] == "n") {
-      f = e.slice(1, e.length);
+      f = e.slice(1, e.length)
     }
     // if (e == 'ratio'||( e!='i'&& e!='fuel'&& e!='denominator'&& e!='times'&& e!='ammo'&& e[0]!='n'&& e[0]!='l')) {
     if (e == "ratio" || (!isResource(e) && e != "times" && e[0] != "n" && e[0] != "l")) {
-      f = "%";
+      f = "%"
       if (e == "ratio") {
-        f = "确率";
+        f = "确率"
       }
-      formatter = formatR;
+      formatter = formatR
     }
     if (e[0] == "l") {
-      f = "Lv";
+      f = "Lv"
     }
     if (e == "times" || e[0] == "n" || !isResource(e)) {
       col.push({
@@ -292,137 +292,137 @@ function thead(eg) {
         field: e,
         sortable: true,
         formatter: formatter,
-      });
+      })
     }
   }
-  return [co, col];
+  return [co, col]
 }
 function isResource(e) {
-  return ["i", "fuel", "ammo", "steel", "bauxite", "資材", "secretary", "denominator"].indexOf(e) > -1;
+  return ["i", "fuel", "ammo", "steel", "bauxite", "資材", "secretary", "denominator"].indexOf(e) > -1
 }
 function formatR(value) {
-  return value ? (value * 100).toFixed(2) + "%" : null;
+  return value ? (value * 100).toFixed(2) + "%" : null
 }
 function formatLink(value, row, index) {
-  arrsplice(value, 1);
-  var piedata = [];
+  arrsplice(value, 1)
+  var piedata = []
   for (key in row) {
     if (key[0] == "n") {
-      var itemID = key.slice(1, key.length);
-      var name = addemoji(formatOnlyname(itemID));
-      piedata.push({ value: row[key], name: name });
+      var itemID = key.slice(1, key.length)
+      var name = addemoji(formatOnlyname(itemID))
+      piedata.push({ value: row[key], name: name })
     }
   }
-  piedata.push(value);
-  return "<a href='javascript:pie(" + JSON.stringify(piedata) + ")'>" + value + "</a>";
+  piedata.push(value)
+  return "<a href='javascript:pie(" + JSON.stringify(piedata) + ")'>" + value + "</a>"
 }
 function pie(e) {
   // alert(JSON.stringify(e));
-  $.cookie("pie", JSON.stringify(e), { expires: 365, path: "/" });
-  window.location.href = "pie.html";
+  $.cookie("pie", JSON.stringify(e), { expires: 365, path: "/" })
+  window.location.href = "pie.html"
 }
 function group2By(array, i, s) {
-  let groups = {};
+  let groups = {}
   array.forEach(function (o) {
-    let group = JSON.stringify(o[i] + o[s]);
-    groups[group] = groups[group] || [];
-    groups[group].push(o);
-  });
-  let arr = [];
+    let group = JSON.stringify(o[i] + o[s])
+    groups[group] = groups[group] || []
+    groups[group].push(o)
+  })
+  let arr = []
   for (key in groups) {
-    arr.push(groups[key]);
+    arr.push(groups[key])
   }
-  return arr;
+  return arr
 }
 function filt(r, o) {
-  var array = [];
+  var array = []
   r.forEach(function (element) {
-    var f = true;
+    var f = true
     o.forEach(function (oe) {
-      var ff = false;
+      var ff = false
       element.forEach(function (el) {
         // f = f && el['o'] == o[k]
         if (el["o"] == oe) {
-          ff = true;
+          ff = true
         }
-      });
+      })
       if (!ff) {
-        f = false;
+        f = false
       }
-    });
+    })
     if (f && element[0]["s"] != 0) {
-      array.push(element);
+      array.push(element)
     }
-  });
-  return array;
+  })
+  return array
 }
 function isonladd(array, o) {
   for (k = 0; k < o.length; k++) {
-    egnrl(o[k]);
+    egnrl(o[k])
   }
   if (q == "d") {
-    egnrl("-1");
+    egnrl("-1")
   }
-  let groups = [];
+  let groups = []
   // o.push(-1)
   for (let i = 0, l = array.length; i < l; i++) {
-    let is = array[i][0]["i"];
+    let is = array[i][0]["i"]
     if (q == "d") {
-      is.push(1);
-      is.push(formatStype(array[i][0]["s"]));
+      is.push(1)
+      is.push(formatStype(array[i][0]["s"]))
     } else {
-      is.push(formatStype(array[i][0]["s"]));
+      is.push(formatStype(array[i][0]["s"]))
     }
-    var onal = { i: is };
+    var onal = { i: is }
     for (let j = 0; j < array[i].length; j++) {
-      var item = jsonstr(array[i][j]["o"]);
-      egnrl(item);
+      var item = jsonstr(array[i][j]["o"])
+      egnrl(item)
       if (onal["n" + item]) {
-        onal["n" + item] += Number(array[i][j]["n"]);
+        onal["n" + item] += Number(array[i][j]["n"])
       } else {
-        onal["n" + item] = 0 + Number(array[i][j]["n"]);
+        onal["n" + item] = 0 + Number(array[i][j]["n"])
       }
       if (minlv) {
         if (onal["l" + item]) {
-          onal["l" + item] = Math.min(onal["l" + item], Number(array[i][j]["l"]));
+          onal["l" + item] = Math.min(onal["l" + item], Number(array[i][j]["l"]))
         } else {
-          onal["l" + item] = Math.min(121, Number(array[i][j]["l"]));
+          onal["l" + item] = Math.min(121, Number(array[i][j]["l"]))
         }
       }
     }
-    groups.push(onal);
+    groups.push(onal)
   }
-  return groups;
+  return groups
 }
 function egnrl(item) {
-  resourceTitle["n" + item] = 0;
-  resourceTitle[formatOnlyname(item)] = 0;
+  resourceTitle["n" + item] = 0
+  resourceTitle[formatOnlyname(item)] = 0
   if (minlv) {
-    resourceTitle["l" + item] = 0;
+    resourceTitle["l" + item] = 0
   }
 }
 function initTable(lval) {
   if (lval) {
-    kj = lval.slice(0, 2) == "zh" || lval.slice(0, 2) == "ja";
+    kj = lval.slice(0, 2) == "zh" || lval.slice(0, 2) == "ja"
   } else {
-    console.log(lval);
+    console.log(lval)
   }
-  titleName = { ratio: "" };
+  titleName = { ratio: "" }
   for (key in resourceTitle) {
     if (key[0] == "r" && key != "ratio") {
-      key = key.slice(1, key.length);
-      var k = formatOnlyname(key);
-      titleName[k] = 0;
+      key = key.slice(1, key.length)
+      var k = formatOnlyname(key)
+      titleName[k] = 0
     }
   }
-  loadprot(resourceTitle);
+  loadprot(resourceTitle)
   // console.log("load table", sorted)
-  addcol(sorted, "fuel", "i", 0);
-  addcol(sorted, "ammo", "i", 1);
-  addcol(sorted, "steel", "i", 2);
-  addcol(sorted, "bauxite", "i", 3);
-  addcol(sorted, "資材", "i", 4);
-  addcol(sorted, "secretary", "i", 5);
+  addcol(sorted, "fuel", "i", 0)
+  addcol(sorted, "ammo", "i", 1)
+  addcol(sorted, "steel", "i", 2)
+  addcol(sorted, "bauxite", "i", 3)
+  addcol(sorted, "資材", "i", 4)
+  addcol(sorted, "secretary", "i", 5)
   $("#mytab")
     .bootstrapTable("destroy")
     .bootstrapTable({
@@ -440,37 +440,37 @@ function initTable(lval) {
       stickyHeaderOffsetRight: em,
       locale: lval,
       columns: thead(resourceTitle),
-    });
+    })
   // if (Width() < 900 && kj) { $('.table .th-inner').css('writing-mode', 'vertical-lr'); }
-  var padding = "6";
+  var padding = "6"
   // if (Width() < 1200) {
   //     padding = kj ? '' : '4';
   //     $('.table .th-inner').css('white-space', 'normal')}
   document.getElementById("csscontainer").innerHTML =
-    ".fix-sticky {padding-top:" + padding + "0px;position: fixed !important;overflow: hidden;  z-index: 100;}";
+    ".fix-sticky {padding-top:" + padding + "0px;position: fixed !important;overflow: hidden;  z-index: 100;}"
 }
 function formatOnlyname(value) {
-  var str = value;
+  var str = value
   if (value == -1) {
-    return fail;
+    return fail
   }
   for (nitem = 0; nitem < slotitem.length; nitem++) {
     if (slotitem[nitem][api + "id"] == value) {
-      str = slotitem[nitem][api + "name"];
-      return bra(str, 1);
+      str = slotitem[nitem][api + "name"]
+      return bra(str, 1)
     }
   }
-  return bra(str, 1);
+  return bra(str, 1)
 }
 function addicon(name, c) {
-  var str = bra(name, 0);
-  var color = c ? '<span style="color:' + c + ';">▐</span>' : ""; //▮∎■
+  var str = bra(name, 0)
+  var color = c ? '<span style="color:' + c + ';">▐</span>' : "" //▮∎■
   for (let a = 0; a < slotitem.length; a++) {
     if (slotitem[a]["api_name"] == str) {
-      return '<span class="flex">' + color + itag(slotitem[a]["api_type"][3]) + str + "</sapn>";
+      return '<span class="flex">' + color + itag(slotitem[a]["api_type"][3]) + str + "</sapn>"
     }
   }
-  return '<span class="flex">' + color + convertHalfToFullWidth(str) + "</sapn>";
+  return '<span class="flex">' + color + convertHalfToFullWidth(str) + "</sapn>"
 }
 /**
  * 半角特殊字符替换为全角字符
@@ -480,8 +480,8 @@ function addicon(name, c) {
 function convertHalfToFullWidth(str) {
   // 先判断传入的是否是字符串，避免非字符串参数报错
   if (typeof str !== "string") {
-    console.warn("传入参数不是字符串类型，请传入有效字符串");
-    return str || "";
+    console.warn("传入参数不是字符串类型，请传入有效字符串")
+    return str || ""
   }
 
   // 方案1：分步替换（清晰易懂，适合新手，便于单独调整某个字符）
@@ -491,6 +491,6 @@ function convertHalfToFullWidth(str) {
     .replace(/!/g, "！") // 半角! 替换为 全角！
     .replace(/#/g, "＃") // 半角# 替换为 全角＃
     .replace(/\$/g, "＄") // 半角$ 替换为 全角＄
-    .replace(/%/g, "％"); // 半角% 替换为 全角％
-  return result;
+    .replace(/%/g, "％") // 半角% 替换为 全角％
+  return result
 }

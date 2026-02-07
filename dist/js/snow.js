@@ -1,10 +1,10 @@
 ;(function () {
   function k(a, b, c) {
     if (a.addEventListener) a.addEventListener(b, c, false)
-    else a.attachEvent && a.attachEvent('on' + b, c)
+    else a.attachEvent && a.attachEvent("on" + b, c)
   }
   function g(a) {
-    if (typeof window.onload != 'function') window.onload = a
+    if (typeof window.onload != "function") window.onload = a
     else {
       var b = window.onload
       window.onload = function () {
@@ -16,14 +16,14 @@
   function h() {
     var a = {}
     for (type in {
-      Top: '',
-      Left: '',
+      Top: "",
+      Left: "",
     }) {
-      var b = type == 'Top' ? 'Y' : 'X'
-      if (typeof window['page' + b + 'Offset'] != 'undefined') a[type.toLowerCase()] = window['page' + b + 'Offset']
+      var b = type == "Top" ? "Y" : "X"
+      if (typeof window["page" + b + "Offset"] != "undefined") a[type.toLowerCase()] = window["page" + b + "Offset"]
       else {
         b = document.documentElement.clientHeight ? document.documentElement : document.body
-        a[type.toLowerCase()] = b['scroll' + type]
+        a[type.toLowerCase()] = b["scroll" + type]
       }
     }
     return a
@@ -40,8 +40,8 @@
     this.parent = document.body
     this.createEl(this.parent, a)
     this.size = Math.random() * 5 + 5
-    this.el.style.width = Math.round(this.size) + 'px'
-    this.el.style.height = Math.round(this.size) + 'px'
+    this.el.style.width = Math.round(this.size) + "px"
+    this.el.style.height = Math.round(this.size) + "px"
     this.maxLeft = document.body.offsetWidth - this.size
     this.maxTop = document.body.offsetHeight - this.size
     this.left = Math.random() * this.maxLeft
@@ -76,7 +76,7 @@
                 c[d].draw()
               }
         }, 40)
-      k(window, 'scroll', function () {
+      k(window, "scroll", function () {
         for (var e = c.length - 1; e >= 0; e--) c[e].draw()
       })
     } else
@@ -89,11 +89,11 @@
   }
   i.prototype = {
     createEl: function (a, b) {
-      this.el = document.createElement('img')
-      this.el.setAttribute('src', b + './images/mix/snow' + Math.floor(Math.random() * 4) + '.gif')
-      this.el.style.position = 'absolute'
-      this.el.style.display = 'block'
-      this.el.style.zIndex = '99999'
+      this.el = document.createElement("img")
+      this.el.setAttribute("src", b + "./images/mix/snow" + Math.floor(Math.random() * 4) + ".gif")
+      this.el.style.position = "absolute"
+      this.el.style.display = "block"
+      this.el.style.zIndex = "99999"
       this.parent.appendChild(this.el)
     },
     move: function () {
@@ -105,8 +105,8 @@
       else if (this.left > this.maxLeft) this.left = 0
     },
     draw: function () {
-      this.el.style.top = Math.round(this.top) + 'px'
-      this.el.style.left = Math.round(this.left) + 'px'
+      this.el.style.top = Math.round(this.top) + "px"
+      this.el.style.left = Math.round(this.left) + "px"
     },
     remove: function () {
       this.parent.removeChild(this.el)

@@ -1,59 +1,59 @@
-const qtar = tar == '装备' ? 'd' : 'c'
+const qtar = tar == "装备" ? "d" : "c"
 var active = {}
 function clearall() {
-  $('.btn').each(function () {
+  $(".btn").each(function () {
     $(this).addClass(btndef)
-    $.cookie('d' + $(this).val(), null, { expires: 365, path: '/' })
+    $.cookie("d" + $(this).val(), null, { expires: 365, path: "/" })
     $(this).removeClass(btninfo)
     $(this).removeClass(primary)
   })
   btnclick()
 }
 function btnbind() {
-  $('.btn').click(function () {
-    $(this).addClass('clicked')
+  $(".btn").click(function () {
+    $(this).addClass("clicked")
     if ($(this).hasClass(primary)) {
       $(this).removeClass(btndef)
       $(this).addClass(btninfo)
-      $.cookie('d' + $(this).val(), btninfo, { expires: 365, path: '/' })
+      $.cookie("d" + $(this).val(), btninfo, { expires: 365, path: "/" })
       $(this).removeClass(primary)
     } else {
       if ($(this).hasClass(btninfo)) {
         $(this).addClass(btndef)
-        $.cookie('d' + $(this).val(), null, { expires: 365, path: '/' })
+        $.cookie("d" + $(this).val(), null, { expires: 365, path: "/" })
         $(this).removeClass(btninfo)
         $(this).removeClass(primary)
       } else {
         $(this).addClass(primary)
-        $.cookie('d' + $(this).val(), primary, { expires: 365, path: '/' })
+        $.cookie("d" + $(this).val(), primary, { expires: 365, path: "/" })
         $(this).removeClass(btndef)
       }
     }
   })
   btnclick()
 }
-var primary = 'btn-primary'
-var btninfo = 'btn-info'
-var btndef = 'btn-default'
-if (tar == '装备') {
-  $.getJSON('parsed/api_mst_slotitem_equiptype.json', function (res) {
+var primary = "btn-primary"
+var btninfo = "btn-info"
+var btndef = "btn-default"
+if (tar == "装备") {
+  $.getJSON("parsed/api_mst_slotitem_equiptype.json", function (res) {
     itype = res
   })
     .done(function () {
-      $.getJSON('parsed/api_mst_slotitem.json', function (result) {
-        addcol(result, 'itype', 'api_type', 2)
+      $.getJSON("parsed/api_mst_slotitem.json", function (result) {
+        addcol(result, "itype", "api_type", 2)
         slotitem = result
       })
         .done(function () {
           genCheck(init)
-          $('.btn').click(btnclick)
+          $(".btn").click(btnclick)
         })
         .fail(function (d) {
-          alert('文件  ' + 'parsed/api_mst_slotitem.json' + ' 读取失败' + d)
+          alert("文件  " + "parsed/api_mst_slotitem.json" + " 读取失败" + d)
         })
     })
     .fail(function (d) {
-      alert('文件  ' + 'parsed/api_mst_slotitem_equiptype.json' + ' 读取失败' + d)
+      alert("文件  " + "parsed/api_mst_slotitem_equiptype.json" + " 读取失败" + d)
     })
 }
 
@@ -62,17 +62,17 @@ function genCheck(Obj) {
   for (key in Obj) {
     years.push(key)
   }
-  var content = 'content'
-  var checkText = 'checkbox'
-  var link = 'link'
+  var content = "content"
+  var checkText = "checkbox"
+  var link = "link"
   var size
-  $('#show').html('')
+  $("#show").html("")
   size = years.length
   for (var i = 0; i < years.length; i++) {
-    genShowContent('show', checkText + i, i, years[i] + '', content + i)
+    genShowContent("show", checkText + i, i, years[i] + "", content + i)
   }
   for (var i = 0; i < years.length; i++) {
-    var array = Obj['' + years[i] + '']
+    var array = Obj["" + years[i] + ""]
     for (var j = 0; j < array.length; j++) {
       genCheckBox(content + i, link + i, array[j], array[j], i, false)
     }
@@ -83,16 +83,16 @@ function genCheck(Obj) {
 function genCheckBox(id, name, value, showText, parentIndex, isCheck) {
   var checkbox =
     "<span class='la'><button class='btn " +
-    ($.cookie('d' + value) == btninfo ? btninfo : $.cookie('d' + value) == primary ? primary : btndef) +
+    ($.cookie("d" + value) == btninfo ? btninfo : $.cookie("d" + value) == primary ? primary : btndef) +
     "' parentIndex=" +
     parentIndex +
-    (isCheck ? " checked='checked'" : '') +
-    ' value=' +
+    (isCheck ? " checked='checked'" : "") +
+    " value=" +
     value +
-    ' >' +
+    " >" +
     StranText(formatItemId(showText)) +
-    '</button></span>'
-  $('#' + id).append(checkbox)
+    "</button></span>"
+  $("#" + id).append(checkbox)
 }
 function genShowContent(id, checkboxId, index, showText, idName) {
   var showContent = "<dd class='msg'><dt class='bigfont'>"
@@ -100,7 +100,7 @@ function genShowContent(id, checkboxId, index, showText, idName) {
     .concat("：</dt> <dd class='content' id='")
     .concat(idName)
     .concat("' ></dd></dd><br>")
-  $('#' + id).append(showContent)
+  $("#" + id).append(showContent)
 }
 function isAllCheck(name) {
   var box = document.getElementsByName(name)
@@ -118,16 +118,16 @@ function arrange(value) {
       for (let i = 0, l = slotitem.length; i < l; i++) {
         e = slotitem[i]
         // slotitem.forEach(function(e){
-        if (e['api_id'] == d) {
+        if (e["api_id"] == d) {
           var jstr = e[value]
         } else {
           continue
         }
         if (release[jstr]) {
-          release[jstr].push(e['api_id'])
+          release[jstr].push(e["api_id"])
         } else {
           release[jstr] = []
-          release[jstr].push(e['api_id'])
+          release[jstr].push(e["api_id"])
         }
         break
       }
@@ -135,7 +135,7 @@ function arrange(value) {
   } else {
     if (value == -1) {
       release = releasetime
-      release['2013/04/23'] = [
+      release["2013/04/23"] = [
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
         31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, -1,
       ]
@@ -147,14 +147,14 @@ function arrange(value) {
           // for(e of slotitem){
           for (let j = 0; j < slotitem.length; j++) {
             e = slotitem[j]
-            if (e['api_id'] == d) {
+            if (e["api_id"] == d) {
               var jstr
-              var tn = e['api_type'][value]
+              var tn = e["api_type"][value]
               switch (value) {
-                case '2':
+                case "2":
                   jstr = formatItype(tn)
                   break
-                case '3':
+                case "3":
                   jstr = itag(tn)
                   break
                 default:
@@ -164,10 +164,10 @@ function arrange(value) {
               continue
             }
             if (release[jstr]) {
-              release[jstr].push(e['api_id'])
+              release[jstr].push(e["api_id"])
             } else {
               release[jstr] = []
-              release[jstr].push(e['api_id'])
+              release[jstr].push(e["api_id"])
             }
             break
           }
@@ -177,18 +177,18 @@ function arrange(value) {
   }
   genCheck(release)
 }
-$('.go').click(function () {
+$(".go").click(function () {
   var output = []
   var extra = []
   var duration = []
-  $('button.btn-primary').each(function () {
+  $("button.btn-primary").each(function () {
     output.push($(this).val())
   })
-  $('button.btn-info').each(function () {
+  $("button.btn-info").each(function () {
     extra.push($(this).val())
   })
-  $('input.time').each(function () {
-    if ($(this).prop('checked')) {
+  $("input.time").each(function () {
+    if ($(this).prop("checked")) {
       duration.push($(this).val())
     }
   })
@@ -196,45 +196,45 @@ $('.go').click(function () {
     if (duration.length > 0) {
       console.log(extra, output)
       window.location.href =
-        'result.html?t=' +
+        "result.html?t=" +
         duration.reverse() +
-        '&q=' +
+        "&q=" +
         qtar +
-        '&o=' +
+        "&o=" +
         output +
-        '&e=' +
+        "&e=" +
         extra +
-        '&s=' +
-        $('#sorto').val() +
-        '&a=' +
-        $('#a').val() +
-        '&l=' +
-        $('#lv')[0].checked
+        "&s=" +
+        $("#sorto").val() +
+        "&a=" +
+        $("#a").val() +
+        "&l=" +
+        $("#lv")[0].checked
     } else {
-      alert('您未选择时间范围！')
+      alert("您未选择时间范围！")
     }
   } else {
-    if (confirm('您未选择' + tar + '，\n是要查询所有' + tar + '吗？\n(可点击' + tar + '名称选择' + tar + ')') == true) {
+    if (confirm("您未选择" + tar + "，\n是要查询所有" + tar + "吗？\n(可点击" + tar + "名称选择" + tar + ")") == true) {
       window.location.href =
-        'result.html?t=' +
+        "result.html?t=" +
         duration.reverse() +
-        '&q=' +
+        "&q=" +
         qtar +
-        '&o=' +
+        "&o=" +
         output +
-        '&e=' +
+        "&e=" +
         extra +
-        '&s=' +
-        $('#sorto').val() +
-        '&a=' +
-        $('#a').val() +
-        '&l=' +
-        $('#lv')[0].checked
+        "&s=" +
+        $("#sorto").val() +
+        "&a=" +
+        $("#a").val() +
+        "&l=" +
+        $("#lv")[0].checked
     }
   }
 })
 btnbind()
-$('.hint').html(
+$(".hint").html(
   `
 <div class="panel-heading">
     <h3 class="panel-title ">提示</h3>
@@ -256,16 +256,16 @@ $('.hint').html(
     `选择数量无关</li><br>
     <li>不兼容IE浏览器</li><br>
 </ul>  
-</div>`,
+</div>`
 )
-$.getJSON('dist/items/developable/possibles.json', function (result) {
+$.getJSON("dist/items/developable/possibles.json", function (result) {
   possibles = result
 })
-$('.btn').click(btnclick)
+$(".btn").click(btnclick)
 function btnclick() {
   var output = []
   active = {}
-  $('button.btn-primary').each(function () {
+  $("button.btn-primary").each(function () {
     output.push(Number($(this).val()))
   })
   z({ possibles, loaded: true, output })
@@ -278,22 +278,22 @@ function btnclick() {
         })
       }
     })
-    $('button.btn').each(function () {
+    $("button.btn").each(function () {
       if (!active[$(this).val()]) {
-        $(this).addClass('active').addClass('disabled')
+        $(this).addClass("active").addClass("disabled")
       } else {
-        $(this).removeClass('active').removeClass('disabled')
+        $(this).removeClass("active").removeClass("disabled")
       }
     })
   } else {
-    w('no output')
-    $('button.btn').each(function () {
-      $(this).removeClass('active').removeClass('disabled')
+    w("no output")
+    $("button.btn").each(function () {
+      $(this).removeClass("active").removeClass("disabled")
     })
   }
 }
-$.getJSON('parsed/cstype.json').fail(function (d) {
-  w('文件  ' + 'parsed/cstype.json' + ' 读取失败' + d)
+$.getJSON("parsed/cstype.json").fail(function (d) {
+  w("文件  " + "parsed/cstype.json" + " 读取失败" + d)
 })
-$('#nav').load('nav.html')
-$('#foot').load('foot.html')
+$("#nav").load("nav.html")
+$("#foot").load("foot.html")

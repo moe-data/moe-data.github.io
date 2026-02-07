@@ -2,8 +2,8 @@ function finish() {
   current = 9
   for (let i = 0; i < data.nodes.length; i++) {
     if (data.nodes[i].id == current) {
-      data.nodes[i].cluster = 'a'
-      data.nodes[i].style.stroke = '#aaa'
+      data.nodes[i].cluster = "a"
+      data.nodes[i].style.stroke = "#aaa"
       break
     }
   }
@@ -27,10 +27,10 @@ function _defineProperty(obj, key, value) {
 
 //       const tipDiv = document.createElement('div');
 // tipDiv.innerHTML = '点击查看详细信息';
-const graphDiv = document.getElementById('container')
+const graphDiv = document.getElementById("container")
 // graphDiv.appendChild(tipDiv);
 
-const container = document.getElementById('container')
+const container = document.getElementById("container")
 const nodes = data.nodes
 const nodeMap = new Map()
 const clusterMap = new Map()
@@ -61,7 +61,7 @@ nodes.forEach(function (n) {
 })
 const nodeSizeRange = [10, 30]
 const nodeSizeDataRange = [minNodeValue, maxNodeValue]
-scaleNodeProp(nodes, 'size', 'value', nodeSizeDataRange, nodeSizeRange)
+scaleNodeProp(nodes, "size", "value", nodeSizeDataRange, nodeSizeRange)
 
 nodes.forEach(function (node) {
   node.oriSize = node.size
@@ -69,7 +69,7 @@ nodes.forEach(function (node) {
 })
 
 function refreshDragedNodePosition(e) {
-  const model = e.item.get('model')
+  const model = e.item.get("model")
   model.fx = e.x
   model.fy = e.y
 }
@@ -84,13 +84,13 @@ function scaleNodeProp(elements, propName, refPropName, dataRange, outRange) {
   const outLength = outRange[1] - outRange[0]
   const dataLength = dataRange[1] - dataRange[0]
   elements.forEach(function (n) {
-    if (propName.split('.')[0] === 'style') {
+    if (propName.split(".")[0] === "style") {
       if (n.style) {
-        n.style[propName.split('.')[1]] = ((n[refPropName] - dataRange[0]) * outLength) / dataLength + outRange[0]
+        n.style[propName.split(".")[1]] = ((n[refPropName] - dataRange[0]) * outLength) / dataLength + outRange[0]
       } else {
         n.style = _defineProperty(
           {},
-          propName.split('.')[1],
+          propName.split(".")[1],
           ((n[refPropName] - dataRange[0]) * outLength) / dataLength + outRange[0]
         )
       }
@@ -101,10 +101,10 @@ function scaleNodeProp(elements, propName, refPropName, dataRange, outRange) {
 }
 function newline(str) {
   l = str.length
-  var res = ''
+  var res = ""
   for (let i = 0; i < l; i++) {
     if (i % 8 == 7) {
-      res += str[i] + '\n'
+      res += str[i] + "\n"
     } else {
       res += str[i]
     }
@@ -112,10 +112,10 @@ function newline(str) {
   return res
 }
 function seplink(str) {
-  var link = ''
-  var m = str.split(',')
+  var link = ""
+  var m = str.split(",")
   for (let i = 0; i < m.length; i++) {
-    link += `<a href='javascript:jump("` + m[i] + `")'>` + m[i] + '</a> '
+    link += `<a href='javascript:jump("` + m[i] + `")'>` + m[i] + "</a> "
   }
   console.log(22)
   return link
@@ -126,17 +126,17 @@ function jump(str) {
     if (data.nodes[i].id == str) {
       console.log(data.nodes[i])
       var model = data.nodes[i]
-      $('.description').html(model.description)
-      $('.id').html(model.id)
-      $('.content').html(model.content.replace(/\n/g, '<br/>'))
-      $('.after').html(seplink(model.after))
-      $('.ammo').html(model.ammo)
-      $('.bauxite').html(model.bauxite)
-      $('.before').html(seplink(model.before))
-      $('.bonus').html(model.bonus.replace(/\n/g, '<br/>'))
-      $('.fuel').html(model.fuel)
-      $('.memo').html(model.memo)
-      $('.period').html(model.period)
+      $(".description").html(model.description)
+      $(".id").html(model.id)
+      $(".content").html(model.content.replace(/\n/g, "<br/>"))
+      $(".after").html(seplink(model.after))
+      $(".ammo").html(model.ammo)
+      $(".bauxite").html(model.bauxite)
+      $(".before").html(seplink(model.before))
+      $(".bonus").html(model.bonus.replace(/\n/g, "<br/>"))
+      $(".fuel").html(model.fuel)
+      $(".memo").html(model.memo)
+      $(".period").html(model.period)
       return
     }
   }

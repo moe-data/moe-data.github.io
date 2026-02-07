@@ -1,14 +1,14 @@
 that.setData({
-  current: app.get('current'),
+  current: app.get("current"),
 })
 let jsindex = 0
 let bar = 0
-let ranget = ['slotitem', 'useitem', 'furniture', 'cstype', 'mapinfo']
+let ranget = ["slotitem", "useitem", "furniture", "cstype", "mapinfo"]
 var mapinfo
 for (let i = 0; i < ranget.length; i++) {
   setTimeout(() => {
-    $.getJSON('./parsed/' + (i == 3 ? '' : 'api_mst_') + ranget[i] + '.json').done(function (result) {
-      eval(ranget[i] + ' = result')
+    $.getJSON("./parsed/" + (i == 3 ? "" : "api_mst_") + ranget[i] + ".json").done(function (result) {
+      eval(ranget[i] + " = result")
       jsonover()
     })
   }, 0)
@@ -44,14 +44,14 @@ function jsonover() {
 
 function progress(p) {
   bar += p
-  $('.progress-bar').css('width', bar + '%')
+  $(".progress-bar").css("width", bar + "%")
 }
 function showinput() {
-  $('#input').css('display', 'flex')
+  $("#input").css("display", "flex")
 }
 function loadquest() {
-  result = $('#input').val()
-  var start = find(result, 'svdata=') + 7
+  result = $("#input").val()
+  var start = find(result, "svdata=") + 7
   let api_list = JSON.parse(result.substring(start)).api_data.api_list
   z(api_list.length)
   let newload = app.newload
@@ -67,15 +67,15 @@ function loadquest() {
       let maps = []
       mapinfo.forEach(function (map) {
         if (e.api_detail.indexOf(map.api_name) > -1 || e.api_detail.indexOf(map.api_opetext) > -1) {
-          maps.push(map.api_maparea_id + '-' + map.api_no)
+          maps.push(map.api_maparea_id + "-" + map.api_no)
         }
       })
       let requirements = {
-        category: 'simple',
+        category: "simple",
       }
       if (maps.length) {
         requirements = {
-          category: 'sortie',
+          category: "sortie",
           times: 1,
           map: maps,
           groups: [
@@ -106,13 +106,13 @@ function loadquest() {
     }
     app.setstat(app.wkid[id] || id, e.api_state)
   })
-  app.set('newload', newload)
+  app.set("newload", newload)
 }
 
-$('#rewaguess').change(function () {
-  rewa.tapguess($('#rewaguess').val())
+$("#rewaguess").change(function () {
+  rewa.tapguess($("#rewaguess").val())
 })
 
-$('#battguess').change(function () {
-  batt.tapguess($('#battguess').val())
+$("#battguess").change(function () {
+  batt.tapguess($("#battguess").val())
 })

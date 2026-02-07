@@ -4,8 +4,8 @@ isFirst = true
 // $('#container').attr( "style","width:"+(Width()-60)+"px;height:"+(400+Width()-60*2.22)+"px;")};
 function getcol() {
   var strIds = new Array() //声明一个存放id的数组
-  $('input[name=items]').each(function (i, d) {
-    if (d.getAttribute('index') == 1) {
+  $("input[name=items]").each(function (i, d) {
+    if (d.getAttribute("index") == 1) {
       if (d.checked) {
         strIds.push(d.value)
       }
@@ -13,7 +13,7 @@ function getcol() {
       var la = d.nextSibling.nextSibling.children
       for (lalen = la.length, j = 0; j < lalen; j++) {
         if (la[j].firstChild.checked) {
-          strIds.push(d.value + '#' + j) //"Max",d.value+"Min")
+          strIds.push(d.value + "#" + j) //"Max",d.value+"Min")
         }
       }
     }
@@ -22,10 +22,10 @@ function getcol() {
 }
 
 function loadchart() {
-  info = document.getElementById('inform')
-  if ('undefined' == typeof echarts) {
+  info = document.getElementById("inform")
+  if ("undefined" == typeof echarts) {
     if (isFirst) {
-      info.innerHTML = '默认加载全表数据，建议在表格中进行筛选'
+      info.innerHTML = "默认加载全表数据，建议在表格中进行筛选"
       isFirst = false
     } else {
       info.innerHTML = echarts
@@ -33,25 +33,25 @@ function loadchart() {
     return
   }
   var wi = Width()
-  var myChart = echarts.init(document.getElementById('container'))
+  var myChart = echarts.init(document.getElementById("container"))
   option = null
   var raw = []
-  raw = $table.bootstrapTable('getSelections')
+  raw = $table.bootstrapTable("getSelections")
   if (raw.length == 0) {
-    raw = $table.bootstrapTable('getData')
+    raw = $table.bootstrapTable("getData")
   }
   var rawlen = raw.length
   var rnd
   if (raw.length == 0) {
     console.log(raw)
-    info.innerHTML = '没有符合筛选的数据'
+    info.innerHTML = "没有符合筛选的数据"
     isFirst = false
     return
   }
-  if (!raw[0]['id'] && !raw[0]['api_id']) {
+  if (!raw[0]["id"] && !raw[0]["api_id"]) {
     console.log(raw[0])
     if (isFirst) {
-      info.innerHTML = '点击按钮试试看吧'
+      info.innerHTML = "点击按钮试试看吧"
       isFirst = false
     } else {
       info.innerHTML = raw[0]
@@ -63,36 +63,36 @@ function loadchart() {
       var temp = []
       rnd = Math.round(1 + 21 * Math.random())
       for (let i = 0; i < rawlen; i++) {
-        if (raw[i][rawlen > 600 ? 'stype' : 'itype'] == rnd && (rawlen > 600 ? raw[i]['final_form'] == 'yes' : true)) {
+        if (raw[i][rawlen > 600 ? "stype" : "itype"] == rnd && (rawlen > 600 ? raw[i]["final_form"] == "yes" : true)) {
           temp.push(raw[i])
         }
       }
       raw = temp
     }
   }
-  info.innerHTML = rawlen > 325 ? '（默认加载全表数据，建议在表格中进行筛选）' : ''
+  info.innerHTML = rawlen > 325 ? "（默认加载全表数据，建议在表格中进行筛选）" : ""
   column = getcol()
   rawlen = raw.length
   isFirst = false
   if (column.length < 1 || rawlen < 1) {
-    info.innerHTML = '请选择属性'
+    info.innerHTML = "请选择属性"
     console.log({ raw, rnd })
     return
   }
-  sortkey = $('#sort').val()
-  if (sortkey != 'unsort' && (raw[0][sortkey] || raw[0][sortkey] == false)) {
+  sortkey = $("#sort").val()
+  if (sortkey != "unsort" && (raw[0][sortkey] || raw[0][sortkey] == false)) {
     raw.sort(sortby)
   }
-  console.log('start chart ' + rawlen) //[0]["name"])
+  console.log("start chart " + rawlen) //[0]["name"])
   var h = 200 + rawlen * 15
   var extra = 100
   var lable = 0
   var sqrtrl = 81 / Math.sqrt(rawlen)
-  var shapeval = $('#shape').val()
+  var shapeval = $("#shape").val()
   if (!shapeval) {
-    shapeval = 'bar'
+    shapeval = "bar"
   }
-  var stackval = $('#stack').val()
+  var stackval = $("#stack").val()
   if (!stackval) {
     stackval = 0
   }
@@ -102,10 +102,10 @@ function loadchart() {
     h = 2178
     extra = 50
   }
-  document.getElementById('container').style.height = lable + extra + h + 'px'
-  document.getElementById('container').style.width = Width() - 60 + 'px'
+  document.getElementById("container").style.height = lable + extra + h + "px"
+  document.getElementById("container").style.width = Width() - 60 + "px"
   myChart.resize() //直接加这句即可
-  var interval = 'auto'
+  var interval = "auto"
   var fontSize = 10
   var rotate = 0
   if (rawlen <= 100) {
@@ -124,33 +124,33 @@ function loadchart() {
   }
   grid = lable + temp + temp2
   var inverse = true
-  if ($('#desc').length) {
-    inverse = !$('#desc')[0].checked
+  if ($("#desc").length) {
+    inverse = !$("#desc")[0].checked
   }
-  if (sortkey == 'unsort') {
+  if (sortkey == "unsort") {
     inverse = !inverse
   }
   var dmin = 0
   for (let i = 0; i < gseries[0].length; i++) {
-    for (let j = 0; j < gseries[0][i]['data'].length; j++) {
-      if (dmin > gseries[0][i]['data'][j]) dmin = gseries[0][i]['data'][j]
+    for (let j = 0; j < gseries[0][i]["data"].length; j++) {
+      if (dmin > gseries[0][i]["data"][j]) dmin = gseries[0][i]["data"][j]
     }
   }
   option = {
     title: {
-      text: '',
+      text: "",
     },
     tooltip: {
-      trigger: 'axis',
+      trigger: "axis",
     },
     legend: {
       data: gseries[1], //['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
     },
     grid: {
-      left: '0%',
-      right: '0%',
+      left: "0%",
+      right: "0%",
       top: grid,
-      bottom: '1%',
+      bottom: "1%",
       containLabel: true,
       height: h,
     },
@@ -158,7 +158,7 @@ function loadchart() {
       feature: { saveAsImage: {} },
     },
     yAxis: {
-      type: 'category',
+      type: "category",
       boundaryGap: false,
       data: gseries[2],
       axisLabel: {
@@ -170,20 +170,20 @@ function loadchart() {
     },
     xAxis: [
       {
-        type: 'value',
+        type: "value",
         offset: sqrtrl > 40 ? 40 : sqrtrl,
         min: dmin,
         // max: 'dataMax'
       },
       {
-        type: 'value',
+        type: "value",
         offset: sqrtrl > 40 ? 40 : sqrtrl,
         min: dmin,
       },
     ],
     series: gseries[0],
   }
-  if (option && typeof option === 'object') {
+  if (option && typeof option === "object") {
     myChart.setOption(option, true)
   }
 }
@@ -228,16 +228,16 @@ function getseries(r, c, shape, stack, sortkey) {
     var e = c[k]
     // for(e of c){
     var prot
-    var suffix = ''
-    if (e.indexOf('#') > 0) {
-      prot = e.split('#')[0]
+    var suffix = ""
+    if (e.indexOf("#") > 0) {
+      prot = e.split("#")[0]
       if (r[0][prot].length == 2) {
-        if (e.split('#')[1] == 1) {
+        if (e.split("#")[1] == 1) {
           // suffix=" min"}else{
-          suffix = ' max'
+          suffix = " max"
         }
       } else {
-        suffix = 1 + Number(e.split('#')[1])
+        suffix = 1 + Number(e.split("#")[1])
       }
     } else {
       prot = e
@@ -246,10 +246,10 @@ function getseries(r, c, shape, stack, sortkey) {
     var data = []
     for (let i = 0; i < rawlen; i++) {
       if (r[i][e] == null) {
-        if (r[i][e.split('#')[0]] == null) {
+        if (r[i][e.split("#")[0]] == null) {
           unit = 0
         } else {
-          unit = r[i][e.split('#')[0]][e.split('#')[1]]
+          unit = r[i][e.split("#")[0]][e.split("#")[1]]
         }
       } else {
         unit = r[i][e]
@@ -259,98 +259,98 @@ function getseries(r, c, shape, stack, sortkey) {
     var eie = exclude.indexOf(prot) > -1
     s.push({
       name: name,
-      type: eie ? (shape == 'line' ? 'bar' : 'line') : shape,
-      stack: eie ? shape == 'line' : stack == 0 ? (shape == 'line' ? false : true) : stack == 1 ? true : false,
+      type: eie ? (shape == "line" ? "bar" : "line") : shape,
+      stack: eie ? shape == "line" : stack == 0 ? (shape == "line" ? false : true) : stack == 1 ? true : false,
       data: data,
       xAxisIndex: eie ? 1 : 0,
       origin: prot,
       label: {
         show: true,
         formatter:
-          e == 'itype'
+          e == "itype"
             ? function (params) {
                 if (temp == formatItype(params.value)) {
-                  return ''
+                  return ""
                 } else {
                   temp = formatItype(params.value)
                   return temp
                 }
               }
-            : e == 'stype'
-              ? function (params) {
-                  if (temp == formatStype(params.value)) {
-                    return ''
+            : e == "stype"
+            ? function (params) {
+                if (temp == formatStype(params.value)) {
+                  return ""
+                } else {
+                  temp = formatStype(params.value)
+                  return temp
+                }
+              }
+            : function (params) {
+                if (params.seriesType == "line") {
+                  if (Math.random() < 0.8 || params.value == 0) {
+                    return ""
                   } else {
-                    temp = formatStype(params.value)
-                    return temp
+                    return params.value
+                  }
+                } else {
+                  if (params.value < limit) {
+                    return ""
+                  } else {
+                    return params.value
                   }
                 }
-              : function (params) {
-                  if (params.seriesType == 'line') {
-                    if (Math.random() < 0.8 || params.value == 0) {
-                      return ''
-                    } else {
-                      return params.value
-                    }
-                  } else {
-                    if (params.value < limit) {
-                      return ''
-                    } else {
-                      return params.value
-                    }
-                  }
-                },
-        position: eie ? 'right' : 'insideLeft',
+              },
+        position: eie ? "right" : "insideLeft",
       },
       lineStyle: {
-        type: prot == sortkey ? 'solid' : Math.random() > 0.7 ? 'dashed' : Math.random() > 0.5 ? 'solid' : 'dotted',
+        type: prot == sortkey ? "solid" : Math.random() > 0.7 ? "dashed" : Math.random() > 0.5 ? "solid" : "dotted",
         width: prot == sortkey ? 4 : 1,
       },
     })
     col.push(name)
   }
   var shipname = []
-  var nametitle = 'title'
+  var nametitle = "title"
   if (!r[0][nametitle]) {
-    nametitle = 'name'
+    nametitle = "name"
   }
   for (let i = 0; i < rawlen; i++) {
     shipname.push(r[i][nametitle])
   }
 
-  if (shape == 'bar' || sortkey == 'sum') {
-    var len = s[0]['data'].length
+  if (shape == "bar" || sortkey == "sum") {
+    var len = s[0]["data"].length
     var slen = col.length
     s[slen] = {
-      name: kj ? '属性合计' : 'total',
-      symbol: 'none',
-      type: 'line',
+      name: kj ? "属性合计" : "total",
+      symbol: "none",
+      type: "line",
       stack: false,
       data: [],
       xAxisIndex: 1,
       lineStyle: {
-        type: 'dashed',
+        type: "dashed",
         width: 0,
       },
     }
     for (var i = 0; i < len; i++) {
       var sum = 0
       for (var j = 0; j < slen; j++) {
-        if (exclude.indexOf(s[j]['origin']) > -1 || isNaN(s[j]['data'][i])) {
+        if (exclude.indexOf(s[j]["origin"]) > -1 || isNaN(s[j]["data"][i])) {
           continue
         }
-        sum += Number(s[j]['data'][i])
+        sum += Number(s[j]["data"][i])
       }
-      s[slen]['data'].push(sum)
+      s[slen]["data"].push(sum)
     }
-    if (sortkey == 'sum') {
+    if (sortkey == "sum") {
       for (var n = 0; n < len - 1; n++) {
         for (var m = 0; m < len - 1 - n; m++) {
-          if (s[slen]['data'][m] > s[slen]['data'][m + 1]) {
+          if (s[slen]["data"][m] > s[slen]["data"][m + 1]) {
             for (var j = 0; j <= slen; j++) {
-              var temp = s[j]['data'][m]
-              s[j]['data'][m] = s[j]['data'][m + 1]
-              s[j]['data'][m + 1] = temp
+              var temp = s[j]["data"][m]
+              s[j]["data"][m] = s[j]["data"][m + 1]
+              s[j]["data"][m + 1] = temp
             }
             var temp = shipname[m]
             shipname[m] = shipname[m + 1]
@@ -363,15 +363,15 @@ function getseries(r, c, shape, stack, sortkey) {
   return [s, col, shipname]
 }
 function genCheck(years, months, stat) {
-  var content = 'content'
-  var checkText = 'checkbox'
-  var link = 'link'
+  var content = "content"
+  var checkText = "checkbox"
+  var link = "link"
   var size
-  $('#show').html('')
+  $("#show").html("")
   size = years.length
   for (var i = 0; i < size; i++) {
     // if(exclude.indexOf(years[i])>-1){}else{
-    genShowContent('show', checkText + years[i], i, years[i], content + years[i], stat[years[i]])
+    genShowContent("show", checkText + years[i], i, years[i], content + years[i], stat[years[i]])
   }
   // }
   for (let i in months) {
@@ -385,11 +385,11 @@ function genCheck(years, months, stat) {
     // } else {
     //     box.checked = false;
     // }
-    $('input[name=' + link + i + ']').each(function () {
+    $("input[name=" + link + i + "]").each(function () {
       $(this).unbind()
       $(this).change(function () {
-        var flag = isAllCheck($(this).attr('name'))
-        var box = document.getElementById(checkText + $(this).attr('parentIndex'))
+        var flag = isAllCheck($(this).attr("name"))
+        var box = document.getElementById(checkText + $(this).attr("parentIndex"))
         if (flag) {
           box.checked = true
         } else {
@@ -400,10 +400,10 @@ function genCheck(years, months, stat) {
   }
   for (var i = 0; i < size; i++) {
     if (stat[years[i]] > 1) {
-      $('#' + checkText + years[i]).unbind()
-      $('#' + checkText + years[i]).change(function () {
-        var temp = link + $(this).attr('value')
-        var p = document.getElementById(checkText + $(this).attr('value'))
+      $("#" + checkText + years[i]).unbind()
+      $("#" + checkText + years[i]).change(function () {
+        var temp = link + $(this).attr("value")
+        var p = document.getElementById(checkText + $(this).attr("value"))
         var box = document.getElementsByName(temp)
         for (var j = 0; j < box.length; j++) {
           if (p.checked) {
@@ -423,60 +423,60 @@ function genCheckBox(id, name, value, showText, parentIndex, stat) {
   var isCheck = false
   if (stat == 2) {
     if (showText == 1) {
-      txt = 'min'
+      txt = "min"
     } else {
-      txt = 'max'
+      txt = "max"
       isCheck = true
     }
-    if (parentIndex == 'luck') {
+    if (parentIndex == "luck") {
       isCheck = !isCheck
     }
-    if (parentIndex == 'taik') {
+    if (parentIndex == "taik") {
       isCheck = false
     }
   }
   var checkbox =
     "<span class='la'><input type='checkbox' parentIndex=" +
     parentIndex +
-    ' name='.concat(
+    " name=".concat(
       name,
-      (isCheck ? chck : '') + ' value=',
+      (isCheck ? chck : "") + " value=",
       value,
-      ' alt=',
+      " alt=",
       showText,
       " id='" + parentIndex + value + "' /><label for='" + parentIndex + value + "'>",
       txt,
-      '</label></span>',
+      "</label></span>"
     )
-  $('#' + id).append(checkbox)
+  $("#" + id).append(checkbox)
   // debug(id,checkbox)
 }
 
 function genShowContent(id, checkboxId, index, showText, idName, stat) {
-  if (showText == 'name' || showText == 'title') {
+  if (showText == "name" || showText == "title") {
     return
   }
   var chck = " checked='checked'"
   var isCheck = false
   // console.log(id, checkboxId, index, showText, idName,stat)
-  var colon = '#'
+  var colon = "#"
   if (stat == 1) {
-    colon = ''
+    colon = ""
   }
   if (
-    showText == 'anti_submarine' ||
-    showText == 'sight' ||
-    showText == 'evasion' ||
-    showText == 'HP' ||
-    showText == 'houg' ||
-    showText == 'raig' ||
-    showText == 'tyku'
+    showText == "anti_submarine" ||
+    showText == "sight" ||
+    showText == "evasion" ||
+    showText == "HP" ||
+    showText == "houg" ||
+    showText == "raig" ||
+    showText == "tyku"
   ) {
     isCheck = true
   }
   var showContent =
     "<span class='msg'><input type='checkbox' name='items'" +
-    (isCheck ? chck : '') +
+    (isCheck ? chck : "") +
     " value='".concat(
       showText,
       "' index=",
@@ -488,9 +488,9 @@ function genShowContent(id, checkboxId, index, showText, idName, stat) {
       colon,
       " </label><span class='content' id='",
       idName,
-      "' ></span></span>",
+      "' ></span></span>"
     )
-  $('#' + id).append(showContent)
+  $("#" + id).append(showContent)
 }
 
 function isAllCheck(name) {
