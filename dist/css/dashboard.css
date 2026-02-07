@@ -1,3 +1,7 @@
+.panel.col-sm-6 {
+  margin-bottom: 5px;
+}
+
 /* Move down content because we have a fixed navbar that is 50px tall */
 
 .gray {
