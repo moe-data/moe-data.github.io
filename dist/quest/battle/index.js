@@ -75,9 +75,7 @@ Object.defineProperty(batt, "setData", {
               ifnull(title.pages[map].result, "") +
               '</span><span class="n">' +
               title.pages[map].n +
-              `</span><img src="./img/ta1.png" class="tar"  onclick="app.target('` +
-              map +
-              `')"></img>
+              `</span><img src="./img/ta1.png" class="tar"  onclick="app.target('${map}')"></img>
             <img src="./img/` +
               (title.pages[map].finished ? (title.pages[map].finished == 2 ? "finish" : "ongoing") : "locked") +
               `.png" class="sta"></img>` +
@@ -101,9 +99,7 @@ Object.defineProperty(batt, "setData", {
       </dt>
       <dd class="batt_dd list_dd">
       <ul>
-        ` +
-            ulli +
-            `
+        ${ulli}
       </ul>
     </dd>
 `

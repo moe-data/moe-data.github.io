@@ -418,24 +418,8 @@ function slidehtml(max) {
   let actid = ++sliden + slideq.wiki_id.toString()
   let value = app.get(actid) || 0
   return (
-    `<span class="right"><span class="` +
-    actid +
-    `">` +
-    value +
-    "</span>/" +
-    max +
-    `</span>` +
-    `<input type="range" id="` +
-    actid +
-    `" value="` +
-    value +
-    `" min="0" max="` +
-    max +
-    `" step="1" onchange="onslide('` +
-    actid +
-    `')" oninput="inslide('` +
-    actid +
-    `')" list="tickmarks">`
+    `<span class="right"><span class="${actid}">${value}</span>/${max}</span>` +
+    `<input type="range" id="${actid}" value="${value}" min="0" max="${max}" step="1" onchange="onslide('${actid}')" oninput="inslide('${actid}')" list="tickmarks">`
   )
 }
 function onslide(actid) {
@@ -471,7 +455,7 @@ const switches = those.switches
 function seplink(m) {
   var str = ""
   for (let i = 0; i < m.length; i++) {
-    str += `<a href='javascript:jump("` + m[i] + `")'>` + m[i] + "</a> "
+    str += `<a href='javascript:jump("${m[i]}")'>${m[i]}</a> `
   }
   return str
 }

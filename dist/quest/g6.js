@@ -115,7 +115,7 @@ function seplink(str) {
   var link = ""
   var m = str.split(",")
   for (let i = 0; i < m.length; i++) {
-    link += `<a href='javascript:jump("` + m[i] + `")'>` + m[i] + "</a> "
+    link += `<a href='javascript:jump("${m[i]}")'>${m[i]}</a> `
   }
   console.log(22)
   return link
