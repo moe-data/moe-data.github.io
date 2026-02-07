@@ -242,17 +242,38 @@
         <div align="center" class="panel-body col-sm-12">
           <button type="button" class="btnlg btn-success go" value="">检索</button>
         </div>
+        <div class="panel panel-warning col-sm-6 hint"></div>
         <div class="panel panel-success col-sm-6">
           <div class="panel-heading">
             <h3 class="panel-title">时间范围</h3>
           </div>
           <div class="panel-body" align="center">
-            <table cellpadding="50">
-              <tbody class="list"></tbody>
-            </table>
+            <div class="list">
+              <div style="margin-bottom: 15px; display: flex; justify-content: center; align-items: center; gap: 20px">
+                <div>
+                  <label>开始月份：</label>
+                  <select id="startMonth" class="time"></select>
+                </div>
+                <div>
+                  <label>结束月份：</label>
+                  <select id="endMonth" class="time"></select>
+                </div>
+              </div>
+              <table cellpadding="20">
+                <tr>
+                  <th>累计开发次数</th>
+                  <th>&ensp;&ensp;&ensp;公式条数</th>
+                  <th>&ensp;&ensp;&ensp;文件大小</th>
+                </tr>
+                <tr>
+                  <td id="totalCount" align="right">-</td>
+                  <td id="formulaCount" align="right">-</td>
+                  <td id="fileSize" align="right">-</td>
+                </tr>
+              </table>
+            </div>
           </div>
         </div>
-        <div class="panel panel-warning col-sm-6 hint"></div>
         <div class="panel panel-default col-sm-6">
           <div class="panel-heading">
             <h3 class="panel-title">设置</h3>

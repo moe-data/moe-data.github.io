@@ -234,89 +234,112 @@ function itag(str) {
 function lvplus(arr) {
   if (isNaN(arr)) return
 }
-// 修正后的日期解析函数（兼容1-16和202601/202602格式）
 function qndate(qn) {
-  // 处理202601/202602这类6位数字（年+月）
   if (qn.toString().length >= 6) {
     const year = Math.floor(qn / 100) // 取前4位：202601 → 2026
     const month = qn % 100 // 取后2位：202601 → 1
     return `${year}/${month}`
   }
-  // 处理1-16（原逻辑：2020年为基准，qn+1为月份，修正为合理时间映射）
-  // 原逻辑：qn=0→2020/1, qn=1→2020/2... 调整为匹配原始HTML的时间范围
-  if (qn === 0 || qn === 1) return "2019/5" // 2019年5月或更早
-  if (qn === 2) return "2019/6~2020/3" // 2019年6月~2020年3月
-  if (qn === 3) return "2020/4~8" // 2020年4月~8月
-  // 处理8-16（2021年3月及以后，按qn-10=月份）
-  var date = new Date(2020, Number(qn) + 1)
-  return date.getFullYear() + "/" + (date.getMonth() + 1)
-}
- // 映射滑动器值到对应的时间文本
- const timeLabels = [
-  "2019年5月或更早",  // 值1
-  "2019年6月~2020年3月",// 值2
-  "2020年4月~8月",      // 值3
-  "2020年9月~10月",     // 值8（映射为4）
-  "2020年11月"          // 值9（映射为5）
-];
-// 修正滑动器值和时间标签的对应关系（简化为1-5）
-const valueToLabel = {
-  1: timeLabels[0],
-  2: timeLabels[1],
-  3: timeLabels[2],
-  4: timeLabels[3],
-  5: timeLabels[4]
-};
-
-// 更新选中的时间范围文本
-function updateRange() {
-  const startVal = parseInt(document.getElementById('startMonth').value);
-  const endVal = parseInt(document.getElementById('endMonth').value);
-  
-  // 确保开始值 ≤ 结束值
-  if (startVal > endVal) {
-      document.getElementById('endMonth').value = startVal;
+  if (qn === 0 || qn === 1) return "2019/5"
+  if (qn === 2) return "2019/6~2020/3"
+  if (qn === 3) return "2020/4~8"
+  if (qn >= 8 && qn <= 12) {
+    const monthMap = { 8: "2020/9", 9: "2020/11", 10: "2020/12", 11: "2021/1", 12: "2021/2" }
+    return monthMap[qn]
   }
-  
-  const startText = valueToLabel[startVal] || timeLabels[0];
-  const endText = valueToLabel[endVal] || timeLabels[4];
-  
-  document.getElementById('rangeText').innerText = `${startText} ~ ${endText}`;
-  
-  // 这里可以扩展：根据选中的范围高亮/筛选表格行
-  // 例如：highlightTableRows(startVal, endVal);
+  const date = new Date(2021, Number(qn) - 10)
+  return `${date.getFullYear()}/${date.getMonth() + 1}`
 }
-
-// 可选：根据范围高亮表格行的函数
-function highlightTableRows(startVal, endVal) {
-  const rows = document.querySelectorAll('table tr:not(:first-child)');
-  rows.forEach((row, index) => {
-      // index从0开始，对应value1-5
-      const rowVal = index + 1;
-      if (rowVal >= startVal && rowVal <= endVal) {
-          row.style.backgroundColor = '#f0f8ff';
-      } else {
-          row.style.backgroundColor = '';
-      }
-  });
-}
-// 修正后的生成函数（最新2项默认勾选）
+var duration = []
 function timetable(t) {
-  var timelist = $(".list").html()
-  t.forEach((e, index) => {
-    // 判断是否为最后2项 → 勾选
-    const isChecked = index >= t.length - 2 ? ' checked="checked"' : ""
-    timelist += `<tr>
-        <td>
-          <input class="time" type="checkbox" value="${e[0]}" id="${e[0]}"${isChecked}>
-          <label for="${e[0]}">${qndate(e[0])}</label>
-        </td>
-        <td align="right">${e[1].toLocaleString()}</td> // 数字加千分位，匹配原始格式
-        <td align="right">${e[2]}</td>
-        <td align="right">${e[3]} MB</td>
-      </tr>`
+  const $startSelect = $("#startMonth")
+  const $endSelect = $("#endMonth")
+  t.forEach((e) => {
+    const value = e[0]
+    const label = qndate(value)
+    $startSelect.append(`<option value="${value}">${label}</option>`)
+    $endSelect.append(`<option value="${value}">${label}</option>`)
   })
-  $(".list").html(timelist)
+
+  const lastIdx = t.length - 1
+  const secondLastIdx = t.length - 2
+  $startSelect.val(t[secondLastIdx][0])
+  $endSelect.val(t[lastIdx][0])
+
+  // Core function: Update duration + print + sync querystring
+  function updateDuration() {
+    duration = [] // Reset to match original checkbox logic
+    const startVal = Number($startSelect.val())
+    const endVal = Number($endSelect.val())
+    const startIdx = t.findIndex((item) => item[0] === startVal)
+    const endIdx = t.findIndex((item) => item[0] === endVal)
+
+    // Push all values in selected range (same as checked checkboxes)
+    if (startIdx !== -1 && endIdx !== -1 && startIdx <= endIdx) {
+      for (let i = startIdx; i <= endIdx; i++) {
+        duration.push(t[i][0].toString()) // Keep string type like original
+      }
+    }
+
+    // 1. Print duration (required: on load + change)
+    console.log("Current duration:", duration)
+
+    // 2. Update querystring "t" parameter (restore original t)
+    const url = new URL(window.location.href)
+    if (duration.length > 0) {
+      url.searchParams.set("t", duration.join(","))
+    } else {
+      url.searchParams.delete("t")
+    }
+    window.history.replaceState({}, "", url) // Update URL without reload
+  }
+
+  // --------------------------
+  // Fixed: Data update logic (keep original logic structure)
+  function updateStats() {
+    const startVal = Number($startSelect.val())
+    const endVal = Number($endSelect.val())
+
+    const startIdx = t.findIndex((item) => item[0] === startVal)
+    const endIdx = t.findIndex((item) => item[0] === endVal)
+
+    if (startIdx === -1 || endIdx === -1 || startIdx > endIdx) {
+      $("#totalCount").text("-")
+      $("#formulaCount").text("-")
+      $("#fileSize").text("-")
+      updateDuration() // Sync duration even if invalid
+      return
+    }
+
+    // Calculate cumulative data (match "累计" logic)
+    let totalCount = 0
+    let formulaCount = 0
+    let fileSize = 0
+    for (let i = startIdx; i <= endIdx; i++) {
+      totalCount += t[i][1]
+      formulaCount += t[i][2]
+      fileSize += t[i][3]
+    }
+
+    $("#totalCount").text(totalCount.toLocaleString())
+    $("#formulaCount").text(formulaCount)
+    $("#fileSize").text(`${fileSize.toFixed(1)} MB`)
+
+    updateDuration() // Sync duration after stats update
+  }
+
+  // --------------------------
+  // Bind events (minimal change: add updateDuration trigger)
+  updateStats() // Initial load: update stats + duration + print + querystring
+  updateDuration() // Double confirm initial duration print (match requirement)
+
+  // On select change: update stats → update duration → print → querystring
+  $startSelect.off("change").on("change", function () {
+    updateStats()
+  })
+  $endSelect.off("change").on("change", function () {
+    updateStats()
+  })
 }
 
 function isContain(parent, son) {

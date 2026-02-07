@@ -135,10 +135,6 @@ function arrange(value) {
   } else {
     if (value == -1) {
       release = releasetime
-      release["2013/04/23"] = [
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
-        31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, -1,
-      ]
     } else {
       if (value == -2) {
         release = init
@@ -180,17 +176,11 @@ function arrange(value) {
 $(".go").click(function () {
   var output = []
   var extra = []
-  var duration = []
   $("button.btn-primary").each(function () {
     output.push($(this).val())
   })
   $("button.btn-info").each(function () {
     extra.push($(this).val())
-  })
-  $("input.time").each(function () {
-    if ($(this).prop("checked")) {
-      duration.push($(this).val())
-    }
   })
   if (output.length + extra.length > 0) {
     if (duration.length > 0) {
@@ -211,6 +201,7 @@ $(".go").click(function () {
         "&l=" +
         $("#lv")[0].checked
     } else {
+      z({duration})
       alert("您未选择时间范围！")
     }
   } else {
@@ -249,11 +240,11 @@ $(".hint").html(
     <li>` +
     tar +
     `开发数据来自POI</li><br>
-    <li>第一次所需的查询时间可能较长，请耐心等待。</li><br>
+    <li>初次必要的查询时间可能较长，请耐心等待。</li><br>
     <li>时间范围勾选的越少，加载速度越快</li><br>
     <li>加载速度和` +
     tar +
-    `选择数量无关</li><br>
+    `选择数无关</li><br>
     <li>不兼容IE浏览器</li><br>
 </ul>  
 </div>`
