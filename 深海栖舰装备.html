@@ -192,6 +192,7 @@
 
   <script src="./dist/js/jgs.js"></script>
   <script src="./dist/js/simplize.js"></script>
+  <script src="dist/items/developable/sortby/all.js"></script>
   <script src="./dist/js/item.js"></script>
   <script src="./dist/js/share.js"></script>
   <script src="./dist/js/table.js"></script>
@@ -384,7 +385,7 @@
       $.getJSON("./parsed/api_mst_slotitem.json", function (result) {
         slotitem = [];
         result.forEach((el) => {
-          if (el["api_id"] > 500) {
+          if (el["api_id"] > 1499) {
             var i = {};
             for (key in el) {
               i[api(key)] = el[key];
