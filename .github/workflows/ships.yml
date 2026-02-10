@@ -1,6 +1,7 @@
 name: Convert api_mst_ship to ship.json
 
 on:
+  workflow_dispatch: # 允许手动触发
   push:
     paths:
       - 'parsed/api_mst_ship.json'

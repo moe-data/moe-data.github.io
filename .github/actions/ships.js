@@ -21,7 +21,9 @@ try {
         newShip[key] = ship[key];
       }
     });
-
+    if (newShip.id>1500) {
+        return
+    }
     // Derived fields
     if (newShip.maxeq) {
       newShip.total_eq = newShip.maxeq.reduce((sum, val) => sum + val, 0);
