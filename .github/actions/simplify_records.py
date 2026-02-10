@@ -6,19 +6,6 @@ import sys
 
 client = MongoClient('mongodb://localhost:27017/')
 db = client['poi-production']
-developable = []
-
-# 新增：读取cstype.json用于LEFT JOIN逻辑（匹配SQL）
-def load_cstype_map():
-    try:
-        with open('parsed/cstype.json', 'r', encoding='utf-8') as f:
-            cstype_data = json.load(f)
-            # 构建id到dtype的映射（匹配SQL: LEFT JOIN cstype b on secretary=b.id）
-            return {item.get('id'): item.get('dtype', -2) for item in cstype_data}
-    except FileNotFoundError:
-        raise FileNotFoundError("cstype.json not found at parsed/cstype.json")
-
-cstype_map = load_cstype_map()
 
 def export_processed_mongodb_data(collection, output_file, output_type):
     """
@@ -29,6 +16,7 @@ def export_processed_mongodb_data(collection, output_file, output_type):
         output_file: 输出JSON文件的路径
         output_type: 字段类型（仅支持"itemId"或"shipId"），替换原itemId字段
     """
+    developable = []
     # 新增：校验output_type合法性
     if output_type not in ("itemId", "shipId"):
         raise ValueError(f"output_type must be 'itemId' or 'shipId', got {output_type}")
@@ -76,7 +64,7 @@ def export_processed_mongodb_data(collection, output_file, output_type):
         
         # 处理secretary（匹配SQL: LEFT JOIN cstype b on secretary=b.id）
         secretary_str = secretary_val if secretary_val is not None else -2
-        secretary_final = secretary_str #cstype_map.get(secretary_str, -2)
+        secretary_final = secretary_str #load_cstype_map().get(secretary_str, -2)
         
         # 处理teitokuLv（记录最小值，匹配SQL: min(teitokuLv)）
         teitoku_lv = doc.get('teitokuLv', -2)
@@ -108,24 +96,27 @@ def export_processed_mongodb_data(collection, output_file, output_type):
             })
         
         # Collect unique positive itemId / shipId for developable
-        if isinstance(o_final, (int, str)) and str(o_final).isdigit() and int(o_final) > -2 and successful_val:
-            developable.append(int(o_final))
-            # if o in 42,43,79,81,83,86
-            if int(o_final) in [42,43,79,81,83,86]:
-                print({
-                    'i': items_final,
-                    's': secretary_final,
-                    'o': o_final,
-                    'n': record_stats[simplified_key]['count'],
-                    'l': teitoku_lv
-                })
-                sys.exit(2)
+        o = int(o_final)
+        if isinstance(o_final, (int, str)) and str(o_final).isdigit() and -2 < o < 1501 and o not in developable:
+            if output_type == "itemId" and successful_val:
+                developable.append(o)
+                if o in [42,43,79,81,83,86]:
+                    print({
+                        'i': items_final,
+                        's': secretary_final,
+                        'o': o,
+                        'n': record_stats[simplified_key]['count'],
+                        'l': teitoku_lv
+                    })
+                    sys.exit(2)
+            elif output_type == "shipId":
+                developable.append(o)
     
-    # 新增：校验压缩后的条目数量（<5则exit2）
+    # 新增：校验压缩后的条目数量（<50则exit5）
     compressed_count = len(record_stats)
-    if compressed_count < 5:
-        print(f"Error: Compressed record count ({compressed_count}) < 5")
-        sys.exit(2)
+    if compressed_count < 50:
+        print(f"Error: Compressed record count ({compressed_count}) < 50")
+        sys.exit(5)
     
     # 第二步：写入压缩后的JSON（替换successful为出现次数）
     with open(output_file, 'w', encoding='utf-8') as f:
@@ -159,8 +150,12 @@ def export_processed_mongodb_data(collection, output_file, output_type):
     # 新增：show the number of abnormal records
     print(f"Number of abnormal records (containing -2): {len(abnormal_records)}")
     
-    print(f"处理后的JSON已导出到 {output_file}")
-    print(f"压缩后条目数量: {compressed_count}")
+    print(f"{output_type} 处理后的JSON已导出到 {output_file}")
+    print(f"{output_type} 压缩后条目数量: {compressed_count}")
+    if len(developable) < 20:
+        print(f"Error: Compressed record count ({len(developable)}) < 20")
+        sys.exit(2)
+    return sorted(set(developable))
 
 # 获取当月文件名
 month = os.environ.get("MONTH")  # 我们从 workflow 传入
@@ -169,15 +164,30 @@ if not month:
 
 # 调用函数 - createitemrecords（output_type=itemId）
 collection = db['createitemrecords']
-export_processed_mongodb_data(collection, f"dump/d{month}.json", "itemId")
+developable = export_processed_mongodb_data(collection, f"dump/d{month}.json", "itemId")
 
 # 调用函数 - createshiprecords（output_type=shipId）
 collection = db['createshiprecords']
-export_processed_mongodb_data(collection, f"dump/c{month}.json", "shipId")
+constructable = export_processed_mongodb_data(collection, f"dump/c{month}.json", "shipId")
 
 # Final unique developable values (all positive itemId + shipId)
-unique_developable = sorted(set(developable))
-print(f"Total unique developable values: {len(unique_developable)}")
-print(json.dumps(unique_developable))
+print(f"Total unique developable values: {len(developable)}")
+print(json.dumps(developable))
 with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
-    fh.write(f"developable={json.dumps(unique_developable)}\n")
+    fh.write(f"developable={json.dumps(developable)}\n")
+
+print(f"Total unique constructable values: {len(constructable)}")
+print(json.dumps(constructable))
+with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
+    fh.write(f"constructable={json.dumps(constructable)}\n")
+
+
+# 读取ship.json用于LEFT JOIN逻辑（匹配SQL）
+# def load_cstype_map():
+#     try:
+#         with open('parsed/cstype.json', 'r', encoding='utf-8') as f:
+#             cstype_data = json.load(f)
+#             # 构建id到dtype的映射（匹配SQL: LEFT JOIN cstype b on secretary=b.id）
+#             return {item.get('id'): item.get('dtype', -2) for item in cstype_data}
+#     except FileNotFoundError:
+#         raise FileNotFoundError("ship.json not found at parsed/ship.json")

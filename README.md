@@ -170,7 +170,7 @@ DELETE FROM d2 WHERE secretary=0;
 
 ### 4. run SQL query:<br>
 
-the table `cstype` is from https://github.com/moe-data/moe-data.github.io/blob/master/parsed/cstype.json
+the table `cstype` is from https://github.com/moe-data/moe-data.github.io/blob/master/parsed/ship.json
 
 for develop:
 

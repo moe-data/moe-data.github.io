@@ -30,7 +30,7 @@ var ship
 var csjson = []
 var bar = 1
 $(".loading").css("width", Width())
-$.getJSON("parsed/cstype.json").done(function (result) {
+$.getJSON("parsed/ship.json").done(function (result) {
   csjson = result
   jsonover()
 })
@@ -127,10 +127,8 @@ function jsonover() {
           if (q == "d") {
             if (typeof is == "string") is = JSON.parse(is)
             is.push(1)
-            is.push(formatStype(array[i][0]["s"]))
-          } else {
-            is.push(formatshipId(array[i][0]["s"]))
           }
+          is.push(formatshipId(array[i][0]["s"]))
           var onal = { i: is }
           for (let j = 0; j < array[i].length; j++) {
             var item = jsonstr(array[i][j]["o"])

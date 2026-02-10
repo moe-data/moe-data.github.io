@@ -32,9 +32,9 @@ function btnbind() {
   })
   btnclick()
 }
-var primary = "btn-primary"
-var btninfo = "btn-info"
-var btndef = "btn-default"
+const primary = "btn-primary"
+const btninfo = "btn-info"
+const btndef = "btn-default"
 if (tar == "装备") {
   $.getJSON("parsed/api_mst_slotitem_equiptype.json", function (res) {
     itype = res
@@ -62,10 +62,10 @@ function genCheck(Obj) {
   for (key in Obj) {
     years.push(key)
   }
-  var content = "content"
-  var checkText = "checkbox"
-  var link = "link"
-  var size
+  let content = "content"
+  let checkText = "checkbox"
+  let link = "link"
+  let size
   $("#show").html("")
   size = years.length
   for (var i = 0; i < years.length; i++) {
@@ -114,6 +114,7 @@ function isAllCheck(name) {
 function arrange(value) {
   release = {}
   if (isNaN(value)) {
+    // Handle string values like "api_rare" or "api_tyku" from select options
     developable.forEach(function (d) {
       for (let i = 0, l = slotitem.length; i < l; i++) {
         e = slotitem[i]
@@ -132,48 +133,46 @@ function arrange(value) {
         break
       }
     })
+  } else if (value == -1) {
+    // Handle value -1: "开发解禁时间" (Development release time)
+    release = releasetime
+  } else if (value == -2) {
+    // Handle value -2: "默认" (Default)
+    release = init
   } else {
-    if (value == -1) {
-      release = releasetime
-    } else {
-      if (value == -2) {
-        release = init
-      } else {
-        developable.forEach(function (d) {
-          // for(e of slotitem){
-          for (let j = 0; j < slotitem.length; j++) {
-            e = slotitem[j]
-            if (e["api_id"] == d) {
-              var jstr
-              var tn = e["api_type"][value]
-              switch (value) {
-                case "2":
-                  jstr = formatItype(tn)
-                  break
-                case "3":
-                  jstr = itag(tn)
-                  break
-                default:
-                  var jstr = tn
-              }
-            } else {
-              continue
-            }
-            if (release[jstr]) {
-              release[jstr].push(e["api_id"])
-            } else {
-              release[jstr] = []
-              release[jstr].push(e["api_id"])
-            }
-            break
+    // Handle numeric values like 0: "大类" (Major category), 1: "中类" (Medium category), 2: "小类" (Minor category), 3: "图标" (Icon)
+    developable.forEach(function (d) {
+      // for(e of slotitem){
+      for (let j = 0; j < slotitem.length; j++) {
+        e = slotitem[j]
+        if (e["api_id"] == d) {
+          var jstr
+          var tn = e["api_type"][value]
+          switch (value) {
+            case "2":
+              jstr = formatItype(tn)
+              break
+            case "3":
+              jstr = itag(tn)
+              break
+            default:
+              var jstr = tn
           }
-        })
+        } else {
+          continue
+        }
+        if (!release[jstr]) {
+          release[jstr] = []
+        }
+        release[jstr].push(e["api_id"])
+        break
       }
-    }
+    })
   }
+  z({release, value, developable})
   genCheck(release)
 }
-$(".go").click(function () {
+$(".inquire").click(function () {
   var output = []
   var extra = []
   $("button.btn-primary").each(function () {
@@ -201,7 +200,7 @@ $(".go").click(function () {
         "&l=" +
         $("#lv")[0].checked
     } else {
-      z({duration})
+      z({ duration })
       alert("您未选择时间范围！")
     }
   } else {
@@ -279,8 +278,8 @@ function btnclick() {
     })
   }
 }
-$.getJSON("parsed/cstype.json").fail(function (d) {
-  w("文件  " + "parsed/cstype.json" + " 读取失败" + d)
+$.getJSON("parsed/ship.json").fail(function (d) {
+  w("文件  " + "parsed/ship.json" + " 读取失败" + d)
 })
 $("#nav").load("nav.html")
 $("#foot").load("foot.html")

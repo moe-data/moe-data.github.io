@@ -32,7 +32,7 @@ jobs:
         id: cstypes
         uses: ./.github/actions/check-json-length
         with:
-          json-file-path: "parsed/cstype.json"
+          json-file-path: "parsed/ship.json"
 
       - name: Install MongoDB Server and Tools
         run: |
@@ -70,11 +70,18 @@ jobs:
           python3 .github/actions/simplify_records.py
 
       - name: Output developables
-        uses: conbanwa/write-js-array@v0.1
+        uses: conbanwa/write-js-array@v1.2
         with:
           js-name: dist/items/developable/sortby/all.js
           array-name: developable
           values: ${{ steps.python-export.outputs.developable }}
+
+      - name: Output constructables
+        uses: conbanwa/write-js-array@v1.2
+        with:
+          js-name: dist/ships/developable/sortby/all.js
+          array-name: developable
+          values: ${{ steps.python-export.outputs.constructable }}
 
       - name: Show result size
         run: |

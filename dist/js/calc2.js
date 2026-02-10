@@ -34,7 +34,7 @@ var ship
 var csjson = []
 var bar = 1
 $(".loading").css("width", Width())
-$.getJSON("parsed/cstype.json", function (result) {
+$.getJSON("parsed/ship.json", function (result) {
   csjson = result
   jsindex++
 }).done(function (d) {
