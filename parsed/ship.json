@@ -13561,10 +13561,10 @@
     "HP": "32"
   },
   {
-    "afterbull": 0,
-    "afterfuel": 0,
-    "afterlv": 0,
-    "aftershipid": 0,
+    "afterbull": 9300,
+    "afterfuel": 4800,
+    "afterlv": 98,
+    "aftershipid": 1031,
     "backs": 8,
     "broken": [
       10,
@@ -58980,6 +58980,77 @@
     "anti_submarine": 0,
     "final_form": "no",
     "HP": "69"
+  },
+  {
+    "afterbull": 0,
+    "afterfuel": 0,
+    "afterlv": 0,
+    "aftershipid": 0,
+    "backs": 8,
+    "broken": [
+      11,
+      18,
+      38,
+      14
+    ],
+    "buildtime": 250,
+    "bull_max": 95,
+    "ctype": 25,
+    "fuel_max": 90,
+    "getmes": "<br>",
+    "houg": [
+      0,
+      72
+    ],
+    "id": 1031,
+    "leng": 2,
+    "luck": [
+      63,
+      122
+    ],
+    "maxeq": [
+      24,
+      24,
+      18,
+      4,
+      2
+    ],
+    "name": "飛龍改三",
+    "powup": [
+      0,
+      0,
+      5,
+      6
+    ],
+    "raig": [
+      0,
+      0
+    ],
+    "slot_num": 5,
+    "soku": 10,
+    "sort_id": 2047,
+    "sortno": 621,
+    "souk": [
+      50,
+      80
+    ],
+    "stype": 11,
+    "taik": [
+      73,
+      91
+    ],
+    "tyku": [
+      46,
+      90
+    ],
+    "voicef": 3,
+    "yomi": "ひりゅう",
+    "total_eq": 72,
+    "evasion": 0,
+    "sight": 0,
+    "anti_submarine": 0,
+    "final_form": "no",
+    "HP": "73"
   },
   {
     "afterbull": 0,
