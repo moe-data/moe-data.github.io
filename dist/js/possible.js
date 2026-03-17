@@ -45,7 +45,9 @@ if (tar == "装备") {
         slotitem = result
       })
         .done(function () {
-          genCheck(init)
+          // Initial render must wait until slotitem/itype are loaded.
+          // Use current sort selection as the default grouping.
+          arrange($("#sort").val())
           $(".btn").click(btnclick)
         })
         .fail(function (d) {
