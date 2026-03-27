@@ -1,0 +1,104 @@
+name: Update selected timeperiod
+
+on:
+  schedule:
+    - cron: "0 20 1 * *"
+  push:
+    paths:
+      - "**/update-selected-timeperiod.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-timeperiod:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Update timetable month keys
+        id: update
+        shell: bash
+        run: |
+          current_month="$(date -u +%Y%m)"
+          previous_month="$(date -u -d "$(date -u +%Y-%m-01) -1 month" +%Y%m)"
+          echo "current_month=$current_month" >> "$GITHUB_OUTPUT"
+          echo "previous_month=$previous_month" >> "$GITHUB_OUTPUT"
+          export CURRENT_MONTH="$current_month"
+          export PREVIOUS_MONTH="$previous_month"
+
+          node <<'NODE'
+          const fs = require("fs")
+
+          const files = ["index.html", "construction.html"]
+          const previousMonth = process.env.PREVIOUS_MONTH
+          const currentMonth = process.env.CURRENT_MONTH
+
+          function replaceMonthsInTimetable(content, filePath) {
+            const timetableRegex = /timetable\(\[(?<rows>[\s\S]*?)\]\)/m
+            const match = content.match(timetableRegex)
+            if (!match || !match.groups || !match.groups.rows) {
+              throw new Error(`Could not find timetable([...]) block in ${filePath}`)
+            }
+
+            const rows = match.groups.rows
+            const monthKeyRegex = /\[(\d{6}),/g
+            const monthMatches = [...rows.matchAll(monthKeyRegex)]
+            if (monthMatches.length < 2) {
+              throw new Error(`Expected at least 2 six-digit month keys in ${filePath}, found ${monthMatches.length}`)
+            }
+
+            let replacementIndex = 0
+            const updatedRows = rows.replace(monthKeyRegex, (full) => {
+              if (replacementIndex === 0) {
+                replacementIndex += 1
+                return `[${previousMonth},`
+              }
+              if (replacementIndex === 1) {
+                replacementIndex += 1
+                return `[${currentMonth},`
+              }
+              return full
+            })
+
+            return content.replace(rows, updatedRows)
+          }
+
+          for (const file of files) {
+            const original = fs.readFileSync(file, "utf8")
+            const updated = replaceMonthsInTimetable(original, file)
+            fs.writeFileSync(file, updated, "utf8")
+            console.log(`Updated month keys in ${file}`)
+          }
+          NODE
+
+      - name: Show computed months and diff
+        shell: bash
+        run: |
+          echo "Previous month: ${{ steps.update.outputs.previous_month }}"
+          echo "Current month:  ${{ steps.update.outputs.current_month }}"
+          git --no-pager diff -- index.html construction.html
+
+      - name: Detect changes
+        id: changes
+        shell: bash
+        run: |
+          if git diff --quiet -- index.html construction.html; then
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Auto-commit updated timeperiod
+        if: steps.changes.outputs.has_changes == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update selected timeperiod month keys"
+          file_pattern: index.html construction.html
