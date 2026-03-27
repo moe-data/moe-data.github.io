@@ -25,6 +25,38 @@ function normalizeName(s) {
     .replace(/発射管/g, '')
 }
 
+function loadVarFromScript(relPath, varName) {
+  const code = readUtf8(relPath)
+  const ctx = {}
+  vm.createContext(ctx)
+  vm.runInContext(code, ctx)
+  if (!(varName in ctx)) {
+    // `let/const` at top-level doesn't become a global property in vm contexts.
+    // Fallback: parse the array/object literal from source.
+    const declRe = new RegExp(String.raw`(?:^|\r?\n)\s*(?:var|let|const)\s+${varName}\s*=\s*([\s\S]*?);\s*(?:\r?\n|$)`)
+    const declMatch = code.match(declRe)
+    if (!declMatch) {
+      throw new Error(`Failed to load global \`${varName}\` from ${relPath}`)
+    }
+    const literal = declMatch[1]
+    const sandbox = {}
+    vm.createContext(sandbox)
+    vm.runInContext(`result = (${literal})`, sandbox)
+    return { value: sandbox.result, code }
+  }
+  return { value: ctx[varName], code }
+}
+
+function expectUniqueIntegerIds(arr, label) {
+  expect(Array.isArray(arr)).toBe(true)
+  expect(arr.length).toBeGreaterThan(0)
+  expect(arr.every((v) => v !== undefined && v !== null)).toBe(true)
+  const ids = arr.map(Number)
+  expect(ids.every((n) => Number.isFinite(n) && Number.isInteger(n))).toBe(true)
+  expect(new Set(ids).size).toBe(ids.length)
+  return ids
+}
+
 describe('Sort options + init.js consistency', () => {
   test('index.html #sort option values are expected and unique', () => {
     const html = readUtf8('index.html')
@@ -61,6 +93,7 @@ describe('Sort options + init.js consistency', () => {
     const groupRegex = /\/\/\s*([^：\r\n]+)\s*：([^\r\n]*)\r?\n\s*"([^"]+)"\s*:\s*\[([^\]]*)\]/g
 
     const seenGroups = []
+    const seenGroupKeys = new Set()
     let m
     while ((m = groupRegex.exec(initCode))) {
       const commentGroupName = m[1].trim()
@@ -68,11 +101,27 @@ describe('Sort options + init.js consistency', () => {
       const objectKey = m[3].trim()
 
       seenGroups.push({ commentGroupName, objectKey })
+      seenGroupKeys.add(objectKey)
       expect(objectKey).toBe(commentGroupName)
 
-      const ids = Array.isArray(init[objectKey]) ? init[objectKey].map(Number) : []
+      // Reject missing groups / unexpected shapes.
+      expect(Array.isArray(init[objectKey])).toBe(true)
+      const raw = init[objectKey]
+      // Reject holes like [1, 2,, 3] and undefined/null entries.
+      expect(raw.every((v) => v !== undefined && v !== null)).toBe(true)
+
+      const ids = raw.map(Number)
       expect(ids.length).toBeGreaterThan(0)
+      // Must all be finite integers (no NaN from things like '' or undefined).
+      expect(ids.every((n) => Number.isFinite(n) && Number.isInteger(n))).toBe(true)
       expect(new Set(ids).size).toBe(ids.length) // unique ids inside each group
+
+      // -1 is a sentinel only allowed in "其の他" group (represents 无效值).
+      if (objectKey === '其の他') {
+        expect(ids.filter((x) => x === -1).length).toBe(1)
+      } else {
+        expect(ids.includes(-1)).toBe(false)
+      }
 
       for (const id of ids) {
         if (id === -1) continue
@@ -105,6 +154,34 @@ describe('Sort options + init.js consistency', () => {
     }
 
     expect(seenGroups.length).toBeGreaterThan(0)
+
+    // Ensure every init group is validated by the regex (prevents silent pass when a line format breaks).
+    const initKeys = Object.keys(init)
+    expect(initKeys.length).toBeGreaterThan(0)
+    expect(seenGroupKeys.size).toBe(initKeys.length)
+    for (const k of initKeys) {
+      expect(seenGroupKeys.has(k)).toBe(true)
+    }
+  })
+
+  test('sortby/all.js developable list has no duplicate ids', () => {
+    const { value: developable } = loadVarFromScript('dist/items/developable/sortby/all.js', 'developable')
+    expectUniqueIntegerIds(developable, 'developable')
+  })
+
+  test('sortby/releasetime.js has no duplicate ids per date', () => {
+    const { value: releasetime } = loadVarFromScript('dist/items/developable/sortby/releasetime.js', 'releasetime')
+    expect(releasetime && typeof releasetime === 'object').toBe(true)
+
+    for (const [date, ids] of Object.entries(releasetime)) {
+      // allow the historical sentinel -1 in the initial "2013/04/23" bucket
+      expect(Array.isArray(ids)).toBe(true)
+      const nums = ids.map(Number)
+      expect(nums.every((n) => Number.isFinite(n) && Number.isInteger(n))).toBe(true)
+      expect(new Set(nums).size).toBe(nums.length)
+      // basic sanity on key format (not strict, but catches accidental non-date keys)
+      expect(String(date)).toMatch(/^\d{4}\/\d{2}\/\d{2}$/)
+    }
   })
 })
 
