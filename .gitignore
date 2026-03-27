@@ -1,6 +1,7 @@
 *.wxss
 *.wxml
 .DS_Store
+node_modules/
 tool/
 *.gzip
 parsed/_api_mst_ship.txt

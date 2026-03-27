@@ -19,11 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm init -y
-          npm install --save-dev jest jest-environment-jsdom
-
-      - name: Create Jest config for jsdom
-        run: |
-          echo "module.exports = { testEnvironment: 'jsdom' };" > jest.config.js
+          npm install --save-dev jest@29.7.0 jest-environment-jsdom@29.7.0
 
       - name: Run Jest tests
-        run: npx jest --ci --coverage --config jest.config.js
+        run: npx jest --ci --coverage

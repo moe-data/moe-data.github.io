@@ -72,6 +72,31 @@ Here shows how to convert data from poi to the parsed json in moe-data
 
 Data source comes from https://github.com/poooi/poi-server/wiki
 
+---
+
+## Run tests locally
+
+This repo runs Jest tests (including a consistency check that prevents `init.js` comment/name ↔ `api_id` mismatches like `20 -> 201`).
+
+### One-time setup
+
+```bash
+npm init -y
+npm install --save-dev jest@29.7.0 jest-environment-jsdom@29.7.0
+```
+
+### Run all tests
+
+```bash
+npx jest --ci
+```
+
+### Run the specific consistency test
+
+```bash
+npx jest --ci __tests__/sort-options-and-init-consistency.test.js
+```
+
 ### 1. download the .gz files<br>
 
 Construction

@@ -1,0 +1,27 @@
+name: Sort options + init.js consistency
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Jest (ephemeral)
+        run: |
+          npm init -y
+          npm install --save-dev jest@29.7.0 jest-environment-jsdom@29.7.0
+
+      - name: Run consistency test
+        run: npx jest --ci __tests__/sort-options-and-init-consistency.test.js
+
