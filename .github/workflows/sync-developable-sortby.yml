@@ -1,0 +1,42 @@
+name: Sync developable sortby metadata
+
+on:
+  push:
+    paths:
+      - "dist/items/developable/sortby/all.js"
+      - "**/sync-developable-sortby.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Sync sortby files
+        run: node scripts/sync-developable-sortby.cjs
+
+      - name: Install test dependencies
+        run: |
+          npm init -y
+          npm install --save-dev jest@29.7.0 jest-environment-jsdom@29.7.0
+
+      - name: Run consistency test
+        run: npx jest --ci __tests__/sort-options-and-init-consistency.test.js
+
+      - name: Auto-commit synced files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: sync developable sortby metadata"
+          file_pattern: dist/items/developable/sortby/all.js dist/items/developable/sortby/init.js dist/items/developable/sortby/releasetime.js

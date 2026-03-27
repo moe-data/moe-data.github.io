@@ -183,5 +183,28 @@ describe('Sort options + init.js consistency', () => {
       expect(String(date)).toMatch(/^\d{4}\/\d{2}\/\d{2}$/)
     }
   })
+
+  test('all.js, init.js, releasetime.js have exact cross-file ID coverage', () => {
+    const { value: developable } = loadVarFromScript('dist/items/developable/sortby/all.js', 'developable')
+    const { value: init } = loadVarFromScript('dist/items/developable/sortby/init.js', 'init')
+    const { value: releasetime } = loadVarFromScript('dist/items/developable/sortby/releasetime.js', 'releasetime')
+
+    const allSet = new Set(expectUniqueIntegerIds(developable, 'developable'))
+
+    const initIds = Object.entries(init).flatMap(([group, ids]) => {
+      expect(Array.isArray(ids)).toBe(true)
+      return ids
+    })
+    const initSet = new Set(expectUniqueIntegerIds(initIds.filter((x) => Number(x) !== -1), 'init union'))
+
+    const releaseIds = Object.entries(releasetime).flatMap(([date, ids]) => {
+      expect(Array.isArray(ids)).toBe(true)
+      return ids
+    })
+    const releaseSet = new Set(expectUniqueIntegerIds(releaseIds.filter((x) => Number(x) !== -1), 'releasetime union'))
+
+    expect(initSet).toEqual(allSet)
+    expect(releaseSet).toEqual(allSet)
+  })
 })
 
