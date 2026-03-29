@@ -117,7 +117,11 @@ function formatDtype(value, row, index) {
 }
 function formatshipId(value, row, index) {
   var str = value
-  for (let i = 0; i < csjson.length; i++) {
+  if (q === "d") {
+    return str
+  }
+  // ship lookup (original behavior)
+  for (let i = 0; i < csjson.length && csjson[i]; i++) {
     if (csjson[i]["id"] == value) {
       str = csjson[i]["name"]
       break
