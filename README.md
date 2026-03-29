@@ -81,13 +81,7 @@ This repo runs Jest tests (including a consistency check that prevents `init.js`
 ### One-time setup
 
 ```bash
-npm init -y
-npm install --save-dev jest@29.7.0 jest-environment-jsdom@29.7.0
-```
-
-### Run all tests
-
-```bash
+npm install
 npx jest --ci
 ```
 
