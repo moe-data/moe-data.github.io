@@ -34,49 +34,34 @@ jobs:
           export CURRENT_MONTH="$current_month"
           export PREVIOUS_MONTH="$previous_month"
 
+      - name: Update dist/timetables.json with dump size counts
+        shell: bash
+        run: |
           node <<'NODE'
-          const fs = require("fs")
+          const fs = require('fs')
+          const months = ['202601', '202602', '202603']
+          const sizeC = JSON.parse(fs.readFileSync('dump/size-c.json', 'utf8'))
+          const sizeD = JSON.parse(fs.readFileSync('dump/size-d.json', 'utf8'))
+          const timetablePath = 'dist/timetables.json'
+          const timetable = JSON.parse(fs.readFileSync(timetablePath, 'utf8'))
 
-          const files = ["index.html", "construction.html"]
-          const previousMonth = process.env.PREVIOUS_MONTH
-          const currentMonth = process.env.CURRENT_MONTH
-
-          function replaceMonthsInTimetable(content, filePath) {
-            const timetableRegex = /timetable\(\[(?<rows>[\s\S]*?)\]\)/m
-            const match = content.match(timetableRegex)
-            if (!match || !match.groups || !match.groups.rows) {
-              throw new Error(`Could not find timetable([...]) block in ${filePath}`)
+          months.forEach((month) => {
+            const cLen = Number(sizeC[`${month}-length`])
+            const dLen = Number(sizeD[`${month}-length`])
+            if (Number.isNaN(cLen) || Number.isNaN(dLen)) {
+              throw new Error(`Missing size-c/size-d length for ${month}: c=${sizeC[`${month}-length`]} d=${sizeD[`${month}-length`]}`)
             }
-
-            const rows = match.groups.rows
-            const monthKeyRegex = /\[(\d{6}),/g
-            const monthMatches = [...rows.matchAll(monthKeyRegex)]
-            if (monthMatches.length < 2) {
-              throw new Error(`Expected at least 2 six-digit month keys in ${filePath}, found ${monthMatches.length}`)
+            const shipRow = timetable.ship.find((row) => String(row[0]) === month)
+            const equipRow = timetable.equipment.find((row) => String(row[0]) === month)
+            if (!shipRow || !equipRow) {
+              throw new Error(`Missing ${month} row in dist/timetables.json`)
             }
+            shipRow[1] = cLen
+            equipRow[1] = dLen
+          })
 
-            let replacementIndex = 0
-            const updatedRows = rows.replace(monthKeyRegex, (full) => {
-              if (replacementIndex === 0) {
-                replacementIndex += 1
-                return `[${previousMonth},`
-              }
-              if (replacementIndex === 1) {
-                replacementIndex += 1
-                return `[${currentMonth},`
-              }
-              return full
-            })
-
-            return content.replace(rows, updatedRows)
-          }
-
-          for (const file of files) {
-            const original = fs.readFileSync(file, "utf8")
-            const updated = replaceMonthsInTimetable(original, file)
-            fs.writeFileSync(file, updated, "utf8")
-            console.log(`Updated month keys in ${file}`)
-          }
+          fs.writeFileSync(timetablePath, JSON.stringify(timetable, null, 2) + '\n', 'utf8')
+          console.log('Updated dist/timetables.json for', months.join(', '))
           NODE
 
       - name: Show computed months and diff
@@ -84,13 +69,13 @@ jobs:
         run: |
           echo "Previous month: ${{ steps.update.outputs.previous_month }}"
           echo "Current month:  ${{ steps.update.outputs.current_month }}"
-          git --no-pager diff -- index.html construction.html
+          git --no-pager diff -- dist/timetables.json 
 
       - name: Detect changes
         id: changes
         shell: bash
         run: |
-          if git diff --quiet -- index.html construction.html; then
+          if git diff --quiet -- dist/timetables.json; then
             echo "has_changes=false" >> "$GITHUB_OUTPUT"
           else
             echo "has_changes=true" >> "$GITHUB_OUTPUT"
@@ -100,5 +85,5 @@ jobs:
         if: steps.changes.outputs.has_changes == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: update selected timeperiod month keys"
-          file_pattern: index.html construction.html
+          commit_message: "chore: update selected time period month keys"
+          file_pattern:  dist/timetables.json 

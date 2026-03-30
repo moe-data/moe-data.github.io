@@ -345,6 +345,20 @@ function timetable(t) {
   })
 }
 
+function loadTimetable(key) {
+  $.getJSON("dist/timetables.json")
+    .done(function (data) {
+      if (data && Array.isArray(data[key])) {
+        timetable(data[key])
+      } else {
+        console.error("timetables.json missing key:", key)
+      }
+    })
+    .fail(function (error) {
+      console.error("Failed to load timetables.json", error)
+    })
+}
+
 function isContain(parent, son) {
   for (var i = son.length - 1; i >= 0; i--) {
     if (parent.indexOf(son[i]) == -1) {
