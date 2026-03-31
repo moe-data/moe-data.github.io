@@ -1,0 +1,44 @@
+﻿name: HTML regression
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  root-html:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm test -- --runInBand --testPathPattern=__tests__/root-html-page.test.js
+
+  query-matrix:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        queryName:
+          - default-basic
+          - with-e
+          - multi-t-144
+          - a-500
+          - l-true
+          - q-d-times
+          - empty-e
+          - multi-o
+          - a-zero
+          - complex
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - name: run query test set
+        env:
+          QUERY_NAME: ${{ matrix.queryName }}
+        run: npm test -- --runInBand --testPathPattern=__tests__/root-html-page.test.js
