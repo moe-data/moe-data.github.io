@@ -39,7 +39,8 @@ function parseGetRequest(search, a, b) {
   return char
 }
 
-function computeResultSet(expected) {
+function computeResultSet(set) {
+  const expected = set.expected
   const fs = require('fs')
 
   const t = expected.t.split(',').filter((x) => x !== '')
@@ -146,7 +147,10 @@ describe('result.html query processing cases', () => {
     global.console = { ...console, error: jest.fn(), warn: jest.fn(), info: jest.fn(), log: jest.fn() }
   })
 
-  test.each(querySets)('$name $query', ({ name, query }) => {
+  const normalQuerySets = querySets.filter((set) => !set.name.includes('-must-fail'))
+  const mustFailQuerySets = querySets.filter((set) => set.name.includes('-must-fail'))
+
+  test.each(normalQuerySets)('$name $query', ({ name, query }) => {
     Object.defineProperty(global, 'location', { value: { search: query }, configurable: true })
     const parsed = {
       t: parseGetRequest(query, 't', 1),
@@ -158,7 +162,8 @@ describe('result.html query processing cases', () => {
       l: parseGetRequest(query, 'l'),
     }
 
-    const expected = querySets.find((set) => set.name === name).expected
+    const set = querySets.find((set) => set.name === name)
+    const expected = set.expected
     expect(parsed.t).toEqual(expected.t ? expected.t.split(',').filter((x) => x !== '') : [])
     expect(parsed.o).toEqual(expected.o ? expected.o.split(',').filter((x) => x !== '') : [])
     expect(parsed.e).toEqual(expected.e ? expected.e.split(',').filter((x) => x !== '') : [])
@@ -167,12 +172,36 @@ describe('result.html query processing cases', () => {
     expect(parsed.a).toEqual(Number(expected.a))
     expect(parsed.l).toEqual(expected.l)
 
-    if (expected.result) {
-      const actual = computeResultSet(expected)
-      expect(actual.filted).toBe(expected.result.filted)
-      expect(actual.isonl).toBe(expected.result.isonl)
+    if (set.result) {
+      const actual = computeResultSet(set)
+      expect(actual.filted).toBe(set.result.filted)
+      expect(actual.isonl).toBe(set.result.isonl)
     }
 
     expect(global.console.error).not.toHaveBeenCalled()
+  })
+
+  test('default-1 and default-2 should differ for o values', () => {
+    const set1 = querySets.find((set) => set.name === 'default-1')
+    const set2 = querySets.find((set) => set.name === 'default-2')
+    expect(set1).toBeDefined()
+    expect(set2).toBeDefined()
+
+    const r1 = computeResultSet(set1)
+    const r2 = computeResultSet(set2)
+
+    expect(r1.filted).toBe(set1.result.filted)
+    expect(r1.isonl).toBe(set1.result.isonl)
+    expect(r2.filted).toBe(set2.result.filted)
+    expect(r2.isonl).toBe(set2.result.isonl)
+
+    expect(r1.filted).not.toBe(r2.filted)
+    expect(r1.isonl).not.toBe(r2.isonl)
+  })
+
+  test.each(mustFailQuerySets)('$name should be invalid as expected', (set) => {
+    const actual = computeResultSet(set)
+    expect(actual.filted).not.toBe(set.result.filted)
+    expect(actual.isonl).not.toBe(set.result.isonl)
   })
 })
