@@ -297,9 +297,7 @@ function thead(eg) {
   }
   return [co, col]
 }
-function isResource(e) {
-  return ["i", "fuel", "ammo", "steel", "bauxite", "資材", "secretary", "denominator"].indexOf(e) > -1
-}
+/* delegated to jgs.js: isResource */
 function formatR(value) {
   return value ? (value * 100).toFixed(2) + "%" : null
 }
@@ -321,41 +319,8 @@ function pie(e) {
   $.cookie("pie", JSON.stringify(e), { expires: 365, path: "/" })
   window.location.href = "pie.html"
 }
-function group2By(array, i, s) {
-  let groups = {}
-  array.forEach(function (o) {
-    let group = JSON.stringify(o[i] + o[s])
-    groups[group] = groups[group] || []
-    groups[group].push(o)
-  })
-  let arr = []
-  for (key in groups) {
-    arr.push(groups[key])
-  }
-  return arr
-}
-function filt(r, o) {
-  var array = []
-  r.forEach(function (element) {
-    var f = true
-    o.forEach(function (oe) {
-      var ff = false
-      element.forEach(function (el) {
-        // f = f && el['o'] == o[k]
-        if (el["o"] == oe) {
-          ff = true
-        }
-      })
-      if (!ff) {
-        f = false
-      }
-    })
-    if (f && element[0]["s"] != 0) {
-      array.push(element)
-    }
-  })
-  return array
-}
+/* delegated to jgs.js: group2By */
+/* delegated to jgs.js: filt */
 function isonladd(array, o) {
   for (k = 0; k < o.length; k++) {
     egnrl(o[k])
@@ -394,13 +359,7 @@ function isonladd(array, o) {
   }
   return groups
 }
-function egnrl(item) {
-  resourceTitle["n" + item] = 0
-  resourceTitle[formatOnlyname(item)] = 0
-  if (minlv) {
-    resourceTitle["l" + item] = 0
-  }
-}
+/* delegated to jgs.js: egnrl */
 function initTable(lval) {
   if (lval) {
     kj = lval.slice(0, 2) == "zh" || lval.slice(0, 2) == "ja"
@@ -449,19 +408,7 @@ function initTable(lval) {
   document.getElementById("csscontainer").innerHTML =
     ".fix-sticky {padding-top:" + padding + "0px;position: fixed !important;overflow: hidden;  z-index: 100;}"
 }
-function formatOnlyname(value) {
-  var str = value
-  if (value == -1) {
-    return fail
-  }
-  for (nitem = 0; nitem < slotitem.length; nitem++) {
-    if (slotitem[nitem][api + "id"] == value) {
-      str = slotitem[nitem][api + "name"]
-      return bra(str, 1)
-    }
-  }
-  return bra(str, 1)
-}
+/* delegated to jgs.js: formatOnlyname */
 function addicon(name, c) {
   var str = bra(name, 0)
   var color = c ? '<span style="color:' + c + ';">▐</span>' : "" //▮∎■

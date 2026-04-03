@@ -22,9 +22,7 @@ var resourceTitle = {
   times: "",
   ratio: "",
 }
-function isResource(e) {
-  return ["i", "fuel", "ammo", "steel", "bauxite", "資材", "secretary", "denominator"].indexOf(e) > -1
-}
+/* delegated to jgs.js: isResource */
 var kj = false
 var ship
 var csjson = []
@@ -150,7 +148,8 @@ function jsonover() {
         }
         return groups
       }
-      z(filted, isonl)
+      z("checkpoint in calc.js. Next I’ll grab the actual current first-10 values using the existing utility script so the plan can lock in concrete regression expectations.")
+      console.log(filted, isonl)
       isonl.forEach(function (e) {
         denominator = 0
         for (keys in e) {
@@ -362,52 +361,9 @@ function pie(e) {
   $.cookie("pie", JSON.stringify(e), { expires: 365, path: "/" })
   window.location.href = "pie.html"
 }
-function group2By(array, i, s) {
-  let groups = {}
-  array.forEach(function (o) {
-    let group = JSON.stringify(o[i] + o[s])
-    groups[group] = groups[group] || []
-    groups[group].push(o)
-  })
-  let arr = []
-  for (key in groups) {
-    arr.push(groups[key])
-  }
-  return arr
-}
-function filt(r) {
-  var array = []
-  r.forEach(function (element) {
-    var f = true
-    output.forEach(function (oe) {
-      var ff = false
-      element.forEach(function (el) {
-        // f = f && el['o'] == output[k]
-        if (el["o"] == oe) {
-          ff = true
-        }
-      })
-      if (!ff) {
-        f = false
-      }
-    })
-    if (f && element[0]["s"] != 0) {
-      array.push(element)
-    }
-  })
-  return array
-}
-function egnrl(item) {
-  if (item == 0) {
-    x("dev res 0")
-    return
-  }
-  resourceTitle["n" + item] = 0
-  resourceTitle[formatOnlyname(item)] = 0
-  if (minlv) {
-    resourceTitle["l" + item] = 0
-  }
-}
+/* delegated to jgs.js: group2By */
+/* delegated to jgs.js: filt */
+/* delegated to jgs.js: egnrl */
 function initTable(lval) {
   if (lval) {
     kj = lval.slice(0, 2) == "zh" || lval.slice(0, 2) == "ja"
@@ -456,19 +412,7 @@ function initTable(lval) {
   document.getElementById("csscontainer").innerHTML =
     ".fix-sticky {padding-top:" + padding + "0px;position: fixed !important;overflow: hidden;  z-index: 100;}"
 }
-function formatOnlyname(value) {
-  var str = value
-  if (value == -1) {
-    return fail
-  }
-  for (nitem = 0; nitem < slotitem.length; nitem++) {
-    if (slotitem[nitem][api_ + "id"] == value) {
-      str = slotitem[nitem][api_ + "name"]
-      return bra(str, 1)
-    }
-  }
-  return bra(str, 1)
-}
+/* delegated to jgs.js: formatOnlyname */
 function addicon(name, c) {
   var str = bra(name, 0)
   var color = c ? '<span style="color:' + c + ';">▐</span>' : "" //▮∎■

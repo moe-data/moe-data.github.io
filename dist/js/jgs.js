@@ -14,7 +14,8 @@ function replaceBy(selector, c, old, replace) {
 const w = console.warn
 const x = console.error
 const z = console.info
-if (typeof jQuery == "undefined") {
+const inNode = typeof window === 'undefined' || typeof document === 'undefined'
+if (!inNode && typeof jQuery == "undefined") {
   w("JQuery load failed")
   document.write(unescape("%3Cscript src='./dist/js/cdn/jquery.min.js' type='text/javascript'%3E%3C/script%3E"))
 }
@@ -40,24 +41,26 @@ function insertbr(str) {
   return str.replace(p1, "$1<br>$2").replace(p2, "$1<br>$2").replace(p3, "$1<br>$2")
 }
 var selectAlli = 0
-//全选
-$("#selectAll").on("click", function () {
-  if (selectAlli == 0) {
-    //把所有复选框选中
-    $(".show span :checkbox").prop("checked", true)
-    selectAlli = 1
-  } else {
-    $(".show span :checkbox").prop("checked", false)
-    selectAlli = 0
-  }
-})
-$("#ReverseSelect").on("click", function () {
-  //反选
-  $("#show span :checkbox").each(function () {
-    //遍历所有复选框，然后取值进行 !非操作
-    $(this).prop("checked", !$(this).prop("checked"))
+// 全选 handlers (only install when in browser and jQuery is available)
+if (!inNode && typeof $ !== 'undefined') {
+  $("#selectAll").on("click", function () {
+    if (selectAlli == 0) {
+      //把所有复选框选中
+      $(".show span :checkbox").prop("checked", true)
+      selectAlli = 1
+    } else {
+      $(".show span :checkbox").prop("checked", false)
+      selectAlli = 0
+    }
   })
-})
+  $("#ReverseSelect").on("click", function () {
+    //反选
+    $("#show span :checkbox").each(function () {
+      //遍历所有复选框，然后取值进行 !非操作
+      $(this).prop("checked", !$(this).prop("checked"))
+    })
+  })
+}
 function js(url) {
   var script = document.createElement("script")
   script.type = "text/javascript"
@@ -141,4 +144,165 @@ function convertHalfToFullWidth(str) {
     .replace(/\$/g, "＄") // 半角$ 替换为 全角＄
     .replace(/%/g, "％") // 半角% 替换为 全角％
   return result
+}
+
+// --- Shared helpers (canonical implementations) ---
+function isResource(e) {
+  return ['i', 'fuel', 'ammo', 'steel', 'bauxite', '資材', 'secretary', 'denominator'].indexOf(e) > -1
+}
+
+function group2By(array, i, s) {
+  var groups = {}
+  array.forEach(function (o) {
+    var group = JSON.stringify(o[i] + o[s])
+    groups[group] = groups[group] || []
+    groups[group].push(o)
+  })
+  var arr = []
+  for (var key in groups) {
+    arr.push(groups[key])
+  }
+  return arr
+}
+
+function filt(groups, output) {
+  var array = []
+  groups.forEach(function (element) {
+    var f = true
+    for (var k = 0; k < output.length; k++) {
+      var oe = output[k]
+      var ff = false
+      for (var j = 0; j < element.length; j++) {
+        if (element[j]['o'] == oe) {
+          ff = true
+          break
+        }
+      }
+      if (!ff) {
+        f = false
+        break
+      }
+    }
+    if (f && element[0]['s'] != 0) {
+      array.push(element)
+    }
+  })
+  return array
+}
+
+// formatshipId: in Node we provide a simple identity implementation for tests/builds.
+// In the browser we must NOT define `formatshipId` so that `dist/js/share.js`
+// can provide the proper ship-name lookup using `csjson`.
+var formatshipId
+if (inNode) {
+  // Attempt to load ship/item parsed data when running in Node so name lookups work
+  try {
+    const fs = require('fs')
+    const path = require('path')
+    if (typeof slotitem === 'undefined' || !slotitem) {
+      try {
+        slotitem = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'parsed', 'api_mst_slotitem.json'), 'utf8'))
+      } catch (e) {
+        // ignore
+      }
+    }
+    if (typeof csjson === 'undefined' || !csjson) {
+      try {
+        csjson = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'parsed', 'ship.json'), 'utf8'))
+      } catch (e) {
+        // ignore
+      }
+    }
+  } catch (e) {
+    // ignore
+  }
+
+  formatshipId = function () {
+    const val = arguments[0]
+    try {
+      if (typeof csjson !== 'undefined' && csjson && csjson.length) {
+        for (let i = 0; i < csjson.length; i++) {
+          if (csjson[i]['id'] == val || csjson[i]['api_id'] == val || csjson[i]['apiId'] == val) {
+            return csjson[i]['name'] || csjson[i]['api_name'] || String(val)
+          }
+        }
+      }
+    } catch (e) {
+      // ignore
+    }
+    if (arguments.length === 1) return val
+    return val
+  }
+}
+
+function formatOnlyname(value) {
+  var str = value
+  try {
+    if (value == -1) return typeof fail !== 'undefined' ? fail : 'fail'
+    // Prefer in-memory `slotitem` if available, otherwise (Node) try to load parsed JSON
+    var items = null
+    if (typeof slotitem !== 'undefined' && slotitem && slotitem.length) {
+      items = slotitem
+    } else if (inNode) {
+      try {
+        const fs = require('fs')
+        const path = require('path')
+        items = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'parsed', 'api_mst_slotitem.json'), 'utf8'))
+      } catch (e) {
+        items = null
+      }
+    }
+    if (items && items.length) {
+      const idKeys = [(typeof api_ !== 'undefined' ? api_ : '') + 'id', 'api_id', 'id']
+      const nameKeys = [(typeof api_ !== 'undefined' ? api_ : '') + 'name', 'api_name', 'name']
+      for (var nitem = 0; nitem < items.length; nitem++) {
+        for (var ik = 0; ik < idKeys.length; ik++) {
+          var idKey = idKeys[ik]
+          if (items[nitem][idKey] == value) {
+            for (var nk = 0; nk < nameKeys.length; nk++) {
+              var nameKey = nameKeys[nk]
+              if (items[nitem][nameKey]) {
+                str = items[nitem][nameKey]
+                if (typeof bra === 'function') return bra(str, 1)
+                return str
+              }
+            }
+          }
+        }
+      }
+    }
+  } catch (e) {
+    // ignore
+  }
+  if (typeof bra === 'function') return bra(str, 1)
+  return str
+}
+
+function egnrl(item) {
+  if (item == 0) {
+    if (typeof x === 'function') x('dev res 0')
+    return
+  }
+  if (typeof resourceTitle === 'undefined') resourceTitle = {}
+  resourceTitle['n' + item] = 0
+  try {
+    resourceTitle[formatOnlyname(item)] = 0
+  } catch (e) {
+    resourceTitle['' + item] = 0
+  }
+  if (typeof minlv !== 'undefined' && minlv) {
+    resourceTitle['l' + item] = 0
+  }
+}
+
+// Export helpers for Node (module) usage if available
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = module.exports || {}
+  module.exports.jsonstr = jsonstr
+  module.exports.isResource = isResource
+  module.exports.group2By = group2By
+  module.exports.filt = filt
+  module.exports.egnrl = egnrl
+  module.exports.formatOnlyname = formatOnlyname
+  module.exports.formatshipId = formatshipId
 }

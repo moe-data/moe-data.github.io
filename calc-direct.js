@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { jsonstr, group2By } = require('./dist/js/jgs.js');
 
 const q = 'd';
 const output = [201];
@@ -14,9 +15,7 @@ function isResource(e){ return ['i','fuel','ammo','steel','bauxite','資材','se
 function bra(str){ return str; }
 function formatOnlyname(value){ if (value===-1 || value==='-1') return 'fail'; let str = String(value); for (const item of slotitem){ if (item[api_ + 'id'] == value){ str = item[api_ + 'name']; return bra(str); } } return bra(str); }
 function formatshipId(s){ return s; }
-function jsonstr(a){ return JSON.stringify(a).replace('[','').replace(']','').replace(/"/g,''); }
 function egnrl(item){ resourceTitle['n'+item] = 0; resourceTitle[formatOnlyname(item)] = 0; if (minlv){ resourceTitle['l'+item] = 0; } }
-function group2By(array,i,s){ const groups={}; array.forEach(o=>{ const g=JSON.stringify(o[i]+o[s]); groups[g]=groups[g]||[]; groups[g].push(o); }); return Object.values(groups); }
 function filt(r){ const arr=[]; for (const element of r){ let f=true; for (const oe of output){ let ff=false; for (const el of element){ if (el.o == oe) { ff=true; break; }} if (!ff){ f = false; break;} } if (f && element[0].s != 0){ arr.push(element);} } return arr; }
 
 // load data

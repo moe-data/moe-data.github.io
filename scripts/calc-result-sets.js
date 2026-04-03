@@ -1,9 +1,9 @@
 const fs = require('fs');
 const querySets = require('../test-data/result-query-sets');
 const slotitem = JSON.parse(fs.readFileSync('parsed/api_mst_slotitem.json', 'utf8'));
-const jsonstr = (a) => JSON.stringify(a).replace('[', '').replace(']', '').replace(/"/g, '');
+const { jsonstr, group2By } = require('../dist/js/jgs.js');
 
-function group2By(array,i,s){ const g={}; array.forEach(o=>{ const k = JSON.stringify(o[i]+o[s]); (g[k]||(g[k]=[])).push(o); }); return Object.values(g); }
+
 
 function computeCounts(qset){
   const t = qset.expected.t.split(',').filter(x=>x!=='');
