@@ -5,6 +5,9 @@ on:
     paths:
       - "dist/items/developable/sortby/all.js"
       - "**/sync-developable-sortby.yml"
+  pull_request:
+    paths:
+      - "dist/items/developable/sortby/all.js"
   workflow_dispatch:
 
 permissions:

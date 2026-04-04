@@ -64,9 +64,10 @@
   </script>
   <script src="https://lib.baomitu.com/echarts/3.8.5/echarts.min.js"></script>
   <script type="text/javascript">
-    // console.log($.cookie('pie'));
+    console.log($.cookie('pie'));
     if ($.cookie("pie") == null) {
-      window.location.href = "index.html";
+      x("没有饼图数据，返回首页");
+      // window.location.href = "index.html";
     }
     piedata = JSON.parse($.cookie("pie"));
     $("#nav").load("nav.html");
