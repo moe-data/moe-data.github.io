@@ -64,7 +64,7 @@ if (!havelang) {
   if (detect.slice(0, 2) == "zh" || detect.slice(0, 2) == "ja") {
     kj = true
   }
-  selectlang = document.getElementById("locale")
+  selectlang = document.getElementById("locale") || []
   for (let i = 0; i < selectlang.length; i++) {
     if (selectlang[i].value == detect) {
       selectlang[i].selected = true

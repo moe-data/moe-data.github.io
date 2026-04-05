@@ -66,8 +66,10 @@ function js(url) {
   script.type = "text/javascript"
   script.src = url
   // document.body.appendChild(script)
-  var jsbody = document.getElementById("js")
-  jsbody.appendChild(script)
+  var jsbody = document.getElementById("js") || document.body || document.documentElement
+  if (jsbody && jsbody.appendChild) {
+    jsbody.appendChild(script)
+  }
 }
 
 function GetRequest(a, b) {

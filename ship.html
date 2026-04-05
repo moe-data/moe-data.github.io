@@ -16,13 +16,20 @@
   <meta name="author" content="">
   <link rel="icon" href="https://img.pddpic.com/mms-material-img/2021-01-16/e555cb1c-1339-48b5-9930-4101be911797.png">
   <title>舰队大数据 - Fleet Data</title>
+  <script>window.jQuery || document.write('<script src="./dist/js/cdn/jquery.min.js"><\/script>')</script>
   <!-- Bootstrap core CSS -->
-  <link href="./dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="./dist/css/bootstrap-table.min.css">
-  <!-- <link href="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.css" rel="stylesheet"> -->
-  <!-- <link rel="stylesheet" type="text/css" href="./dist/css/bootstrap-table-filter-control.min.css"> -->
-  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <link href="./assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+  <script src="./dist/js/cdn/bootstrap.min.js"></script>
+  <link href="./dist/js/cdn/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script>
+    $.fn.emulateTransitionEnd ||
+      document.write(
+        '<script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"><\/script>">'
+      );
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/bootstrap-table.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.0/locale/bootstrap-table-zh-CN.min.js"></script>
   <style>
     .fix-sticky {
       position: fixed !important;
@@ -38,14 +45,6 @@
       background: #fff;
     }
   </style>
-  <!-- Custom styles for this template -->
-  <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-  <!--[if lt IE 9]><script src="./assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-  <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQLQ5EBLTM"></script>
   <script>
@@ -82,19 +81,20 @@
   </div>
   </div>
   </div>
-  <script src="./assets/js/vendor/jquery.min.js"></script>
-  <script src="./assets/js/ie-emulation-modes-warning.js"></script>
-  <script>window.jQuery || document.write('<script src="./assets/js/vendor/jquery.min.js"><\/script>')</script>
   <script>
     $("#nav").load("nav.html");
     $("#foot").load("./foot.html");
     $("#foot").load("foot.html");
   </script>
-  <script src="./dist/js/bootstrap.min.js"></script>
-  <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-  <script src="./assets/js/vendor/holder.min.js"></script>
-  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <script src="./assets/js/ie10-viewport-bug-workaround.js"></script>
+  <!-- <script src="./dist/js/cdn/jquery.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/holderjs@2.9.8/holder.min.js"></script>
+
+<!-- 方案2: MaxCDN（Bootstrap官方CDN，国内访问较慢） -->
+<link href="https://maxcdn.bootstrapcdn.com/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/holderjs@2.9.8/holder.min.js"></script>
+
+<!-- 方案3: cdnjs（Cloudflare，全球可用，国内建议用镜像） -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.8/holder.min.js"></script>
 </body>
 
 </html>

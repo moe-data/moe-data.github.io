@@ -63,9 +63,14 @@
       return void 0 === a.cookie(b) ? !1 : (a.cookie(b, "", a.extend({}, c, { expires: -1 })), !a.cookie(b))
     })
 })
-var Default_isFT = 4 //默认是否繁体，0-简体，1-繁体 , 2- Japan 3 english
+var Default_isFT = typeof Default_isFT !== 'undefined' ? Default_isFT : 4 //默认是否繁体，0-简体，1-繁体 , 2- Japan 3 english
 var StranLink_Obj
-BodyIsFt = $.cookie("JF_cn") || Default_isFT
+
+// 立即定义 BodyIsFt，确保在其他脚本引用前就存在
+// 使用 var 而不是 let，确保是函数作用域而不是块级作用域
+var BodyIsFt = (typeof $ !== 'undefined' && $.cookie)
+  ? ($.cookie("JF_cn") || Default_isFT)
+  : (typeof Default_isFT !== 'undefined' ? Default_isFT : 4)
 console.log("FT: ", BodyIsFt)
 //转换文本
 function StranText(txt) {

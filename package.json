@@ -6,10 +6,16 @@
   "scripts": {
     "test": "jest --ci"
   },
-  "keywords": ["kancolle", "poi", "development", "construction"],
+  "keywords": [
+    "kancolle",
+    "poi",
+    "development",
+    "construction"
+  ],
   "license": "ISC",
   "devDependencies": {
     "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0"
+    "jest-environment-jsdom": "^29.7.0",
+    "jsdom": "^22.1.0"
   }
 }
