@@ -9,21 +9,12 @@ if (typeof global.TextEncoder === 'undefined') {
   global.TextDecoder = TextDecoder;
 }
 
-const fs = require('fs');
 const path = require('path');
 const { executeHtmlAndCollectLogs } = require('../dist/js/util/html-js-executor.js');
+const { getAllHtmlFiles } = require('../dist/js/util/paths.js');
 
-// 获取所有 HTML 文件
-function getAllHtmlFiles() {
-  const rootDir = path.join(__dirname, '..');
-  const files = fs.readdirSync(rootDir);
-  return files
-    .filter(file => file.endsWith('.html'))
-    .map(file => `/${file}`)
-    .sort();
-}
-
-const htmlFiles = getAllHtmlFiles();
+const rootDir = path.join(__dirname, '..');
+const htmlFiles = getAllHtmlFiles(rootDir);
 
 describe('executeHtmlAndCollectLogs - All HTML pages (Enhanced Diagnostics)', () => {
   test('should find HTML files', () => {
@@ -47,32 +38,31 @@ describe('executeHtmlAndCollectLogs - All HTML pages (Enhanced Diagnostics)', ()
         executionError = error;
       }
 
-      // 验证执行
-      expect(Array.isArray(logs) || executionError !== null).toBe(true);
+      expect(executionError).toBeNull();
+      expect(Array.isArray(logs)).toBe(true);
 
-      // 统计和报告
-      if (logs.length > 0) {
-        const errorCount = logs.filter(l => l.level === 'error').length;
-        const warnCount = logs.filter(l => l.level === 'warn').length;
+      const errorLogs = logs.filter(l => l.level === 'error');
+      const warnCount = logs.filter(l => l.level === 'warn').length;
 
-        if (errorCount > 0) {
-          let report = `\n${htmlPath}\n`;
-          report += '════════════════════════════════════\n';
-          logs.filter(l => l.level === 'error').forEach((err, i) => {
-            report += `\n错误 #${i + 1}: ${err.message}\n`;
-            if (err.script) {
-              report += `脚本: ${err.script}\n`;
-            }
-            if (err.stack) {
-              report += `堆栈:\n${err.stack}\n`;
-            }
-          });
-          report += '════════════════════════════════════\n';
-          console.warn(report);
-        } else {
-          console.log(`${htmlPath}: ✓ OK (${logs.length} logs, ${warnCount} warnings)`);
-        }
+      if (errorLogs.length > 0) {
+        let report = `\n${htmlPath}\n`;
+        report += '════════════════════════════════════\n';
+        errorLogs.forEach((err, i) => {
+          report += `\n错误 #${i + 1}: ${err.message}\n`;
+          if (err.script) {
+            report += `脚本: ${err.script}\n`;
+          }
+          if (err.stack) {
+            report += `堆栈:\n${err.stack}\n`;
+          }
+        });
+        report += '════════════════════════════════════\n';
+        console.warn(report);
+      } else if (logs.length > 0) {
+        console.log(`${htmlPath}: ✓ OK (${logs.length} logs, ${warnCount} warnings)`);
       }
+
+      expect(errorLogs).toHaveLength(0);
     });
   });
 

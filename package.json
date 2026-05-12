@@ -3,6 +3,11 @@
   "version": "1.0.1",
   "description": "KanColle multi-equipment development & construction probability database",
   "main": "index.html",
+  "paths": {
+    "dirs": [
+      "."
+    ]
+  },
   "scripts": {
     "test": "jest --ci"
   },

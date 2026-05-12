@@ -2,7 +2,7 @@ name: Update selected timeperiod
 
 on:
   schedule:
-    - cron: "0 20 1 * *"
+    - cron: "0 20 28 * *"
   push:
     paths:
       - "**/update-selected-timeperiod.yml"

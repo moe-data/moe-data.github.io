@@ -1,3 +1,5 @@
+package-lock.json
+coverage/
 *.wxss
 *.wxml
 .DS_Store

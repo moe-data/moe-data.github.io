@@ -10,21 +10,12 @@ if (typeof global.TextEncoder === 'undefined') {
   global.TextDecoder = TextDecoder;
 }
 
-const fs = require('fs');
 const path = require('path');
 const { executeHtmlAndCollectLogs } = require('../dist/js/util/html-js-executor.js');
+const { getAllHtmlFiles } = require('../dist/js/util/paths.js');
 
-// 获取所有 HTML 文件
-function getAllHtmlFiles() {
-  const rootDir = path.join(__dirname, '..');
-  const files = fs.readdirSync(rootDir);
-  return files
-    .filter(file => file.endsWith('.html'))
-    .map(file => `/${file}`)
-    .sort();
-}
-
-const htmlFiles = getAllHtmlFiles();
+const rootDir = path.join(__dirname, '..');
+const htmlFiles = getAllHtmlFiles(rootDir);
 
 describe('executeHtmlAndCollectLogs - All HTML pages', () => {
   test('should find HTML files', () => {
@@ -58,9 +49,8 @@ describe('executeHtmlAndCollectLogs - All HTML pages', () => {
         }
       }
 
-      // 即使有错误，测试仍然应该通过
-      // 因为目的是验证系统能够处理各种 HTML 文件
-      expect(Array.isArray(logs) || errorMessage !== null).toBe(true);
+      expect(errorMessage).toBeNull();
+      expect(Array.isArray(logs)).toBe(true);
 
       if (logs.length > 0) {
         // 验证日志结构
@@ -99,6 +89,7 @@ describe('executeHtmlAndCollectLogs - All HTML pages', () => {
             }
           });
         }
+        expect(errorLogs).toHaveLength(0);
       }
     });
   });
