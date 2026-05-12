@@ -28964,10 +28964,10 @@
     "HP": "16"
   },
   {
-    "afterbull": 0,
-    "afterfuel": 0,
-    "afterlv": 0,
-    "aftershipid": 0,
+    "afterbull": 980,
+    "afterfuel": 480,
+    "afterlv": 95,
+    "aftershipid": 1035,
     "backs": 6,
     "broken": [
       1,
@@ -31680,7 +31680,7 @@
     "getmes": "<br>",
     "houg": [
       16,
-      65
+      66
     ],
     "id": 464,
     "leng": 1,
@@ -31721,7 +31721,7 @@
     ],
     "tyku": [
       24,
-      72
+      73
     ],
     "voicef": 1,
     "yomi": "かすみ",
@@ -32106,7 +32106,7 @@
     "getmes": "<br>",
     "houg": [
       12,
-      61
+      63
     ],
     "id": 470,
     "leng": 1,
@@ -32147,7 +32147,7 @@
     ],
     "tyku": [
       32,
-      82
+      83
     ],
     "voicef": 1,
     "yomi": "かすみ",
@@ -37994,7 +37994,7 @@
     "getmes": "<br>",
     "houg": [
       10,
-      65
+      66
     ],
     "id": 557,
     "leng": 1,
@@ -38065,7 +38065,7 @@
     "getmes": "<br>",
     "houg": [
       10,
-      63
+      64
     ],
     "id": 558,
     "leng": 1,
@@ -39524,8 +39524,8 @@
       57
     ],
     "tyku": [
-      18,
-      74
+      19,
+      76
     ],
     "voicef": 3,
     "yomi": "あさしも",
@@ -45382,8 +45382,8 @@
     "id": 663,
     "leng": 2,
     "luck": [
-      17,
-      89
+      18,
+      91
     ],
     "maxeq": [
       1,
@@ -45417,8 +45417,8 @@
       69
     ],
     "tyku": [
-      25,
-      80
+      26,
+      81
     ],
     "voicef": 7,
     "yomi": "やはぎ",
@@ -45666,8 +45666,8 @@
     "id": 668,
     "leng": 2,
     "luck": [
-      17,
-      89
+      18,
+      91
     ],
     "maxeq": [
       1,
@@ -45701,8 +45701,8 @@
       68
     ],
     "tyku": [
-      36,
-      88
+      37,
+      89
     ],
     "voicef": 7,
     "yomi": "やはぎ",
@@ -48695,10 +48695,10 @@
     "HP": "39"
   },
   {
-    "afterbull": 0,
-    "afterfuel": 0,
-    "afterlv": 0,
-    "aftershipid": 0,
+    "afterbull": 490,
+    "afterfuel": 390,
+    "afterlv": 81,
+    "aftershipid": 1033,
     "backs": 5,
     "broken": [
       1,
@@ -55547,7 +55547,7 @@
       31,
       91
     ],
-    "slot_num": 3,
+    "slot_num": 4,
     "soku": 10,
     "sort_id": 15088,
     "sortno": 561,
@@ -59051,6 +59051,219 @@
     "anti_submarine": 0,
     "final_form": "no",
     "HP": "73"
+  },
+  {
+    "afterbull": 0,
+    "afterfuel": 0,
+    "afterlv": 0,
+    "aftershipid": 0,
+    "backs": 7,
+    "broken": [
+      1,
+      2,
+      10,
+      0
+    ],
+    "buildtime": 24,
+    "bull_max": 20,
+    "ctype": 38,
+    "fuel_max": 15,
+    "getmes": "<br>",
+    "houg": [
+      18,
+      64
+    ],
+    "id": 1033,
+    "leng": 1,
+    "luck": [
+      21,
+      88
+    ],
+    "maxeq": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "name": "玉波改二",
+    "powup": [
+      2,
+      2,
+      1,
+      1
+    ],
+    "raig": [
+      31,
+      87
+    ],
+    "slot_num": 3,
+    "soku": 10,
+    "sort_id": 16286,
+    "sortno": 623,
+    "souk": [
+      16,
+      54
+    ],
+    "stype": 2,
+    "taik": [
+      33,
+      56
+    ],
+    "tyku": [
+      29,
+      79
+    ],
+    "voicef": 3,
+    "yomi": "たまなみ",
+    "total_eq": 0,
+    "evasion": 0,
+    "sight": 0,
+    "anti_submarine": 0,
+    "final_form": "no",
+    "HP": "33"
+  },
+  {
+    "afterbull": 1680,
+    "afterfuel": 780,
+    "afterlv": 95,
+    "aftershipid": 1040,
+    "backs": 8,
+    "broken": [
+      2,
+      4,
+      11,
+      2
+    ],
+    "buildtime": 22,
+    "bull_max": 25,
+    "ctype": 12,
+    "fuel_max": 20,
+    "getmes": "<br>",
+    "houg": [
+      18,
+      67
+    ],
+    "id": 1035,
+    "leng": 1,
+    "luck": [
+      30,
+      93
+    ],
+    "maxeq": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "name": "吹雪改三",
+    "powup": [
+      2,
+      2,
+      3,
+      2
+    ],
+    "raig": [
+      32,
+      90
+    ],
+    "slot_num": 4,
+    "soku": 10,
+    "sort_id": 14017,
+    "sortno": 625,
+    "souk": [
+      15,
+      54
+    ],
+    "stype": 2,
+    "taik": [
+      33,
+      52
+    ],
+    "tyku": [
+      36,
+      82
+    ],
+    "voicef": 3,
+    "yomi": "ふぶき",
+    "total_eq": 0,
+    "evasion": 0,
+    "sight": 0,
+    "anti_submarine": 0,
+    "final_form": "no",
+    "HP": "33"
+  },
+  {
+    "afterbull": 0,
+    "afterfuel": 0,
+    "afterlv": 0,
+    "aftershipid": 0,
+    "backs": 8,
+    "broken": [
+      2,
+      4,
+      12,
+      4
+    ],
+    "buildtime": 22,
+    "bull_max": 30,
+    "ctype": 12,
+    "fuel_max": 25,
+    "getmes": "<br>",
+    "houg": [
+      19,
+      69
+    ],
+    "id": 1040,
+    "leng": 1,
+    "luck": [
+      39,
+      107
+    ],
+    "maxeq": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "name": "吹雪改三護(六式)",
+    "powup": [
+      2,
+      2,
+      3,
+      2
+    ],
+    "raig": [
+      40,
+      92
+    ],
+    "slot_num": 4,
+    "soku": 10,
+    "sort_id": 14018,
+    "sortno": 630,
+    "souk": [
+      17,
+      57
+    ],
+    "stype": 2,
+    "taik": [
+      38,
+      57
+    ],
+    "tyku": [
+      45,
+      92
+    ],
+    "voicef": 3,
+    "yomi": "ふぶき",
+    "total_eq": 0,
+    "evasion": 0,
+    "sight": 0,
+    "anti_submarine": 0,
+    "final_form": "no",
+    "HP": "38"
   },
   {
     "afterbull": 0,
